@@ -29,7 +29,7 @@ Get in on NuGet
 License
 -------
 
-MIT <a href="http://paymillwrapper.codeplex.com/license">License</a>
+MIT <a href="https://github.com/jcantos/paymillwrappernet/blob/master/LICENSE">License</a>
 
 Donate
 ------
