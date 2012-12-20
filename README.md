@@ -19,7 +19,7 @@ Features
 Documentation
 -------------
 
-See the documentation at: http://paymillwrapper.codeplex.com/documentation
+See the <a href="http://paymillwrapper.codeplex.com/documentation">documentation</a>
 
 Get in on NuGet
 ---------------
@@ -29,7 +29,7 @@ Get in on NuGet
 License
 -------
 
-Mit License at http://paymillwrapper.codeplex.com/license
+MIT <a href="http://paymillwrapper.codeplex.com/license">License</a>
 
 Donate
 ------
