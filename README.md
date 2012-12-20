@@ -31,7 +31,7 @@ Requirements
 Compiled binary
 ---------------
 
-You can download the <a href="http://paymillwrapper.codeplex.com/releases/view/98431">Paymill Wrapper .NET Beta 2</a>
+You can download the last version of <a href="http://paymillwrapper.codeplex.com/releases">Paymill Wrapper .NET Beta 2</a>
 
 Documentation
 -------------
