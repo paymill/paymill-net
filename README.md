@@ -16,6 +16,18 @@ Features
 * Management transactions
 * Supports .NET 4.5
 
+Requirements
+------------
+
+### For use
+
+* Net Framework 4.5
+
+### For development
+
+* Visual Studio 2012
+* Net Framework 4.5
+
 Documentation
 -------------
 
