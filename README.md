@@ -1,4 +1,4 @@
-Paymill Wrapper .Net
+Paymill Wrapper .NET
 ====================
 
 Paymill Wrapper. NET is an API for easy integration for recurring billings and payments online through the product https://www.paymill.com
