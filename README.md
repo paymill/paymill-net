@@ -28,6 +28,11 @@ Requirements
 * Visual Studio 2012
 * Net Framework 4.5
 
+Compiled binary
+---------------
+
+You can download the <a href="http://paymillwrapper.codeplex.com/releases/view/98431">Paymill Wrapper .NET Beta 2</a>
+
 Documentation
 -------------
 
