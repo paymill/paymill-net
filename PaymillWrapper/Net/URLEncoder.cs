@@ -121,6 +121,11 @@ namespace PaymillWrapper.Net
             this.addKeyValuePair(sb, "interval", data.Interval);
             this.addKeyValuePair(sb, "name", data.Name);
 
+            if (data.Trial_Period_Days.HasValue == true)
+            {
+                this.addKeyValuePair(sb, "trial_period_days", data.Trial_Period_Days.Value);
+            }
+
             return sb.ToString();
         }
         public string EncodeOfferUpdate(Offer data)
@@ -148,7 +153,7 @@ namespace PaymillWrapper.Net
         {
             StringBuilder sb = new StringBuilder();
 
-            this.addKeyValuePair(sb, "cancel_at_period_end", data.Cancel_At_Period_End.ToString().ToLower());
+            this.addKeyValuePair(sb, "cancel_at_period_end", data.CancelAtPeriodEnd.ToString().ToLower());
 
             return sb.ToString();
         }

@@ -117,7 +117,7 @@ namespace SandboxConsole
             Subscription subs = susbscriptionService.Get(newSubscription.Id);
             subs.Offer = offer;
             subs.Payment = payment;
-            subs.Cancel_At_Period_End = true;
+            subs.CancelAtPeriodEnd = true;
             var updatedSubscription = susbscriptionService.Update(subs);
 
             Console.WriteLine("SubscriptionID:" + updatedSubscription.Id);

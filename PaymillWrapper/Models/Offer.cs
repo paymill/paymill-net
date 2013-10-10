@@ -20,13 +20,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Your name for this offer
         /// </summary>
-        [DataMember(Name = "Name")]
+        [DataMember(Name = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Every interval the specified amount will be charged. In test mode only even values e.g. 42.00 = 4200 are allowed
         /// </summary>
-        [DataMember(Name = "Amount")]
+        [DataMember(Name = "amount")]
         public int Amount { get; set; }
 
         /// <summary>
@@ -44,19 +44,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
-        [DataMember(Name = "Interval")]
+        [DataMember(Name = "interval")]
         public String Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?
         /// </summary>
-        [DataMember(Name = "Trial_Period_Days")]
-        public int? Trial_Period_Days { get; set; }
+        [DataMember(Name = "trial_period_days")]
+        public int? TrialPeriodDays { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "Currency")]
+        [DataMember(Name = "currency")]
         public string Currency { get; set; }
 
         /// <summary>
@@ -67,7 +67,19 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "subscription_count")]
         public SubscriptionCount SubscriptionCount { get; set; }
+    }
 
- 
+    [DataContract]
+    public class SubscriptionCount
+    {
+        [DataMember(Name = "active")]
+        public String Аctive { get; set; }
+        [DataMember(Name = "inactive")]
+        public string Inactive { get; set; }
+        public SubscriptionCount(String active, String inactive)
+        {
+            Аctive = active;
+            Inactive = inactive;
+        }
     }
 }

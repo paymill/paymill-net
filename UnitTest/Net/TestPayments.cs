@@ -10,36 +10,31 @@ namespace UnitTest.Net
     [TestClass]
     public class TestPayments
     {
+        Paymill _paymill = null;
         [TestInitialize]
         public void Initialize()
         {
-            Paymill.ApiKey = "9a4129b37640ea5f62357922975842a1";
-            Paymill.ApiUrl = "https://api.paymill.de/v2";
+            _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
         }
         [TestMethod]
         public void GetPayments()
         {
-           
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            List<Payment> lstPayments = paymentService.GetPayments();
+            IReadOnlyCollection<Payment> lstPayments = _paymill.Payments.GetPayments();
             Assert.IsFalse(lstPayments.Count == 0, "GetPayments Fail");
          }
         [TestMethod]
         public void CreatePayment()
         {
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            Payment payment = paymentService.Create("098f6bcd4621d373cade4e832627b4f6");
+            Payment payment = _paymill.Payments.Create("098f6bcd4621d373cade4e832627b4f6");
             Assert.IsFalse(payment.Id == String.Empty, "CreatePayment Fail");
         }
         [TestMethod]
         public void CreatePaymentWithclient()
         {
-            ClientService clientService = Paymill.GetService<ClientService>();
-            Client client = clientService.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            Payment payment = paymentService.Create("098f6bcd4621d373cade4e832627b4f6", client.Id);
+            Payment payment = _paymill.Payments.Create("098f6bcd4621d373cade4e832627b4f6", client.Id);
             Assert.IsFalse(payment.Id == String.Empty, "CreatePayment With Client Fail");
             Assert.IsFalse(payment.Client != client.Id, "Client does not match");
         }
@@ -47,17 +42,15 @@ namespace UnitTest.Net
         [TestMethod]
         public void RemovePayment()
         {
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            Payment payment = paymentService.Create("098f6bcd4621d373cade4e832627b4f6");
-            bool reply = paymentService.Remove(payment.Id);
+            Payment payment = _paymill.Payments.Create("098f6bcd4621d373cade4e832627b4f6");
+            bool reply = _paymill.Payments.Remove(payment.Id);
             Assert.IsTrue(reply, "RemovePayment Fail");
         }
         [TestMethod]
         [ExpectedException(typeof(PaymillRequestException))]
         public void RemovePaymentWithException()
         {
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            bool reply = paymentService.Remove("pay_3af44644dd6d25c8hhhhh");
+            bool reply = _paymill.Payments.Remove("pay_3af44644dd6d25c8hhhhh");
             Assert.IsTrue(reply, "RemovePayment Fail");
         }
     }

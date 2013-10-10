@@ -7,10 +7,10 @@ using PaymillWrapper.Net;
 
 namespace PaymillWrapper.Service
 {
-    public class WebhookService : AbstractService<Webhook>
+    class WebhookService : AbstractService<Webhook>
     {
         public WebhookService(HttpClientRest webhook)
-            : base(webhook)
+            : base(Resource.Webhooks, webhook, Paymill.ApiUrl)
         {
         }
 
@@ -23,10 +23,7 @@ namespace PaymillWrapper.Service
 
             return CreateUrl(obj.Url, obj.EventTypes);
         }
-        public Webhook Get(String webhookID)
-        {
-            return get<Webhook>(Resource.Webhooks, webhookID);
-        }
+      
       
         public Webhook CreateUrl(Uri url, params PaymillWrapper.Models.EventType[] eventTypes)
         {
@@ -39,12 +36,11 @@ namespace PaymillWrapper.Service
             {
                 throw new NullReferenceException("eventTypes");
             }
-            return create<Webhook>(
-                   Resource.Webhooks,
+            return Create(
                    null,
-                   new URLEncoder().EncodeObject(new {
+                   new UrlEncoder().EncodeObject(new {
                             url = url.AbsoluteUri,
-                            event_types = URLEncoder.ConvertEventsArr(eventTypes) 
+                            event_types = UrlEncoder.ConvertEventsArr(eventTypes) 
                    }));
         }
 
@@ -54,7 +50,7 @@ namespace PaymillWrapper.Service
         /// <param name="email"></param>
         /// <param name="eventTypes"></param>
         /// <returns></returns>
-        public Webhook CreateEmail(String email, params  PaymillWrapper.Models.EventType[] eventTypes)
+        public Webhook CreateEmail(String email, params PaymillWrapper.Models.EventType[] eventTypes)
         {
             if (email == null)
             {
@@ -64,12 +60,11 @@ namespace PaymillWrapper.Service
             {
                 throw new NullReferenceException("eventTypes");
             }
-            return create<Webhook>(
-                   Resource.Webhooks,
+            return Create(
                    null,
-                   new URLEncoder().EncodeObject(new { 
+                   new UrlEncoder().EncodeObject(new { 
                        email = email,
-                       event_types = URLEncoder.ConvertEventsArr(eventTypes) 
+                       event_types = UrlEncoder.ConvertEventsArr(eventTypes) 
                    }));
         }
         /// <summary>
@@ -79,29 +74,25 @@ namespace PaymillWrapper.Service
         /// <returns></returns>
         public Webhook Update(Webhook webhook)
         {
-            return update<Webhook>(
-                Resource.Webhooks,
-                webhook,
-                webhook.Id,
-                new URLEncoder().EncodeWebhookUpdate(webhook));
+            return Update(webhook);
         }
-       /// <summary>
-       /// This function remove webhook
-       /// </summary>
-       /// <param name="webhookID"></param>
-       /// <returns></returns>
-        public Boolean Remove(string webhookID)
-        {
-            return remove<Webhook>(Resource.Webhooks, webhookID);
-        }
+       
         /// <summary>
         /// this function return all webhooks
         /// </summary>
         /// <returns></returns>
-        public List<Webhook> GetWebhooks()
+        public IReadOnlyCollection<Webhook> GetWebhooks()
         {
-            return getList<Webhook>(Resource.Webhooks, null);
+            return getList(null);
         }
-       
+        protected override string GetResourceId(Webhook obj)
+        {
+            return obj.Id;
+        }
+
+        protected override string GetEncodedUpdateParams(Webhook obj, UrlEncoder encoder)
+        {
+            return encoder.EncodeWebhookUpdate(obj);
+        }
     }
 }

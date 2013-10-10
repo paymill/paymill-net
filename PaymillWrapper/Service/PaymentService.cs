@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,6 +13,7 @@ using PaymillWrapper.Net;
 
 namespace PaymillWrapper.Service
 {
+/*
    
     public class PaymentService : AbstractService<Payment>
     {
@@ -21,49 +22,7 @@ namespace PaymillWrapper.Service
         {
         }
 
-        /// <summary>
-        /// This function allows request a payment list
-        /// </summary>
-        /// <returns>Returns a list payments-object</returns>
-        public List<Payment> GetPayments()
-        {
-            return getList<Payment>(Resource.Payments);
-        }
 
-        /// <summary>
-        /// This function allows request a payment list
-        /// </summary>
-        /// <param name="filter">Result filtered in the required way</param>
-        /// <returns>Returns a list payments-object</returns>
-        public List<Payment> GetPaymentsByFilter(Filter filter)
-        {
-            return getList<Payment>(Resource.Payments, filter);
-        }
-        /// <summary>
-        /// This function creates a payment object
-        /// </summary>
-        /// <param name="token">payment token</param>
-        /// <returns>New object-payment just created</returns>
-        public Payment Create(String token)
-        {
-            return create<Payment>(
-                Resource.Payments,
-                null,
-                new URLEncoder().EncodeObject(new { Token = token }));
-        }
-        /// <summary>
-        /// This function creates a payment object with client
-        /// </summary>
-        /// <param name="token">payment token</param>
-        /// <param name="token">payment client</param>
-        /// <returns>New object-payment just created</returns>
-        public Payment Create(String token, String client)
-        {
-            return create<Payment>(
-                Resource.Payments,
-                null,
-                new URLEncoder().EncodeObject(new { Token = token, Client = client }));
-        }
 
         /// <summary>
         /// To get the details of an existing payment you’ll need to supply the payment ID
@@ -85,5 +44,62 @@ namespace PaymillWrapper.Service
             return remove<Payment>(Resource.Payments, paymentID);
         }
 
+*/
+    public class PaymentService : AbstractService<Payment>
+    {
+        public PaymentService(HttpClient client, string apiUrl)
+            : base(Resource.Payments, client, apiUrl)
+        {
+        }
+        /// <summary>
+        /// This function allows request a payment list
+        /// </summary>
+        /// <returns>Returns a list payments-object</returns>
+        public IReadOnlyCollection<Payment> GetPayments()
+        {
+            return getList();
+        }
+
+        /// <summary>
+        /// This function allows request a payment list
+        /// </summary>
+        /// <param name="filter">Result filtered in the required way</param>
+        /// <returns>Returns a list payments-object</returns>
+        public IReadOnlyCollection<Payment> GetPaymentsByFilter(Filter filter)
+        {
+            return getList(filter);
+        }
+        /// <summary>
+        /// This function creates a payment object
+        /// </summary>
+        /// <param name="token">payment token</param>
+        /// <returns>New object-payment just created</returns>
+        public Payment Create(String token)
+        {
+            return Create(
+                null,
+                new UrlEncoder().EncodeObject(new { Token = token }));
+        }
+        /// <summary>
+        /// This function creates a payment object with client
+        /// </summary>
+        /// <param name="token">payment token</param>
+        /// <param name="token">payment client</param>
+        /// <returns>New object-payment just created</returns>
+        public Payment Create(String token, String client)
+        {
+            return Create(
+                null,
+                new UrlEncoder().EncodeObject(new { Token = token, Client = client }));
+        }
+        protected override string GetResourceId(Payment obj)
+        {
+            return obj.Id;
+        }
+
+        protected override string GetEncodedUpdateParams(Payment obj, UrlEncoder encoder)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

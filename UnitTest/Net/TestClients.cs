@@ -10,27 +10,25 @@ namespace UnitTest.Net
     [TestClass]
     public class TestClients
     {
+        Paymill _paymill = null;
         [TestInitialize]
         public void Initialize()
         {
-            Paymill.ApiKey = "9a4129b37640ea5f62357922975842a1";
-            Paymill.ApiUrl = "https://api.paymill.de/v2";
+            _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
         }
         [TestMethod]
         public void CreateClient()
         {
-            ClientService clientService = Paymill.GetService<ClientService>();
-            Client client = clientService.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
         }
         [TestMethod]
         public void RemoveClient()
         {
-            ClientService clientService = Paymill.GetService<ClientService>();
-            Client client = clientService.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
-            Boolean result = clientService.Remove(client.Id);
+            Boolean result = _paymill.Clients.Remove(client.Id);
             Assert.IsTrue(result, "Remove  Offer");
 
 
@@ -38,12 +36,11 @@ namespace UnitTest.Net
         [TestMethod]
         public void UpdateClient()
         {
-            ClientService clientService = Paymill.GetService<ClientService>();
-            Client client = clientService.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
             client.Email = "test@mail.com";
-            var updatetedClient = clientService.Update(client);
+            var updatetedClient = _paymill.Clients.Update(client);
             Assert.IsTrue(updatetedClient.Email == "test@mail.com", "Update Client Failed");
 
         }

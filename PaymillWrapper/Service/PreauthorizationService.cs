@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
 
 namespace PaymillWrapper.Service
 {
-    public class PreauthorizationService : AbstractService<Preauthorization>
+/*    public class PreauthorizationService : AbstractService<Preauthorization>
     {
         public PreauthorizationService(HttpClientRest client)
             : base(client)
@@ -33,42 +32,44 @@ namespace PaymillWrapper.Service
             return getList<Preauthorization>(Resource.Preauthorizations, filter);
         }
 
+*/
+
+
+    public class PreauthorizationService : AbstractService<Preauthorization>
+    {
+        public PreauthorizationService(HttpClient client, string apiUrl) 
+            : base(Resource.Preauthorizations, client, apiUrl)
+        {
+        }
+
+        protected override string GetResourceId(Preauthorization obj)
+        {
+            return obj.Id;
+        }
+  
+        protected override string GetEncodedUpdateParams(Preauthorization obj, UrlEncoder encoder)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// This function creates a transaction object
         /// </summary>
-        /// <param name="client">Object-transaction</param>
+        /// <param name="token">token</param>
+        ///  <param name="amount">amount</param>
+        /// <param name="currency">currency</param>
         /// <returns>New object-transaction just add</returns>
-        public Preauthorization Create(Preauthorization preauthorization)
+        public Preauthorization CreateWithToken(String token, int amount, String currency)
         {
-            Preauthorization reply=null;
-
-            Transaction replyTransaction = create<Transaction>(
-                Resource.Preauthorizations,
+            return Create(
+                 null,
+                 new UrlEncoder().EncodePreauthorization(token, amount, currency));
+        }
+        public Preauthorization CreateWithPayment(Payment payment, int amount, String currency)
+        {
+            return Create(
                 null,
-                new URLEncoder().EncodePreauthorization(preauthorization));
-
-            if (replyTransaction != null)
-                reply = replyTransaction.Preauthorization;
-
-            return reply;
-        }
-        /// <summary>
-        /// Remove preauthorization
-        /// </summary>
-        /// <param name="clientID">Preauthorization identifier</param>
-        /// <returns>Return true if remove was ok, false if not possible</returns>
-        public Boolean Remove(string preauthorizationID)
-        {
-            return remove<Preauthorization>(Resource.Preauthorizations, preauthorizationID);
-        }
-        /// <summary>
-        /// To get the details of an existing preauthorization you’ll need to supply the transaction ID
-        /// </summary>
-        /// <param name="clientID">Preauthorization identifier</param>
-        /// <returns>Preauthorization-object</returns>
-        public Preauthorization Get(string preauthorizationID)
-        {
-            return get<Preauthorization>(Resource.Preauthorizations, preauthorizationID);
+                new UrlEncoder().EncodePreauthorization(payment, amount, currency));
         }
     }
 }

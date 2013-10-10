@@ -18,26 +18,38 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Mail address of this client
         /// </summary>
-        [DataMember(Name = "Email")]
+        [DataMember(Name = "email")]
         public string Email { get; set; }
 
         /// <summary>
         /// Additional description for this client
         /// </summary>
-        [DataMember(Name = "Description")]
+        [DataMember(Name = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// List creditcard-object or directdebit-object
         /// </summary>
-        [DataMember(Name = "Payment")]
-        public List<Payment> Payment { get; set; }
+        [DataMember(Name = "payment")]
+        public List<Payment> Payments { get; set; }
 
         /// <summary>
         /// List suscription-object
         /// </summary>
-        [DataMember(Name = "Subscription")]
-        public List<Subscription> Subscription { get; set; }
+        [DataMember(Name = "subscription")]
+        public List<Subscription> Subscriptions { get; set; }
+
+        [DataMember(Name = "app_id")]
+        private String AppId;
+
+        public Client()
+        {
+        }
+        public Client(String id)
+        {
+            Id = id;
+        }
+
     }
 
 }

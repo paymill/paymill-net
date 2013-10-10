@@ -15,140 +15,56 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(JsonParser<Subscription>))]
     public class Subscription : BaseModel
     {
-        private static readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
-
         /// <summary>
         /// Hash describing the offer which is subscribed to the client
         /// </summary>
-        [DataMember(Name = "Offer")]
+        [DataMember(Name = "offer")]
         public Offer Offer { get; set; }
 
         /// <summary>
         /// Whether this subscription was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "Livemode")]
+        [DataMember(Name = "livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// Cancel this subscription immediately or at the end of the current period?
         /// </summary>
-        [DataMember(Name = "Cancel_At_Period_End")]
-        public bool Cancel_At_Period_End { get; set; }
+        [DataMember(Name = "cancel_at_period_end")]
+        public bool CancelAtPeriodEnd { get; set; }
+
+        [DataMember(Name = "trial_start")]
+        public DateTime? TrialStart { get; set; }
+
+        [DataMember(Name = "trial_end")]
+        public DateTime? TrialEnd { get; set; }
+
+        /// <summary>
+        /// Next charge date.
+        /// </summary>
+        [DataMember(Name = "next_capture_at")]
+        public DateTime NextCaptureAt { get; set; }
 
         /// <summary>
         /// Cancel date
         /// </summary>
-        public DateTime CanceledAt { get; set; }
+        [DataMember(Name = "canceled_at")]
+        public DateTime? CanceledAt { get; set; }
 
-        [DataMember(Name = "Canceled_At")]
-        public int? Canceled_At_Ticks
-        {
-            get
-            {
-                return (int)(this.CanceledAt - unixEpoch).TotalSeconds;
-            }
-            set
-            {
-                if (value.HasValue == true)
-                {
-                    this.CanceledAt = unixEpoch.AddSeconds(value.Value);
-                }
-            }
-        }
         /// <summary>
         /// Client
         /// </summary>
+        [DataMember(Name = "client")]
         public Client Client { get; set; }
-        /// <summary>
-        /// Payment-object
-        /// </summary>
-        [DataMember(Name = "Client")]
-        private Object Client_At_Object
-        {
-            set
-            {
-                if (value != null)
-                {
-                    this.Client = Newtonsoft.Json.JsonConvert.DeserializeObject<Client>(value.ToString());
-                }
-            }
-        }
+       
 
         /// <summary>
         /// Payment
         /// </summary>
+        [DataMember(Name = "payment")]
         public Payment Payment { get;set;}
 
-        /// <summary>
-        /// Payment-object
-        /// </summary>
-        [DataMember(Name = "Payment")]
-        private Object Payment_At_Object { set {
-            if (value != null)
-            {
-                this.Payment = Newtonsoft.Json.JsonConvert.DeserializeObject<Payment>(value.ToString());
-            }
-        } }
-
-        /// <summary>
-        /// Trial Start
-        /// </summary>
-        public DateTime TrialStart { get; set; }
-
-        [DataMember(Name = "Trial_Start")]
-        public int? TrialStart_At_Ticks
-        {
-            get
-            {
-                return (int)(this.TrialStart - unixEpoch).TotalSeconds;
-            }
-            set {
-                if (value.HasValue == true)
-                {
-                    this.TrialStart = unixEpoch.AddSeconds(value.Value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Trial End
-        /// </summary>
-        public DateTime TrialEnd { get; set; }
-        [DataMember(Name = "Trial_End")]
-        public int? TrialEnd_At_Ticks
-        {
-            get
-            {
-                return (int)(this.TrialEnd - unixEpoch).TotalSeconds;
-            }
-            set
-            {
-                if (value.HasValue == true)
-                {
-                    this.TrialEnd = unixEpoch.AddSeconds(value.Value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Next Capture At
-        /// </summary>
-        public DateTime NextCaptureAt { get; set; }
-
-        [DataMember(Name = "Next_Capture_At")]
-        public int? Next_Capture_At_Ticks
-        {
-            get
-            {
-                return (int)(this.NextCaptureAt - unixEpoch).TotalSeconds;
-            }
-            set
-            {
-                if (value.HasValue == true)
-                {
-                    this.NextCaptureAt = unixEpoch.AddSeconds(value.Value);
-                }
-            }
-        }
-    }
+       [DataMember(Name = "app_id")]
+        public String AppId { get; set; }
+     }
 }

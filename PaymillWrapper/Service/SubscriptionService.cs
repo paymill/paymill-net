@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Net.Http;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
+using System.Collections.Generic;
 
 namespace PaymillWrapper.Service
 {
-    public class SubscriptionService : AbstractService<Subscription>
+    public class SubscriptionService : AbstractService<Subscription>, ICRUDService<Subscription>
     {
-        public SubscriptionService(HttpClientRest client):base(client)
+        public SubscriptionService(HttpClient client, string apiUrl)
+            : base(Resource.Subscriptions, client, apiUrl)
         {
         }
-
         /// <summary>
         /// This function allows request a subscription list
         /// </summary>
         /// <returns>Returns a list subscriptions-object</returns>
-        public List<Subscription> GetSubscriptions()
+        public IReadOnlyCollection<Subscription> GetSubscriptions()
         {
-            return getList<Subscription>(Resource.Subscriptions);
+            return getList();
         }
 
         /// <summary>
@@ -27,45 +25,37 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list subscription-object</returns>
-        public List<Subscription> GetSubscriptionsByFilter(Filter filter)
+        public IReadOnlyCollection<Subscription> GetSubscriptionsByFilter(Filter filter)
         {
-            return getList<Subscription>(Resource.Subscriptions, filter);
+            return getList(filter);
         }
 
-       
-
-        /// <summary>
-        /// To get the details of an existing subscription you’ll need to supply the subscription ID
-        /// </summary>
-        /// <param name="clientID">Subscription identifier</param>
-        /// <returns>Subscription-object</returns>
-        public Subscription Get(string subscriptionID)
+        protected override string GetResourceId(Subscription obj)
         {
-            return get<Subscription>(Resource.Subscriptions, subscriptionID);
+            return obj.Id;
         }
 
-        /// <summary>
-        /// This function deletes a subscription
-        /// </summary>
-        /// <param name="clientID">Subscription identifier</param>
-        /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool Remove(string subscriptionID)
+        protected override string GetEncodedUpdateParams(Subscription obj, UrlEncoder encoder)
         {
-            return remove<Subscription>(Resource.Subscriptions, subscriptionID);
+            return encoder.EncodeSubscriptionUpdate(obj);
         }
-
         /// <summary>
-        /// This function updates the data of a subscription
+        /// This function creates a subscription object
         /// </summary>
-        /// <param name="client">Object-subscription</param>
-        /// <returns>Object-subscription just updated</returns>
-        public Subscription Update(Subscription subscription)
+        /// <param name="offer"></param>
+        /// <param name="client"></param>
+        /// <param name="pay"></param>
+        /// <returns></returns>
+        public Subscription Subscribe(Offer offer, Client client, Payment pay)
         {
-            return update<Subscription>(
-                Resource.Subscriptions,
-                subscription,
-                subscription.Id,
-                new URLEncoder().EncodeSubscriptionUpdate(subscription));
+            Subscription subscription = new Subscription();
+            subscription.Client = client;
+            subscription.Offer = offer;
+            subscription.Payment = pay;
+
+            return Create(
+                null,
+                new UrlEncoder().EncodeSubscriptionAdd(subscription));
         }
     }
 }

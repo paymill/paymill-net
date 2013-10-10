@@ -14,7 +14,7 @@ namespace SandboxConsole
         static void Main(string[] args)
         {
             var payment = PaymentSamples.GetPayments();
-            ТransactionStamples.AddTransactionWithClient(payment.First().Id, payment.First().Client);
+            (new ТransactionStamples()).AddTransactionWithClient(payment.First().Id, payment.First().Client);
             Console.ReadLine();
         }
      

@@ -57,6 +57,7 @@
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\Fee.cs" />
+    <Compile Include="Models\MultipleResults.cs" />
     <Compile Include="Models\Preauthorization.cs" />
     <Compile Include="Models\Offer.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -73,6 +74,8 @@
     <Compile Include="PaymillRequestException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AbstractService.cs" />
+    <Compile Include="Service\Resource.cs" />
+    <Compile Include="Service\ServiceInterfaces.cs" />
     <Compile Include="Service\WebhookService.cs" />
     <Compile Include="Service\ClientService.cs" />
     <Compile Include="Service\PreauthorizationService.cs" />
@@ -81,7 +84,6 @@
     <Compile Include="Service\TransactionService.cs" />
     <Compile Include="Service\PaymentService.cs" />
     <Compile Include="Service\OfferService.cs" />
-    <Compile Include="SubscriptionCount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="librerias\Newtonsoft.Json.dll" />

@@ -11,8 +11,9 @@ using System.ComponentModel;
 
 namespace SandboxConsole
 {
-    public static class ОfferSamples
+    public  class ОfferSamples
     {
+
         public static void GetAllOffers()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;

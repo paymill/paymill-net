@@ -10,6 +10,24 @@ namespace PaymillWrapper.Models
     [DataContract]
     public class BaseModel
     {
+        /// <summary>
+        /// Unique identifier
+        /// </summary>
+        [DataMember(Name = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Creation date
+        /// </summary>
+        [DataMember(Name = "created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// Last update
+        /// </summary>
+        [DataMember(Name = "updated_at")]
+        public DateTime UpdatedAt { get; set; }
+        /*
         private static readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
 
         /// <summary>
@@ -24,7 +42,7 @@ namespace PaymillWrapper.Models
         [IgnoreDataMember]
         public DateTime Created_At { get; set; }
 
-        [DataMember(Name = "Created_At")]
+        [DataMember(Name = "created_at")]
         public int Created_At_Ticks
         {
             get { 
@@ -39,11 +57,12 @@ namespace PaymillWrapper.Models
         [IgnoreDataMember]
         public DateTime Updated_At { get; set; }
 
-        [DataMember(Name = "Updated_At")]
-        public int Updated_At_Ticks
+        [DataMember(Name = "updated_at")]
+        public int UpdatedAtTicks
         {
             get { return (int)(this.Updated_At - unixEpoch).TotalSeconds; }
             set { this.Updated_At = unixEpoch.AddSeconds(value); }
         }
+        */
     }
 }

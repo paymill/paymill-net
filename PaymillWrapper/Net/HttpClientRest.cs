@@ -14,7 +14,7 @@ namespace PaymillWrapper.Net
     {
         private string _apiUrl = "";
         private string _apiKey = "";
-        private URLEncoder _urlEncoder;
+        private UrlEncoder _urlEncoder;
 
         /// <summary>
         /// Create an HttpClientRest-object
@@ -35,7 +35,7 @@ namespace PaymillWrapper.Net
                 throw new PaymillException("ApiURL is not a valid format Uri");
             }
 
-            this._urlEncoder = new URLEncoder();
+            this._urlEncoder = new UrlEncoder();
         }
 
     }

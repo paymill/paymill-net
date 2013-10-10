@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -13,22 +15,22 @@ namespace PaymillWrapper.Models
         {
             APPLICATION
         };
-        [DataMember(Name = "Type")]
+        [DataMember(Name = "type")]
         public FeeType Type { get; set; }
 
-        [DataMember(Name = "Application")]
+        [DataMember(Name = "application")]
         public String Application { get; set; }
 
-        [DataMember(Name = "Payment")]
+        [DataMember(Name = "payment")]
         public String Payment { get; set; }
 
-        [DataMember(Name = "Amount")]
+        [DataMember(Name = "amount")]
         public int Amount { get; set; }
 
-        [DataMember(Name = "Billed_At")]
-        public DateTime? Billed_At { get; set; }
+        [DataMember(Name = "billed_at")]
+        public DateTime? BilledAt { get; set; }
 
-        [DataMember(Name = "Currency")]
+        [DataMember(Name = "currency")]
         public String Currency { get; set; }
     }
 }

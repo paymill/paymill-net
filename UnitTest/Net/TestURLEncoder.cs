@@ -63,7 +63,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void EncodeTransaction()
         {
-            URLEncoder urlEncoder = new URLEncoder();
+            UrlEncoder urlEncoder = new UrlEncoder();
 
             Transaction transaction = new Transaction();
             transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
@@ -80,7 +80,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void EncodePreauthorization()
         {
-            URLEncoder urlEncoder = new URLEncoder();
+            UrlEncoder urlEncoder = new UrlEncoder();
 
             Preauthorization preauthorization = new Preauthorization();
             preauthorization.Amount = 3500;
@@ -96,7 +96,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void EncodeRefund()
         {
-            URLEncoder urlEncoder = new URLEncoder();
+            UrlEncoder urlEncoder = new UrlEncoder();
 
             Refund refund = new Refund();
             refund.Amount = 500;
@@ -111,7 +111,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void EncodeSubscriptionAdd()
         {
-            URLEncoder urlEncoder = new URLEncoder();
+            UrlEncoder urlEncoder = new UrlEncoder();
 
             Subscription subscription = new Subscription();
             subscription.Client = new Client() { Id = "client_bbe895116de80b6141fd" };
@@ -127,10 +127,10 @@ namespace UnitTest.Net
         [TestMethod]
         public void EncodeSubscriptionUpdate()
         {
-            URLEncoder urlEncoder = new URLEncoder();
+            UrlEncoder urlEncoder = new UrlEncoder();
 
             Subscription subscription = new Subscription();
-            subscription.Cancel_At_Period_End = true;
+            subscription.CancelAtPeriodEnd = true;
             subscription.Id = "sub_569df922b4506cd73030";
             string expected = "cancel_at_period_end=true";
             string reply = urlEncoder.EncodeSubscriptionUpdate(subscription);

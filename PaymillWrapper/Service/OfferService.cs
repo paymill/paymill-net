@@ -4,64 +4,17 @@ using System.Linq;
 using System.Web;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
+using System.Net.Http;
 
 namespace PaymillWrapper.Service
 {
+/*
     public class OfferService : AbstractService<Offer>
     {
         public OfferService(HttpClientRest client):base(client)
         {
         }
-        /// <summary>
-        /// This function creates a subscription object
-        /// </summary>
-        /// <param name="offer"></param>
-        /// <param name="client"></param>
-        /// <param name="pay"></param>
-        /// <returns></returns>
-        public Subscription Subscribe(Offer offer, Client client, Payment pay)
-        {
-            Subscription subscription = new Subscription();
-            subscription.Client = client;
-            subscription.Offer = offer;
-            subscription.Payment = pay;
 
-            return create<Subscription>(
-                Resource.Subscriptions,
-                null,
-                new URLEncoder().EncodeSubscriptionAdd(subscription));
-        }
-        /// <summary>
-        /// This function allows request a offer list
-        /// </summary>
-        /// <returns>Returns a list offers-object</returns>
-        public List<Offer> GetOffers()
-        {
-            return getList<Offer>(Resource.Offers);
-        }
-
-        /// <summary>
-        /// This function allows request a offer list
-        /// </summary>
-        /// <param name="filter">Result filtered in the required way</param>
-        /// <returns>Returns a list offer-object</returns>
-        public List<Offer> GetOffersByFilter(Filter filter)
-        {
-            return getList<Offer>(Resource.Offers, filter);
-        }
-
-        /// <summary>
-        /// This function creates a offer object
-        /// </summary>
-        /// <param name="client">Object-offer</param>
-        /// <returns>New object-offer just add</returns>
-        public Offer Create(Offer offer)
-        {
-            return create<Offer>(
-                Resource.Offers,
-                null,
-                new URLEncoder().EncodeOfferAdd(offer));
-        }
 
         /// <summary>
         /// To get the details of an existing offer you’ll need to supply the offer ID
@@ -96,5 +49,53 @@ namespace PaymillWrapper.Service
                 offer.Id,
                 new URLEncoder().EncodeOfferUpdate(offer));
         }
+*/
+    public class OfferService : AbstractService<Offer>
+    {
+        public OfferService(HttpClient client, string apiUrl)
+            : base(Resource.Offers, client, apiUrl)
+        {
+        }
+       
+        /// <summary>
+        /// This function allows request a offer list
+        /// </summary>
+        /// <returns>Returns a list offers-object</returns>
+        public IReadOnlyCollection<Offer> GetOffers()
+        {
+            return getList();
+        }
+
+        /// <summary>
+        /// This function allows request a offer list
+        /// </summary>
+        /// <param name="filter">Result filtered in the required way</param>
+        /// <returns>Returns a list offer-object</returns>
+        public IReadOnlyCollection<Offer> GetOffersByFilter(Filter filter)
+        {
+            return getList(filter);
+        }
+
+        /// <summary>
+        /// This function creates a offer object
+        /// </summary>
+        /// <param name="client">Object-offer</param>
+        /// <returns>New object-offer just add</returns>
+        public Offer Create(Offer offer)
+        {
+            return Create(
+                null,
+                new UrlEncoder().EncodeOfferAdd(offer));
+        }
+        protected override string GetResourceId(Offer obj)
+        {
+            return obj.Id;
+        }
+
+        protected override string GetEncodedUpdateParams(Offer obj, UrlEncoder encoder)
+        {
+            return encoder.EncodeOfferUpdate(obj);
+        }
+
     }
 }

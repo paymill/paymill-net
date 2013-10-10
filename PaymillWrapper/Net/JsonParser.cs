@@ -26,15 +26,12 @@ namespace PaymillWrapper.Net
                 JObject jObject = JObject.Load(reader);
                 T target = (T)Activator.CreateInstance(typeof(T));
                 serializer.Populate(jObject.CreateReader(), target);
-
                 return target;
             }
             catch
             {
                 JArray ja = new JArray();
-
                 T target = (T)Activator.CreateInstance(typeof(T));
-
                 if (reader.Value != null)
                 {
                     PropertyInfo prop = target.GetType().GetProperty("Id", BindingFlags.Public | BindingFlags.Instance);
