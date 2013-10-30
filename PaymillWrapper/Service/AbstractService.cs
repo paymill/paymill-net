@@ -41,7 +41,8 @@ namespace PaymillWrapper.Service
             if (response.IsSuccessStatusCode)
             {
                 var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                lstPayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(jsonArray["data"].ToString());
+                String jsonData = jsonArray["data"].ToString();
+                lstPayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(jsonData);
             }
             else
             {

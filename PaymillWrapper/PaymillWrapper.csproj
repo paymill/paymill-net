@@ -76,6 +76,7 @@
     <Compile Include="Service\TransactionService.cs" />
     <Compile Include="Service\PaymentService.cs" />
     <Compile Include="Service\OfferService.cs" />
+    <Compile Include="SubscriptionCount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="librerias\Newtonsoft.Json.dll" />

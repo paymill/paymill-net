@@ -13,13 +13,17 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Offer : BaseModel
     {
-        public enum ParamIntervalValue
+     /*   public enum ParamIntervalValue
         {
             week,
             month,
             year
         }
-
+        */
+        public Offer()
+        {
+            SubscriptionCount = new SubscriptionCount(null, null);
+        }
         /// <summary>
         /// Your name for this offer
         /// </summary>
@@ -61,6 +65,26 @@ namespace PaymillWrapper.Models
         /// </summary>
         [DataMember(Name = "Currency")]
         public string Currency { get; set; }
+
+        /// <summary>
+        /// App (ID) that created this offer or null if created by yourself
+        /// </summary>
+        [DataMember(Name = "app_id")]
+        public string AppId { get; set; }
+
+        /// <summary>
+        /// Give it a try or charge directly?
+        /// </summary>
+        [DataMember(Name = "trial_period_days")]
+        public int? TrialPeriodDays { get; set; }
+
+         /// <summary>
+        /// Give it a try or charge directly?
+        /// </summary>
+        [DataMember(Name = "subscription_count")]
+        public SubscriptionCount SubscriptionCount { get; set; }
+
+        
 
     }
 }

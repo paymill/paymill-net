@@ -43,7 +43,7 @@ namespace SandboxConsole
             Filter filter = new Filter();
             filter.Add("count", 1); //OK
             filter.Add("offset", 2); //OK
-            filter.Add("interval", Offer.ParamIntervalValue.month.ToString()); //OK
+            filter.Add("interval","MONTH"); //OK
             filter.Add("amount", 495); //OK
             //filter.Add("created_at", span.TotalSeconds.ToString()); //KO
             //filter.Add("trial_period_days", 5); //OK
@@ -64,12 +64,17 @@ namespace SandboxConsole
             OfferService offerService = Paymill.GetService<OfferService>();
 
             Offer offer = new Offer();
+            offer.Id = "offer_40237e20a7d5a231d99b";
             offer.Amount = 1500;
-            offer.Currency = "eur";
-            offer.Interval = @"MONTH";
+            offer.Currency = "EUR";
+            offer.Interval = @"1 MONTH";
             offer.Name = "Prueba API";
             offer.Trial_Period_Days = 3;
-
+            offer.Created_At = DateTime.Now;
+            offer.Trial_Period_Days = 0;
+            offer.Updated_At = DateTime.Now;
+            offer.SubscriptionCount.Аctive = "3";
+            offer.SubscriptionCount.Inactive = "0";
             Offer newOffer = offerService.AddOffer(offer);
 
             Utilities.printObject(newOffer);
