@@ -83,7 +83,7 @@ namespace SandboxConsole
             Console.WriteLine("Created at:" + newPayment.Created_At);
             Console.Read();
         }
-        static void addDebitPayment()
+        public static void AddDebitPayment()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

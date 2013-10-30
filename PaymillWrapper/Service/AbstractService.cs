@@ -37,27 +37,16 @@ namespace PaymillWrapper.Service
 
             if (filter != null)
                 requestUri += String.Format("?{0}",filter.ToString());
-
-            var task = _client.GetAsync(requestUri)
-                .ContinueWith(
-                (result) =>
-                {
-                    var response = result.Result;
-                    response.EnsureSuccessStatusCode();
-
-                    var task2 = response.Content
-                        .ReadAsAsync<JObject>()
-                        .ContinueWith(readResult =>
-                        {
-                            var jsonArray = readResult.Result;
-                            lstPayments = Newtonsoft.Json.JsonConvert
-                                .DeserializeObject<List<T>>(jsonArray["data"].ToString());
-
-                        });
-                    task2.Wait();
-                });
-            task.Wait();
-
+            HttpResponseMessage response  = _client.GetAsync(requestUri).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+                lstPayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(jsonArray["data"].ToString());
+            }
+            else
+            {
+                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
+            }
             return lstPayments;
         }
 
@@ -71,31 +60,22 @@ namespace PaymillWrapper.Service
 
             var content = new StringContent(encodeParams);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower();
 
             if (!string.IsNullOrEmpty(resourceID))
+            {
                 requestUri += "/" + resourceID;
-
-            var task = _client.PostAsync(requestUri, content).ContinueWith(
-                (result) =>
-                {
-                    var response = result.Result;
-                    response.EnsureSuccessStatusCode();
-
-                    var task2 = response.Content
-                        .ReadAsAsync<JObject>()
-                        .ContinueWith(readResult =>
-                        {
-                            var jsonArray = readResult.Result;
-
-                            reply = Newtonsoft.Json.JsonConvert
-                                .DeserializeObject<T>(jsonArray["data"].ToString());
-                        });
-                    task2.Wait();
-                });
-            task.Wait();
-
+            }
+            HttpResponseMessage response = _client.PostAsync(requestUri, content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArray["data"].ToString());
+            }
+            else
+            {
+                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
+            }
             return reply;
         }
         protected T get<T>(Resource resource, string resourceID)
@@ -103,24 +83,16 @@ namespace PaymillWrapper.Service
             T reply = default(T);
 
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-            var task = _client.GetAsync(requestUri).ContinueWith(
-                (result) =>
-                {
-                    var response = result.Result;
-                    response.EnsureSuccessStatusCode();
-
-                    var task2 = response.Content
-                        .ReadAsAsync<JObject>()
-                        .ContinueWith(readResult =>
-                        {
-                            var jsonArray = readResult.Result;
-                            reply = Newtonsoft.Json.JsonConvert
-                                .DeserializeObject<T>(jsonArray["data"].ToString());
-                        });
-                    task2.Wait();
-                });
-            task.Wait();
-
+            HttpResponseMessage response = _client.GetAsync(requestUri).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArray["data"].ToString());
+            }
+            else
+            {
+                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
+            }
             return reply;
         }
         protected bool remove<T>(Resource resource, string resourceID)
@@ -128,24 +100,18 @@ namespace PaymillWrapper.Service
             bool reply = false;
 
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-            var task = _client.DeleteAsync(requestUri).ContinueWith(
-                (result) =>
-                {
-                    var response = result.Result;
-                    response.EnsureSuccessStatusCode();
 
-                    var task2 = response.Content
-                        .ReadAsAsync<JObject>()
-                        .ContinueWith(readResult =>
-                        {
-                            var jsonArray = readResult.Result;
-                            string r = jsonArray["data"].ToString();
-                            reply = r.Equals("[]");
-                        });
-                    task2.Wait();
-                });
-            task.Wait();
-
+            HttpResponseMessage response = _client.DeleteAsync(requestUri).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+                string r = jsonArray["data"].ToString();
+                reply = r.Equals("[]");
+            }
+            else
+            {
+                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
+            }
             return reply;
         }
         protected T update<T>(Resource resource, object obj, string resourceID, string encodeParams)
@@ -156,25 +122,20 @@ namespace PaymillWrapper.Service
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-            var task = _client.PutAsync(requestUri, content).ContinueWith(
-                (result) =>
-                {
-                    var response = result.Result;
-                    response.EnsureSuccessStatusCode();
 
-                    var task2 = response.Content
-                        .ReadAsAsync<JObject>()
-                        .ContinueWith(readResult =>
-                        {
-                            var jsonArray = readResult.Result;
+            HttpResponseMessage response = _client.DeleteAsync(requestUri).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArray["data"].ToString());
+            }
+            else
+            {
+                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
+            }
+            return reply;
 
-                            reply = Newtonsoft.Json.JsonConvert
-                                .DeserializeObject<T>(jsonArray["data"].ToString());
-                        });
-                    task2.Wait();
-                });
-            task.Wait();
-
+           
             return reply;
         }
     }

@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class ОfferSamples
     {
-        static void getOffers()
+        public static void GetAllOffers()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -57,7 +57,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addOffer()
+        public static void AddOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -75,7 +75,7 @@ namespace SandboxConsole
             Utilities.printObject(newOffer);
             Console.Read();
         }
-        static void getOffer()
+        public static void GetOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

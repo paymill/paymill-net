@@ -66,6 +66,7 @@
     <Compile Include="Net\URLEncoder.cs" />
     <Compile Include="Paymill.cs" />
     <Compile Include="PaymillException.cs" />
+    <Compile Include="PaymillRequestException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AbstractService.cs" />
     <Compile Include="Service\ClientService.cs" />
