@@ -13,11 +13,11 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Offer : BaseModel
     {
-        public enum TypeInterval
+        public enum ParamIntervalValue
         {
-            WEEK,
-            MONTH,
-            YEAR
+            week,
+            month,
+            year
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace PaymillWrapper.Models
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
         [DataMember(Name = "Interval")]
-        public TypeInterval Interval { get; set; }
+        public string Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?

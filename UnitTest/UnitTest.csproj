@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Net\TestFilter.cs" />
     <Compile Include="Net\TestHttpClientRest.cs" />
+    <Compile Include="Net\TestPayments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Net\TestURLEncoder.cs" />
   </ItemGroup>

@@ -117,7 +117,7 @@ namespace UnitTest.Net
             Offer offer = new Offer();
             offer.Amount = 1500;
             offer.Currency = "eur";
-            offer.Interval = Offer.TypeInterval.MONTH;
+            offer.Interval = Offer.ParamIntervalValue.month.ToString();
             offer.Name = "Prueba API";
             offer.Trial_Period_Days = 3;
 
