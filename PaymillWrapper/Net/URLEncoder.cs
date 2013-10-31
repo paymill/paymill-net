@@ -36,7 +36,21 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
+        public string EncodeObject(Object data)
+        {
+            var props = data.GetType().GetProperties();
 
+            
+            StringBuilder sb = new StringBuilder();
+            foreach (var prop in props)
+            {
+                object value = prop.GetValue(data, null);
+                if (value != null)
+                    this.addKeyValuePair(sb, prop.Name.ToLower(), value);
+            }
+
+            return sb.ToString();
+        }
         public string EncodeTransaction(Transaction data)
         {
             StringBuilder sb = new StringBuilder();

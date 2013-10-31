@@ -13,13 +13,6 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Offer : BaseModel
     {
-     /*   public enum ParamIntervalValue
-        {
-            week,
-            month,
-            year
-        }
-        */
         public Offer()
         {
             SubscriptionCount = new SubscriptionCount(null, null);

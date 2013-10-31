@@ -38,13 +38,12 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-transaction</param>
         /// <returns>New object-transaction just add</returns>
-        public Preauthorization AddPreauthorization(Preauthorization preauthorization)
+        public Preauthorization CreatePreauthorization(Preauthorization preauthorization)
         {
             Preauthorization reply=null;
 
-            Transaction replyTransaction = add<Transaction>(
+            Transaction replyTransaction = create<Transaction>(
                 Resource.Preauthorizations,
-                preauthorization,
                 null,
                 new URLEncoder().EncodePreauthorization(preauthorization));
 

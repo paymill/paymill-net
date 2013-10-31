@@ -14,6 +14,7 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(JsonParser<Payment>))]
     public class Payment : BaseModel
     {
+       
         public enum TypePayment
         {
             CREDITCARD, 
@@ -85,11 +86,13 @@ namespace PaymillWrapper.Models
         /// </summary>
         [DataMember(Name = "Account")]
         public string Account { get; set; }
-
+    
         /// <summary>
-        /// Unique credit card token
+        /// App (ID) that created this offer or null if created by yourself
         /// </summary>
-        [DataMember(Name = "Token")]
-        public string Token { get; set; }
+        [DataMember(Name = "app_id")]
+        public string AppId { get; set; }
+
+     
     }
 }

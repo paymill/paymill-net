@@ -29,7 +29,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getOffersWithParameters()
+        public static void GetOffersWithParameters()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -57,7 +57,14 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        public static void AddOffer()
+        public static void CreateOffer()
+        {
+            Offer newOffer = createOffer();
+            Utilities.printObject(newOffer);
+            Console.Read();
+        }
+
+        private static Offer createOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -75,10 +82,8 @@ namespace SandboxConsole
             offer.Updated_At = DateTime.Now;
             offer.SubscriptionCount.Аctive = "3";
             offer.SubscriptionCount.Inactive = "0";
-            Offer newOffer = offerService.AddOffer(offer);
-
-            Utilities.printObject(newOffer);
-            Console.Read();
+            Offer newOffer = offerService.CreateOffer(offer);
+            return newOffer;
         }
         public static void GetOffer()
         {

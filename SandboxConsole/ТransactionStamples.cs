@@ -62,7 +62,7 @@ namespace SandboxConsole
             transaction.Currency = "EUR";
             transaction.Description = "Prueba desde API c#";
 
-            Transaction newTransaction = transactionService.AddTransaction(transaction);
+            Transaction newTransaction = transactionService.CreateTransaction(transaction);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -79,7 +79,7 @@ namespace SandboxConsole
             transaction.Description = "Prueba desde API c#";
             transaction.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
 
-            Transaction newTransaction = transactionService.AddTransaction(transaction);
+            Transaction newTransaction = transactionService.CreateTransaction(transaction);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -101,7 +101,7 @@ namespace SandboxConsole
             transaction.Payment = new Payment() { Id = "pay_c08f1f94754b93f46ac3" };
             transaction.Client = new Client() { Id = "client_ad591663d69051d306a8" };
 
-            Transaction newTransaction = transactionService.AddTransaction(transaction);
+            Transaction newTransaction = transactionService.CreateTransaction(transaction);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();

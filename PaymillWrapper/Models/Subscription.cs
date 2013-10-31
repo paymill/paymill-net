@@ -46,13 +46,6 @@ namespace PaymillWrapper.Models
         public Client Client { get; set; }
 
         /// <summary>
-        /// To connects the offer with more than a client.
-        /// Under construction
-        /// </summary>
-        [DataMember(Name = "Clients")]
-        public List<Client> Clients { get; set; }
-
-        /// <summary>
         /// Payment-object
         /// </summary>
         [DataMember(Name = "Payment")]

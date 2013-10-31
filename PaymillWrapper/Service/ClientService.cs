@@ -37,13 +37,12 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-client</param>
         /// <returns>New object-client just add</returns>
-        public Client AddClient(Client client)
+        public Client Create(String email, String description)
         {
-            return add<Client>(
+            return create<Client>(
                 Resource.Clients,
-                client,
                 null,
-                new URLEncoder().Encode<Client>(client));
+                new URLEncoder().EncodeObject( new {Email= email, Description = description}));
         }
         
         /// <summary>

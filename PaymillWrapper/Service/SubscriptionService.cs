@@ -37,11 +37,10 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-subscription</param>
         /// <returns>New object-subscription just add</returns>
-        public Subscription AddSubscription(Subscription subscription)
+        public Subscription CreateSubscription(Subscription subscription)
         {
-            return add<Subscription>(
+            return create<Subscription>(
                 Resource.Subscriptions,
-                subscription,
                 null,
                 new URLEncoder().EncodeSubscriptionAdd(subscription));
         }

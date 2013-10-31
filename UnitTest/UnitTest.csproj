@@ -57,6 +57,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Net\TestClients.cs" />
     <Compile Include="Net\TestFilter.cs" />
     <Compile Include="Net\TestHttpClientRest.cs" />
     <Compile Include="Net\TestPayments.cs" />

@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class ClientSamples
     {
-        static void getClients()
+        public static void GetClients()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -51,22 +51,16 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addClient()
+        public static void CreateClient()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             ClientService clientService = Paymill.GetService<ClientService>();
+            Client newClient = clientService.Create("javicantos22@hotmail.es", "Prueba API");
+            Utilities.printObject(newClient);
 
-            Client c = new Client();
-            c.Description = "Prueba API";
-            c.Email = "javicantos22@hotmail.es";
-
-            Client newClient = clientService.AddClient(c);
-
-            Console.WriteLine("ClientID:" + newClient.Id);
-            Console.Read();
         }
-        static void getClient()
+        public static void GetClient()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -80,7 +74,7 @@ namespace SandboxConsole
             Console.WriteLine("Created at:" + c.Created_At.ToShortDateString());
             Console.Read();
         }
-        static void updateClient()
+        public static void UpdateClient()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -96,7 +90,7 @@ namespace SandboxConsole
             Console.WriteLine("ClientID:" + updatedClient.Id);
             Console.Read();
         }
-        static void removeClient()
+        public static void RemoveClient(String clientId)
         {
             // lo borra pero no devuelve blanco
             // devuelve el objeto cliente con el identificador pasado por parametro

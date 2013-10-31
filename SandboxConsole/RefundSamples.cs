@@ -69,7 +69,7 @@ namespace SandboxConsole
             refund.Description = "Prueba desde API c#";
             refund.Transaction = new Transaction() { Id = "tran_a7c93a1e5b431b52c0f0" };
 
-            Refund newRefund = refundService.AddRefund(refund);
+            Refund newRefund = refundService.CreateRefund(refund);
 
             Console.WriteLine("RefundID:" + newRefund.Id);
             Console.Read();

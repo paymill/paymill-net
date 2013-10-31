@@ -36,26 +36,18 @@ namespace PaymillWrapper.Service
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower();
 
             if (filter != null)
-                requestUri += String.Format("?{0}",filter.ToString());
-            HttpResponseMessage response  = _client.GetAsync(requestUri).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                String jsonData = jsonArray["data"].ToString();
-                lstPayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(jsonData);
-            }
-            else
-            {
-                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
-            }
+                requestUri += String.Format("?{0}", filter.ToString());
+            HttpResponseMessage response = _client.GetAsync(requestUri).Result;
+            String data = readReponseMessage(response);
+            lstPayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
             return lstPayments;
         }
 
         protected List<T> getList<T>(Resource resource)
         {
-            return getList<T>(resource,null);
+            return getList<T>(resource, null);
         }
-        protected T add<T>(Resource resource, object obj, string resourceID, string encodeParams)
+        protected T create<T>(Resource resource, string resourceID, string encodeParams)
         {
             T reply = default(T);
 
@@ -68,52 +60,41 @@ namespace PaymillWrapper.Service
                 requestUri += "/" + resourceID;
             }
             HttpResponseMessage response = _client.PostAsync(requestUri, content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArray["data"].ToString());
-            }
-            else
-            {
-                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
-            }
+            String data = readReponseMessage(response);
+            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
             return reply;
         }
+
         protected T get<T>(Resource resource, string resourceID)
         {
             T reply = default(T);
 
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
             HttpResponseMessage response = _client.GetAsync(requestUri).Result;
+            String data = readReponseMessage(response);
+            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            return reply;
+        }
+        private String readReponseMessage(HttpResponseMessage response)
+        {
+            var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
             if (response.IsSuccessStatusCode)
             {
-                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArray["data"].ToString());
+                return jsonArray["data"].ToString();
             }
             else
             {
-                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
+                string error = jsonArray["error "].ToString();
+                throw new PaymillRequestException(error, response.StatusCode);
             }
-            return reply;
         }
         protected bool remove<T>(Resource resource, string resourceID)
         {
-            bool reply = false;
-
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
 
             HttpResponseMessage response = _client.DeleteAsync(requestUri).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                string r = jsonArray["data"].ToString();
-                reply = r.Equals("[]");
-            }
-            else
-            {
-                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
-            }
-            return reply;
+            readReponseMessage(response);
+            return true;
         }
         protected T update<T>(Resource resource, object obj, string resourceID, string encodeParams)
         {
@@ -125,18 +106,8 @@ namespace PaymillWrapper.Service
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
 
             HttpResponseMessage response = _client.DeleteAsync(requestUri).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonArray["data"].ToString());
-            }
-            else
-            {
-                throw new PaymillRequestException(response.ReasonPhrase, response.StatusCode);
-            }
-            return reply;
-
-           
+            String data = readReponseMessage(response);
+            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
             return reply;
         }
     }

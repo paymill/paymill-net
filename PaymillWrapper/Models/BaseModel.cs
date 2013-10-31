@@ -27,7 +27,9 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "Created_At")]
         private int Created_At_Ticks
         {
-            get { return (int)(this.Created_At - unixEpoch).TotalSeconds; }
+            get { 
+                return (int)(this.Created_At - unixEpoch).TotalSeconds; 
+            }
             set { this.Created_At = unixEpoch.AddSeconds(value); }
         }
 

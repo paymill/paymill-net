@@ -37,11 +37,10 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-transaction</param>
         /// <returns>New object-transaction just add</returns>
-        public Transaction AddTransaction(Transaction transaction)
+        public Transaction CreateTransaction(Transaction transaction)
         {
-            return add<Transaction>(
+            return create<Transaction>(
                 Resource.Transactions,
-                transaction,
                 null,
                 new URLEncoder().EncodeTransaction(transaction));
         }

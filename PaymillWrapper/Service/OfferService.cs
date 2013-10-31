@@ -37,11 +37,10 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-offer</param>
         /// <returns>New object-offer just add</returns>
-        public Offer AddOffer(Offer offer)
+        public Offer CreateOffer(Offer offer)
         {
-            return add<Offer>(
+            return create<Offer>(
                 Resource.Offers,
-                offer,
                 null,
                 new URLEncoder().EncodeOfferAdd(offer));
         }

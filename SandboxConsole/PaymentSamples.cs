@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class PaymentSamples
     {
-        static void getPayments()
+        public static void GetPayments()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -31,7 +31,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getPaymentsWithParameters()
+        public static void GetPaymentsWithParameters()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -53,74 +53,20 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addCreditCardPayment()
+
+        public static void CreatePayment()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             PaymentService paymentService = Paymill.GetService<PaymentService>();
 
-            Payment payment = new Payment();
-            payment.Token = "098f6bcd4621d373cade4e832627b4f6";
+            string token = "098f6bcd4621d373cade4e832627b4f6";
+            Payment payment = paymentService.Create(token);
 
-            Payment newPayment = paymentService.AddPayment(payment);
-
-            Utilities.printObject(newPayment);
+            Utilities.printObject(payment);
             Console.Read();
         }
-        static void addCreditCardPaymentWithClient()
-        {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-
-            Payment payment = new Payment();
-            payment.Token = "098f6bcd4621d373cade4e832627b4f6";
-            payment.Client = "client_ad591663d69051d306a8";
-
-            Payment newPayment = paymentService.AddPayment(payment);
-
-            Console.WriteLine("PaymentID:" + newPayment.Id);
-            Console.WriteLine("Created at:" + newPayment.Created_At);
-            Console.Read();
-        }
-        public static void AddDebitPayment()
-        {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-
-            Payment payment = new Payment();
-            payment.Type = Payment.TypePayment.DEBIT;
-            payment.Code = "86055500";
-            payment.Account = "1234512345";
-            payment.Holder = "Max Mustermann";
-
-            Payment newPayment = paymentService.AddPayment(payment);
-
-            Console.WriteLine("PaymentID:" + newPayment.Id);
-            Console.WriteLine("Created at:" + newPayment.Created_At);
-            Console.Read();
-        }
-        static void addDebitPaymentWithClient()
-        {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-
-            Payment payment = new Payment();
-            payment.Type = Payment.TypePayment.DEBIT;
-            payment.Code = "86055500";
-            payment.Account = "1234512345";
-            payment.Holder = "Max Mustermann";
-            payment.Client = "client_bbe895116de80b6141fd";
-
-            Payment newPayment = paymentService.AddPayment(payment);
-
-            Console.WriteLine("PaymentID:" + newPayment.Id);
-            Console.WriteLine("Created at:" + newPayment.Created_At);
-            Console.Read();
-        }
-        static void getPayment()
+        public static void GetPayment()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -133,7 +79,7 @@ namespace SandboxConsole
             Console.WriteLine("PaymentID:" + payment.Created_At.ToShortDateString());
             Console.Read();
         }
-        static void removePayment()
+        public static void RemovePayment()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

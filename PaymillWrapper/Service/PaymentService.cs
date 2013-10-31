@@ -13,6 +13,7 @@ using PaymillWrapper.Net;
 
 namespace PaymillWrapper.Service
 {
+   
     public class PaymentService : AbstractService<Payment>
     {
         public PaymentService(HttpClientRest client)
@@ -38,19 +39,30 @@ namespace PaymillWrapper.Service
         {
             return getList<Payment>(Resource.Payments, filter);
         }
-
         /// <summary>
         /// This function creates a payment object
         /// </summary>
-        /// <param name="client">Object-payment</param>
-        /// <returns>New object-payment just add</returns>
-        public Payment AddPayment(Payment creditCardPayment)
+        /// <param name="token">payment token</param>
+        /// <returns>New object-payment just created</returns>
+        public Payment Create(String token)
         {
-            return add<Payment>(
+            return create<Payment>(
                 Resource.Payments,
-                creditCardPayment,
                 null,
-                new URLEncoder().Encode<Payment>(creditCardPayment));
+                new URLEncoder().EncodeObject(new { Token = token }));
+        }
+        /// <summary>
+        /// This function creates a payment object with client
+        /// </summary>
+        /// <param name="token">payment token</param>
+        /// <param name="token">payment client</param>
+        /// <returns>New object-payment just created</returns>
+        public Payment Create(String token, Client client)
+        {
+            return create<Payment>(
+                Resource.Payments,
+                null,
+                new URLEncoder().EncodeObject(new { Token = token, Client = client.Id }));
         }
 
         /// <summary>

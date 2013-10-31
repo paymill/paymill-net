@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class SubscriptionSamples
     {
-        static void getSubscriptions()
+        public static void GetSubscriptions()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -53,7 +53,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addSubscription()
+        public static void AddSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -63,8 +63,8 @@ namespace SandboxConsole
             subscription.Client = new Client() { Id = "client_bbe895116de80b6141fd" };
             subscription.Offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
             subscription.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
-
-            Subscription newSubscription = susbscriptionService.AddSubscription(subscription);
+            // TODO: get result body
+            Subscription newSubscription = susbscriptionService.CreateSubscription(subscription);
 
             Utilities.printObject(newSubscription);
             Console.Read();

@@ -62,7 +62,7 @@ namespace SandboxConsole
             //preauthorization.Token = "098f6bcd4621d373cade4e832627b4f6";
             preauthorization.Payment = new Payment() { Id = "pay_4c159fe95d3be503778a" };
 
-            Preauthorization newPreauthorization = preauthorizationService.AddPreauthorization(preauthorization);
+            Preauthorization newPreauthorization = preauthorizationService.CreatePreauthorization(preauthorization);
 
             Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
             Console.Read();

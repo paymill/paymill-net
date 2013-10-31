@@ -37,11 +37,10 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-refund</param>
         /// <returns>New object-refund just add</returns>
-        public Refund AddRefund(Refund refund)
+        public Refund CreateRefund(Refund refund)
         {
-            return add<Refund>(
+            return create<Refund>(
                 Resource.Refunds,
-                refund,
                 refund.Transaction.Id,
                 new URLEncoder().EncodeRefund(refund));
         }
