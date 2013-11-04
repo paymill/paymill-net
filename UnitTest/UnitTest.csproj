@@ -57,6 +57,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Net\TestWebhooks.cs" />
+    <Compile Include="Net\TestOffers.cs" />
     <Compile Include="Net\TestClients.cs" />
     <Compile Include="Net\TestFilter.cs" />
     <Compile Include="Net\TestHttpClientRest.cs" />

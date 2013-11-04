@@ -21,7 +21,8 @@ namespace PaymillWrapper.Service
             Refunds,
             Subscriptions,
             Transactions,
-            Preauthorizations
+            Preauthorizations,
+            Webhooks
         }
 
         public AbstractService(HttpClientRest client)
@@ -84,7 +85,7 @@ namespace PaymillWrapper.Service
             }
             else
             {
-                string error = jsonArray["error "].ToString();
+                string error = jsonArray["error"].ToString();
                 throw new PaymillRequestException(error, response.StatusCode);
             }
         }

@@ -13,11 +13,8 @@ namespace SandboxConsole
     {
         static void Main(string[] args)
         {
-            PaymentSamples.GetPayments();
-            ClientSamples.GetClients();
-            ОfferSamples.GetAllOffers();
-            // removeClient();
-           // getOffer();
+
+           ОfferSamples.GetAllOffers();
             // updateOffer()
            // removeOffer();
            // addSubscription();

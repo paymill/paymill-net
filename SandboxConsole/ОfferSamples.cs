@@ -71,7 +71,6 @@ namespace SandboxConsole
             OfferService offerService = Paymill.GetService<OfferService>();
 
             Offer offer = new Offer();
-            offer.Id = "offer_40237e20a7d5a231d99b";
             offer.Amount = 1500;
             offer.Currency = "EUR";
             offer.Interval = @"1 MONTH";
