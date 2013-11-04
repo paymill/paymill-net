@@ -13,10 +13,10 @@ namespace PaymillWrapper.Models
     {
         public enum TypeStatus
         {
-            PARTIAL_REFUNDED, 
-            REFUNDED, 
-            CLOSED, 
-            FAILED, 
+            PARTIAL_REFUNDED,
+            REFUNDED,
+            CLOSED,
+            FAILED,
             PENDING,
             OPEN,
             PREAUTH
@@ -107,9 +107,15 @@ namespace PaymillWrapper.Models
         public string Token { get; set; }
 
         /// <summary>
-        /// Client-object
+        /// Preauthorization-object
         /// </summary>
         [DataMember(Name = "Preauthorization")]
         public Preauthorization Preauthorization { get; set; }
+
+        [DataMember(Name = "Response_Code")]
+        public String ResponseCode { get; set; }
+
+        [DataMember(Name = "Fees")]
+        public List<Fee> Fees { get; set; }
     }
 }

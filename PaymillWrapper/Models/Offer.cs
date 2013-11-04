@@ -45,13 +45,13 @@ namespace PaymillWrapper.Models
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
         [DataMember(Name = "Interval")]
-        public string Interval { get; set; }
+        public String Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?
         /// </summary>
         [DataMember(Name = "Trial_Period_Days")]
-        public int Trial_Period_Days { get; set; }
+        public int? Trial_Period_Days { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
@@ -65,19 +65,9 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "app_id")]
         public string AppId { get; set; }
 
-        /// <summary>
-        /// Give it a try or charge directly?
-        /// </summary>
-        [DataMember(Name = "trial_period_days")]
-        public int? TrialPeriodDays { get; set; }
-
-         /// <summary>
-        /// Give it a try or charge directly?
-        /// </summary>
         [DataMember(Name = "subscription_count")]
         public SubscriptionCount SubscriptionCount { get; set; }
 
-        
-
+ 
     }
 }

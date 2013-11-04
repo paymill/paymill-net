@@ -36,7 +36,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Cancel date
         /// </summary>
-        [DataMember(Name = "CanceledAt")]
+        [DataMember(Name = "Canceled_At")]
         public DateTime CanceledAt { get; set; }
 
         /// <summary>
@@ -50,5 +50,23 @@ namespace PaymillWrapper.Models
         /// </summary>
         [DataMember(Name = "Payment")]
         public Payment Payment { get; set; }
+
+        /// <summary>
+        /// Trial Start
+        /// </summary>
+        [DataMember(Name = "Trial_Start")]
+        public DateTime TrialStart { get; set; }
+
+        /// <summary>
+        /// Trial End
+        /// </summary>
+        [DataMember(Name = "Trial_End")]
+        public DateTime TrialEnd { get; set; }
+
+        /// <summary>
+        /// Next Capture At
+        /// </summary>
+        [DataMember(Name = "Nextcapture_At")]
+        public DateTime NextCaptureAt { get; set; }
     }
 }
