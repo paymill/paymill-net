@@ -7,25 +7,40 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
+   
     public class Webhook : BaseModel
     {
-        public enum EventType
-        {
-            CHARGEBACK_EXECUTED,
-            REFUND_SUCCEEDED,
-            REFUND_FAILED,
-            SUBSCRIPTION_SUCCEEDED,
-            SUBSCRIPTION_FAILED,
-            TRANSACTION_SUCCEEDED,
-            TRANSACTION_FAILED
-        }
+        [DataMember(Name = "Id")]
+        public String Id { get; set; }
+
         [DataMember(Name = "Url")]
         public Uri Url { get; set; }
 
-        [DataMember(Name = "Email")]
+        [DataMember(Name = "Livemode")]
+        public Boolean livemode { get; set; }
+
+         [DataMember(Name = "Email")]
         public String Email { get; set; }
 
-        [DataMember(Name = "EventTypes")]
-        public EventType[] EventTypes { get; set; }
+         [DataMember(Name = "Event_Types")]
+         private String[] Created_EventTypes
+         {
+             get
+             {
+                 return null;
+             }
+             set {
+                 if (value != null)
+                 {
+                     List<EventType> eventsList = new List<EventType>();
+                     foreach (String eventName in value)
+                     {
+                         eventsList.Add(EventType.GetEventByName(eventName));
+                     }
+                     this.EventTypes = eventsList.ToArray();
+                 }
+             }
+         }
+         public EventType[] EventTypes { get; set; }
     }
 }

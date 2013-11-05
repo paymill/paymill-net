@@ -55,6 +55,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\Fee.cs" />
     <Compile Include="Models\Preauthorization.cs" />
     <Compile Include="Models\Offer.cs" />

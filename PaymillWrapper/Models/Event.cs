@@ -16,6 +16,6 @@ namespace PaymillWrapper.Models
         public Transaction Transaction;
 
         [DataMember(Name = "Event_Type")]
-        public PaymillWrapper.Models.Webhook.EventType Type { get; set; }
+        public PaymillWrapper.Models.EventType Type { get; set; }
     }
 }

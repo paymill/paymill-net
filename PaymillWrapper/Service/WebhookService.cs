@@ -23,10 +23,14 @@ namespace PaymillWrapper.Service
 
             return CreateUrl(obj.Url, obj.EventTypes);
         }
-
-
-        public Webhook CreateUrl(Uri url, params PaymillWrapper.Models.Webhook.EventType[] eventTypes)
+        public Webhook Get(String webhookID)
         {
+            return get<Webhook>(Resource.Webhooks, webhookID);
+        }
+      
+        public Webhook CreateUrl(Uri url, params PaymillWrapper.Models.EventType[] eventTypes)
+        {
+           
             if (url == null)
             {
                 throw new NullReferenceException("url");
@@ -38,11 +42,11 @@ namespace PaymillWrapper.Service
             return create<Webhook>(
                    Resource.Webhooks,
                    null,
-                   new URLEncoder().EncodeObject(new { url = url.AbsoluteUri, event_types = eventTypes }));
+                   new URLEncoder().EncodeObject(new { url = url.AbsoluteUri, event_types = convertEventsArr(eventTypes) }));
         }
 
 
-        public Webhook CreateEmail(String email, params  PaymillWrapper.Models.Webhook.EventType[] eventTypes)
+        public Webhook CreateEmail(String email, params  PaymillWrapper.Models.EventType[] eventTypes)
         {
             if (email == null)
             {
@@ -55,7 +59,7 @@ namespace PaymillWrapper.Service
             return create<Webhook>(
                    Resource.Webhooks,
                    null,
-                   new URLEncoder().EncodeObject(new { email = email, event_types = eventTypes }));
+                   new URLEncoder().EncodeObject(new { email = email, event_types = convertEventsArr(eventTypes) }));
         }
 
         public Webhook Update(Webhook obj)
@@ -72,6 +76,16 @@ namespace PaymillWrapper.Service
             //params.put("event_types", obj.getEventTypes());
             //return client.put(resource, obj.getId(), params, modelClass);
             return null;
+        }
+        private String convertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
+        {
+            List<String> typesList = new List<String>();
+            foreach (PaymillWrapper.Models.EventType evt in eventTypes)
+            {
+                typesList.Add(evt.ToString());
+            }
+
+            return String.Join(",", typesList.ToArray()); ;
         }
     }
 }

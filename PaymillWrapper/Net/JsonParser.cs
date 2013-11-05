@@ -29,7 +29,7 @@ namespace PaymillWrapper.Net
 
                 return target;
             }
-            catch(Exception ex)
+            catch
             {
                 JArray ja = new JArray();
 
