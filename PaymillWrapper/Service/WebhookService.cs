@@ -45,7 +45,12 @@ namespace PaymillWrapper.Service
                    new URLEncoder().EncodeObject(new { url = url.AbsoluteUri, event_types = convertEventsArr(eventTypes) }));
         }
 
-
+        /// <summary>
+        /// This funcion create webhook by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="eventTypes"></param>
+        /// <returns></returns>
         public Webhook CreateEmail(String email, params  PaymillWrapper.Models.EventType[] eventTypes)
         {
             if (email == null)
@@ -61,21 +66,35 @@ namespace PaymillWrapper.Service
                    null,
                    new URLEncoder().EncodeObject(new { email = email, event_types = convertEventsArr(eventTypes) }));
         }
-
-        public Webhook Update(Webhook obj)
+        /// <summary>
+        /// This function update the webhook
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public Webhook Update(Webhook webhook)
         {
-            //Map<String, Object> params = new HashMap<String, Object>();
-            //String url = obj.getUrl() == null ? null : obj.getUrl().toString();
-            //String email = obj.getEmail() == null ? null : obj.getEmail();
-            //if (url != null) {
-            //    params.put("url", url);
-            //}
-            //if (email != null) {
-            //    params.put("email", email);
-            //}
-            //params.put("event_types", obj.getEventTypes());
-            //return client.put(resource, obj.getId(), params, modelClass);
-            return null;
+            return update<Webhook>(
+                Resource.Webhooks,
+                webhook,
+                webhook.Id,
+                new URLEncoder().EncodeWebhookUpdate(webhook));
+        }
+       /// <summary>
+       /// This function remove webhook
+       /// </summary>
+       /// <param name="webhookID"></param>
+       /// <returns></returns>
+        public Boolean Remove(string webhookID)
+        {
+            return remove<Webhook>(Resource.Webhooks, webhookID);
+        }
+        /// <summary>
+        /// this function return all webhooks
+        /// </summary>
+        /// <returns></returns>
+        public List<Webhook> GetWebhooks()
+        {
+            return getList<Webhook>(Resource.Webhooks, null);
         }
         private String convertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
         {

@@ -25,7 +25,7 @@ namespace PaymillWrapper.Models
         public DateTime Created_At { get; set; }
 
         [DataMember(Name = "Created_At")]
-        private int Created_At_Ticks
+        public int Created_At_Ticks
         {
             get { 
                 return (int)(this.Created_At - unixEpoch).TotalSeconds; 
@@ -40,7 +40,7 @@ namespace PaymillWrapper.Models
         public DateTime Updated_At { get; set; }
 
         [DataMember(Name = "Updated_At")]
-        private int Updated_At_Ticks
+        public int Updated_At_Ticks
         {
             get { return (int)(this.Updated_At - unixEpoch).TotalSeconds; }
             set { this.Updated_At = unixEpoch.AddSeconds(value); }

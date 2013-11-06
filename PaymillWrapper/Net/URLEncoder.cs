@@ -135,13 +135,39 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
+        public string EncodeWebhookUpdate(Webhook data)
+        {
+            /*    "id":"hook_40237e20a7d5a231d99b",
+           "url":"<your-webhook-url>",
+           "livemode":false,
+           "event_types":[
+               "transaction.succeeded",
+               "transaction.failed"
+           ],
+           "created_at":1358982000,
+           "updated_at":1358982000,
+           "app_id" : null*/
+            StringBuilder sb = new StringBuilder();
+            this.addKeyValuePair(sb, "id", data.Id);
+            if (data.Url != null) { 
+                this.addKeyValuePair(sb, "url", data.Url.AbsolutePath);
+            }
+            if (data.Email != null)
+            {
+                this.addKeyValuePair(sb, "email", data.Email);
+            }
+            this.addKeyValuePair(sb, "livemode", data.livemode);
+            this.addKeyValuePair(sb, "created_at", data.Created_At_Ticks);
+            this.addKeyValuePair(sb, "updated_at", data.Updated_At_Ticks);
+            this.addKeyValuePair(sb, "app_id", null);
+            return sb.ToString();
+        }
         public string EncodeClientUpdate(Client data)
         {
             StringBuilder sb = new StringBuilder();
-
             this.addKeyValuePair(sb, "email", data.Email);
             this.addKeyValuePair(sb, "description", data.Description);
-
+            this.addKeyValuePair(sb, "id", data.Id);
             return sb.ToString();
         }
 

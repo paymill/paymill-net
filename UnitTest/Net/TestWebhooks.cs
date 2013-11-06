@@ -61,5 +61,51 @@ namespace UnitTest.Net
             Assert.IsTrue(webhook.Id != String.Empty, "GetWebhook Fail");
             Assert.IsTrue(webhook.EventTypes.Length == 2, "GetWebhook Fail");
         }
+        [TestMethod]
+        public void UpdateWebhook()
+        {
+            EventType[] eventTypes = { EventType.SUBSCRIPTION_SUCCEEDED, EventType.SUBSCRIPTION_FAILED };
+            WebhookService srv = Paymill.GetService<WebhookService>();
+            Webhook webhook = new Webhook();
+            webhook.Email = "test@email.com";
+            webhook.EventTypes = eventTypes;
+            webhook = srv.Create(webhook);
+            Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
+            // get
+            Webhook newWebhook = srv.Get(webhook.Id);
+            Assert.IsTrue(webhook.Id != String.Empty, "GetWebhook Fail");
+            Assert.IsTrue(webhook.EventTypes.Length == 2, "GetWebhook Fail");
+            // update 
+            Webhook updatedWebhook = srv.Update(webhook);
+        }
+        [TestMethod]
+        public void RemoveWebhook()
+        {
+            EventType[] eventTypes = { EventType.SUBSCRIPTION_SUCCEEDED, EventType.SUBSCRIPTION_FAILED };
+            WebhookService srv = Paymill.GetService<WebhookService>();
+            Webhook webhook = new Webhook();
+            webhook.Email = "test@email.com";
+            webhook.EventTypes = eventTypes;
+            webhook = srv.Create(webhook);
+            Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
+            // get
+            Boolean result = srv.Remove(webhook.Id);
+            Assert.IsTrue(result == true, "Remove Webhook");
+            
+        }
+        [TestMethod]
+        public void GetWebhooks()
+        {
+            EventType[] eventTypes = { EventType.SUBSCRIPTION_SUCCEEDED, EventType.SUBSCRIPTION_FAILED };
+            WebhookService srv = Paymill.GetService<WebhookService>();
+            Webhook webhook = new Webhook();
+            webhook.Email = "test@email.com";
+            webhook.EventTypes = eventTypes;
+            webhook = srv.Create(webhook);
+            Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
+            List<Webhook> resultList = srv.GetWebhooks();
+            Assert.IsTrue(resultList.Count > 0, "Get Webhooks failed");
+
+        }
     }
 }

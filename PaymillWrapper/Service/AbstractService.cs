@@ -105,8 +105,7 @@ namespace PaymillWrapper.Service
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-
-            HttpResponseMessage response = _client.DeleteAsync(requestUri).Result;
+            HttpResponseMessage response = _client.PutAsync(requestUri, content).Result;
             String data = readReponseMessage(response);
             reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
             return reply;
