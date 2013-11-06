@@ -42,7 +42,10 @@ namespace PaymillWrapper.Service
             return create<Webhook>(
                    Resource.Webhooks,
                    null,
-                   new URLEncoder().EncodeObject(new { url = url.AbsoluteUri, event_types = convertEventsArr(eventTypes) }));
+                   new URLEncoder().EncodeObject(new {
+                            url = url.AbsoluteUri, 
+                            event_types = convertEventsArr(eventTypes) 
+                   }));
         }
 
         /// <summary>
@@ -96,15 +99,6 @@ namespace PaymillWrapper.Service
         {
             return getList<Webhook>(Resource.Webhooks, null);
         }
-        private String convertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
-        {
-            List<String> typesList = new List<String>();
-            foreach (PaymillWrapper.Models.EventType evt in eventTypes)
-            {
-                typesList.Add(evt.ToString());
-            }
-
-            return String.Join(",", typesList.ToArray()); ;
-        }
+       
     }
 }

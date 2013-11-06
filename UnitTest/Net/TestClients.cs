@@ -33,7 +33,19 @@ namespace UnitTest.Net
             Boolean result = clientService.RemoveClient(client.Id);
             Assert.IsTrue(result, "Remove  Offer");
 
-  
+
+        }
+        [TestMethod]
+        public void UpdateClient()
+        {
+            ClientService clientService = Paymill.GetService<ClientService>();
+            Client client = clientService.Create("lovely-client@example.com", "Lovely Client");
+            Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
+
+            client.Email = "test@mail.com";
+            var updatetedClient = clientService.UpdateClient(client);
+            Assert.IsTrue(updatetedClient.Email == "test@mail.com", "Update Client Failed");
+
         }
     }
 }

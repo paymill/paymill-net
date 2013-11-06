@@ -76,7 +76,9 @@ namespace UnitTest.Net
             Assert.IsTrue(webhook.Id != String.Empty, "GetWebhook Fail");
             Assert.IsTrue(webhook.EventTypes.Length == 2, "GetWebhook Fail");
             // update 
+            webhook.Email = "test1@mail.com";
             Webhook updatedWebhook = srv.Update(webhook);
+            Assert.IsTrue(updatedWebhook.Email == "test1@mail.com", "Update Webhook Fail");
         }
         [TestMethod]
         public void RemoveWebhook()
