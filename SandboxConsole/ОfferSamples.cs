@@ -74,7 +74,7 @@ namespace SandboxConsole
             offer.Amount = 1500;
             offer.Currency = "EUR";
             offer.Interval = @"1 MONTH";
-            offer.Name = "Prueba API";
+            offer.Name = "Test API";
             offer.Trial_Period_Days = 3;
             offer.Created_At = DateTime.Now;
             offer.Trial_Period_Days = 0;
@@ -98,7 +98,7 @@ namespace SandboxConsole
             Console.WriteLine("Created at:" + offer.Created_At.ToShortDateString());
             Console.Read();
         }
-        static void updateOffer()
+        public static void UpdateOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -113,7 +113,7 @@ namespace SandboxConsole
             Console.WriteLine("OfferID:" + updatedOffer.Id);
             Console.Read();
         }
-        static void removeOffer()
+        public static void RemoveOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

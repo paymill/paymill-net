@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class RefundSamples
     {
-        static void getRefunds()
+        public static void GetRefunds()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -29,15 +29,9 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getRefundsWithParameters()
+        public static void GetRefundsWithParameters()
         {
-            // probar los parametros, no funciona bien
-            // transaction es ok
-            // client no funciona
-            // amount es ok
-            // created_at no funciona
-            // count es ok
-
+ 
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             RefundService refundService = Paymill.GetService<RefundService>();
@@ -56,7 +50,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addRefund()
+        public static void AddRefund()
         {
             // la documentación de la API está mal, devuelve un objeto Refund en vez de Transaction
 
@@ -66,7 +60,7 @@ namespace SandboxConsole
 
             Refund refund = new Refund();
             refund.Amount = 500;
-            refund.Description = "Prueba desde API c#";
+            refund.Description = "Test desde API c#";
             refund.Transaction = new Transaction() { Id = "tran_a7c93a1e5b431b52c0f0" };
 
             Refund newRefund = refundService.Create(refund);
@@ -74,7 +68,7 @@ namespace SandboxConsole
             Console.WriteLine("RefundID:" + newRefund.Id);
             Console.Read();
         }
-        static void getRefund()
+        public static void GetRefund()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

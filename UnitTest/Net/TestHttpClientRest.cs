@@ -22,8 +22,8 @@ namespace UnitTest.Net
         private TestContext testContextInstance;
 
         /// <summary>
-        ///Obtiene o establece el contexto de las pruebas que proporciona
-        ///información y funcionalidad para la ejecución de pruebas actual.
+        ///Obtiene o establece el contexto de las Tests que proporciona
+        ///información y funcionalidad para la ejecución de Tests actual.
         ///</summary>
         public TestContext TestContext
         {
@@ -37,23 +37,23 @@ namespace UnitTest.Net
             }
         }
 
-        #region Atributos de prueba adicionales
+        #region Atributos de Test adicionales
         //
-        // Puede usar los siguientes atributos adicionales conforme escribe las pruebas:
+        // Puede usar los siguientes atributos adicionales conforme escribe las Tests:
         //
-        // Use ClassInitialize para ejecutar el código antes de ejecutar la primera prueba en la clase
+        // Use ClassInitialize para ejecutar el código antes de ejecutar la primera Test en la clase
         // [ClassInitialize()]
         // public static void MyClassInitialize(TestContext testContext) { }
         //
-        // Use ClassCleanup para ejecutar el código una vez ejecutadas todas las pruebas en una clase
+        // Use ClassCleanup para ejecutar el código una vez ejecutadas todas las Tests en una clase
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        // Usar TestInitialize para ejecutar el código antes de ejecutar cada prueba 
+        // Usar TestInitialize para ejecutar el código antes de ejecutar cada Test 
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-        // Use TestCleanup para ejecutar el código una vez ejecutadas todas las pruebas
+        // Use TestCleanup para ejecutar el código una vez ejecutadas todas las Tests
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //

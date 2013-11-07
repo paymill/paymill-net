@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public class PreauthorizationSamples
     {
-        static void getPreauthorizations()
+        public static void GetPreauthorizations()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -29,7 +29,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getPreauthorizationsWithParameters()
+        public static void GetPreauthorizationsWithParameters()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -50,7 +50,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addPreauthorization()
+        public static void AddPreauthorization()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -67,7 +67,7 @@ namespace SandboxConsole
             Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
             Console.Read();
         }
-        static void getPreauthorization()
+        public static void GetPreauthorization()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

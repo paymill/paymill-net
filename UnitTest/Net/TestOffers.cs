@@ -24,7 +24,7 @@ namespace UnitTest.Net
             offer.Amount = 1500;
             offer.Currency = "EUR";
             offer.Interval = @"1 MONTH";
-            offer.Name = "Prueba API";
+            offer.Name = "Test API";
             offer.Trial_Period_Days = 3;
             offer.Created_At = DateTime.Now;
             offer.Trial_Period_Days = 0;

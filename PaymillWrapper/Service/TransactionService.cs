@@ -44,7 +44,19 @@ namespace PaymillWrapper.Service
                 null,
                 new URLEncoder().EncodeTransaction(transaction));
         }
-
+        /// <summary>
+        /// This function update a transaction object
+        /// </summary>
+        /// <param name="client">Object-transaction</param>
+        /// <returns>New object-transaction just add</returns>
+        public Transaction Update(Transaction transaction)
+        {
+            return update<Transaction>(
+                Resource.Transactions,
+                transaction,
+                transaction.Id,
+                new URLEncoder().EncodeTransaction(transaction));
+        }
         /// <summary>
         /// To get the details of an existing transaction you’ll need to supply the transaction ID
         /// </summary>

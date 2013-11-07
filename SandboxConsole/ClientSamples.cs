@@ -56,7 +56,7 @@ namespace SandboxConsole
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             ClientService clientService = Paymill.GetService<ClientService>();
-            Client newClient = clientService.Create("javicantos22@hotmail.es", "Prueba API");
+            Client newClient = clientService.Create("javicantos22@hotmail.es", "Test API");
             Utilities.printObject(newClient);
 
         }
