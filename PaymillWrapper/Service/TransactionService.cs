@@ -55,7 +55,7 @@ namespace PaymillWrapper.Service
                 Resource.Transactions,
                 transaction,
                 transaction.Id,
-                new URLEncoder().EncodeTransaction(transaction));
+                new URLEncoder().EncodeTransactionUpdate(transaction));
         }
         /// <summary>
         /// To get the details of an existing transaction you’ll need to supply the transaction ID

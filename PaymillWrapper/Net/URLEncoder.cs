@@ -51,6 +51,13 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
+
+        public string EncodeTransactionUpdate(Transaction data)
+        {
+            StringBuilder sb = new StringBuilder();
+            this.addKeyValuePair(sb, "description", data.Description);
+            return sb.ToString();
+        }
         public string EncodeTransaction(Transaction data)
         {
             StringBuilder sb = new StringBuilder();
