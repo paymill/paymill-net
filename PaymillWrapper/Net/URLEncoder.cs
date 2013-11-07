@@ -135,7 +135,7 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
-        public  static String convertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
+        public static String ConvertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
         {
             List<String> typesList = new List<String>();
             foreach (PaymillWrapper.Models.EventType evt in eventTypes)

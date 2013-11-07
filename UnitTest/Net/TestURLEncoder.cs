@@ -109,39 +109,7 @@ namespace UnitTest.Net
             Assert.AreEqual(expected, reply);
         }
 
-        [TestMethod]
-        public void EncodeOfferAdd()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Offer offer = new Offer();
-            offer.Amount = 1500;
-            offer.Currency = "eur";
-            offer.Interval = "MONTH";
-            offer.Name = "Prueba API";
-            offer.Trial_Period_Days = 3;
-
-            string expected = "amount=1500&currency=eur&interval=month&name=Prueba+API";
-            string reply = urlEncoder.EncodeOfferAdd(offer);
-
-            Assert.AreEqual(expected, reply);
-        }
-
-        [TestMethod]
-        public void EncodeOfferUpdate()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Offer offer = new Offer();
-            offer.Name = "Oferta 48";
-            offer.Id = "offer_6eea405f83d4d3098604";
-
-            string expected = "amount=0&interval=week&name=Oferta+48";
-            string reply = urlEncoder.EncodeOfferAdd(offer);
-
-            Assert.AreEqual(expected, reply);
-        }
-
+      
         [TestMethod]
         public void EncodeSubscriptionAdd()
         {
@@ -173,35 +141,7 @@ namespace UnitTest.Net
             Assert.AreEqual(expected, reply);
         }
 
-        [TestMethod]
-        public void EncodeClientAdd()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Client c = new Client();
-            c.Description = "Prueba";
-            c.Email = "javicantos22@hotmail.es";
-
-            string expected = "email=javicantos22%40hotmail.es&description=Prueba";
-            string reply = urlEncoder.Encode<Client>(c);
-
-            Assert.AreEqual(expected, reply);
-        }
-
-        [TestMethod]
-        public void EncodeClientUpdate()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Client c = new Client();
-            c.Description = "Javier";
-            c.Email = "javicantos33@hotmail.es";
-            c.Id = "client_bbe895116de80b6141fd";
-
-            string expected = "email=javicantos33%40hotmail.es&description=Javier&id=client_bbe895116de80b6141fd";
-            string reply = urlEncoder.Encode<Client>(c);
-
-            Assert.AreEqual(expected, reply);
-        }
+       
+     
     }
 }

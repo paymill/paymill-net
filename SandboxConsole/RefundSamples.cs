@@ -47,7 +47,7 @@ namespace SandboxConsole
             Filter filter = new Filter();
             filter.Add("count", 5);
 
-            List<Refund> lstRefunds = refundService.GetRefunds(filter);
+            List<Refund> lstRefunds = refundService.GetRefundsByFilter(filter);
 
             foreach (Refund refund in lstRefunds)
             {
@@ -69,7 +69,7 @@ namespace SandboxConsole
             refund.Description = "Prueba desde API c#";
             refund.Transaction = new Transaction() { Id = "tran_a7c93a1e5b431b52c0f0" };
 
-            Refund newRefund = refundService.CreateRefund(refund);
+            Refund newRefund = refundService.Create(refund);
 
             Console.WriteLine("RefundID:" + newRefund.Id);
             Console.Read();
@@ -82,7 +82,7 @@ namespace SandboxConsole
 
             Console.WriteLine("Request refund...");
             string refundID = "refund_53860aa0e514d4913aad";
-            Refund refund = refundService.GetRefund(refundID);
+            Refund refund = refundService.Get(refundID);
 
             Console.WriteLine("RefundID:" + refund.Id);
             Console.WriteLine("Created at:" + refund.Created_At.ToShortDateString());

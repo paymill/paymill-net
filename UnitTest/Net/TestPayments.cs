@@ -48,7 +48,7 @@ namespace UnitTest.Net
         {
             PaymentService paymentService = Paymill.GetService<PaymentService>();
             Payment payment = paymentService.Create("098f6bcd4621d373cade4e832627b4f6");
-            bool reply = paymentService.RemovePayment(payment.Id);
+            bool reply = paymentService.Remove(payment.Id);
             Assert.IsTrue(reply, "RemovePayment Fail");
         }
         [TestMethod]
@@ -56,7 +56,7 @@ namespace UnitTest.Net
         public void RemovePaymentWithException()
         {
             PaymentService paymentService = Paymill.GetService<PaymentService>();
-            bool reply = paymentService.RemovePayment("pay_3af44644dd6d25c8hhhhh");
+            bool reply = paymentService.Remove("pay_3af44644dd6d25c8hhhhh");
             Assert.IsTrue(reply, "RemovePayment Fail");
         }
     }

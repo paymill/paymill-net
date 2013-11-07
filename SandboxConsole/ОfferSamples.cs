@@ -48,7 +48,7 @@ namespace SandboxConsole
             //filter.Add("created_at", span.TotalSeconds.ToString()); //KO
             //filter.Add("trial_period_days", 5); //OK
 
-            List<Offer> lstOffers = offerService.GetOffers(filter);
+            List<Offer> lstOffers = offerService.GetOffersByFilter(filter);
 
             foreach (Offer o in lstOffers)
             {
@@ -81,7 +81,7 @@ namespace SandboxConsole
             offer.Updated_At = DateTime.Now;
             offer.SubscriptionCount.Аctive = "3";
             offer.SubscriptionCount.Inactive = "0";
-            Offer newOffer = offerService.CreateOffer(offer);
+            Offer newOffer = offerService.Create(offer);
             return newOffer;
         }
         public static void GetOffer()
@@ -92,7 +92,7 @@ namespace SandboxConsole
 
             Console.WriteLine("Request offer...");
             string offerID = "offer_6eea405f83d4d3098604";
-            Offer offer = offerService.GetOffer(offerID);
+            Offer offer = offerService.Get(offerID);
 
             Console.WriteLine("OfferID:" + offer.Id);
             Console.WriteLine("Created at:" + offer.Created_At.ToShortDateString());
@@ -108,7 +108,7 @@ namespace SandboxConsole
             offer.Name = "Oferta 48";
             offer.Id = "offer_6eea405f83d4d3098604";
 
-            Offer updatedOffer = offerService.UpdateOffer(offer);
+            Offer updatedOffer = offerService.Update(offer);
 
             Console.WriteLine("OfferID:" + updatedOffer.Id);
             Console.Read();
@@ -122,7 +122,7 @@ namespace SandboxConsole
             Console.WriteLine("Removing offer...");
 
             string offerID = "offer_6eea405f83d4d3098604";
-            bool reply = offerService.RemoveOffer(offerID);
+            bool reply = offerService.Remove(offerID);
 
             Console.WriteLine("Result remove:" + reply);
             Console.Read();

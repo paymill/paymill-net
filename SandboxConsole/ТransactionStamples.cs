@@ -41,7 +41,7 @@ namespace SandboxConsole
             filter.Add("count", 1);
             filter.Add("offset", 2);
 
-            List<Transaction> lstTransactions = transactionService.GetTransactions(filter);
+            List<Transaction> lstTransactions = transactionService.GetTransactionsByFilter(filter);
 
             foreach (Transaction transaction in lstTransactions)
             {
@@ -62,7 +62,7 @@ namespace SandboxConsole
             transaction.Currency = "EUR";
             transaction.Description = "Prueba desde API c#";
 
-            Transaction newTransaction = transactionService.CreateTransaction(transaction);
+            Transaction newTransaction = transactionService.Create(transaction);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -79,7 +79,7 @@ namespace SandboxConsole
             transaction.Description = "Prueba desde API c#";
             transaction.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
 
-            Transaction newTransaction = transactionService.CreateTransaction(transaction);
+            Transaction newTransaction = transactionService.Create(transaction);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -101,7 +101,7 @@ namespace SandboxConsole
             transaction.Payment = new Payment() { Id = "pay_c08f1f94754b93f46ac3" };
             transaction.Client = new Client() { Id = "client_ad591663d69051d306a8" };
 
-            Transaction newTransaction = transactionService.CreateTransaction(transaction);
+            Transaction newTransaction = transactionService.Create(transaction);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -114,7 +114,7 @@ namespace SandboxConsole
 
             Console.WriteLine("Solicitando transaction...");
             string transactionID = "tran_9255ee9ad5a7f2999625";
-            Transaction transaction = transactionService.GetTransaction(transactionID);
+            Transaction transaction = transactionService.Get(transactionID);
 
             Console.WriteLine("TransactionID:" + transaction.Id);
             Console.WriteLine("Created at:" + transaction.Created_At.ToShortDateString());

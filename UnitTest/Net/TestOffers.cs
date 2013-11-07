@@ -31,7 +31,7 @@ namespace UnitTest.Net
             offer.Updated_At = DateTime.Now;
             offer.SubscriptionCount.Аctive = "3";
             offer.SubscriptionCount.Inactive = "0";
-            Offer newOffer = offerService.CreateOffer(offer);
+            Offer newOffer = offerService.Create(offer);
             return newOffer;
         }
         [TestMethod]
@@ -48,7 +48,7 @@ namespace UnitTest.Net
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
 
-            Boolean result = offersService.RemoveOffer(newOffer.Id);
+            Boolean result = offersService.Remove(newOffer.Id);
             Assert.IsTrue(result, "Remove  Offer Failed");
         }
     }

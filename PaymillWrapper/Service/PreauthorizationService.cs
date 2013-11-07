@@ -28,7 +28,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list preauthorization-object</returns>
-        public List<Preauthorization> GetPreauthorizations(Filter filter)
+        public List<Preauthorization> GetPreauthorizationsByFilter(Filter filter)
         {
             return getList<Preauthorization>(Resource.Preauthorizations, filter);
         }
@@ -38,7 +38,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-transaction</param>
         /// <returns>New object-transaction just add</returns>
-        public Preauthorization CreatePreauthorization(Preauthorization preauthorization)
+        public Preauthorization Create(Preauthorization preauthorization)
         {
             Preauthorization reply=null;
 
@@ -58,7 +58,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Preauthorization identifier</param>
         /// <returns>Preauthorization-object</returns>
-        public Preauthorization GetPreauthorization(string preauthorizationID)
+        public Preauthorization Get(string preauthorizationID)
         {
             return get<Preauthorization>(Resource.Preauthorizations, preauthorizationID);
         }

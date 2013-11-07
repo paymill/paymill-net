@@ -27,7 +27,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list subscription-object</returns>
-        public List<Subscription> GetSubscriptions(Filter filter)
+        public List<Subscription> GetSubscriptionsByFilter(Filter filter)
         {
             return getList<Subscription>(Resource.Subscriptions, filter);
         }
@@ -37,7 +37,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-subscription</param>
         /// <returns>New object-subscription just add</returns>
-        public Subscription CreateSubscription(Subscription subscription)
+        public Subscription Create(Subscription subscription)
         {
             return create<Subscription>(
                 Resource.Subscriptions,
@@ -50,7 +50,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Subscription identifier</param>
         /// <returns>Subscription-object</returns>
-        public Subscription GetSubscription(string subscriptionID)
+        public Subscription Get(string subscriptionID)
         {
             return get<Subscription>(Resource.Subscriptions, subscriptionID);
         }
@@ -60,7 +60,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Subscription identifier</param>
         /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool RemoveSubscription(string subscriptionID)
+        public bool Remove(string subscriptionID)
         {
             return remove<Subscription>(Resource.Subscriptions, subscriptionID);
         }
@@ -70,7 +70,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-subscription</param>
         /// <returns>Object-subscription just updated</returns>
-        public Subscription UpdateSubscription(Subscription subscription)
+        public Subscription Update(Subscription subscription)
         {
             return update<Subscription>(
                 Resource.Subscriptions,

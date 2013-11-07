@@ -42,7 +42,7 @@ namespace SandboxConsole
             //  filter.Add("creditcard", "pay_f95c7d70c6ad8da339e5"); //KO
             //  filter.Add("created_at", 1352930695); //KO
 
-            List<Client> lstClients = clientService.GetClients(filter);
+            List<Client> lstClients = clientService.GetClientsByFilter(filter);
 
             foreach (Client c in lstClients)
             {
@@ -68,7 +68,7 @@ namespace SandboxConsole
 
             Console.WriteLine("Request client...");
             string clientID = "client_ad591663d69051d306a8";
-            Client c = clientService.GetClient(clientID);
+            Client c = clientService.Get(clientID);
 
             Console.WriteLine("ClientID:" + c.Id);
             Console.WriteLine("Created at:" + c.Created_At.ToShortDateString());
@@ -85,7 +85,7 @@ namespace SandboxConsole
             c.Email = "javicantos33@hotmail.es";
             c.Id = "client_bbe895116de80b6141fd";
 
-            Client updatedClient = clientService.UpdateClient(c);
+            Client updatedClient = clientService.Update(c);
 
             Console.WriteLine("ClientID:" + updatedClient.Id);
             Console.Read();
@@ -102,7 +102,7 @@ namespace SandboxConsole
             Console.WriteLine("Removing client...");
 
             string clientID = "client_180ad3d1042a1da4a0a0";
-            bool reply = clientService.RemoveClient(clientID);
+            bool reply = clientService.Remove(clientID);
 
             Console.WriteLine("Result remove:" + reply);
             Console.Read();

@@ -44,7 +44,7 @@ namespace SandboxConsole
             //filter.Add("canceled_at", 495); //KO
             //filter.Add("created_at", 1353194860); //KO
 
-            List<Subscription> lstSubscriptions = susbscriptionService.GetSubscriptions(filter);
+            List<Subscription> lstSubscriptions = susbscriptionService.GetSubscriptionsByFilter(filter);
 
             foreach (Subscription s in lstSubscriptions)
             {
@@ -64,7 +64,7 @@ namespace SandboxConsole
             subscription.Offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
             subscription.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
             // TODO: get result body
-            Subscription newSubscription = susbscriptionService.CreateSubscription(subscription);
+            Subscription newSubscription = susbscriptionService.Create(subscription);
 
             Utilities.printObject(newSubscription);
             Console.Read();
@@ -77,7 +77,7 @@ namespace SandboxConsole
 
             Console.WriteLine("Request subscription...");
             string subscriptionID = "sub_e77d3332e456674101ad";
-            Subscription subscription = susbscriptionService.GetSubscription(subscriptionID);
+            Subscription subscription = susbscriptionService.Get(subscriptionID);
             Utilities.printObject(subscription);
             Console.Read();
         }
@@ -91,7 +91,7 @@ namespace SandboxConsole
             subscription.Cancel_At_Period_End = true;
             subscription.Id = "sub_569df922b4506cd73030";
 
-            Subscription updatedSubscription = susbscriptionService.UpdateSubscription(subscription);
+            Subscription updatedSubscription = susbscriptionService.Update(subscription);
 
             Console.WriteLine("SubscriptionID:" + updatedSubscription.Id);
             Console.Read();
@@ -107,7 +107,7 @@ namespace SandboxConsole
             Console.WriteLine("Removing subscription...");
 
             string subscriptionID = "sub_569df922b4506cd73030";
-            bool reply = susbscriptionService.RemoveSubscription(subscriptionID);
+            bool reply = susbscriptionService.Remove(subscriptionID);
 
             Console.WriteLine("Result remove:" + reply);
             Console.Read();

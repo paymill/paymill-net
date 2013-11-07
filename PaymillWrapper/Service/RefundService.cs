@@ -27,7 +27,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list refund-object</returns>
-        public List<Refund> GetRefunds(Filter filter)
+        public List<Refund> GetRefundsByFilter(Filter filter)
         {
             return getList<Refund>(Resource.Refunds, filter);
         }
@@ -37,7 +37,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-refund</param>
         /// <returns>New object-refund just add</returns>
-        public Refund CreateRefund(Refund refund)
+        public Refund Create(Refund refund)
         {
             return create<Refund>(
                 Resource.Refunds,
@@ -50,7 +50,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Refund identifier</param>
         /// <returns>Refund-object</returns>
-        public Refund GetRefund(string refundID)
+        public Refund Get(string refundID)
         {
             return get<Refund>(Resource.Refunds, refundID);
         }

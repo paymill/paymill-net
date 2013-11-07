@@ -35,7 +35,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list payments-object</returns>
-        public List<Payment> GetPayments(Filter filter)
+        public List<Payment> GetPaymentsByFilter(Filter filter)
         {
             return getList<Payment>(Resource.Payments, filter);
         }
@@ -70,7 +70,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Payment identifier</param>
         /// <returns>Payment-object</returns>
-        public Payment GetPayment(string paymentID)
+        public Payment Get(string paymentID)
         {
             return get<Payment>(Resource.Payments, paymentID);
         }
@@ -80,7 +80,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Payment identifier</param>
         /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool RemovePayment(string paymentID)
+        public bool Remove(string paymentID)
         {
             return remove<Payment>(Resource.Payments, paymentID);
         }

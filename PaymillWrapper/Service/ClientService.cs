@@ -27,7 +27,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list client-object</returns>
-        public List<Client> GetClients(Filter filter)
+        public List<Client> GetClientsByFilter(Filter filter)
         {
             return getList<Client>(Resource.Clients, filter);
         }
@@ -50,7 +50,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Client identifier</param>
         /// <returns>Client-object</returns>
-        public Client GetClient(string clientID)
+        public Client Get(string clientID)
         {
             return get<Client>(Resource.Clients, clientID);
         }
@@ -60,7 +60,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Client identifier</param>
         /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool RemoveClient(string clientID)
+        public bool Remove(string clientID)
         {
             return remove<Client>(Resource.Clients, clientID);
         }
@@ -70,7 +70,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-client</param>
         /// <returns>Object-client just updated</returns>
-        public Client UpdateClient(Client client)
+        public Client Update(Client client)
         {
             return update<Client>(
                 Resource.Clients,
