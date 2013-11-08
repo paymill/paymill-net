@@ -67,6 +67,25 @@ namespace SandboxConsole
             Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
             Console.Read();
         }
+        public static void RemovePreauthorization()
+        {
+            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
+            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
+            PreauthorizationService preauthorizationService = Paymill.GetService<PreauthorizationService>();
+
+            Preauthorization preauthorization = new Preauthorization();
+            preauthorization.Amount = 3500;
+            preauthorization.Currency = "EUR";
+            preauthorization.Token = "098f6bcd4621d373cade4e832627b4f6";
+            preauthorization.Payment = new Payment() { Id = "pay_4c159fe95d3be503778a" };
+
+            Preauthorization newPreauthorization = preauthorizationService.Create(preauthorization);
+
+            Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
+            preauthorizationService.Remove(newPreauthorization.Id);
+
+            Console.Read();
+        }
         public static void GetPreauthorization()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;

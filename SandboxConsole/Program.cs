@@ -14,7 +14,7 @@ namespace SandboxConsole
         static void Main(string[] args)
         {
 
-           ClientSamples.UpdateClient();
+           PreauthorizationSamples.RemovePreauthorization();
             // updateOffer()
            // removeOffer();
            // addSubscription();

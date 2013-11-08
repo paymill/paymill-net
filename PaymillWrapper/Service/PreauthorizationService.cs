@@ -52,7 +52,15 @@ namespace PaymillWrapper.Service
 
             return reply;
         }
-
+        /// <summary>
+        /// Remove preauthorization
+        /// </summary>
+        /// <param name="clientID">Preauthorization identifier</param>
+        /// <returns>Return true if remove was ok, false if not possible</returns>
+        public Boolean Remove(string preauthorizationID)
+        {
+            return remove<Preauthorization>(Resource.Preauthorizations, preauthorizationID);
+        }
         /// <summary>
         /// To get the details of an existing preauthorization you’ll need to supply the transaction ID
         /// </summary>
