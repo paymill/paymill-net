@@ -18,7 +18,7 @@ namespace UnitTest.Net
         }
         private static Offer createOffer()
         {
-             OfferService offerService = Paymill.GetService<OfferService>();
+            OfferService offerService = Paymill.GetService<OfferService>();
 
             Offer offer = new Offer();
             offer.Amount = 1500;

@@ -31,20 +31,51 @@ namespace PaymillWrapper.Service
         {
             return getList<Refund>(Resource.Refunds, filter);
         }
-
         /// <summary>
         /// This function creates a refund object
         /// </summary>
-        /// <param name="client">Object-refund</param>
-        /// <returns>New object-refund just add</returns>
-        public Refund Create(Refund refund)
-        {
-            return create<Refund>(
+        /// <param name="transaction"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public Refund Create(Transaction transaction, int amount) {
+		    return Create(transaction.Id, amount, null);
+    	}
+        /// <summary>
+        /// This function creates a refund object
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <param name="amount"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+	    public Refund Create(Transaction transaction, int amount, String description) {
+	    	return Create(transaction.Id, amount, description);
+	    }
+        /// <summary>
+        /// This function creates a refund object
+        /// </summary>
+        /// <param name="transactionId"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+	    public Refund Create(String transactionId, int amount) {
+		    return Create(transactionId, amount, null);
+	    }
+        /// <summary>
+        /// This function creates a refund object
+        /// </summary>
+        /// <param name="transactionId"></param>
+        /// <param name="amount"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+	    public Refund Create(String transactionId, int amount, String description) {
+		    Refund refund = new Refund();
+		    refund.Amount = amount;
+		    refund.Description = description;
+            refund.Transaction = new Transaction() { Id = transactionId };
+              return create<Refund>(
                 Resource.Refunds,
-                refund.Transaction.Id,
+                transactionId,
                 new URLEncoder().EncodeRefund(refund));
-        }
-
+	    }
         /// <summary>
         /// To get the details of an object refund you’ll need to supply the refund ID
         /// </summary>

@@ -32,18 +32,7 @@ namespace PaymillWrapper.Service
             return getList<Subscription>(Resource.Subscriptions, filter);
         }
 
-        /// <summary>
-        /// This function creates a subscription object
-        /// </summary>
-        /// <param name="client">Object-subscription</param>
-        /// <returns>New object-subscription just add</returns>
-        public Subscription Create(Subscription subscription)
-        {
-            return create<Subscription>(
-                Resource.Subscriptions,
-                null,
-                new URLEncoder().EncodeSubscriptionAdd(subscription));
-        }
+       
 
         /// <summary>
         /// To get the details of an existing subscription you’ll need to supply the subscription ID

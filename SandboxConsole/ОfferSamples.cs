@@ -59,12 +59,12 @@ namespace SandboxConsole
         }
         public static void CreateOffer()
         {
-            Offer newOffer = createOffer();
+            Offer newOffer = CreateOfferObject();
             Utilities.printObject(newOffer);
             Console.Read();
         }
 
-        private static Offer createOffer()
+        public static Offer CreateOfferObject()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;

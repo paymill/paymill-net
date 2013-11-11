@@ -39,4 +39,5 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "Subscription")]
         public List<Subscription> Subscription { get; set; }
     }
+
 }

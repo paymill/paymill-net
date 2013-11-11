@@ -32,7 +32,7 @@ namespace PaymillWrapper.Service
 
         protected List<T> getList<T>(Resource resource, Filter filter)
         {
-            var lstPayments = new List<T>();
+            var lst = new List<T>();
 
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower();
 
@@ -40,8 +40,8 @@ namespace PaymillWrapper.Service
                 requestUri += String.Format("?{0}", filter.ToString());
             HttpResponseMessage response = _client.GetAsync(requestUri).Result;
             String data = readReponseMessage(response);
-            lstPayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
-            return lstPayments;
+            lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
+            return lst;
         }
 
         protected List<T> getList<T>(Resource resource)

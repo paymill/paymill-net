@@ -58,12 +58,7 @@ namespace SandboxConsole
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             RefundService refundService = Paymill.GetService<RefundService>();
 
-            Refund refund = new Refund();
-            refund.Amount = 500;
-            refund.Description = "Test desde API c#";
-            refund.Transaction = new Transaction() { Id = "tran_a7c93a1e5b431b52c0f0" };
-
-            Refund newRefund = refundService.Create(refund);
+            Refund newRefund = refundService.Create("tran_a7c93a1e5b431b52c0f0", 500, "Test desde API c#");
 
             Console.WriteLine("RefundID:" + newRefund.Id);
             Console.Read();

@@ -29,7 +29,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getSubscriptionsWithParameters()
+        public static void GetSubscriptionsWithParameters()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -41,9 +41,6 @@ namespace SandboxConsole
             filter.Add("count", 1); //OK
             filter.Add("offset", 2); //OK
             filter.Add("offer", "offer_32008ddd39954e71ed48"); //KO
-            //filter.Add("canceled_at", 495); //KO
-            //filter.Add("created_at", 1353194860); //KO
-
             List<Subscription> lstSubscriptions = susbscriptionService.GetSubscriptionsByFilter(filter);
 
             foreach (Subscription s in lstSubscriptions)
@@ -57,46 +54,58 @@ namespace SandboxConsole
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
+            OfferService offerService = Paymill.GetService<OfferService>();
 
-            Subscription subscription = new Subscription();
-            subscription.Client = new Client() { Id = "client_bbe895116de80b6141fd" };
-            subscription.Offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
-            subscription.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
-            // TODO: get result body
-            Subscription newSubscription = susbscriptionService.Create(subscription);
+            Client client = new Client() { Id = "client_bbe895116de80b6141fd" };
+            Offer offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
+            Payment payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
+            Subscription newSubscription = offerService.Subscribe(offer, client, payment);
 
             Utilities.printObject(newSubscription);
             Console.Read();
         }
-        static void getSubscription()
+        public static void GetSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
 
             Console.WriteLine("Request subscription...");
-            string subscriptionID = "sub_e77d3332e456674101ad";
+            string subscriptionID = "sub_25523ba98729754be371";
             Subscription subscription = susbscriptionService.Get(subscriptionID);
             Utilities.printObject(subscription);
+
+            Subscription subscription1 = susbscriptionService.Get("sub_ca7ed15bc2c8e97e29f2");
+            Utilities.printObject(subscription1);
             Console.Read();
         }
-        static void updateSubscription()
+       
+        public static void UpdateSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
+
+            OfferService offerService = Paymill.GetService<OfferService>();
+            PaymentService paymentService = Paymill.GetService<PaymentService>();
             SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
 
-            Subscription subscription = new Subscription();
-            subscription.Cancel_At_Period_End = true;
-            subscription.Id = "sub_569df922b4506cd73030";
+            ClientService clientService = Paymill.GetService<ClientService>();
+            Client newClient = clientService.Create("javicantos22@hotmail.es", "Test API");
+            string token = "098f6bcd4621d373cade4e832627b4f6";
+            Payment payment = paymentService.Create(token, newClient);
+            Offer offer = ОfferSamples.CreateOfferObject();
+            Subscription newSubscription = offerService.Subscribe(offer, newClient, payment);
 
-            Subscription updatedSubscription = susbscriptionService.Update(subscription);
+            Subscription subs = susbscriptionService.Get(newSubscription.Id);
+            subs.Offer = offer;
+            subs.Payment = payment;
+            subs.Cancel_At_Period_End = true;
+            var updatedSubscription = susbscriptionService.Update(subs);
 
             Console.WriteLine("SubscriptionID:" + updatedSubscription.Id);
             Console.Read();
         }
-        static void removeSubscription()
+        public static void RemoveSubscription()
         {
             // se elimina correctamente pero el json de respuesta no devuelve vacio 
 

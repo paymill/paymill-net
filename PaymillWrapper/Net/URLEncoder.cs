@@ -138,7 +138,7 @@ namespace PaymillWrapper.Net
         {
             StringBuilder sb = new StringBuilder();
 
-            this.addKeyValuePair(sb, "cancel_at_period_end", data.Cancel_At_Period_End);
+            this.addKeyValuePair(sb, "cancel_at_period_end", data.Cancel_At_Period_End.ToString().ToLower());
 
             return sb.ToString();
         }

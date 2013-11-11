@@ -13,13 +13,9 @@ namespace SandboxConsole
     {
         static void Main(string[] args)
         {
-
-           PreauthorizationSamples.RemovePreauthorization();
-            // updateOffer()
-           // removeOffer();
-           // addSubscription();
-           // updateSubscription();
-          //  removeSubscription();
+  //          SubscriptionSamples.GetSubscriptions();
+            SubscriptionSamples.UpdateSubscription();
+          //  ClientSamples.GetClients();
             Console.ReadLine();
         }
      

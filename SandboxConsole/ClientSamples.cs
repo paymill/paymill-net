@@ -39,9 +39,7 @@ namespace SandboxConsole
 
             Filter filter = new Filter();
             filter.Add("email", "javicantos22@hotmail.es"); //OK
-            //  filter.Add("creditcard", "pay_f95c7d70c6ad8da339e5"); //KO
-            //  filter.Add("created_at", 1352930695); //KO
-
+  
             List<Client> lstClients = clientService.GetClientsByFilter(filter);
 
             foreach (Client c in lstClients)
