@@ -58,12 +58,19 @@ namespace PaymillWrapper.Net
             this.addKeyValuePair(sb, "description", data.Description);
             return sb.ToString();
         }
-        public string EncodeTransaction(Transaction data)
+        public string EncodeTransaction(Transaction data, Fee fee)
         {
             StringBuilder sb = new StringBuilder();
 
             this.addKeyValuePair(sb, "amount", data.Amount);
             this.addKeyValuePair(sb, "currency", data.Currency);
+
+            if (fee != null)
+            {
+                this.addKeyValuePair(sb, "fee_amount", fee.Amount);
+                if (!string.IsNullOrEmpty(fee.Payment))
+                    this.addKeyValuePair(sb, "fee_payment", fee.Payment);
+            }
 
             if (!string.IsNullOrEmpty(data.Token))
                 this.addKeyValuePair(sb, "token", data.Token);
@@ -150,7 +157,7 @@ namespace PaymillWrapper.Net
                 typesList.Add(evt.ToString());
             }
 
-            return String.Join(",", typesList.ToArray()); ;
+            return String.Join(",", typesList.ToArray());
         }
         public string EncodeWebhookUpdate(Webhook data)
         {

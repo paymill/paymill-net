@@ -72,7 +72,7 @@ namespace UnitTest.Net
             transaction.Description = "Test";
 
             string expected = "amount=3500&currency=EUR&token=098f6bcd4621d373cade4e832627b4f6&description=Test";
-            string reply = urlEncoder.EncodeTransaction(transaction);
+            string reply = urlEncoder.EncodeTransaction(transaction, null);
 
             Assert.AreEqual(expected, reply);
         }
@@ -134,8 +134,7 @@ namespace UnitTest.Net
             Subscription subscription = new Subscription();
             subscription.Cancel_At_Period_End = true;
             subscription.Id = "sub_569df922b4506cd73030";
-
-            string expected = "cancel_at_period_end=True";
+            string expected = "cancel_at_period_end=true";
             string reply = urlEncoder.EncodeSubscriptionUpdate(subscription);
 
             Assert.AreEqual(expected, reply);

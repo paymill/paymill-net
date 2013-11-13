@@ -57,12 +57,12 @@ namespace PaymillWrapper.Service
         /// <param name="token">payment token</param>
         /// <param name="token">payment client</param>
         /// <returns>New object-payment just created</returns>
-        public Payment Create(String token, Client client)
+        public Payment Create(String token, String client)
         {
             return create<Payment>(
                 Resource.Payments,
                 null,
-                new URLEncoder().EncodeObject(new { Token = token, Client = client.Id }));
+                new URLEncoder().EncodeObject(new { Token = token, Client = client }));
         }
 
         /// <summary>

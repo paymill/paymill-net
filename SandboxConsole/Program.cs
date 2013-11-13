@@ -14,7 +14,7 @@ namespace SandboxConsole
         static void Main(string[] args)
         {
   //          SubscriptionSamples.GetSubscriptions();
-            SubscriptionSamples.UpdateSubscription();
+            ТransactionStamples.AddTransactionWithPayment();
           //  ClientSamples.GetClients();
             Console.ReadLine();
         }

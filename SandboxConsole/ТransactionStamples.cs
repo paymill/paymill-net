@@ -61,9 +61,8 @@ namespace SandboxConsole
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
             transaction.Description = "Test desde API c#";
-
-            Transaction newTransaction = transactionService.Create(transaction);
-
+            
+            Transaction newTransaction = transactionService.Create(transaction, null);
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
@@ -77,9 +76,11 @@ namespace SandboxConsole
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
             transaction.Description = "Test desde API c#";
-            transaction.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
-
-            Transaction newTransaction = transactionService.Create(transaction);
+            transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
+            Fee fee = new Fee();
+            fee.Amount = 320;
+            fee.Payment = "pay_3af44644dd6d25c820a8";
+            Transaction newTransaction = transactionService.Create(transaction, fee);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -101,7 +102,7 @@ namespace SandboxConsole
             transaction.Payment = new Payment() { Id = "pay_c08f1f94754b93f46ac3" };
             transaction.Client = new Client() { Id = "client_ad591663d69051d306a8" };
 
-            Transaction newTransaction = transactionService.Create(transaction);
+            Transaction newTransaction = transactionService.Create(transaction, null);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();

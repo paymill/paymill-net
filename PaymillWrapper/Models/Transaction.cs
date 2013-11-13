@@ -21,7 +21,10 @@ namespace PaymillWrapper.Models
             OPEN,
             PREAUTH
         }
-
+        public Transaction()
+        {
+            this.Fees = new List<Fee>();
+        }
         /// <summary>
         /// Amount of this transaction
         /// </summary>
@@ -117,5 +120,6 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "Fees")]
         public List<Fee> Fees { get; set; }
-    }
+
+      }
 }

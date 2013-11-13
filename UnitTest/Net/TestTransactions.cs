@@ -29,7 +29,7 @@ namespace UnitTest.Net
             transaction.Currency = "EUR";
             transaction.Description = "Test API c#";
             transaction.Payment = payment;
-            transaction = service.Create(transaction);
+            transaction = service.Create(transaction, null);
             transaction.Client = clientService.Create("javicantos22@hotmail.es", "Test API");
 
             Assert.IsTrue(transaction.Id != String.Empty, "Create Transaction Fail");

@@ -92,7 +92,7 @@ namespace SandboxConsole
             ClientService clientService = Paymill.GetService<ClientService>();
             Client newClient = clientService.Create("javicantos22@hotmail.es", "Test API");
             string token = "098f6bcd4621d373cade4e832627b4f6";
-            Payment payment = paymentService.Create(token, newClient);
+            Payment payment = paymentService.Create(token, newClient.Id);
             Offer offer = ОfferSamples.CreateOfferObject();
             Subscription newSubscription = offerService.Subscribe(offer, newClient, payment);
 

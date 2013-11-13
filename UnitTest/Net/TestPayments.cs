@@ -39,10 +39,11 @@ namespace UnitTest.Net
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
             PaymentService paymentService = Paymill.GetService<PaymentService>();
-            Payment payment = paymentService.Create("098f6bcd4621d373cade4e832627b4f6", client);
+            Payment payment = paymentService.Create("098f6bcd4621d373cade4e832627b4f6", client.Id);
             Assert.IsFalse(payment.Id == String.Empty, "CreatePayment With Client Fail");
             Assert.IsFalse(payment.Client != client.Id, "Client does not match");
         }
+
         [TestMethod]
         public void RemovePayment()
         {
