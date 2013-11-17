@@ -43,8 +43,8 @@ namespace PaymillWrapper.Service
                    Resource.Webhooks,
                    null,
                    new URLEncoder().EncodeObject(new {
-                            url = url.AbsoluteUri, 
-                            event_types = convertEventsArr(eventTypes) 
+                            url = url.AbsoluteUri,
+                            event_types = URLEncoder.convertEventsArr(eventTypes) 
                    }));
         }
 
@@ -67,7 +67,10 @@ namespace PaymillWrapper.Service
             return create<Webhook>(
                    Resource.Webhooks,
                    null,
-                   new URLEncoder().EncodeObject(new { email = email, event_types = convertEventsArr(eventTypes) }));
+                   new URLEncoder().EncodeObject(new { 
+                        email = email,
+                        event_types = URLEncoder.convertEventsArr(eventTypes) 
+                   }));
         }
         /// <summary>
         /// This function update the webhook

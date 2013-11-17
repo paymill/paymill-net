@@ -30,7 +30,7 @@ namespace UnitTest.Net
             Client client = clientService.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
-            Boolean result = clientService.RemoveClient(client.Id);
+            Boolean result = clientService.Remove(client.Id);
             Assert.IsTrue(result, "Remove  Offer");
 
 
@@ -43,7 +43,7 @@ namespace UnitTest.Net
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
             client.Email = "test@mail.com";
-            var updatetedClient = clientService.UpdateClient(client);
+            var updatetedClient = clientService.Update(client);
             Assert.IsTrue(updatetedClient.Email == "test@mail.com", "Update Client Failed");
 
         }

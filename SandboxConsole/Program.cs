@@ -13,12 +13,7 @@ namespace SandboxConsole
     {
         static void Main(string[] args)
         {
-
-           ClientSamples.UpdateClient();
-            // updateOffer()
-           // removeOffer();
-           // addSubscription();
-           // updateSubscription();
+            SubscriptionSamples.UpdateSubscription();
           //  removeSubscription();
             Console.ReadLine();
         }

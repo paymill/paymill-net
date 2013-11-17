@@ -37,7 +37,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-offer</param>
         /// <returns>New object-offer just add</returns>
-        public Offer CreateOffer(Offer offer)
+        public Offer Create(Offer offer)
         {
             return create<Offer>(
                 Resource.Offers,
@@ -50,7 +50,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Offer identifier</param>
         /// <returns>Offer-object</returns>
-        public Offer GetOffer(string offerID)
+        public Offer Get(string offerID)
         {
             return get<Offer>(Resource.Offers, offerID);
         }
@@ -60,7 +60,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="clientID">Offer identifier</param>
         /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool RemoveOffer(string offerID)
+        public bool Remove(string offerID)
         {
             return remove<Offer>(Resource.Offers, offerID);
         }
@@ -70,7 +70,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-offer</param>
         /// <returns>Object-offer just updated</returns>
-        public Offer UpdateOffer(Offer offer)
+        public Offer Update(Offer offer)
         {
             return update<Offer>(
                 Resource.Offers,

@@ -29,7 +29,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getSubscriptionsWithParameters()
+        public static void GetSubscriptionsWithParameters()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -41,9 +41,7 @@ namespace SandboxConsole
             filter.Add("count", 1); //OK
             filter.Add("offset", 2); //OK
             filter.Add("offer", "offer_32008ddd39954e71ed48"); //KO
-            //filter.Add("canceled_at", 495); //KO
-            //filter.Add("created_at", 1353194860); //KO
-
+ 
             List<Subscription> lstSubscriptions = susbscriptionService.GetSubscriptions(filter);
 
             foreach (Subscription s in lstSubscriptions)
@@ -52,6 +50,28 @@ namespace SandboxConsole
             }
 
             Console.Read();
+        }
+       
+        private static Subscription createSubsription()
+        {
+            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
+            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
+            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
+            ClientService clientService = Paymill.GetService<ClientService>();
+            OfferService offerService = Paymill.GetService<OfferService>();
+
+            var client = clientService.Create("test@mail.com", "test");
+            var offer = ОfferSamples.CreateOfferObject();
+
+            Subscription subscription = new Subscription();
+            subscription.Client = client;
+            subscription.Offer = offer;
+            PaymentService paymentService = Paymill.GetService<PaymentService>();
+            string token = "098f6bcd4621d373cade4e832627b4f6";
+            Payment payment = paymentService.Create(token);
+            subscription.Payment = payment;
+            return susbscriptionService.CreateSubscription(subscription);
+        
         }
         public static void AddSubscription()
         {
@@ -63,13 +83,12 @@ namespace SandboxConsole
             subscription.Client = new Client() { Id = "client_bbe895116de80b6141fd" };
             subscription.Offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
             subscription.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
-            // TODO: get result body
-            Subscription newSubscription = susbscriptionService.CreateSubscription(subscription);
+             Subscription newSubscription = susbscriptionService.CreateSubscription(subscription);
 
             Utilities.printObject(newSubscription);
             Console.Read();
         }
-        static void getSubscription()
+        public static void GetSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -81,14 +100,15 @@ namespace SandboxConsole
             Utilities.printObject(subscription);
             Console.Read();
         }
-        static void updateSubscription()
+        public static void UpdateSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
 
-            Subscription subscription = new Subscription();
+            Subscription subscription = createSubsription();
             subscription.Cancel_At_Period_End = true;
+
             subscription.Id = "sub_569df922b4506cd73030";
 
             Subscription updatedSubscription = susbscriptionService.UpdateSubscription(subscription);
@@ -96,7 +116,7 @@ namespace SandboxConsole
             Console.WriteLine("SubscriptionID:" + updatedSubscription.Id);
             Console.Read();
         }
-        static void removeSubscription()
+        public static void RemoveSubscription()
         {
             // se elimina correctamente pero el json de respuesta no devuelve vacio 
 

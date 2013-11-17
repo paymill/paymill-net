@@ -64,7 +64,7 @@ namespace SandboxConsole
             Console.Read();
         }
 
-        private static Offer createOffer()
+        public static Offer CreateOfferObject()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -81,7 +81,7 @@ namespace SandboxConsole
             offer.Updated_At = DateTime.Now;
             offer.SubscriptionCount.Аctive = "3";
             offer.SubscriptionCount.Inactive = "0";
-            Offer newOffer = offerService.CreateOffer(offer);
+            Offer newOffer = offerService.Create(offer);
             return newOffer;
         }
         public static void GetOffer()
@@ -92,37 +92,32 @@ namespace SandboxConsole
 
             Console.WriteLine("Request offer...");
             string offerID = "offer_6eea405f83d4d3098604";
-            Offer offer = offerService.GetOffer(offerID);
+            Offer offer = offerService.Get(offerID);
 
             Console.WriteLine("OfferID:" + offer.Id);
             Console.WriteLine("Created at:" + offer.Created_At.ToShortDateString());
             Console.Read();
         }
-        static void updateOffer()
+        public static void UpdateOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             OfferService offerService = Paymill.GetService<OfferService>();
-
-            Offer offer = new Offer();
-            offer.Name = "Oferta 48";
-            offer.Id = "offer_6eea405f83d4d3098604";
-
-            Offer updatedOffer = offerService.UpdateOffer(offer);
-
-            Console.WriteLine("OfferID:" + updatedOffer.Id);
-            Console.Read();
+            Offer offer = createOffer();
+            offer.Name = "Test offer";
+            Offer updatedOffer = offerService.Update(offer);
+            Utilities.printObject(offer);
+             Console.Read();
         }
-        static void removeOffer()
+        public static void RemoveOffer()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             OfferService offerService = Paymill.GetService<OfferService>();
 
             Console.WriteLine("Removing offer...");
-
-            string offerID = "offer_6eea405f83d4d3098604";
-            bool reply = offerService.RemoveOffer(offerID);
+            Offer offer = createOffer();
+            bool reply = offerService.RemoveOffer(offer.Id);
 
             Console.WriteLine("Result remove:" + reply);
             Console.Read();
