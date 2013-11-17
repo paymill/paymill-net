@@ -67,7 +67,7 @@ namespace SandboxConsole
             subscription.Offer = offer;
             PaymentService paymentService = Paymill.GetService<PaymentService>();
             string token = "098f6bcd4621d373cade4e832627b4f6";
-            Payment payment = paymentService.Create(token);
+            Payment payment = paymentService.Create(token, client.Id);
             subscription.Payment = payment;
             return offerService.Subscribe(offer, client, payment);
         
