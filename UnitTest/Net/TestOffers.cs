@@ -18,20 +18,20 @@ namespace UnitTest.Net
         }
         private static Offer createOffer()
         {
-             OfferService offerService = Paymill.GetService<OfferService>();
+            OfferService offerService = Paymill.GetService<OfferService>();
 
             Offer offer = new Offer();
             offer.Amount = 1500;
             offer.Currency = "EUR";
             offer.Interval = @"1 MONTH";
-            offer.Name = "Prueba API";
+            offer.Name = "Test API";
             offer.Trial_Period_Days = 3;
             offer.Created_At = DateTime.Now;
             offer.Trial_Period_Days = 0;
             offer.Updated_At = DateTime.Now;
             offer.SubscriptionCount.Аctive = "3";
             offer.SubscriptionCount.Inactive = "0";
-            Offer newOffer = offerService.CreateOffer(offer);
+            Offer newOffer = offerService.Create(offer);
             return newOffer;
         }
         [TestMethod]
@@ -48,7 +48,7 @@ namespace UnitTest.Net
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
 
-            Boolean result = offersService.RemoveOffer(newOffer.Id);
+            Boolean result = offersService.Remove(newOffer.Id);
             Assert.IsTrue(result, "Remove  Offer Failed");
         }
     }

@@ -27,7 +27,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list client-object</returns>
-        public List<Client> GetClients(Filter filter)
+        public List<Client> GetClientsByFilter(Filter filter)
         {
             return getList<Client>(Resource.Clients, filter);
         }

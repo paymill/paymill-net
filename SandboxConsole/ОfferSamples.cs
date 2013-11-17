@@ -48,7 +48,7 @@ namespace SandboxConsole
             //filter.Add("created_at", span.TotalSeconds.ToString()); //KO
             //filter.Add("trial_period_days", 5); //OK
 
-            List<Offer> lstOffers = offerService.GetOffers(filter);
+            List<Offer> lstOffers = offerService.GetOffersByFilter(filter);
 
             foreach (Offer o in lstOffers)
             {
@@ -59,7 +59,7 @@ namespace SandboxConsole
         }
         public static void CreateOffer()
         {
-            Offer newOffer = createOffer();
+            Offer newOffer = CreateOfferObject();
             Utilities.printObject(newOffer);
             Console.Read();
         }
@@ -74,7 +74,7 @@ namespace SandboxConsole
             offer.Amount = 1500;
             offer.Currency = "EUR";
             offer.Interval = @"1 MONTH";
-            offer.Name = "Prueba API";
+            offer.Name = "Test API";
             offer.Trial_Period_Days = 3;
             offer.Created_At = DateTime.Now;
             offer.Trial_Period_Days = 0;
@@ -103,11 +103,14 @@ namespace SandboxConsole
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             OfferService offerService = Paymill.GetService<OfferService>();
-            Offer offer = createOffer();
-            offer.Name = "Test offer";
+            Offer offer = new Offer();
+            offer.Name = "Oferta 48";
+            offer.Id = "offer_6eea405f83d4d3098604";
+
             Offer updatedOffer = offerService.Update(offer);
-            Utilities.printObject(offer);
-             Console.Read();
+
+            Console.WriteLine("OfferID:" + updatedOffer.Id);
+            Console.Read();
         }
         public static void RemoveOffer()
         {
@@ -116,8 +119,9 @@ namespace SandboxConsole
             OfferService offerService = Paymill.GetService<OfferService>();
 
             Console.WriteLine("Removing offer...");
-            Offer offer = createOffer();
-            bool reply = offerService.RemoveOffer(offer.Id);
+
+            string offerID = "offer_6eea405f83d4d3098604";
+            bool reply = offerService.Remove(offerID);
 
             Console.WriteLine("Result remove:" + reply);
             Console.Read();

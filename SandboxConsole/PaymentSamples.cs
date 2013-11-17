@@ -44,7 +44,7 @@ namespace SandboxConsole
             filter.Add("count", 5);
             filter.Add("offset", 41);
 
-            List<Payment> lstPayments = paymentService.GetPayments(filter);
+            List<Payment> lstPayments = paymentService.GetPaymentsByFilter(filter);
 
             foreach (Payment payment in lstPayments)
             {
@@ -73,7 +73,7 @@ namespace SandboxConsole
             PaymentService paymentService = Paymill.GetService<PaymentService>();
 
             string paymentID = "pay_4c159fe95d3be503778a";
-            Payment payment = paymentService.GetPayment(paymentID);
+            Payment payment = paymentService.Get(paymentID);
 
             Console.WriteLine("PaymentID:" + payment.Id);
             Console.WriteLine("PaymentID:" + payment.Created_At.ToShortDateString());
@@ -86,7 +86,7 @@ namespace SandboxConsole
             PaymentService paymentService = Paymill.GetService<PaymentService>();
 
             string paymentID = "pay_640be2127169cea1d375";
-            bool reply = paymentService.RemovePayment(paymentID);
+            bool reply = paymentService.Remove(paymentID);
 
             Console.WriteLine("Result remove:" + reply);
             Console.Read();

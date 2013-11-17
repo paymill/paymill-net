@@ -44,7 +44,7 @@ namespace PaymillWrapper.Service
                    null,
                    new URLEncoder().EncodeObject(new {
                             url = url.AbsoluteUri,
-                            event_types = URLEncoder.convertEventsArr(eventTypes) 
+                            event_types = URLEncoder.ConvertEventsArr(eventTypes) 
                    }));
         }
 
@@ -68,8 +68,8 @@ namespace PaymillWrapper.Service
                    Resource.Webhooks,
                    null,
                    new URLEncoder().EncodeObject(new { 
-                        email = email,
-                        event_types = URLEncoder.convertEventsArr(eventTypes) 
+                       email = email,
+                       event_types = URLEncoder.ConvertEventsArr(eventTypes) 
                    }));
         }
         /// <summary>

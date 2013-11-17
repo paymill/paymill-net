@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class ТransactionStamples
     {
-        static void getTransactions()
+        public static void GetTransactions()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -29,7 +29,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void getTransactionsWithParameters()
+        public static void GetTransactionsWithParameters()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -41,7 +41,7 @@ namespace SandboxConsole
             filter.Add("count", 1);
             filter.Add("offset", 2);
 
-            List<Transaction> lstTransactions = transactionService.GetTransactions(filter);
+            List<Transaction> lstTransactions = transactionService.GetTransactionsByFilter(filter);
 
             foreach (Transaction transaction in lstTransactions)
             {
@@ -50,7 +50,7 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        static void addTransaction()
+        public static void AddTransaction()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -60,14 +60,13 @@ namespace SandboxConsole
             transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
-            transaction.Description = "Prueba desde API c#";
-
-            Transaction newTransaction = transactionService.CreateTransaction(transaction);
-
+            transaction.Description = "Test desde API c#";
+            
+            Transaction newTransaction = transactionService.Create(transaction, null);
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
-        static void addTransactionWithPayment()
+        public static void AddTransactionWithPayment()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -76,15 +75,17 @@ namespace SandboxConsole
             Transaction transaction = new Transaction();
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
-            transaction.Description = "Prueba desde API c#";
-            transaction.Payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
-
-            Transaction newTransaction = transactionService.CreateTransaction(transaction);
+            transaction.Description = "Test desde API c#";
+            transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
+            Fee fee = new Fee();
+            fee.Amount = 320;
+            fee.Payment = "pay_3af44644dd6d25c820a8";
+            Transaction newTransaction = transactionService.Create(transaction, fee);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
-        static void addTransactionWithClient()
+        public static void AddTransactionWithClient()
         {
             // Hay que depurar esta función, no funciona bien cuando se pasa el identificador del cliente, 
             // está creando un nuevo cliente aunque le pasemos el identificador de uno ya existente
@@ -101,12 +102,12 @@ namespace SandboxConsole
             transaction.Payment = new Payment() { Id = "pay_c08f1f94754b93f46ac3" };
             transaction.Client = new Client() { Id = "client_ad591663d69051d306a8" };
 
-            Transaction newTransaction = transactionService.CreateTransaction(transaction);
+            Transaction newTransaction = transactionService.Create(transaction, null);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
-        static void getTransaction()
+        public static void GetTransaction()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -114,7 +115,7 @@ namespace SandboxConsole
 
             Console.WriteLine("Solicitando transaction...");
             string transactionID = "tran_9255ee9ad5a7f2999625";
-            Transaction transaction = transactionService.GetTransaction(transactionID);
+            Transaction transaction = transactionService.Get(transactionID);
 
             Console.WriteLine("TransactionID:" + transaction.Id);
             Console.WriteLine("Created at:" + transaction.Created_At.ToShortDateString());

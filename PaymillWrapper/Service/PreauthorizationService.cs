@@ -28,7 +28,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list preauthorization-object</returns>
-        public List<Preauthorization> GetPreauthorizations(Filter filter)
+        public List<Preauthorization> GetPreauthorizationsByFilter(Filter filter)
         {
             return getList<Preauthorization>(Resource.Preauthorizations, filter);
         }
@@ -38,7 +38,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-transaction</param>
         /// <returns>New object-transaction just add</returns>
-        public Preauthorization CreatePreauthorization(Preauthorization preauthorization)
+        public Preauthorization Create(Preauthorization preauthorization)
         {
             Preauthorization reply=null;
 
@@ -52,13 +52,21 @@ namespace PaymillWrapper.Service
 
             return reply;
         }
-
+        /// <summary>
+        /// Remove preauthorization
+        /// </summary>
+        /// <param name="clientID">Preauthorization identifier</param>
+        /// <returns>Return true if remove was ok, false if not possible</returns>
+        public Boolean Remove(string preauthorizationID)
+        {
+            return remove<Preauthorization>(Resource.Preauthorizations, preauthorizationID);
+        }
         /// <summary>
         /// To get the details of an existing preauthorization you’ll need to supply the transaction ID
         /// </summary>
         /// <param name="clientID">Preauthorization identifier</param>
         /// <returns>Preauthorization-object</returns>
-        public Preauthorization GetPreauthorization(string preauthorizationID)
+        public Preauthorization Get(string preauthorizationID)
         {
             return get<Preauthorization>(Resource.Preauthorizations, preauthorizationID);
         }

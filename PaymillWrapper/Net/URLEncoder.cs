@@ -51,12 +51,26 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
-        public string EncodeTransaction(Transaction data)
+
+        public string EncodeTransactionUpdate(Transaction data)
+        {
+            StringBuilder sb = new StringBuilder();
+            this.addKeyValuePair(sb, "description", data.Description);
+            return sb.ToString();
+        }
+        public string EncodeTransaction(Transaction data, Fee fee)
         {
             StringBuilder sb = new StringBuilder();
 
             this.addKeyValuePair(sb, "amount", data.Amount);
             this.addKeyValuePair(sb, "currency", data.Currency);
+
+            if (fee != null)
+            {
+                this.addKeyValuePair(sb, "fee_amount", fee.Amount);
+                if (!string.IsNullOrEmpty(fee.Payment))
+                    this.addKeyValuePair(sb, "fee_payment", fee.Payment);
+            }
 
             if (!string.IsNullOrEmpty(data.Token))
                 this.addKeyValuePair(sb, "token", data.Token);
@@ -131,11 +145,11 @@ namespace PaymillWrapper.Net
         {
             StringBuilder sb = new StringBuilder();
 
-            this.addKeyValuePair(sb, "cancel_at_period_end", data.Cancel_At_Period_End);
+            this.addKeyValuePair(sb, "cancel_at_period_end", data.Cancel_At_Period_End.ToString().ToLower());
 
             return sb.ToString();
         }
-        public  static String convertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
+        public static String ConvertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
         {
             List<String> typesList = new List<String>();
             foreach (PaymillWrapper.Models.EventType evt in eventTypes)
@@ -143,7 +157,7 @@ namespace PaymillWrapper.Net
                 typesList.Add(evt.ToString());
             }
 
-            return String.Join(",", typesList.ToArray()); ;
+            return String.Join(",", typesList.ToArray());
         }
         public string EncodeWebhookUpdate(Webhook data)
         {
@@ -157,7 +171,7 @@ namespace PaymillWrapper.Net
             }
             if(data.EventTypes != null
                 && data.EventTypes.Length > 0)
-                this.addKeyValuePair(sb, "event_types", convertEventsArr(data.EventTypes));
+                this.addKeyValuePair(sb, "event_types", ConvertEventsArr(data.EventTypes));
             return sb.ToString();
         }
         public string EncodeClientUpdate(Client data)

@@ -15,6 +15,8 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(JsonParser<Subscription>))]
     public class Subscription : BaseModel
     {
+        private static readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
+
         /// <summary>
         /// Hash describing the offer which is subscribed to the client
         /// </summary>
@@ -36,37 +38,117 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Cancel date
         /// </summary>
-        [DataMember(Name = "Canceled_At")]
         public DateTime CanceledAt { get; set; }
 
+        [DataMember(Name = "Canceled_At")]
+        public int? Canceled_At_Ticks
+        {
+            get
+            {
+                return (int)(this.CanceledAt - unixEpoch).TotalSeconds;
+            }
+            set
+            {
+                if (value.HasValue == true)
+                {
+                    this.CanceledAt = unixEpoch.AddSeconds(value.Value);
+                }
+            }
+        }
         /// <summary>
-        /// Client-object
+        /// Client
+        /// </summary>
+        public Client Client { get; set; }
+        /// <summary>
+        /// Payment-object
         /// </summary>
         [DataMember(Name = "Client")]
-        public Client Client { get; set; }
+        private Object Client_At_Object
+        {
+            set
+            {
+                if (value != null)
+                {
+                    this.Client = Newtonsoft.Json.JsonConvert.DeserializeObject<Client>(value.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Payment
+        /// </summary>
+        public Payment Payment { get;set;}
 
         /// <summary>
         /// Payment-object
         /// </summary>
         [DataMember(Name = "Payment")]
-        public Payment Payment { get; set; }
+        private Object Payment_At_Object { set {
+            if (value != null)
+            {
+                this.Payment = Newtonsoft.Json.JsonConvert.DeserializeObject<Payment>(value.ToString());
+            }
+        } }
 
         /// <summary>
         /// Trial Start
         /// </summary>
-        [DataMember(Name = "Trial_Start")]
         public DateTime TrialStart { get; set; }
+
+        [DataMember(Name = "Trial_Start")]
+        public int? TrialStart_At_Ticks
+        {
+            get
+            {
+                return (int)(this.TrialStart - unixEpoch).TotalSeconds;
+            }
+            set {
+                if (value.HasValue == true)
+                {
+                    this.TrialStart = unixEpoch.AddSeconds(value.Value);
+                }
+            }
+        }
 
         /// <summary>
         /// Trial End
         /// </summary>
-        [DataMember(Name = "Trial_End")]
         public DateTime TrialEnd { get; set; }
+        [DataMember(Name = "Trial_End")]
+        public int? TrialEnd_At_Ticks
+        {
+            get
+            {
+                return (int)(this.TrialEnd - unixEpoch).TotalSeconds;
+            }
+            set
+            {
+                if (value.HasValue == true)
+                {
+                    this.TrialEnd = unixEpoch.AddSeconds(value.Value);
+                }
+            }
+        }
 
         /// <summary>
         /// Next Capture At
         /// </summary>
-        [DataMember(Name = "Nextcapture_At")]
         public DateTime NextCaptureAt { get; set; }
+
+        [DataMember(Name = "Next_Capture_At")]
+        public int? Next_Capture_At_Ticks
+        {
+            get
+            {
+                return (int)(this.NextCaptureAt - unixEpoch).TotalSeconds;
+            }
+            set
+            {
+                if (value.HasValue == true)
+                {
+                    this.NextCaptureAt = unixEpoch.AddSeconds(value.Value);
+                }
+            }
+        }
     }
 }

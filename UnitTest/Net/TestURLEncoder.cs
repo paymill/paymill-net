@@ -23,8 +23,8 @@ namespace UnitTest.Net
         private TestContext testContextInstance;
 
         /// <summary>
-        ///Obtiene o establece el contexto de las pruebas que proporciona
-        ///información y funcionalidad para la ejecución de pruebas actual.
+        ///Obtiene o establece el contexto de las Tests que proporciona
+        ///información y funcionalidad para la ejecución de Tests actual.
         ///</summary>
         public TestContext TestContext
         {
@@ -38,23 +38,23 @@ namespace UnitTest.Net
             }
         }
 
-        #region Atributos de prueba adicionales
+        #region Atributos de Test adicionales
         //
-        // Puede usar los siguientes atributos adicionales conforme escribe las pruebas:
+        // Puede usar los siguientes atributos adicionales conforme escribe las Tests:
         //
-        // Use ClassInitialize para ejecutar el código antes de ejecutar la primera prueba en la clase
+        // Use ClassInitialize para ejecutar el código antes de ejecutar la primera Test en la clase
         // [ClassInitialize()]
         // public static void MyClassInitialize(TestContext testContext) { }
         //
-        // Use ClassCleanup para ejecutar el código una vez ejecutadas todas las pruebas en una clase
+        // Use ClassCleanup para ejecutar el código una vez ejecutadas todas las Tests en una clase
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
-        // Usar TestInitialize para ejecutar el código antes de ejecutar cada prueba 
+        // Usar TestInitialize para ejecutar el código antes de ejecutar cada Test 
         // [TestInitialize()]
         // public void MyTestInitialize() { }
         //
-        // Use TestCleanup para ejecutar el código una vez ejecutadas todas las pruebas
+        // Use TestCleanup para ejecutar el código una vez ejecutadas todas las Tests
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
@@ -69,10 +69,10 @@ namespace UnitTest.Net
             transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
-            transaction.Description = "Prueba";
+            transaction.Description = "Test";
 
-            string expected = "amount=3500&currency=EUR&token=098f6bcd4621d373cade4e832627b4f6&description=Prueba";
-            string reply = urlEncoder.EncodeTransaction(transaction);
+            string expected = "amount=3500&currency=EUR&token=098f6bcd4621d373cade4e832627b4f6&description=Test";
+            string reply = urlEncoder.EncodeTransaction(transaction, null);
 
             Assert.AreEqual(expected, reply);
         }
@@ -100,48 +100,16 @@ namespace UnitTest.Net
 
             Refund refund = new Refund();
             refund.Amount = 500;
-            refund.Description = "Prueba";
+            refund.Description = "Test";
             refund.Transaction = new Transaction() { Id = "tran_a7c93a1e5b431b52c0f0" };
 
-            string expected = "amount=500&description=Prueba";
+            string expected = "amount=500&description=Test";
             string reply = urlEncoder.EncodeRefund(refund);
 
             Assert.AreEqual(expected, reply);
         }
 
-        [TestMethod]
-        public void EncodeOfferAdd()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Offer offer = new Offer();
-            offer.Amount = 1500;
-            offer.Currency = "eur";
-            offer.Interval = "MONTH";
-            offer.Name = "Prueba API";
-            offer.Trial_Period_Days = 3;
-
-            string expected = "amount=1500&currency=eur&interval=month&name=Prueba+API";
-            string reply = urlEncoder.EncodeOfferAdd(offer);
-
-            Assert.AreEqual(expected, reply);
-        }
-
-        [TestMethod]
-        public void EncodeOfferUpdate()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Offer offer = new Offer();
-            offer.Name = "Oferta 48";
-            offer.Id = "offer_6eea405f83d4d3098604";
-
-            string expected = "amount=0&interval=week&name=Oferta+48";
-            string reply = urlEncoder.EncodeOfferAdd(offer);
-
-            Assert.AreEqual(expected, reply);
-        }
-
+      
         [TestMethod]
         public void EncodeSubscriptionAdd()
         {
@@ -166,42 +134,13 @@ namespace UnitTest.Net
             Subscription subscription = new Subscription();
             subscription.Cancel_At_Period_End = true;
             subscription.Id = "sub_569df922b4506cd73030";
-
-            string expected = "cancel_at_period_end=True";
+            string expected = "cancel_at_period_end=true";
             string reply = urlEncoder.EncodeSubscriptionUpdate(subscription);
 
             Assert.AreEqual(expected, reply);
         }
 
-        [TestMethod]
-        public void EncodeClientAdd()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Client c = new Client();
-            c.Description = "Prueba";
-            c.Email = "javicantos22@hotmail.es";
-
-            string expected = "email=javicantos22%40hotmail.es&description=Prueba";
-            string reply = urlEncoder.Encode<Client>(c);
-
-            Assert.AreEqual(expected, reply);
-        }
-
-        [TestMethod]
-        public void EncodeClientUpdate()
-        {
-            URLEncoder urlEncoder = new URLEncoder();
-
-            Client c = new Client();
-            c.Description = "Javier";
-            c.Email = "javicantos33@hotmail.es";
-            c.Id = "client_bbe895116de80b6141fd";
-
-            string expected = "email=javicantos33%40hotmail.es&description=Javier&id=client_bbe895116de80b6141fd";
-            string reply = urlEncoder.Encode<Client>(c);
-
-            Assert.AreEqual(expected, reply);
-        }
+       
+     
     }
 }

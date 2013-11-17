@@ -12,7 +12,25 @@ namespace PaymillWrapper.Service
         public OfferService(HttpClientRest client):base(client)
         {
         }
+        /// <summary>
+        /// This function creates a subscription object
+        /// </summary>
+        /// <param name="offer"></param>
+        /// <param name="client"></param>
+        /// <param name="pay"></param>
+        /// <returns></returns>
+        public Subscription Subscribe(Offer offer, Client client, Payment pay)
+        {
+            Subscription subscription = new Subscription();
+            subscription.Client = client;
+            subscription.Offer = offer;
+            subscription.Payment = pay;
 
+            return create<Subscription>(
+                Resource.Subscriptions,
+                null,
+                new URLEncoder().EncodeSubscriptionAdd(subscription));
+        }
         /// <summary>
         /// This function allows request a offer list
         /// </summary>
@@ -27,7 +45,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list offer-object</returns>
-        public List<Offer> GetOffers(Filter filter)
+        public List<Offer> GetOffersByFilter(Filter filter)
         {
             return getList<Offer>(Resource.Offers, filter);
         }

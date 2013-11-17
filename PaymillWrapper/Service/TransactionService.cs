@@ -27,7 +27,7 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list transaction-object</returns>
-        public List<Transaction> GetTransactions(Filter filter)
+        public List<Transaction> GetTransactionsByFilter(Filter filter)
         {
             return getList<Transaction>(Resource.Transactions, filter);
         }
@@ -37,20 +37,32 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="client">Object-transaction</param>
         /// <returns>New object-transaction just add</returns>
-        public Transaction CreateTransaction(Transaction transaction)
+        public Transaction Create(Transaction transaction, Fee fee)
         {
             return create<Transaction>(
                 Resource.Transactions,
                 null,
-                new URLEncoder().EncodeTransaction(transaction));
+                new URLEncoder().EncodeTransaction(transaction, fee));
         }
-
+        /// <summary>
+        /// This function update a transaction object
+        /// </summary>
+        /// <param name="client">Object-transaction</param>
+        /// <returns>New object-transaction just add</returns>
+        public Transaction Update(Transaction transaction)
+        {
+            return update<Transaction>(
+                Resource.Transactions,
+                transaction,
+                transaction.Id,
+                new URLEncoder().EncodeTransactionUpdate(transaction));
+        }
         /// <summary>
         /// To get the details of an existing transaction you’ll need to supply the transaction ID
         /// </summary>
         /// <param name="clientID">Client identifier</param>
         /// <returns>Client-object</returns>
-        public Transaction GetTransaction(string transactionID)
+        public Transaction Get(string transactionID)
         {
             return get<Transaction>(Resource.Transactions, transactionID);
         }

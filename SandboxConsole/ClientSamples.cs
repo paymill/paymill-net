@@ -39,10 +39,8 @@ namespace SandboxConsole
 
             Filter filter = new Filter();
             filter.Add("email", "javicantos22@hotmail.es"); //OK
-            //  filter.Add("creditcard", "pay_f95c7d70c6ad8da339e5"); //KO
-            //  filter.Add("created_at", 1352930695); //KO
-
-            List<Client> lstClients = clientService.GetClients(filter);
+  
+            List<Client> lstClients = clientService.GetClientsByFilter(filter);
 
             foreach (Client c in lstClients)
             {
@@ -56,7 +54,7 @@ namespace SandboxConsole
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             ClientService clientService = Paymill.GetService<ClientService>();
-            Client newClient = clientService.Create("javicantos22@hotmail.es", "Prueba API");
+            Client newClient = clientService.Create("javicantos22@hotmail.es", "Test API");
             Utilities.printObject(newClient);
 
         }
