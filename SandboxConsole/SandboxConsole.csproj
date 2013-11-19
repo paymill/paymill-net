@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientSamples.cs" />
+    <Compile Include="WebhookSamples.cs" />
     <Compile Include="PaymentSamples.cs" />
     <Compile Include="PreauthorizationSamples.cs" />
     <Compile Include="Program.cs" />

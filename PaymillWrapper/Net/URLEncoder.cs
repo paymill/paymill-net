@@ -169,6 +169,9 @@ namespace PaymillWrapper.Net
             {
                 this.addKeyValuePair(sb, "email", data.Email);
             }
+            if(data.EventTypes != null
+                && data.EventTypes.Length > 0)
+                this.addKeyValuePair(sb, "event_types", ConvertEventsArr(data.EventTypes));
             return sb.ToString();
         }
         public string EncodeClientUpdate(Client data)

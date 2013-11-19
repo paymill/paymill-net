@@ -103,7 +103,6 @@ namespace SandboxConsole
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             OfferService offerService = Paymill.GetService<OfferService>();
-
             Offer offer = new Offer();
             offer.Name = "Oferta 48";
             offer.Id = "offer_6eea405f83d4d3098604";

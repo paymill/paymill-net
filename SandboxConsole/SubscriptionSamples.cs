@@ -50,12 +50,33 @@ namespace SandboxConsole
 
             Console.Read();
         }
+       
+        private static Subscription createSubsription()
+        {
+            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
+            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
+            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
+            ClientService clientService = Paymill.GetService<ClientService>();
+            OfferService offerService = Paymill.GetService<OfferService>();
+
+            var client = clientService.Create("test@mail.com", "test");
+            var offer = ОfferSamples.CreateOfferObject();
+
+            Subscription subscription = new Subscription();
+            subscription.Client = client;
+            subscription.Offer = offer;
+            PaymentService paymentService = Paymill.GetService<PaymentService>();
+            string token = "098f6bcd4621d373cade4e832627b4f6";
+            Payment payment = paymentService.Create(token, client.Id);
+            subscription.Payment = payment;
+            return offerService.Subscribe(offer, client, payment);
+        
+        }
         public static void AddSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             OfferService offerService = Paymill.GetService<OfferService>();
-
             Client client = new Client() { Id = "client_bbe895116de80b6141fd" };
             Offer offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
             Payment payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
@@ -79,7 +100,6 @@ namespace SandboxConsole
             Utilities.printObject(subscription1);
             Console.Read();
         }
-       
         public static void UpdateSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
@@ -88,14 +108,12 @@ namespace SandboxConsole
             OfferService offerService = Paymill.GetService<OfferService>();
             PaymentService paymentService = Paymill.GetService<PaymentService>();
             SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
-
             ClientService clientService = Paymill.GetService<ClientService>();
             Client newClient = clientService.Create("javicantos22@hotmail.es", "Test API");
             string token = "098f6bcd4621d373cade4e832627b4f6";
             Payment payment = paymentService.Create(token, newClient.Id);
             Offer offer = ОfferSamples.CreateOfferObject();
             Subscription newSubscription = offerService.Subscribe(offer, newClient, payment);
-
             Subscription subs = susbscriptionService.Get(newSubscription.Id);
             subs.Offer = offer;
             subs.Payment = payment;

@@ -13,9 +13,7 @@ namespace SandboxConsole
     {
         static void Main(string[] args)
         {
-  //          SubscriptionSamples.GetSubscriptions();
             ТransactionStamples.AddTransactionWithPayment();
-          //  ClientSamples.GetClients();
             Console.ReadLine();
         }
      
