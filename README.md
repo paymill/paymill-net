@@ -1,4 +1,3 @@
-
 ![PAYMILL icon](https://static.paymill.com/r/335f99eb3914d517bf392beb1adaf7cccef786b6/img/logo-download_Light.png)
 
 # PAYMILL .NET
@@ -12,7 +11,7 @@ A .NET wrapper for the  [PAYMILL](https://www.paymill.com/) API.
 - Install the latest release.
 - Check the samples.
 - Check the API [reference](https://www.paymill.com/en-gb/documentation-3/reference/api-reference/).
-- Check the additional [documentation](http://paymill.github.io/paymill-js/docs/).
+- Check the additional [documentation](https://paymill.codeplex.com/documentation).
 
 ## Installation
 
