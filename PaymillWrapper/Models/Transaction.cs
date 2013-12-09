@@ -19,7 +19,8 @@ namespace PaymillWrapper.Models
             FAILED,
             PENDING,
             OPEN,
-            PREAUTH
+            PREAUTH,
+            CHARGEBACK
         }
         public Transaction()
         {
