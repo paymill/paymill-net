@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using PaymillWrapper.Models;
+﻿using PaymillWrapper.Models;
 using PaymillWrapper.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Net;
 using System.Text;
 using System.Web;
 using PaymillWrapper.Service;
@@ -27,13 +25,11 @@ namespace PaymillWrapper
                     throw new PaymillException("You need to set an api url before instantiating an HttpClientRest");
 
                 var client = new HttpClientRest(ApiUrl, ApiKey);
-                client.DefaultRequestHeaders.Accept
-                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.Headers.Add("Accept", "application/json");
 
                 string authInfo = ApiKey + ":";
                 authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-                client.DefaultRequestHeaders.Authorization = 
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authInfo);  
+                client.Headers.Add("Authorization", "Basic " + authInfo);  
 
                 return client;
             }

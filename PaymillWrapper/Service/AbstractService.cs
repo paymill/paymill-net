@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PaymillWrapper.Net;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Net;
 
 namespace PaymillWrapper.Service
 {
@@ -38,7 +36,7 @@ namespace PaymillWrapper.Service
 
             if (filter != null)
                 requestUri += String.Format("?{0}", filter.ToString());
-            HttpResponseMessage response = _client.GetAsync(requestUri).Result;
+            HttpResponseMessage response = _client.GetWebRequest(requestUri).Result;
             String data = readReponseMessage(response);
             lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
             return lst;

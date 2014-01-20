@@ -1,16 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
-using PaymillWrapper.Models;
+﻿using PaymillWrapper.Models;
 using PaymillWrapper.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Net;
 using System.Web;
 
 namespace PaymillWrapper.Net
 {
-    public class HttpClientRest : HttpClient
+    public class HttpClientRest : WebClient
     {
         private string _apiUrl = "";
         private string _apiKey = "";

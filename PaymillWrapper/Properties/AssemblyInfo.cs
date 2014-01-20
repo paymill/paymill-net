@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // La información general sobre un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos atributos para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("PaymillWrapperNET")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Wrapper for the PAYMILL API")]
+[assembly: AssemblyDescription("Wrapper for the PAYMILL API")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("www.javiercantos.net")]
-[assembly: AssemblyProduct("PaymillWrapperNET")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("PAYMILL GmbH")]
+[assembly: AssemblyProduct("PaymillWrapper")]
+[assembly: AssemblyCopyright("PAYMILL GmbH")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
