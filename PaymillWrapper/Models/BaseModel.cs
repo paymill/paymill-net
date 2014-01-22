@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -15,16 +16,16 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [DataMember(Name = "Id")]
+        [JsonPropertyAttribute("Id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Creation date
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public DateTime Created_At { get; set; }
 
-        [DataMember(Name = "Created_At")]
+        [JsonPropertyAttribute("Created_At")]
         public int Created_At_Ticks
         {
             get { 
@@ -36,10 +37,10 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Last update
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public DateTime Updated_At { get; set; }
 
-        [DataMember(Name = "Updated_At")]
+        [JsonPropertyAttribute("Updated_At")]
         public int Updated_At_Ticks
         {
             get { return (int)(this.Updated_At - unixEpoch).TotalSeconds; }

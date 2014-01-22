@@ -14,7 +14,7 @@ namespace PaymillWrapper.Net
     {
         public override bool CanConvert(Type objectType)
         {
-            if (objectType == typeof(BaseModel))
+            if (objectType == typeof(T))
                 return true;
 
             return false;

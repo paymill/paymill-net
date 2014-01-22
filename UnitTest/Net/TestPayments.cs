@@ -4,6 +4,9 @@ using PaymillWrapper;
 using PaymillWrapper.Service;
 using System.Collections.Generic;
 using PaymillWrapper.Models;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using PaymillWrapper.Net;
 
 namespace UnitTest.Net
 {
@@ -19,11 +22,13 @@ namespace UnitTest.Net
         [TestMethod]
         public void GetPayments()
         {
-           
+
             PaymentService paymentService = Paymill.GetService<PaymentService>();
             List<Payment> lstPayments = paymentService.GetPayments();
             Assert.IsFalse(lstPayments.Count == 0, "GetPayments Fail");
-         }
+        }
+
+
         [TestMethod]
         public void CreatePayment()
         {

@@ -58,8 +58,8 @@ namespace UnitTest.Net
             webhook = srv.Create(webhook);
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
             Webhook newWebhook = srv.Get(webhook.Id);
-            Assert.IsTrue(webhook.Id != String.Empty, "GetWebhook Fail");
-            Assert.IsTrue(webhook.EventTypes.Length == 2, "GetWebhook Fail");
+            Assert.IsTrue(newWebhook.Id != String.Empty, "GetWebhook Fail");
+            Assert.IsTrue(newWebhook.EventTypes.Length == 2, "GetWebhook Fail");
         }
         [TestMethod]
         public void UpdateWebhook()

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using PaymillWrapper.Net;
 using System.Net;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using System.Text;
 
 namespace PaymillWrapper.Service
 {
@@ -31,14 +34,20 @@ namespace PaymillWrapper.Service
         protected List<T> getList<T>(Resource resource, Filter filter)
         {
             var lst = new List<T>();
-
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower();
-
             if (filter != null)
                 requestUri += String.Format("?{0}", filter.ToString());
-            HttpResponseMessage response = _client.GetWebRequest(requestUri).Result;
-            String data = readReponseMessage(response);
-            lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
+            try
+            {
+                String jsonResponse = _client.DownloadString(requestUri);
+                String data = readReponseMessage(jsonResponse, HttpStatusCode.OK);
+                lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
+            }
+            catch (WebException ex)
+            {
+                var response = ((HttpWebResponse)ex.Response);
+                throwResponseError(response);
+            }
             return lst;
         }
 
@@ -49,64 +58,103 @@ namespace PaymillWrapper.Service
         protected T create<T>(Resource resource, string resourceID, string encodeParams)
         {
             T reply = default(T);
-
-            var content = new StringContent(encodeParams);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower();
-
-            if (!string.IsNullOrEmpty(resourceID))
+            try
             {
-                requestUri += "/" + resourceID;
+                _client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                String jsonResponse = _client.UploadString(requestUri, "POST", encodeParams);
+                String data = readReponseMessage(jsonResponse, HttpStatusCode.OK);
+                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
             }
-            HttpResponseMessage response = _client.PostAsync(requestUri, content).Result;
-            String data = readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            catch (WebException ex)
+            {
+                var response = ((HttpWebResponse)ex.Response);
+                throwResponseError(response);
+            }
             return reply;
         }
 
         protected T get<T>(Resource resource, string resourceID)
         {
             T reply = default(T);
-
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-            HttpResponseMessage response = _client.GetAsync(requestUri).Result;
-            String data = readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
-            return reply;
-        }
-        private String readReponseMessage(HttpResponseMessage response)
-        {
-            var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return jsonArray["data"].ToString();
+                String jsonResponse = _client.DownloadString(requestUri);
+                String data = readReponseMessage(jsonResponse, HttpStatusCode.OK);
+                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
             }
-            else
+            catch (WebException ex)
             {
-                string error = jsonArray["error"].ToString();
-                throw new PaymillRequestException(error, response.StatusCode);
+                var response = ((HttpWebResponse)ex.Response);
+                throwResponseError(response);
             }
+             return reply;
         }
         protected bool remove<T>(Resource resource, string resourceID)
         {
             string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-
-            HttpResponseMessage response = _client.DeleteAsync(requestUri).Result;
-            readReponseMessage(response);
+            try
+            {
+                String jsonResponse = _client.UploadString(requestUri, "DELETE", "");
+                readReponseMessage(jsonResponse, HttpStatusCode.OK);
+            }
+            catch (WebException ex)
+            {
+                var response = ((HttpWebResponse)ex.Response);
+                throwResponseError(response);
+            }
             return true;
         }
+
         protected T update<T>(Resource resource, object obj, string resourceID, string encodeParams)
         {
             T reply = default(T);
-
-            var content = new StringContent(encodeParams);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-
-            string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
-            HttpResponseMessage response = _client.PutAsync(requestUri, content).Result;
-            String data = readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            try
+            {
+                string requestUri = Paymill.ApiUrl + "/" + resource.ToString().ToLower() + "/" + resourceID;
+                _client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                String jsonResponse = _client.UploadString(requestUri, "PUT", encodeParams);
+                String data = readReponseMessage(jsonResponse, HttpStatusCode.OK);
+                reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            }
+            catch (WebException ex)
+            {
+                var response = ((HttpWebResponse)ex.Response);
+                throwResponseError(response);
+            }
             return reply;
         }
+        private static String readReponseMessage(String stringFullOfJson, HttpStatusCode responseCode)
+        {
+            JToken token = JObject.Parse(stringFullOfJson);
+            if (responseCode == HttpStatusCode.OK)
+            {
+                return token.SelectToken("data").ToString();
+            }
+            else
+            {
+                return token.SelectToken("error").ToString();
+            }
+        }
+        private static void throwResponseError(HttpWebResponse response)
+        {
+            StringBuilder sb = new StringBuilder();
+            Byte[] buf = new byte[8192];
+            Stream resStream = response.GetResponseStream();
+            int count = 0;
+            do
+            {
+                count = resStream.Read(buf, 0, buf.Length);
+                if (count != 0)
+                {
+                    sb.Append(Encoding.UTF8.GetString(buf, 0, count)); // just hardcoding UTF8 here
+                }
+            } while (count > 0);
+            String responseErrorInJson = sb.ToString();
+            String error = readReponseMessage(responseErrorInJson, response.StatusCode);
+            throw new PaymillRequestException(error, response.StatusCode);
+        }
+
     }
 }
