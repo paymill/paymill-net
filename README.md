@@ -2,7 +2,7 @@
 
 # PAYMILL .NET
 
-# This is only for .NET 3.5
+# This is only for .NET 3.5 and future release is not supported
 
 
 A .NET wrapper for the  [PAYMILL](https://www.paymill.com/) API.
