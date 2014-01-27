@@ -31,12 +31,12 @@ Requirements
 Compiled binary
 ---------------
 
-You can download the last version of <a href="http://paymillwrapper.codeplex.com/releases">Paymill Wrapper .NET Beta 2</a>
+You can download the last version of <a href="https://github.com/paymill/paymill-net">Paymill Wrapper</a>
 
 Documentation
 -------------
 
-See the <a href="http://paymillwrapper.codeplex.com/documentation">documentation</a>
+See the <a href="https://paymill.codeplex.com/documentation">documentation</a>
 
 Get in on NuGet
 ---------------
@@ -53,10 +53,4 @@ Donate
 
 Paymill Wrapper .NET is a free open source project that has been developed over hours of my own time. If you are using Paymill Wrapper .NET commercially and you find Paymill Wrapper .NET useful I'd appreciate donations to help support future development, send a message to jcantos@gmail.com
 
-More information
-----------------
 
-* My blog can by found at http://www.javiercantos.net where I post news and updates about Paymill Wrapper .NET.
-* My Twitter account can be found at https://twitter.com/javiercantos.
-* My Linkedin account can be found at http://es.linkedin.com/in/javiercantos
-* My Facebook account can be found at https://www.facebook.com/javier.cantos.vargas
