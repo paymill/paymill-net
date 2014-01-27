@@ -2,6 +2,8 @@
 
 # PAYMILL .NET
 
+# This is only for .NET 3.5
+
 
 A .NET wrapper for the  [PAYMILL](https://www.paymill.com/) API.
 
