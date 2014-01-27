@@ -1,62 +1,34 @@
-Paymill Wrapper .NET
-====================
+![PAYMILL icon](https://static.paymill.com/r/335f99eb3914d517bf392beb1adaf7cccef786b6/img/logo-download_Light.png)
 
-Paymill Wrapper. NET is an API for easy integration for recurring billings and payments online through the product https://www.paymill.com
+# PAYMILL .NET
 
-Features
---------
 
-* API for recurring billings
-* API for payments online
-* Management clients
-* Management offers
-* Management payments
-* Management refunds
-* Management subscriptions
-* Management transactions
-* Supports .NET 4.5
+A .NET wrapper for the  [PAYMILL](https://www.paymill.com/) API.
 
-Requirements
-------------
+## Getting started
 
-### For use
+- If you are not familiar with PAYMILL, start with the [documentation](https://www.paymill.com/en-gb/documentation-3/).
+- Install the latest release.
+- Check the samples.
+- Check the API [reference](https://www.paymill.com/en-gb/documentation-3/reference/api-reference/).
+- Check the additional [documentation](https://paymill.codeplex.com/documentation).
 
-* Net Framework 4.5
+## Installation
 
-### For development
+### Nuget
+To install Wrapper for the PAYMILL API, run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
 
-* Visual Studio 2012
-* Net Framework 4.5
+```
+PM> Install-Package PaymillWrapper 
+```
+More info [here](https://www.nuget.org/packages/PaymillWrapper/)
 
-Compiled binary
----------------
+### Manual
+Download the lastest stable release either from https://paymill.codeplex.com/ or this [repository](https://github.com/paymill/paymill-net/releases).
 
-You can download the last version of <a href="http://paymillwrapper.codeplex.com/releases">Paymill Wrapper .NET Beta 2</a>
+## License
 
-Documentation
--------------
+Copyright 2014 PAYMILL GmbH.
 
-See the <a href="http://paymillwrapper.codeplex.com/documentation">documentation</a>
+MIT License (enclosed)
 
-Get in on NuGet
----------------
-
-<pre><code>Install-Package PaymillWrapperNET</code></pre>
-
-License
--------
-
-MIT <a href="https://github.com/jcantos/paymillwrappernet/blob/master/LICENSE">License</a>
-
-Donate
-------
-
-Paymill Wrapper .NET is a free open source project that has been developed over hours of my own time. If you are using Paymill Wrapper .NET commercially and you find Paymill Wrapper .NET useful I'd appreciate donations to help support future development, send a message to jcantos@gmail.com
-
-More information
-----------------
-
-* My blog can by found at http://www.javiercantos.net where I post news and updates about Paymill Wrapper .NET.
-* My Twitter account can be found at https://twitter.com/javiercantos.
-* My Linkedin account can be found at http://es.linkedin.com/in/javiercantos
-* My Facebook account can be found at https://www.facebook.com/javier.cantos.vargas
