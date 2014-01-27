@@ -26,4 +26,9 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 *.vssscc
+<<<<<<< HEAD
 $tf*/
+=======
+$tf*/
+packages/
+>>>>>>> 91036335ba673b7d1875a28d381979c2cd0aaa7c

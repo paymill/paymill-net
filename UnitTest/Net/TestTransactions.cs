@@ -38,7 +38,6 @@ namespace UnitTest.Net
             var updateted = service.Update(transaction);
             Assert.IsTrue(updateted.Description == "My updated transaction description", "Update Transaction Failed");
             Assert.IsTrue(transaction.Amount == updateted.Amount, "Update Transaction Failed");
-
         }
     }
 }

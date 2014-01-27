@@ -108,8 +108,6 @@ namespace UnitTest.Net
 
             Assert.AreEqual(expected, reply);
         }
-
-
         [TestMethod]
         public void EncodeSubscriptionAdd()
         {
@@ -139,8 +137,6 @@ namespace UnitTest.Net
 
             Assert.AreEqual(expected, reply);
         }
-
-
 
     }
 }
