@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -22,19 +23,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Transactions-object
         /// </summary>
-        [DataMember(Name = "Transaction")]
+        [JsonPropertyAttribute("Transaction")]
         public Transaction Transaction { get; set; }
 
         /// <summary>
         /// The refunded amount
         /// </summary>
-        [DataMember(Name = "Amount")]
+        [JsonPropertyAttribute("Amount")]
         public int Amount { get; set; }
 
         /// <summary>
         /// The refunded formatted amount with decimals
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -46,19 +47,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Indicates the current status of this transaction
         /// </summary>
-        [DataMember(Name = "Status")]
+        [JsonPropertyAttribute("Status")]
         public TypeStatus Status { get; set; }
 
         /// <summary>
         /// The description given for this refund
         /// </summary>
-        [DataMember(Name = "Description")]
+        [JsonPropertyAttribute("Description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Whether this refund happend in test- or in livemode
         /// </summary>
-        [DataMember(Name = "Livemode")]
+        [JsonPropertyAttribute("Livemode")]
         public bool Livemode { get; set; }
     }
 }

@@ -24,6 +24,13 @@ namespace UnitTest.Net
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
         }
         [TestMethod]
+        public void CreateClientWithNameOnly()
+        {
+            ClientService clientService = Paymill.GetService<ClientService>();
+            Client client = clientService.Create("", "Lovely Client");
+            Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
+        }
+        [TestMethod]
         public void RemoveClient()
         {
             ClientService clientService = Paymill.GetService<ClientService>();

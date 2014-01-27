@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -24,13 +25,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Amount of this transaction
         /// </summary>
-        [DataMember(Name = "Amount")]
-        public double Amount { get; set; }
+        [JsonPropertyAttribute("Amount")]
+        public int Amount { get; set; }
 
         /// <summary>
         /// Formatted amount of this transaction
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -42,31 +43,31 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Whether this transaction was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "Livemode")]
+        [JsonPropertyAttribute("Livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// Creditcard-object or directdebit-object
         /// </summary>
-        [DataMember(Name = "Payment")]
+        [JsonPropertyAttribute("Payment")]
         public Payment Payment { get; set; }
 
         /// <summary>
         /// Client-object
         /// </summary>
-        [DataMember(Name = "Client")]
+        [JsonPropertyAttribute("Client")]
         public Client Client { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "Currency")]
+        [JsonPropertyAttribute("Currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// A token generated through JavaScript-Bridge Paymill
         /// </summary>
-        [DataMember(Name = "Token")]
+        [JsonPropertyAttribute("Token")]
         public string Token { get; set; }
 
     }

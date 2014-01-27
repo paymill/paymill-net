@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,7 +13,7 @@ namespace PaymillWrapper
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [JsonPropertyAttribute("Аctive")]
          public String Аctive
          {
              get;
@@ -22,7 +23,7 @@ namespace PaymillWrapper
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [JsonPropertyAttribute("Inactive")]
         public string Inactive
         {
             get;

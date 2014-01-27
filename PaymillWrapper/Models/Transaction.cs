@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -19,7 +20,8 @@ namespace PaymillWrapper.Models
             FAILED,
             PENDING,
             OPEN,
-            PREAUTH
+            PREAUTH,
+            CHARGEBACK
         }
         public Transaction()
         {
@@ -28,13 +30,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Amount of this transaction
         /// </summary>
-        [DataMember(Name = "Amount")]
-        public double Amount { get; set; }
+        [JsonPropertyAttribute("Amount")]
+        public int Amount { get; set; }
 
         /// <summary>
         /// Formatted amount of this transaction
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -46,13 +48,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// The used amount, smallest possible unit per currency (for euro, we’re calculating the amount in cents)
         /// </summary>
-        [DataMember(Name = "Origin_Amount")]
-        public double Origin_Amount { get; set; }
+        [JsonPropertyAttribute("Origin_Amount")]
+        public int Origin_Amount { get; set; }
 
         /// <summary>
         /// Formatted origin amount
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double Origin_AmountFormatted
         {
             get
@@ -64,61 +66,61 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Indicates the current status of this transaction, e.g closed means the transaction is sucessfully transfered, refunded means that the amount is fully or in parts refunded
         /// </summary>
-        [DataMember(Name = "Status")]
+        [JsonPropertyAttribute("Status")]
         public TypeStatus Status { get; set; }
 
         /// <summary>
         /// Need a additional description for this transaction? Maybe your shopping cart ID or something like that?
         /// </summary>
-        [DataMember(Name = "Description")]
+        [JsonPropertyAttribute("Description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Whether this transaction was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "Livemode")]
+        [JsonPropertyAttribute("Livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// List refunds-object
         /// </summary>
-        [DataMember(Name = "Refunds")]
+        [JsonPropertyAttribute("Refunds")]
         public List<Refund> Refunds { get; set; }
 
         /// <summary>
         /// Creditcard-object or directdebit-object
         /// </summary>
-        [DataMember(Name = "Payment")]
+        [JsonPropertyAttribute("Payment")]
         public Payment Payment { get; set; }
 
         /// <summary>
         /// Client-object
         /// </summary>
-        [DataMember(Name = "Client")]
+        [JsonPropertyAttribute("Client")]
         public Client Client { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "Currency")]
+        [JsonPropertyAttribute("Currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// A token generated through JavaScript-Bridge Paymill
         /// </summary>
-        [DataMember(Name = "Token")]
+        [JsonPropertyAttribute("Token")]
         public string Token { get; set; }
 
         /// <summary>
         /// Preauthorization-object
         /// </summary>
-        [DataMember(Name = "Preauthorization")]
+        [JsonPropertyAttribute("Preauthorization")]
         public Preauthorization Preauthorization { get; set; }
 
-        [DataMember(Name = "Response_Code")]
+        [JsonPropertyAttribute("Response_Code")]
         public String ResponseCode { get; set; }
 
-        [DataMember(Name = "Fees")]
+        [JsonPropertyAttribute("Fees")]
         public List<Fee> Fees { get; set; }
 
       }

@@ -13,7 +13,7 @@ namespace UnitTest.Net
         [TestInitialize]
         public void Initialize()
         {
-            Paymill.ApiKey = "9a4129b37640ea5f62357922975842a1";
+            Paymill.ApiKey = "532bd35a7cb65eda489b2fc71bf0ca8f";
             Paymill.ApiUrl = "https://api.paymill.de/v2";
         }
        

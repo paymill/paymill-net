@@ -20,19 +20,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Hash describing the offer which is subscribed to the client
         /// </summary>
-        [DataMember(Name = "Offer")]
+        [JsonPropertyAttribute("Offer")]
         public Offer Offer { get; set; }
 
         /// <summary>
         /// Whether this subscription was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "Livemode")]
+        [JsonPropertyAttribute("Livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// Cancel this subscription immediately or at the end of the current period?
         /// </summary>
-        [DataMember(Name = "Cancel_At_Period_End")]
+        [JsonPropertyAttribute( "Cancel_At_Period_End")]
         public bool Cancel_At_Period_End { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace PaymillWrapper.Models
         /// </summary>
         public DateTime CanceledAt { get; set; }
 
-        [DataMember(Name = "Canceled_At")]
+        [JsonPropertyAttribute("Canceled_At")]
         public int? Canceled_At_Ticks
         {
             get
@@ -62,7 +62,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Payment-object
         /// </summary>
-        [DataMember(Name = "Client")]
+        [JsonPropertyAttribute("Client")]
         private Object Client_At_Object
         {
             set
@@ -82,7 +82,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Payment-object
         /// </summary>
-        [DataMember(Name = "Payment")]
+        [JsonPropertyAttribute("Payment")]
         private Object Payment_At_Object { set {
             if (value != null)
             {
@@ -95,7 +95,7 @@ namespace PaymillWrapper.Models
         /// </summary>
         public DateTime TrialStart { get; set; }
 
-        [DataMember(Name = "Trial_Start")]
+        [JsonPropertyAttribute("Trial_Start")]
         public int? TrialStart_At_Ticks
         {
             get
@@ -114,7 +114,7 @@ namespace PaymillWrapper.Models
         /// Trial End
         /// </summary>
         public DateTime TrialEnd { get; set; }
-        [DataMember(Name = "Trial_End")]
+        [JsonPropertyAttribute("Trial_End")]
         public int? TrialEnd_At_Ticks
         {
             get
@@ -135,7 +135,7 @@ namespace PaymillWrapper.Models
         /// </summary>
         public DateTime NextCaptureAt { get; set; }
 
-        [DataMember(Name = "Next_Capture_At")]
+        [JsonPropertyAttribute("Next_Capture_At")]
         public int? Next_Capture_At_Ticks
         {
             get

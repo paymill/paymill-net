@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -9,13 +10,13 @@ namespace PaymillWrapper.Models
 {
     public class Event
     {
-        [DataMember(Name = "Subscription")]
+        [JsonPropertyAttribute("Subscription")]
         public Subscription Subscription;
 
-        [DataMember(Name = "Transaction")]
+        [JsonPropertyAttribute("Transaction")]
         public Transaction Transaction;
 
-        [DataMember(Name = "Event_Type")]
+        [JsonPropertyAttribute("Event_Type")]
         public PaymillWrapper.Models.EventType Type { get; set; }
     }
 }

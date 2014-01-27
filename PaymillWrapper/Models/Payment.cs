@@ -24,73 +24,73 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// enum(creditcard,debit)
         /// </summary>
-        [DataMember(Name = "Type")]
+        [JsonPropertyAttribute("Type")]
         public TypePayment Type { get; set; }
 
         /// <summary>
         /// The identifier of a client (client-object)
         /// </summary>
-        [DataMember(Name = "Client")]
+        [JsonPropertyAttribute("Client")]
         public string Client { get; set; }
 
         /// <summary>
         /// Visa or Mastercard
         /// </summary>
-        [DataMember(Name = "Card_Type")]
+        [JsonPropertyAttribute("Card_Type")]
         public string Card_Type { get; set; }
 
         /// <summary>
         /// Country
         /// </summary>
-        [DataMember(Name = "Country")]
+        [JsonPropertyAttribute("Country")]
         public string Country { get; set; }
 
         /// <summary>
         /// Expiry month of the credit card
         /// </summary>
-        [DataMember(Name = "Expire_Month")]
+        [JsonPropertyAttribute("Expire_Month")]
         public int Expire_Month { get; set; }
 
         /// <summary>
         /// Expiry year of the credit card
         /// </summary>
-        [DataMember(Name = "Expire_Year")]
+        [JsonPropertyAttribute("Expire_Year")]
         public int Expire_Year { get; set; }
 
         /// <summary>
         /// Name of the card holder
         /// </summary>
-        [DataMember(Name = "Card_Holder")]
+        [JsonPropertyAttribute("Card_Holder")]
         public string Card_Holder { get; set; }
 
         /// <summary>
         /// The last four digits of the credit card
         /// </summary>
-        [DataMember(Name = "Last4")]
+        [JsonPropertyAttribute("Last4")]
         public string Last4 { get; set; }
 
         /// <summary>
         /// The used Bank Code
         /// </summary>
-        [DataMember(Name = "Code")]
+        [JsonPropertyAttribute("Code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Name of the account holder
         /// </summary>
-        [DataMember(Name = "Holder")]
+        [JsonPropertyAttribute("Holder")]
         public string Holder { get; set; }
 
         /// <summary>
         /// The used account number, for security reasons the number is masked
         /// </summary>
-        [DataMember(Name = "Account")]
+        [JsonPropertyAttribute("Account")]
         public string Account { get; set; }
     
         /// <summary>
         /// App (ID) that created this offer or null if created by yourself
         /// </summary>
-        [DataMember(Name = "app_id")]
+        [JsonPropertyAttribute("app_id")]
         public string AppId { get; set; }
 
      

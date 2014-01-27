@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -20,19 +21,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Your name for this offer
         /// </summary>
-        [DataMember(Name = "Name")]
+        [JsonPropertyAttribute("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Every interval the specified amount will be charged. In test mode only even values e.g. 42.00 = 4200 are allowed
         /// </summary>
-        [DataMember(Name = "Amount")]
-        public double Amount { get; set; }
+        [JsonPropertyAttribute("Amount")]
+        public int Amount { get; set; }
 
         /// <summary>
         /// Return formatted amount, e.g. 4200 amount value return 42.00
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -44,28 +45,28 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
-        [DataMember(Name = "Interval")]
+        [JsonPropertyAttribute("Interval")]
         public String Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?
         /// </summary>
-        [DataMember(Name = "Trial_Period_Days")]
+        [JsonPropertyAttribute("Trial_Period_Days")]
         public int? Trial_Period_Days { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "Currency")]
+        [JsonPropertyAttribute("Currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// App (ID) that created this offer or null if created by yourself
         /// </summary>
-        [DataMember(Name = "app_id")]
+        [JsonPropertyAttribute("app_id")]
         public string AppId { get; set; }
 
-        [DataMember(Name = "subscription_count")]
+        [JsonPropertyAttribute("subscription_count")]
         public SubscriptionCount SubscriptionCount { get; set; }
 
  

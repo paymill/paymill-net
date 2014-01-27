@@ -12,9 +12,6 @@ namespace PaymillWrapper.Models
    [JsonConverter(typeof(JsonParser<Webhook>))]
     public class Webhook : BaseModel
     {
-        [JsonPropertyAttribute("Id")]
-        public String Id { get; set; }
-
         [JsonPropertyAttribute("Url")]
         public Uri Url { get; set; }
 
@@ -24,7 +21,7 @@ namespace PaymillWrapper.Models
          [JsonPropertyAttribute("Email")]
         public String Email { get; set; }
 
-         [DataMember(Name = "Event_Types")]
+         [JsonPropertyAttribute("Event_Types")]
          private String[] Created_EventTypes
          {
              get
