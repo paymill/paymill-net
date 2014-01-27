@@ -27,7 +27,7 @@ namespace PaymillWrapper.Models
         /// Every interval the specified amount will be charged. In test mode only even values e.g. 42.00 = 4200 are allowed
         /// </summary>
         [DataMember(Name = "Amount")]
-        public double Amount { get; set; }
+        public int Amount { get; set; }
 
         /// <summary>
         /// Return formatted amount, e.g. 4200 amount value return 42.00

@@ -25,7 +25,7 @@ namespace PaymillWrapper.Models
         /// Amount of this transaction
         /// </summary>
         [DataMember(Name = "Amount")]
-        public double Amount { get; set; }
+        public int Amount { get; set; }
 
         /// <summary>
         /// Formatted amount of this transaction

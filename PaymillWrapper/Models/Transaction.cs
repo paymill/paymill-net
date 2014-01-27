@@ -29,7 +29,7 @@ namespace PaymillWrapper.Models
         /// Amount of this transaction
         /// </summary>
         [DataMember(Name = "Amount")]
-        public double Amount { get; set; }
+        public int Amount { get; set; }
 
         /// <summary>
         /// Formatted amount of this transaction
@@ -47,7 +47,7 @@ namespace PaymillWrapper.Models
         /// The used amount, smallest possible unit per currency (for euro, we’re calculating the amount in cents)
         /// </summary>
         [DataMember(Name = "Origin_Amount")]
-        public double Origin_Amount { get; set; }
+        public int Origin_Amount { get; set; }
 
         /// <summary>
         /// Formatted origin amount
