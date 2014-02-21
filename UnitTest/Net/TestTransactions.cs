@@ -39,5 +39,12 @@ namespace UnitTest.Net
             Assert.IsTrue(updateted.Description == "My updated transaction description", "Update Transaction Failed");
             Assert.IsTrue(transaction.Amount == updateted.Amount, "Update Transaction Failed");
         }
+        [TestMethod]
+        public void ListTransaction()
+        {
+            TransactionService trService = Paymill.GetService<TransactionService>();
+            var list = trService.GetTransactions();
+            Assert.IsTrue(list.Count > 0, "List Transaction Failed");
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace SandboxConsole
 {
     public static class PaymentSamples
     {
-        public static void GetPayments()
+        public static List<Payment> GetPayments()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -30,6 +30,7 @@ namespace SandboxConsole
             }
 
             Console.Read();
+            return lstPayments;
         }
         public static void GetPaymentsWithParameters()
         {

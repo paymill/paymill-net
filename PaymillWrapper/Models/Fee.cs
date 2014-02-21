@@ -24,5 +24,11 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "Amount")]
         public int Amount { get; set; }
+
+        [DataMember(Name = "Billed_At")]
+        public DateTime? Billed_At { get; set; }
+
+        [DataMember(Name = "Currency")]
+        public String Currency { get; set; }
     }
 }

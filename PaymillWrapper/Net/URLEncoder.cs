@@ -70,6 +70,9 @@ namespace PaymillWrapper.Net
                 this.addKeyValuePair(sb, "fee_amount", fee.Amount);
                 if (!string.IsNullOrEmpty(fee.Payment))
                     this.addKeyValuePair(sb, "fee_payment", fee.Payment);
+
+                if (!string.IsNullOrEmpty(fee.Currency))
+                    this.addKeyValuePair(sb, "fee_currency", fee.Currency);
             }
 
             if (!string.IsNullOrEmpty(data.Token))

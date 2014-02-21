@@ -85,28 +85,27 @@ namespace SandboxConsole
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
-        public static void AddTransactionWithClient()
+        public static void AddTransactionWithClient(String paymentId, String clientId)
         {
-            // Hay que depurar esta función, no funciona bien cuando se pasa el identificador del cliente, 
-            // está creando un nuevo cliente aunque le pasemos el identificador de uno ya existente
 
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
             TransactionService transactionService = Paymill.GetService<TransactionService>();
 
             Transaction transaction = new Transaction();
-
+            transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
             transaction.Amount = 8000;
             transaction.Currency = "EUR";
             transaction.Description = "Transacción con cliente";
-            transaction.Payment = new Payment() { Id = "pay_c08f1f94754b93f46ac3" };
-            transaction.Client = new Client() { Id = "client_ad591663d69051d306a8" };
+            transaction.Payment = new Payment() { Id = paymentId };
+            transaction.Client = new Client() { Id = clientId };
 
             Transaction newTransaction = transactionService.Create(transaction, null);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
+       
         public static void GetTransaction()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
