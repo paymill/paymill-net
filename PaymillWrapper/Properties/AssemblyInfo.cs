@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // La información general sobre un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos atributos para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("PaymillWrapperNET")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("PaymillWrapper")]
+[assembly: AssemblyDescription("Wrapper for the PAYMILL API")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("www.javiercantos.net")]
-[assembly: AssemblyProduct("PaymillWrapperNET")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("www.paymill.com")]
+[assembly: AssemblyProduct("PaymillWrapper")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Puede especificar todos los valores o establecer como predeterminados los números de compilación y de revisión 
 // mediante el carácter '*', como se muestra a continuación:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.2")]
-[assembly: AssemblyFileVersion("0.1.0.2")]
+[assembly: AssemblyVersion("0.1.1.2")]
+[assembly: AssemblyFileVersion("0.1.1.2")]
