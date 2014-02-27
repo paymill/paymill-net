@@ -14,8 +14,21 @@ namespace PaymillWrapper
 {
     public static class Paymill
     {
+        static string _apiUrl = String.Empty;
         public static string ApiKey { get; set; }
-        public static string ApiUrl { get; set; }
+        public static string ApiUrl { get {
+            return _apiUrl;
+        }
+            set
+            {
+                _apiUrl = value;
+                if (value.EndsWith("/"))
+                {
+                   _apiUrl = value.TrimEnd('/');
+                }
+
+            }
+        }
         public static HttpClientRest Client
         {
             get
