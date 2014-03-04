@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PaymillWrapper
+namespace PaymillWrapper.Exceptions
 {
     public class PaymillRequestException : Exception
     {

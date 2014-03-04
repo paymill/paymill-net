@@ -1,4 +1,4 @@
-﻿using PaymillWrapper.Models;
+﻿using PaymillWrapper.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,11 @@ using System.Web;
 
 namespace PaymillWrapper.Net
 {
-    public class URLEncoder
+    public class UrlEncoder
     {
         private Encoding charset;
 
-        public URLEncoder()
+        public UrlEncoder()
         {
             charset = Encoding.UTF8;
         }
@@ -51,7 +51,11 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
-
+        public string GetEncodedUpdateParams(Object data)
+        {
+            return String.Empty;
+        }
+/*
         public string EncodeTransactionUpdate(Transaction data)
         {
             StringBuilder sb = new StringBuilder();
@@ -189,7 +193,7 @@ namespace PaymillWrapper.Net
             this.addKeyValuePair(sb, "description", data.Description);
             return sb.ToString();
         }
-
+        */
         private void addKeyValuePair(StringBuilder sb, string key, object value)
         {
             string reply = "";

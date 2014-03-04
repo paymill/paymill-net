@@ -10,20 +10,20 @@ namespace PaymillWrapper.Models
    
     public class Webhook : BaseModel
     {
-        [DataMember(Name = "Id")]
+        [DataMember(Name = "id")]
         public String Id { get; set; }
 
-        [DataMember(Name = "Url")]
+        [DataMember(Name = "url")]
         public Uri Url { get; set; }
 
-        [DataMember(Name = "Livemode")]
+        [DataMember(Name = "livemode")]
         public Boolean livemode { get; set; }
 
-         [DataMember(Name = "Email")]
+         [DataMember(Name = "email")]
         public String Email { get; set; }
 
-         [DataMember(Name = "Event_Types")]
-         private String[] Created_EventTypes
+        
+        /* private String[] CreatedEventTypes
          {
              get
              {
@@ -39,8 +39,8 @@ namespace PaymillWrapper.Models
                      }
                      this.EventTypes = eventsList.ToArray();
                  }
-             }
-         }
+          */
+         [DataMember(Name = "event_types")]
          public EventType[] EventTypes { get; set; }
     }
 }

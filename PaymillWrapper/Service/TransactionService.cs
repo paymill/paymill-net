@@ -38,7 +38,7 @@ namespace PaymillWrapper.Service{
         }
 */
 
-    public class TransactionService : AbstractService<Transaction>, ICRService<Transaction>
+    public class TransactionService : AbstractService<Transaction>
     {
         public TransactionService(HttpClient client, string apiUrl)
             : base(Resource.Transactions, client, apiUrl)
@@ -50,7 +50,7 @@ namespace PaymillWrapper.Service{
         /// <returns>Returns a list transactions-object</returns>
         public IReadOnlyCollection<Transaction> GetTransactions()
         {
-            return getList();
+            return List();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace PaymillWrapper.Service{
         /// <returns>Returns a list transaction-object</returns>
         public IReadOnlyCollection<Transaction> GetTransactionsByFilter(Filter filter)
         {
-            return getList(filter);
+            return List(filter);
         }
 
         /// <summary>
@@ -70,18 +70,15 @@ namespace PaymillWrapper.Service{
         /// <returns>New object-transaction just add</returns>
         public Transaction Create(Transaction transaction, Fee fee)
         {
-            return Create(
+           /* return Create(
                 null,
                 new UrlEncoder().EncodeTransaction(transaction, fee));
+            * */
+            return null;
         }
         protected override string GetResourceId(Transaction obj)
         {
             return obj.Id;
         }
-
-        protected override string GetEncodedUpdateParams(Transaction obj, UrlEncoder encoder)
-        {
-            return encoder.EncodeTransactionUpdate(obj);
-        }
-    }
+     }
 }

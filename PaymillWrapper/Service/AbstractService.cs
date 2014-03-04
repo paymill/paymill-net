@@ -7,10 +7,11 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using PaymillWrapper.Exceptions;
 
 namespace PaymillWrapper.Service
 {
-    public abstract class AbstractService<T> : ICRUDService<T>
+    public abstract class AbstractService<T> 
     {
         private readonly Resource _resource;
         protected readonly HttpClient Client;
@@ -26,9 +27,8 @@ namespace PaymillWrapper.Service
         }
 
         protected abstract string GetResourceId(T obj);
-        protected abstract string GetEncodedUpdateParams(T obj, UrlEncoder encoder);
 
-        public IReadOnlyCollection<T> getList(Filter filter)
+        public List<T> List(Filter filter)
         {
             var lst = new List<T>();
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
@@ -40,9 +40,9 @@ namespace PaymillWrapper.Service
             return lst;
         }
 
-        public IReadOnlyCollection<T> getList()
+        public List<T> List()
         {
-            return getList(null);
+            return List(null);
         }
         public T Create(string id, string encodeParams)
         {
@@ -99,7 +99,8 @@ namespace PaymillWrapper.Service
         {
             T reply = default(T);
             String resourceId = GetResourceId(obj);
-            var content = new StringContent(GetEncodedUpdateParams(obj, new UrlEncoder()));
+            var encoder = new UrlEncoder();
+            var content = new StringContent(encoder.GetEncodedUpdateParams(obj));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = Client.PutAsync(requestUri, content).Result;

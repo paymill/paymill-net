@@ -13,35 +13,25 @@ namespace SandboxConsole
 {
     public class PreauthorizationSamples
     {
-        public static void GetPreauthorizations()
+        Paymill pm = new Paymill(Properties.Settings.Default.ApiKey);
+        public  void GetPreauthorizations()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PreauthorizationService preauthorizationService = Paymill.GetService<PreauthorizationService>();
-
-            Console.WriteLine("Waiting request list preauthorizations...");
-            List<Preauthorization> lstPreauthorizations = preauthorizationService.GetPreauthorizations();
+            List<Preauthorization> lstPreauthorizations = pm.PreauthorizationService.List();
 
             foreach (Preauthorization preauthorization in lstPreauthorizations)
             {
                 Console.WriteLine(String.Format("PreauthorizationID:{0}", preauthorization.Id));
             }
-
             Console.Read();
         }
-        public static void GetPreauthorizationsWithParameters()
+        public  void GetPreauthorizationsWithParameters()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PreauthorizationService preauthorizationService = Paymill.GetService<PreauthorizationService>();
-
-            Console.WriteLine("Waiting request list preauthorizations...");
-
+ 
             Filter filter = new Filter();
             filter.Add("count", 1);
             filter.Add("offset", 2);
 
-            List<Preauthorization> lstPreauthorizations = preauthorizationService.GetPreauthorizationsByFilter(filter);
+            List<Preauthorization> lstPreauthorizations = pm.PreauthorizationService.List(filter);
 
             foreach (Preauthorization preauthorization in lstPreauthorizations)
             {
@@ -50,54 +40,26 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        public static void AddPreauthorization()
+        public  void AddPreauthorization()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PreauthorizationService preauthorizationService = Paymill.GetService<PreauthorizationService>();
-
-            Preauthorization preauthorization = new Preauthorization();
-            preauthorization.Amount = 3500;
-            preauthorization.Currency = "EUR";
-            //preauthorization.Token = "098f6bcd4621d373cade4e832627b4f6";
-            preauthorization.Payment = new Payment() { Id = "pay_4c159fe95d3be503778a" };
-
-            Preauthorization newPreauthorization = preauthorizationService.Create(preauthorization);
-
+            Preauthorization newPreauthorization = pm.PreauthorizationService.CreateWithPayment("pay_4c159fe95d3be503778a", 3500, "EUR");
             Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
             Console.Read();
         }
-        public static void RemovePreauthorization()
+        public  void RemovePreauthorization()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PreauthorizationService preauthorizationService = Paymill.GetService<PreauthorizationService>();
-
-            Preauthorization preauthorization = new Preauthorization();
-            preauthorization.Amount = 3500;
-            preauthorization.Currency = "EUR";
-            preauthorization.Token = "098f6bcd4621d373cade4e832627b4f6";
-            preauthorization.Payment = new Payment() { Id = "pay_4c159fe95d3be503778a" };
-
-            Preauthorization newPreauthorization = preauthorizationService.Create(preauthorization);
-
+            Preauthorization newPreauthorization = pm.PreauthorizationService.CreateWithToken("098f6bcd4621d373cade4e832627b4f6", 3500, "EUR");
             Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
-            preauthorizationService.Remove(newPreauthorization.Id);
-
+            pm.PreauthorizationService.Remove(newPreauthorization.Id);
             Console.Read();
         }
-        public static void GetPreauthorization()
+        public  void GetPreauthorization()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            PreauthorizationService preauthorizationService = Paymill.GetService<PreauthorizationService>();
-
-            Console.WriteLine("Solicitando preauthorization...");
             string preauthorizationID = "preauth_96fe414f466f91ddb266";
-            Preauthorization preauthorization = preauthorizationService.Get(preauthorizationID);
+            Preauthorization preauthorization = pm.PreauthorizationService.Get(preauthorizationID);
 
             Console.WriteLine("PreauthorizationID:" + preauthorization.Id);
-            Console.WriteLine("Created at:" + preauthorization.Created_At.ToShortDateString());
+            Console.WriteLine("Created at:" + preauthorization.CreatedAt.ToShortDateString());
             Console.Read();
         }
 

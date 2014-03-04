@@ -24,7 +24,7 @@ namespace PaymillWrapper.Service
             return get<Refund>(Resource.Refunds, refundID);
         }
 */
-    public class RefundService : AbstractService<Refund>, ICRService<Refund>
+    public class RefundService : AbstractService<Refund>
     {
         public RefundService(HttpClient client, string apiUrl)
             : base(Resource.Refunds, client, apiUrl)
@@ -36,7 +36,7 @@ namespace PaymillWrapper.Service
         /// <returns>Returns a list refunds-object</returns>
         public IReadOnlyCollection<Refund> GetRefunds()
         {
-            return getList();
+            return List();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace PaymillWrapper.Service
         /// <returns>Returns a list refund-object</returns>
         public IReadOnlyCollection<Refund> GetRefundsByFilter(Filter filter)
         {
-            return getList(filter);
+            return List(filter);
         }
         /// <summary>
         /// This function creates a refund object
@@ -88,6 +88,7 @@ namespace PaymillWrapper.Service
         /// <returns></returns>
         public Refund Create(String transactionId, int amount, String description)
         {
+            /*
             Refund refund = new Refund();
             refund.Amount = amount;
             refund.Description = description;
@@ -95,14 +96,12 @@ namespace PaymillWrapper.Service
             return Create(
               transactionId,
               new UrlEncoder().EncodeRefund(refund));
+             * */
+            return null;
         }
         protected override string GetResourceId(Refund obj)
         {
             return obj.Id;
-        }
-        protected override string GetEncodedUpdateParams(Refund obj, UrlEncoder encoder)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace PaymillWrapper.Service
         /// <returns>Returns a list payments-object</returns>
         public IReadOnlyCollection<Payment> GetPayments()
         {
-            return getList();
+            return List();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace PaymillWrapper.Service
         /// <returns>Returns a list payments-object</returns>
         public IReadOnlyCollection<Payment> GetPaymentsByFilter(Filter filter)
         {
-            return getList(filter);
+            return List(filter);
         }
         /// <summary>
         /// This function creates a payment object
@@ -88,18 +88,17 @@ namespace PaymillWrapper.Service
         /// <returns>New object-payment just created</returns>
         public Payment Create(String token, String client)
         {
+            /*
             return Create(
                 null,
                 new UrlEncoder().EncodeObject(new { Token = token, Client = client }));
+             * */
+            return null;
         }
         protected override string GetResourceId(Payment obj)
         {
             return obj.Id;
         }
 
-        protected override string GetEncodedUpdateParams(Payment obj, UrlEncoder encoder)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace SandboxConsole
         Paymill paymill = new Paymill(Properties.Settings.Default.ApiKey);
         public void GetTransactions()
         {
-            IReadOnlyCollection<Transaction> lstTransactions = paymill.Transactions.GetTransactions();
+            IReadOnlyCollection<Transaction> lstTransactions = paymill.TransactionService.GetTransactions();
             Console.WriteLine("Waiting request list transactions...");
   
             foreach (Transaction transaction in lstTransactions)
@@ -32,7 +32,7 @@ namespace SandboxConsole
             Filter filter = new Filter();
             filter.Add("count", 1);
             filter.Add("offset", 2);
-            IReadOnlyCollection<Transaction> lstTransactions = paymill.Transactions.GetTransactionsByFilter(filter);
+            IReadOnlyCollection<Transaction> lstTransactions = paymill.TransactionService.GetTransactionsByFilter(filter);
 
             foreach (Transaction transaction in lstTransactions)
             {
@@ -49,7 +49,7 @@ namespace SandboxConsole
             transaction.Currency = "EUR";
             transaction.Description = "Test desde API c#";
 
-            Transaction newTransaction = paymill.Transactions.Create(transaction, null);
+            Transaction newTransaction = paymill.TransactionService.Create(transaction, null);
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
         }
@@ -63,7 +63,7 @@ namespace SandboxConsole
             Fee fee = new Fee();
             fee.Amount = 320;
             fee.Payment = "pay_3af44644dd6d25c820a8";
-            Transaction newTransaction = paymill.Transactions.Create(transaction, fee);
+            Transaction newTransaction = paymill.TransactionService.Create(transaction, fee);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -78,7 +78,7 @@ namespace SandboxConsole
             transaction.Payment = new Payment() { Id = paymentId };
             transaction.Client = new Client() { Id = clientId };
 
-            Transaction newTransaction = paymill.Transactions.Create(transaction, null);
+            Transaction newTransaction = paymill.TransactionService.Create(transaction, null);
 
             Console.WriteLine("TransactionID:" + newTransaction.Id);
             Console.Read();
@@ -89,7 +89,7 @@ namespace SandboxConsole
  
             Console.WriteLine("Solicitando transaction...");
             string transactionID = "tran_9255ee9ad5a7f2999625";
-            Transaction transaction = paymill.Transactions.Get(transactionID);
+            Transaction transaction = paymill.TransactionService.Get(transactionID);
 
             Console.WriteLine("TransactionID:" + transaction.Id);
             Console.WriteLine("Created at:" + transaction.Created_At.ToShortDateString());

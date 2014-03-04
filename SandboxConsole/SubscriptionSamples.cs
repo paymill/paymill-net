@@ -11,16 +11,13 @@ using System.ComponentModel;
 
 namespace SandboxConsole
 {
-    public static class SubscriptionSamples
+    public class SubscriptionSamples
     {
-        public static void GetSubscriptions()
+        Paymill pm = new Paymill(Properties.Settings.Default.ApiKey);
+        public void GetSubscriptions()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
-
             Console.WriteLine("Waiting request list subscriptions...");
-            List<Subscription> lstSubscriptions = susbscriptionService.GetSubscriptions();
+            List<Subscription> lstSubscriptions = pm.SubscriptionService.List();
 
             foreach (Subscription s in lstSubscriptions)
             {
@@ -29,19 +26,15 @@ namespace SandboxConsole
 
             Console.Read();
         }
-        public static void GetSubscriptionsWithParameters()
+        public void GetSubscriptionsWithParameters()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
-
             Console.WriteLine("Waiting request list subscriptions with parameters...");
 
             Filter filter = new Filter();
             filter.Add("count", 1); //OK
             filter.Add("offset", 2); //OK
             filter.Add("offer", "offer_32008ddd39954e71ed48"); //KO
-            List<Subscription> lstSubscriptions = susbscriptionService.GetSubscriptionsByFilter(filter);
+            List<Subscription> lstSubscriptions = pm.SubscriptionService.GetSubscriptionsByFilter(filter);
 
             foreach (Subscription s in lstSubscriptions)
             {
@@ -51,7 +44,7 @@ namespace SandboxConsole
             Console.Read();
         }
        
-        private static Subscription createSubsription()
+        private Subscription createSubsription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -72,7 +65,7 @@ namespace SandboxConsole
             return offerService.Subscribe(offer, client, payment);
         
         }
-        public static void AddSubscription()
+        public void AddSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -85,7 +78,7 @@ namespace SandboxConsole
             Utilities.printObject(newSubscription);
             Console.Read();
         }
-        public static void GetSubscription()
+        public void GetSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -100,7 +93,7 @@ namespace SandboxConsole
             Utilities.printObject(subscription1);
             Console.Read();
         }
-        public static void UpdateSubscription()
+        public void UpdateSubscription()
         {
             Paymill.ApiKey = Properties.Settings.Default.ApiKey;
             Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
@@ -123,7 +116,7 @@ namespace SandboxConsole
             Console.WriteLine("SubscriptionID:" + updatedSubscription.Id);
             Console.Read();
         }
-        public static void RemoveSubscription()
+        public void RemoveSubscription()
         {
             // se elimina correctamente pero el json de respuesta no devuelve vacio 
 

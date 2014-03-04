@@ -18,13 +18,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Mail address of this client
         /// </summary>
-        [DataMember(Name = "email")]
+        [DataMember(Name = "email"), Updateable(Name = "email")]
         public string Email { get; set; }
 
         /// <summary>
         /// Additional description for this client
         /// </summary>
-        [DataMember(Name = "description")]
+        [DataMember(Name = "description"), Updateable(Name = "description")]
         public string Description { get; set; }
 
         /// <summary>

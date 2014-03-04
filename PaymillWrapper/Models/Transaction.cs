@@ -29,7 +29,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Amount of this transaction
         /// </summary>
-        [DataMember(Name = "Amount")]
+        [DataMember(Name = "amount")]
         public int Amount { get; set; }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// The used amount, smallest possible unit per currency (for euro, we’re calculating the amount in cents)
         /// </summary>
-        [DataMember(Name = "Origin_Amount")]
-        public int Origin_Amount { get; set; }
+        [DataMember(Name = "origin_amount")]
+        public int OriginAmount { get; set; }
 
         /// <summary>
         /// Formatted origin amount
@@ -58,68 +58,68 @@ namespace PaymillWrapper.Models
         {
             get
             {
-                return Origin_Amount / 100;
+                return OriginAmount / 100;
             }
         }
 
         /// <summary>
         /// Indicates the current status of this transaction, e.g closed means the transaction is sucessfully transfered, refunded means that the amount is fully or in parts refunded
         /// </summary>
-        [DataMember(Name = "Status")]
+        [DataMember(Name = "status")]
         public TypeStatus Status { get; set; }
 
         /// <summary>
         /// Need a additional description for this transaction? Maybe your shopping cart ID or something like that?
         /// </summary>
-        [DataMember(Name = "Description")]
+        [DataMember(Name = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Whether this transaction was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "Livemode")]
+        [DataMember(Name = "livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// List refunds-object
         /// </summary>
-        [DataMember(Name = "Refunds")]
+        [DataMember(Name = "refunds")]
         public List<Refund> Refunds { get; set; }
 
         /// <summary>
         /// Creditcard-object or directdebit-object
         /// </summary>
-        [DataMember(Name = "Payment")]
+        [DataMember(Name = "payment")]
         public Payment Payment { get; set; }
 
         /// <summary>
         /// Client-object
         /// </summary>
-        [DataMember(Name = "Client")]
+        [DataMember(Name = "client")]
         public Client Client { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "Currency")]
+        [DataMember(Name = "currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// A token generated through JavaScript-Bridge Paymill
         /// </summary>
-        [DataMember(Name = "Token")]
+        [DataMember(Name = "token")]
         public string Token { get; set; }
 
         /// <summary>
         /// Preauthorization-object
         /// </summary>
-        [DataMember(Name = "Preauthorization")]
+        [DataMember(Name = "preauthorization")]
         public Preauthorization Preauthorization { get; set; }
 
-        [DataMember(Name = "Response_Code")]
+        [DataMember(Name = "response_code")]
         public String ResponseCode { get; set; }
 
-        [DataMember(Name = "Fees")]
+        [DataMember(Name = "fees")]
         public List<Fee> Fees { get; set; }
 
       }

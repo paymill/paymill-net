@@ -63,7 +63,7 @@ namespace PaymillWrapper.Service
         /// <returns>Returns a list offers-object</returns>
         public IReadOnlyCollection<Offer> GetOffers()
         {
-            return getList();
+            return List();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace PaymillWrapper.Service
         /// <returns>Returns a list offer-object</returns>
         public IReadOnlyCollection<Offer> GetOffersByFilter(Filter filter)
         {
-            return getList(filter);
+            return List(filter);
         }
 
         /// <summary>
@@ -83,19 +83,18 @@ namespace PaymillWrapper.Service
         /// <returns>New object-offer just add</returns>
         public Offer Create(Offer offer)
         {
+            /*
             return Create(
                 null,
                 new UrlEncoder().EncodeOfferAdd(offer));
+             * */
+            return null;
         }
         protected override string GetResourceId(Offer obj)
         {
             return obj.Id;
         }
 
-        protected override string GetEncodedUpdateParams(Offer obj, UrlEncoder encoder)
-        {
-            return encoder.EncodeOfferUpdate(obj);
-        }
 
     }
 }

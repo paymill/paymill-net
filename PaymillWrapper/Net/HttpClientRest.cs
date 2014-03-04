@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using PaymillWrapper.Exceptions;
 using PaymillWrapper.Models;
 using PaymillWrapper.Service;
 using System;

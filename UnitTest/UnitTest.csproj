@@ -39,10 +39,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\PaymillWrapper\librerias\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -57,13 +62,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Net\TestTransactions.cs" />
-    <Compile Include="Net\TestWebhooks.cs" />
-    <Compile Include="Net\TestOffers.cs" />
-    <Compile Include="Net\TestClients.cs" />
-    <Compile Include="Net\TestFilter.cs" />
+    <Compile Include="Models\MultipleResults.cs" />
+    <Compile Include="Models\TestJsonDeserialization.cs" />
     <Compile Include="Net\TestHttpClientRest.cs" />
-    <Compile Include="Net\TestPayments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Net\TestURLEncoder.cs" />
   </ItemGroup>
@@ -72,6 +73,15 @@
       <Project>{56d3c8fb-ed6e-4d9a-9472-704ff19a1ba5}</Project>
       <Name>PaymillWrapper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\Input\client.json" />
+    <None Include="Models\Input\offer.json" />
+    <None Include="Models\Input\payment.json" />
+    <None Include="Models\Input\preauthorizations.json" />
+    <None Include="Models\Input\refund.json" />
+    <None Include="Models\Input\subscription.json" />
+    <None Include="Models\Input\transaction.json" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

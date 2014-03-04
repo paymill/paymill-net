@@ -19,16 +19,16 @@ namespace UnitTest.Net
         [TestMethod]
         public void CreateClient()
         {
-            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.ClientService.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
         }
         [TestMethod]
         public void RemoveClient()
         {
-            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.ClientService.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
-            Boolean result = _paymill.Clients.Remove(client.Id);
+            Boolean result = _paymill.ClientService.Remove(client.Id);
             Assert.IsTrue(result, "Remove  Offer");
 
 
@@ -36,11 +36,11 @@ namespace UnitTest.Net
         [TestMethod]
         public void UpdateClient()
         {
-            Client client = _paymill.Clients.Create("lovely-client@example.com", "Lovely Client");
+            Client client = _paymill.ClientService.Create("lovely-client@example.com", "Lovely Client");
             Assert.IsTrue(client.Id != String.Empty, "CreateClient Fail");
 
             client.Email = "test@mail.com";
-            var updatetedClient = _paymill.Clients.Update(client);
+            var updatetedClient = _paymill.ClientService.Update(client);
             Assert.IsTrue(updatetedClient.Email == "test@mail.com", "Update Client Failed");
 
         }

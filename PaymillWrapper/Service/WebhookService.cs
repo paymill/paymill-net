@@ -27,7 +27,7 @@ namespace PaymillWrapper.Service
       
         public Webhook CreateUrl(Uri url, params PaymillWrapper.Models.EventType[] eventTypes)
         {
-           
+           /*
             if (url == null)
             {
                 throw new NullReferenceException("url");
@@ -42,6 +42,8 @@ namespace PaymillWrapper.Service
                             url = url.AbsoluteUri,
                             event_types = UrlEncoder.ConvertEventsArr(eventTypes) 
                    }));
+            * */
+            return null;
         }
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace PaymillWrapper.Service
         /// <returns></returns>
         public Webhook CreateEmail(String email, params PaymillWrapper.Models.EventType[] eventTypes)
         {
+            /*
             if (email == null)
             {
                 throw new NullReferenceException("email");
@@ -65,17 +68,10 @@ namespace PaymillWrapper.Service
                    new UrlEncoder().EncodeObject(new { 
                        email = email,
                        event_types = UrlEncoder.ConvertEventsArr(eventTypes) 
-                   }));
+                   }));*/
+            return null;
         }
-        /// <summary>
-        /// This function update the webhook
-        /// </summary>
-        /// <param name="client"></param>
-        /// <returns></returns>
-        public Webhook Update(Webhook webhook)
-        {
-            return Update(webhook);
-        }
+        
        
         /// <summary>
         /// this function return all webhooks
@@ -83,16 +79,12 @@ namespace PaymillWrapper.Service
         /// <returns></returns>
         public IReadOnlyCollection<Webhook> GetWebhooks()
         {
-            return getList(null);
+            return List(null);
         }
         protected override string GetResourceId(Webhook obj)
         {
             return obj.Id;
         }
 
-        protected override string GetEncodedUpdateParams(Webhook obj, UrlEncoder encoder)
-        {
-            return encoder.EncodeWebhookUpdate(obj);
-        }
     }
 }

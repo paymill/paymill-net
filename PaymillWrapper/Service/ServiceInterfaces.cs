@@ -7,8 +7,8 @@ namespace PaymillWrapper.Service
     public interface IReadService<T>
     {
         T Get(string id);
-        IReadOnlyCollection<T> getList(Filter filter);
-        IReadOnlyCollection<T> getList();
+        IReadOnlyCollection<T> List(Filter filter);
+        IReadOnlyCollection<T> List();
     }
 
     public interface ICreateService<T>

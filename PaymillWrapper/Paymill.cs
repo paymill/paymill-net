@@ -19,13 +19,13 @@ namespace PaymillWrapper
             if (string.IsNullOrEmpty(ApiUrl))
                 throw new ArgumentException("You need to set an API URL.", "apiUrl");
 
-            _clients = new Lazy<ClientService>(() => new ClientService(Client, ApiUrl));
-            _offers = new Lazy<OfferService>(() => new OfferService(Client, ApiUrl));
-            _payments = new Lazy<PaymentService>(() => new PaymentService(Client, ApiUrl));
-            _preauthorizations = new Lazy<PreauthorizationService>(() => new PreauthorizationService(Client, ApiUrl));
-            _refunds = new Lazy<RefundService>(() => new RefundService(Client, ApiUrl));
-            _subscriptions = new Lazy<SubscriptionService>(() => new SubscriptionService(Client, ApiUrl));
-            _transactions = new Lazy<TransactionService>(() => new TransactionService(Client, ApiUrl));
+            _clientService = new Lazy<ClientService>(() => new ClientService(Client, ApiUrl));
+            _offerService = new Lazy<OfferService>(() => new OfferService(Client, ApiUrl));
+            _paymentService = new Lazy<PaymentService>(() => new PaymentService(Client, ApiUrl));
+            _preauthorizationService = new Lazy<PreauthorizationService>(() => new PreauthorizationService(Client, ApiUrl));
+            _refundService = new Lazy<RefundService>(() => new RefundService(Client, ApiUrl));
+            _subscriptionService = new Lazy<SubscriptionService>(() => new SubscriptionService(Client, ApiUrl));
+            _transactionService = new Lazy<TransactionService>(() => new TransactionService(Client, ApiUrl));
         }
 
         public static string ApiKey { get; private set; }
@@ -52,49 +52,49 @@ namespace PaymillWrapper
         }
 
         #region Service members
-        private readonly Lazy<ClientService> _clients;
-        private readonly Lazy<OfferService> _offers;
-        private readonly Lazy<PaymentService> _payments;
-        private readonly Lazy<PreauthorizationService> _preauthorizations;
-        private readonly Lazy<RefundService> _refunds;
-        private readonly Lazy<SubscriptionService> _subscriptions;
-        private readonly Lazy<TransactionService> _transactions;
+        private readonly Lazy<ClientService> _clientService;
+        private readonly Lazy<OfferService> _offerService;
+        private readonly Lazy<PaymentService> _paymentService;
+        private readonly Lazy<PreauthorizationService> _preauthorizationService;
+        private readonly Lazy<RefundService> _refundService;
+        private readonly Lazy<SubscriptionService> _subscriptionService;
+        private readonly Lazy<TransactionService> _transactionService;
         #endregion
 
         #region Public services
-        public ClientService Clients
+        public ClientService ClientService
         {
-            get { return _clients.Value; }
+            get { return _clientService.Value; }
         }
 
-        public OfferService Offers
+        public OfferService OfferService
         {
-            get { return _offers.Value; }
+            get { return _offerService.Value; }
         }
 
-        public PaymentService Payments
+        public PaymentService PaymentService
         {
-            get { return _payments.Value; }
+            get { return _paymentService.Value; }
         }
 
-        public PreauthorizationService Preauthorizations
+        public PreauthorizationService PreauthorizationService
         {
-            get { return _preauthorizations.Value; }
+            get { return _preauthorizationService.Value; }
         }
 
-        public RefundService Refunds
+        public RefundService RefundService
         {
-            get { return _refunds.Value; }
+            get { return _refundService.Value; }
         }
 
-        public SubscriptionService Subscriptions
+        public SubscriptionService SubscriptionService
         {
-            get { return _subscriptions.Value; }
+            get { return _subscriptionService.Value; }
         }
 
-        public TransactionService Transactions
+        public TransactionService TransactionService
         {
-            get { return _transactions.Value; }
+            get { return _transactionService.Value; }
         }
         #endregion
     }

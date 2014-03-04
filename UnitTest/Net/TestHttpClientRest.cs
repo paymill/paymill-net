@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PaymillWrapper.Net;
+using PaymillWrapper.Exceptions;
 
 namespace UnitTest.Net
 {
@@ -68,7 +69,7 @@ namespace UnitTest.Net
         }
 
         [TestMethod]
-        [ExpectedException(typeof(PaymillWrapper.PaymillException),"ApiUrl is inappropiate or malformed")]
+        [ExpectedException(typeof(PaymillException),"ApiUrl is inappropiate or malformed")]
         public void CreateFailedHttpClientRest()
         {
             HttpClientRest client = new HttpClientRest(

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
+    [DataContract]
     public sealed class EventType
     {
         private readonly String name;
@@ -26,7 +28,8 @@ namespace PaymillWrapper.Models
         {
             return name;
         }
-        public static EventType GetEventByName(String name){
+        public static EventType GetEventByName(String name)
+        {
             return EventType.createdEvents.Find(x => String.Compare(x.name, name) == 0);
         }
 

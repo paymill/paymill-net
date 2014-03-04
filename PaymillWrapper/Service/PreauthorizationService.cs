@@ -46,13 +46,7 @@ namespace PaymillWrapper.Service
         {
             return obj.Id;
         }
-  
-        protected override string GetEncodedUpdateParams(Preauthorization obj, UrlEncoder encoder)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
+          /// <summary>
         /// This function creates a transaction object
         /// </summary>
         /// <param name="token">token</param>
@@ -61,15 +55,20 @@ namespace PaymillWrapper.Service
         /// <returns>New object-transaction just add</returns>
         public Preauthorization CreateWithToken(String token, int amount, String currency)
         {
-            return Create(
+           /* return Create(
                  null,
                  new UrlEncoder().EncodePreauthorization(token, amount, currency));
+            * */
+            return null;
         }
         public Preauthorization CreateWithPayment(Payment payment, int amount, String currency)
         {
+            /*
             return Create(
                 null,
                 new UrlEncoder().EncodePreauthorization(payment, amount, currency));
+             * */
+            return null;
         }
     }
 }
