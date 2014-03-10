@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PaymillWrapper.Net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -71,7 +72,8 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Need a additional description for this transaction? Maybe your shopping cart ID or something like that?
         /// </summary>
-        [DataMember(Name = "description")]
+        [DataMember(Name = "description"),
+        Updateable(Name = "description")]
         public string Description { get; set; }
 
         /// <summary>

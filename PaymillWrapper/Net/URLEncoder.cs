@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-
+using PaymillWrapper.Models;
 namespace PaymillWrapper.Net
 {
     public class UrlEncoder
@@ -39,8 +39,6 @@ namespace PaymillWrapper.Net
         public string EncodeObject(Object data)
         {
             var props = data.GetType().GetProperties();
-
-            
             StringBuilder sb = new StringBuilder();
             foreach (var prop in props)
             {
@@ -51,158 +49,34 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
-        public string GetEncodedUpdateParams(Object data)
+        public string EncodeUpdate(Object data)
         {
-            return String.Empty;
-        }
-/*
-        public string EncodeTransactionUpdate(Transaction data)
-        {
+            var props = data.GetType().GetProperties();
             StringBuilder sb = new StringBuilder();
-            this.addKeyValuePair(sb, "description", data.Description);
-            return sb.ToString();
-        }
-        public string EncodeTransaction(Transaction data, Fee fee)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            this.addKeyValuePair(sb, "amount", data.Amount);
-            this.addKeyValuePair(sb, "currency", data.Currency);
-
-            if (fee != null)
+            var updatebles = props.Where(x => x.GetCustomAttributes(typeof(Updateable), false).Length > 0);
+            foreach (var prop in updatebles)
             {
-                this.addKeyValuePair(sb, "fee_amount", fee.Amount);
-                if (!string.IsNullOrEmpty(fee.Payment))
-                    this.addKeyValuePair(sb, "fee_payment", fee.Payment);
-
-                if (!string.IsNullOrEmpty(fee.Currency))
-                    this.addKeyValuePair(sb, "fee_currency", fee.Currency);
-            }
-
-            if (!string.IsNullOrEmpty(data.Token))
-                this.addKeyValuePair(sb, "token", data.Token);
-
-            if (data.Client != null && !string.IsNullOrEmpty(data.Client.Id))
-                this.addKeyValuePair(sb, "client", data.Client.Id);
-
-            if (data.Payment != null && !string.IsNullOrEmpty(data.Payment.Id))
-                this.addKeyValuePair(sb, "payment", data.Payment.Id);
-
-            this.addKeyValuePair(sb, "description", data.Description);
-            
-            return sb.ToString();
-        }
-        public string EncodePreauthorization(Preauthorization data)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            this.addKeyValuePair(sb, "amount", data.Amount);
-            this.addKeyValuePair(sb, "currency", data.Currency);
-
-            if (!string.IsNullOrEmpty(data.Token))
-                this.addKeyValuePair(sb, "token", data.Token);
-
-            if (data.Payment != null && !string.IsNullOrEmpty(data.Payment.Id))
-                this.addKeyValuePair(sb, "payment", data.Payment.Id);
-
-            return sb.ToString();
-        }
-        public string EncodeRefund(Refund data)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            this.addKeyValuePair(sb, "amount", data.Amount);
-            this.addKeyValuePair(sb, "description", data.Description);
-
-            return sb.ToString();
-        }
-        public string EncodeOfferAdd(Offer data)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            this.addKeyValuePair(sb, "amount", data.Amount);
-            this.addKeyValuePair(sb, "currency", data.Currency);
-            this.addKeyValuePair(sb, "interval", data.Interval);
-            this.addKeyValuePair(sb, "name", data.Name);
-
-            if (data.Trial_Period_Days.HasValue == true)
-            {
-                this.addKeyValuePair(sb, "trial_period_days", data.Trial_Period_Days.Value);
+                object value = prop.GetValue(data, null);
+                var updateProps = (Updateable)prop.GetCustomAttributes(typeof(Updateable), false).First();
+                if (updateProps.OnlyProperty != null)
+                {
+                    var valueProp = value.GetType().GetProperty(updateProps.OnlyProperty);
+                    value = valueProp.GetValue(value, null);
+                }
+                if (value != null)
+                {
+                    this.addKeyValuePair(sb, updateProps.Name.ToLower(), value.ToString());
+                }
             }
 
             return sb.ToString();
         }
-        public string EncodeOfferUpdate(Offer data)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            this.addKeyValuePair(sb, "name", data.Name);
-
-            return sb.ToString();
-        }
-        public string EncodeSubscriptionAdd(Subscription data)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            if (data.Client != null)
-                this.addKeyValuePair(sb, "client", data.Client.Id);
-            if (data.Offer != null)
-                this.addKeyValuePair(sb, "offer", data.Offer.Id);
-            if (data.Payment != null)
-                this.addKeyValuePair(sb, "payment", data.Payment.Id);
-
-            return sb.ToString();
-        }
-        public string EncodeSubscriptionUpdate(Subscription data)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            this.addKeyValuePair(sb, "cancel_at_period_end", data.CancelAtPeriodEnd.ToString().ToLower());
-
-            return sb.ToString();
-        }
-        public static String ConvertEventsArr(params PaymillWrapper.Models.EventType[] eventTypes)
-        {
-            List<String> typesList = new List<String>();
-            foreach (PaymillWrapper.Models.EventType evt in eventTypes)
-            {
-                typesList.Add(evt.ToString());
-            }
-
-            return String.Join(",", typesList.ToArray());
-        }
-        public string EncodeWebhookUpdate(Webhook data)
-        {
-            StringBuilder sb = new StringBuilder();
-            if (data.Url != null) { 
-                this.addKeyValuePair(sb, "url", data.Url.AbsolutePath);
-            }
-            if (data.Email != null)
-            {
-                this.addKeyValuePair(sb, "email", data.Email);
-            }
-            if(data.EventTypes != null
-                && data.EventTypes.Length > 0)
-                this.addKeyValuePair(sb, "event_types", ConvertEventsArr(data.EventTypes));
-            return sb.ToString();
-        }
-        public string EncodeClientUpdate(Client data)
-        {
-            StringBuilder sb = new StringBuilder();
-            this.addKeyValuePair(sb, "email", data.Email);
-            this.addKeyValuePair(sb, "description", data.Description);
-            return sb.ToString();
-        }
-        */
         private void addKeyValuePair(StringBuilder sb, string key, object value)
         {
             string reply = "";
-
             if (value == null) return;
-
             try
             {
-
                 key = HttpUtility.UrlEncode(key.ToLower(), this.charset);
 
                 if (value.GetType().IsEnum)

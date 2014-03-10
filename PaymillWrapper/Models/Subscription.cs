@@ -18,7 +18,8 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Hash describing the offer which is subscribed to the client
         /// </summary>
-        [DataMember(Name = "offer")]
+        [DataMember(Name = "offer"),
+        Updateable(Name = "offer", OnlyProperty = "Id")]
         public Offer Offer { get; set; }
 
         /// <summary>
@@ -30,7 +31,8 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Cancel this subscription immediately or at the end of the current period?
         /// </summary>
-        [DataMember(Name = "cancel_at_period_end")]
+        [DataMember(Name = "cancel_at_period_end"),
+        Updateable(Name = "cancel_at_period_end")]
         public bool CancelAtPeriodEnd { get; set; }
 
         [DataMember(Name = "trial_start")]
@@ -61,10 +63,12 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Payment
         /// </summary>
-        [DataMember(Name = "payment")]
+        [DataMember(Name = "payment"), 
+        Updateable(Name = "payment", OnlyProperty="Id")]
         public Payment Payment { get;set;}
 
        [DataMember(Name = "app_id")]
         public String AppId { get; set; }
      }
+
 }

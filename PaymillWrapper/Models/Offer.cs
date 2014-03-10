@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PaymillWrapper.Net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -20,7 +21,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Your name for this offer
         /// </summary>
-        [DataMember(Name = "name")]
+        [DataMember(Name = "name"), Updateable(Name = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace PaymillWrapper.Models
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
         [DataMember(Name = "interval")]
-        public String Interval { get; set; }
+        public int Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?

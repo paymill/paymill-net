@@ -1,0 +1,15 @@
+﻿{
+        "data":{
+                "id":"client_11cc57776f7954925cf9",
+                "email":"lovely-client@example.com",
+                "description":"Lovely Client",
+                "created_at":1340199740,
+                "updated_at":1340199760,
+                "app_id":null,
+                "payment":[
+
+                ],
+                "subscription":null
+        },
+        "mode":"test"
+}

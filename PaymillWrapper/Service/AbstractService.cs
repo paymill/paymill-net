@@ -100,7 +100,7 @@ namespace PaymillWrapper.Service
             T reply = default(T);
             String resourceId = GetResourceId(obj);
             var encoder = new UrlEncoder();
-            var content = new StringContent(encoder.GetEncodedUpdateParams(obj));
+            var content = new StringContent(encoder.EncodeUpdate(obj));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = Client.PutAsync(requestUri, content).Result;

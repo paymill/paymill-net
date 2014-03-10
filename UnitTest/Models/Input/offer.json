@@ -1,0 +1,18 @@
+﻿{
+        "data":{
+                "id":"offer_caef7c90466b540cf8d1",
+                "name":"Test Offer",
+                "amount":"4200",
+                "currency":"EUR",
+                "interval":"1 MONTH",
+                "trial_period_days":0,
+                "created_at":1381489358,
+                "updated_at":1381489358,
+                "subscription_count":{
+                        "active":10,
+                        "inactive":20
+                },
+                "app_id":null
+        },
+        "mode":"test"
+}

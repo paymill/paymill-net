@@ -75,13 +75,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\Input\client.json" />
-    <None Include="Models\Input\offer.json" />
-    <None Include="Models\Input\payment.json" />
-    <None Include="Models\Input\preauthorizations.json" />
-    <None Include="Models\Input\refund.json" />
-    <None Include="Models\Input\subscription.json" />
-    <None Include="Models\Input\transaction.json" />
+    <EmbeddedResource Include="Models\Input\client.json" />
+    <EmbeddedResource Include="Models\Input\offer.json" />
+    <EmbeddedResource Include="Models\Input\payment.json" />
+    <EmbeddedResource Include="Models\Input\preauthorizations.json" />
+    <EmbeddedResource Include="Models\Input\refund.json" />
+    <EmbeddedResource Include="Models\Input\subscription.json" />
+    <EmbeddedResource Include="Models\Input\transaction.json" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
