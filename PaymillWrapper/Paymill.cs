@@ -15,10 +15,7 @@ namespace PaymillWrapper
             ApiUrl = @"https://api.paymill.com/v2";
             if (string.IsNullOrEmpty(apiKey))
                 throw new ArgumentException("You need to set an API key", "apiKey");
-
-            if (string.IsNullOrEmpty(ApiUrl))
-                throw new ArgumentException("You need to set an API URL.", "apiUrl");
-
+            ApiKey = apiKey;
             _clientService = new Lazy<ClientService>(() => new ClientService(Client, ApiUrl));
             _offerService = new Lazy<OfferService>(() => new OfferService(Client, ApiUrl));
             _paymentService = new Lazy<PaymentService>(() => new PaymentService(Client, ApiUrl));

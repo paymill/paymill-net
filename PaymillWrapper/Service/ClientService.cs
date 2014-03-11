@@ -5,6 +5,7 @@ using System.Web;
 using System.Net.Http;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
@@ -17,18 +18,52 @@ namespace PaymillWrapper.Service
 
         }
         /// <summary>
-        /// This function creates a client object
+        /// Creates Client instance.
         /// </summary>
-        /// <param name="client">Object-client</param>
-        /// <returns>New object-client just add</returns>
-        public Client Create(String email, String description)
+        /// <returns>
+        /// New object-client just add
+        /// </returns>
+        public async Task<Client> CreateAsync()
         {
-            /*
-            return Create(
+            return await CreateWithEmailAndDescriptionAsync(null, null);
+        }
+        /// <summary>
+        /// Creates Client instance with the given description.
+        /// </summary>
+        /// <param name="description">The description.</param>
+        /// <returns>
+        /// New object-client just add
+        /// </returns>
+        public async Task<Client> CreateWithDescriptionAsync(String description)
+        {
+
+            return await CreateWithEmailAndDescriptionAsync(null, description);
+        }
+        /// <summary>
+        /// Creates Client instance with the given email.
+        /// </summary>
+        /// <param name="email">Mail address for the Client or null</param>
+        /// <returns>
+        /// New object-client just add
+        /// </returns>
+        public async Task<Client> CreateWithEmailAsync(String email)
+        {
+
+            return await CreateWithEmailAndDescriptionAsync(email, null);
+        }
+        /// <summary>
+        /// Creates Client instance with the given description and email.
+        /// </summary>
+        /// <param name="email">Object-client</param>
+        /// <param name="description">Object-client</param>
+        /// <returns>
+        /// New object-client just add
+        /// </returns>
+        public async Task<Client> CreateWithEmailAndDescriptionAsync(String email, String description)
+        {
+            return await createAsync(
                 null,
                 new UrlEncoder().EncodeObject(new { Email = email, Description = description }));
-             */
-            return null;
         }
         protected override string GetResourceId(Client obj)
         {

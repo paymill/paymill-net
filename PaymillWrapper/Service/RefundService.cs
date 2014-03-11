@@ -3,6 +3,7 @@ using PaymillWrapper.Models;
 using PaymillWrapper.Net;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
@@ -34,9 +35,9 @@ namespace PaymillWrapper.Service
         /// This function allows request a refund list
         /// </summary>
         /// <returns>Returns a list refunds-object</returns>
-        public IReadOnlyCollection<Refund> GetRefunds()
+        public async Task<List<Refund> > GetRefundsAsync()
         {
-            return List();
+            return await ListAsync();
         }
 
         /// <summary>
@@ -44,9 +45,9 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list refund-object</returns>
-        public IReadOnlyCollection<Refund> GetRefundsByFilter(Filter filter)
+        public async Task< List<Refund> > GetRefundsByFilterAsync(Filter filter)
         {
-            return List(filter);
+            return await ListAsync(filter);
         }
         /// <summary>
         /// This function creates a refund object

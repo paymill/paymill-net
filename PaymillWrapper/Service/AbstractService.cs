@@ -28,26 +28,40 @@ namespace PaymillWrapper.Service
 
         protected abstract string GetResourceId(T obj);
 
-        public List<T> List(Filter filter)
+        /// <summary>
+        /// Lists the asynchronous.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public async Task<List<T> > ListAsync(Filter filter)
         {
             var lst = new List<T>();
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
             if (filter != null)
                 requestUri += String.Format("?{0}", filter.ToString());
             HttpResponseMessage response = Client.GetAsync(requestUri).Result;
-            String data = readReponseMessage(response);
+            String data = await readReponseMessage(response);
             lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
             return lst;
         }
 
-        public List<T> List()
+        /// <summary>
+        /// Lists the asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<T> > ListAsync()
         {
-            return List(null);
+            return await ListAsync(null);
         }
-        public T Create(string id, string encodeParams)
+        /// <summary>
+        /// Creates the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="encodeParams">The encode parameters.</param>
+        /// <returns></returns>
+        protected async Task<T> createAsync(string id, string encodeParams)
         {
             T reply = default(T);
-
             var content = new StringContent(encodeParams);
             var requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
             if (!string.IsNullOrEmpty(id))
@@ -55,26 +69,12 @@ namespace PaymillWrapper.Service
                 requestUri += "/" + id;
             }
             HttpResponseMessage response = Client.PostAsync(requestUri, content).Result;
-            String data = readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            String data = await readReponseMessage(response);
+            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
             return reply;
         }
 
-        /// <summary>
-        /// Adds an "item". Use this call if the result returns a different class than you send in.
-        /// </summary>
-        /// <typeparam name="TResult">The resulting type.</typeparam>
-        /// 
-
-        /*
-        protected async Task<TResult> AddAsync<TResult>(T obj)
-        {
-            var content = new StringContent(GetEncodedCreateParams(obj, new UrlEncoder()));
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-            string requestUri = _apiUrl + "/" + resource.ToString().ToLower();
-          */
-
-        public T Get(string id)
+        public async Task<T> GetAsync(string id)
         {
             T reply = default(T);
       
@@ -83,19 +83,24 @@ namespace PaymillWrapper.Service
                 requestUri += "/" + id;
 
             HttpResponseMessage response = Client.GetAsync(requestUri).Result;
-            String data = readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            String data = await readReponseMessage(response);
+            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
             return reply;
         }
 
-        public bool Remove(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + id;
             HttpResponseMessage response = Client.DeleteAsync(requestUri).Result;
-            readReponseMessage(response);
+            await readReponseMessage(response);
             return true;
         }
-        public T Update(T obj)
+        /// <summary>
+        /// Updates the asynchronous.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        public async Task<T> UpdateAsync(T obj)
         {
             T reply = default(T);
             String resourceId = GetResourceId(obj);
@@ -104,21 +109,27 @@ namespace PaymillWrapper.Service
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = Client.PutAsync(requestUri, content).Result;
-            String data = readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data);
+            String data = await readReponseMessage(response);
+            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
             return reply;
         }
 
-        private String readReponseMessage(HttpResponseMessage response)
+        /// <summary>
+        /// Reads the reponse message.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <returns></returns>
+        /// <exception cref="PaymillRequestException"></exception>
+        private async static Task<String> readReponseMessage(HttpResponseMessage response)
         {
-            var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+            var jsonArray = response.Content.ReadAsAsync<JObject>();
             if (response.IsSuccessStatusCode)
             {
-                return jsonArray["data"].ToString();
+                return (await jsonArray)["data"].ToString();
             }
             else
             {
-                string error = jsonArray["error"].ToString();
+                string error = (await jsonArray)["error"].ToString();
                 throw new PaymillRequestException(error, response.StatusCode);
             }
         }

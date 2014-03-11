@@ -2,6 +2,7 @@ using System.Net.Http;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
@@ -17,9 +18,9 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list subscription-object</returns>
-        public IReadOnlyCollection<Subscription> GetSubscriptionsByFilter(Filter filter)
+        public async Task< List<Subscription>> GetSubscriptionsByFilter(Filter filter)
         {
-            return List(filter);
+            return await ListAsync(filter);
         }
 
         protected override string GetResourceId(Subscription obj)

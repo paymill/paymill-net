@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
@@ -77,9 +78,9 @@ namespace PaymillWrapper.Service
         /// this function return all webhooks
         /// </summary>
         /// <returns></returns>
-        public IReadOnlyCollection<Webhook> GetWebhooks()
+        public async Task<List<Webhook>> GetWebhooks()
         {
-            return List(null);
+            return await ListAsync(null);
         }
         protected override string GetResourceId(Webhook obj)
         {

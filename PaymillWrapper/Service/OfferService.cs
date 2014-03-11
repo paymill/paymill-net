@@ -5,6 +5,7 @@ using System.Web;
 using PaymillWrapper.Models;
 using PaymillWrapper.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
@@ -61,9 +62,9 @@ namespace PaymillWrapper.Service
         /// This function allows request a offer list
         /// </summary>
         /// <returns>Returns a list offers-object</returns>
-        public IReadOnlyCollection<Offer> GetOffers()
+        public async Task< List<Offer>> GetOffers()
         {
-            return List();
+            return await ListAsync();
         }
 
         /// <summary>
@@ -71,9 +72,9 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list offer-object</returns>
-        public IReadOnlyCollection<Offer> GetOffersByFilter(Filter filter)
+        public async Task< List<Offer> > GetOffersByFilter(Filter filter)
         {
-            return List(filter);
+            return await ListAsync(filter);
         }
 
         /// <summary>

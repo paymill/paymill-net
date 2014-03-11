@@ -55,9 +55,9 @@ namespace PaymillWrapper.Service
         /// This function allows request a payment list
         /// </summary>
         /// <returns>Returns a list payments-object</returns>
-        public IReadOnlyCollection<Payment> GetPayments()
+        public async Task< List<Payment> > GetPaymentsAsync()
         {
-            return List();
+            return await ListAsync();
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="filter">Result filtered in the required way</param>
         /// <returns>Returns a list payments-object</returns>
-        public IReadOnlyCollection<Payment> GetPaymentsByFilter(Filter filter)
+        public async Task< List<Payment>> GetPaymentsByFilter(Filter filter)
         {
-            return List(filter);
+            return await ListAsync(filter);
         }
         /// <summary>
         /// This function creates a payment object
