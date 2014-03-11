@@ -14,7 +14,7 @@ namespace PaymillWrapper.Service
     public abstract class AbstractService<T> 
     {
         private readonly Resource _resource;
-        protected readonly HttpClient Client;
+        protected readonly HttpClient httpClient;
         private readonly string _apiUrl;
 
         internal AbstractService(Resource resource,
@@ -22,7 +22,7 @@ namespace PaymillWrapper.Service
             string apiUrl)
         {
             _resource = resource;
-            Client = client;
+            httpClient = client;
             _apiUrl = apiUrl;
         }
 
@@ -39,7 +39,7 @@ namespace PaymillWrapper.Service
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
             if (filter != null)
                 requestUri += String.Format("?{0}", filter.ToString());
-            HttpResponseMessage response = Client.GetAsync(requestUri).Result;
+            HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
             lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
             return lst;
@@ -68,7 +68,7 @@ namespace PaymillWrapper.Service
             {
                 requestUri += "/" + id;
             }
-            HttpResponseMessage response = Client.PostAsync(requestUri, content).Result;
+            HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
             reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
             return reply;
@@ -82,7 +82,7 @@ namespace PaymillWrapper.Service
             if (!string.IsNullOrEmpty(id))
                 requestUri += "/" + id;
 
-            HttpResponseMessage response = Client.GetAsync(requestUri).Result;
+            HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
             reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
             return reply;
@@ -91,7 +91,7 @@ namespace PaymillWrapper.Service
         public async Task<bool> DeleteAsync(string id)
         {
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + id;
-            HttpResponseMessage response = Client.DeleteAsync(requestUri).Result;
+            HttpResponseMessage response = httpClient.DeleteAsync(requestUri).Result;
             await readReponseMessage(response);
             return true;
         }
@@ -108,7 +108,7 @@ namespace PaymillWrapper.Service
             var content = new StringContent(encoder.EncodeUpdate(obj));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
-            HttpResponseMessage response = Client.PutAsync(requestUri, content).Result;
+            HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
             reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
             return reply;

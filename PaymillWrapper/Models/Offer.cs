@@ -14,10 +14,6 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Offer : BaseModel
     {
-        public Offer()
-        {
-            SubscriptionCount = new SubscriptionCount(null, null);
-        }
         /// <summary>
         /// Your name for this offer
         /// </summary>
@@ -38,7 +34,7 @@ namespace PaymillWrapper.Models
         {
             get
             {
-                return Amount / 100;
+                return Amount / 100.0;
             }
         }
 
@@ -46,7 +42,7 @@ namespace PaymillWrapper.Models
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
         [DataMember(Name = "interval")]
-        public int Interval { get; set; }
+        public Interval Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?
@@ -68,6 +64,8 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "subscription_count")]
         public SubscriptionCount SubscriptionCount { get; set; }
+
+
     }
 
     [DataContract]
@@ -76,11 +74,58 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "active")]
         public String Аctive { get; set; }
         [DataMember(Name = "inactive")]
-        public string Inactive { get; set; }
-        public SubscriptionCount(String active, String inactive)
+        public int Inactive { get; set; }
+    }
+    [Newtonsoft.Json.JsonConverter(typeof(StringToIntervalConverter))]
+    public class Interval
+    {
+        public enum TypeUnit
         {
-            Аctive = active;
-            Inactive = inactive;
+            DAY,
+            WEEK,
+            MONTH,
+            YEAR
         }
+        public int Count { get; set; }
+        public TypeUnit Unit { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Count"/> class.
+        /// </summary>
+        /// <param name="interval">The interval.</param>
+        public Interval(String interval)
+        {
+            String[] parts = interval.Split(' ');
+            this.Count = int.Parse(parts[0]);
+            this.Unit = CreateUnit(parts[1]);
+        }
+        /// <summary>
+        /// Creates the unit.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">Invalid value for Interval.Unit</exception>
+        private static TypeUnit CreateUnit(String value)
+        {
+            foreach (TypeUnit unit in Enum.GetValues(typeof(TypeUnit)))
+            {
+                if (String.Compare(unit.ToString(), value, true) == 0)
+                {
+                    return unit;
+                }
+            }
+            throw new ArgumentException("Invalid value for Interval.Unit");
+        }
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        public override String ToString()
+        {
+            return String.Format("{0} {1}", this.Count, this.Unit);
+        }
+
     }
 }

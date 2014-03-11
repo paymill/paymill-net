@@ -29,7 +29,8 @@ namespace UnitTest.Models
 
         private static IEnumerable<T> ReadResults<T>(string filename)
         {
-            return JsonConvert.DeserializeObject<MultipleResults<T>>(GetInputFile(filename), new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<MultipleResults<T>>(GetInputFile(filename),
+                new UnixTimestampConverter()).Data;
         }
 
         [TestMethod]
@@ -45,17 +46,17 @@ namespace UnitTest.Models
             Assert.IsNull(client.Subscriptions);
         }
 
-    /*    [TestMethod]
+        [TestMethod]
         public void TestOffer()
         {
             var offer = ReadResult<Offer>("offer.json");
             Assert.AreEqual("offer_caef7c90466b540cf8d1", offer.Id);
             Assert.AreEqual("Test Offer", offer.Name);
-            Assert.AreEqual(42, offer.AmountFormatted);
+            Assert.AreEqual(42.00, offer.AmountFormatted);
             Assert.AreEqual("EUR", offer.Currency);
-            Assert.AreEqual("1 MONTH", offer.Interval);
-            Assert.AreEqual(new DateTime(2013, 10, 11, 12, 2, 38, DateTimeKind.Utc), offer.CreatedAt);
-            Assert.AreEqual(new DateTime(2013, 10, 11, 12, 2, 38, DateTimeKind.Utc), offer.UpdatedAt);
+            Assert.AreEqual("1 MONTH", offer.Interval.ToString());
+            Assert.AreEqual(new DateTime(2013, 10, 11, 13, 2, 38, DateTimeKind.Local), offer.CreatedAt);
+            Assert.AreEqual(new DateTime(2013, 10, 11, 13, 2, 38, DateTimeKind.Local), offer.UpdatedAt);
             Assert.AreEqual(20, offer.SubscriptionCount.Inactive);
             Assert.AreEqual(0, offer.TrialPeriodDays);
         }
@@ -67,16 +68,16 @@ namespace UnitTest.Models
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", payment.Id);
             Assert.AreEqual(Payment.TypePayment.CreditCard, payment.Type);
             Assert.AreEqual("client_11cc57776f7954925cf9", payment.Client);
-            Assert.AreEqual(CardType.Mastercard, payment.CardType);
+            Assert.AreEqual(Payment.TypeCard.Mastercard, payment.CardType);
             Assert.IsNull(payment.Country);
             Assert.AreEqual(12, payment.ExpireMonth);
             Assert.AreEqual(2014, payment.ExpireYear);
             Assert.AreEqual("Joddle Botten", payment.CardHolder);
             Assert.AreEqual("1111", payment.Last4);
-            Assert.AreEqual(new DateTime(2013, 10, 11, 12, 7, 9, DateTimeKind.Utc), payment.CreatedAt);
-            Assert.AreEqual(new DateTime(2013, 10, 11, 12, 7, 9, DateTimeKind.Utc), payment.UpdatedAt);
+            Assert.AreEqual(1381489629, payment.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1381489629, payment.UpdatedAt.ToUnixTimestamp());
         }
-
+        
         [TestMethod]
         public void TestPreauthorization()
         {
@@ -85,11 +86,11 @@ namespace UnitTest.Models
             Assert.AreEqual("client_11cc57776f7954925cf9", p.Client.Id);
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", p.Payment.Id);
             Assert.IsFalse(p.Livemode);
-            Assert.AreEqual(PreauthorizationStatus.Closed, p.Status);
-            Assert.AreEqual(new DateTime(2012, 10, 11, 10, 48, 40, DateTimeKind.Utc), p.CreatedAt);
-            Assert.AreEqual(new DateTime(2012, 10, 11, 10, 48, 40, DateTimeKind.Utc), p.UpdatedAt);
+            Assert.AreEqual(Preauthorization.PreauthorizationStatus.Closed, p.Status);
+            Assert.AreEqual(1349948920, p.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1349948920, p.UpdatedAt.ToUnixTimestamp());
         }
-
+        
         [TestMethod]
         public void TestRefund()
         {
@@ -98,11 +99,11 @@ namespace UnitTest.Models
             Assert.AreEqual(0.42, p.AmountFormatted);
             Assert.AreEqual("tran_54645bcb98ba7acfe204", p.Transaction.Id);
             Assert.IsFalse(p.Livemode);
-            Assert.AreEqual(RefundStatus.Refunded, p.Status);
+            Assert.AreEqual(Refund.RefundStatus.Refunded, p.Status);
             Assert.AreEqual(ResponseCode.Success, p.ResponseCode);
             Assert.AreEqual("foo", p.Description);
-            Assert.AreEqual(new DateTime(2012, 10, 11, 10, 17, 22, DateTimeKind.Utc), p.CreatedAt);
-            Assert.AreEqual(new DateTime(2012, 10, 11, 10, 17, 22, DateTimeKind.Utc), p.UpdatedAt);
+            Assert.AreEqual(1349947042, p.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1349947042, p.UpdatedAt.ToUnixTimestamp());
         }
 
         [TestMethod]
@@ -117,9 +118,9 @@ namespace UnitTest.Models
             Assert.IsFalse(s.CancelAtPeriodEnd);
             Assert.IsNull(s.TrialEnd);
             Assert.IsNull(s.TrialStart);
-            Assert.AreEqual(new DateTime(2013, 10, 11, 12, 7, 24, DateTimeKind.Utc), s.CreatedAt, "Created at");
-            Assert.AreEqual(new DateTime(2013, 10, 11, 12, 7, 24, DateTimeKind.Utc), s.UpdatedAt, "Updated at");
-            Assert.AreEqual(new DateTime(2013, 11, 11, 13, 7, 24, DateTimeKind.Utc), s.NextCaptureAt, "Next capture at");
+            Assert.AreEqual(1381489644, s.CreatedAt.ToUnixTimestamp(), "Created at");
+            Assert.AreEqual(1381489644, s.UpdatedAt.ToUnixTimestamp(), "Updated at");
+            Assert.AreEqual(1384171644, s.NextCaptureAt.ToUnixTimestamp(), "Next capture at");
         }
 
         [TestMethod]
@@ -130,9 +131,9 @@ namespace UnitTest.Models
             Assert.AreEqual("client_db50b6496357e2700f00", t.Client.Id);
             Assert.AreEqual("pay_6bc452ea00f15be0225a1a6e", t.Payment.Id);
             Assert.IsFalse(t.Livemode);
-            Assert.AreEqual(TransactionStatus.Closed, t.Status);
+            Assert.AreEqual(Transaction.TypeStatus.Closed, t.Status);
             Assert.AreEqual("Bar", t.Description);
-            Assert.AreEqual(59, t.AmountFormatted);
+            Assert.AreEqual(59.00, t.AmountFormatted);
             Assert.IsNull(t.Refunds);
             Assert.IsNull(t.Preauthorization);
             Assert.AreEqual(ResponseCode.Success, t.ResponseCode);
@@ -140,6 +141,6 @@ namespace UnitTest.Models
             Assert.AreEqual("7357.7357.7357", t.ShortId);
             Assert.AreEqual(new DateTime(2013, 10, 1, 7, 28, 45, DateTimeKind.Utc), t.CreatedAt, "Created at");
             Assert.AreEqual(new DateTime(2013, 10, 1, 7, 28, 45, DateTimeKind.Utc), t.UpdatedAt, "Updated at");
-        */
+        }
     }
 }

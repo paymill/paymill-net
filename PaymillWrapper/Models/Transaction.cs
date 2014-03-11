@@ -14,14 +14,14 @@ namespace PaymillWrapper.Models
     {
         public enum TypeStatus
         {
-            PARTIAL_REFUNDED,
-            REFUNDED,
-            CLOSED,
-            FAILED,
-            PENDING,
-            OPEN,
-            PREAUTH,
-            CHARGEBACK
+            PartialRefunded,
+            Refunded,
+            Closed,
+            Failed,
+            Pending,
+            Open,
+            Preauth,
+            Chargeback
         }
         public Transaction()
         {
@@ -41,7 +41,7 @@ namespace PaymillWrapper.Models
         {
             get
             {
-                return Amount / 100;
+                return Amount / 100.0;
             }
         }
 
@@ -55,11 +55,11 @@ namespace PaymillWrapper.Models
         /// Formatted origin amount
         /// </summary>
         [IgnoreDataMember]
-        public double Origin_AmountFormatted
+        public double OriginAmountFormatted
         {
             get
             {
-                return OriginAmount / 100;
+                return OriginAmount / 100.0;
             }
         }
 
@@ -119,10 +119,16 @@ namespace PaymillWrapper.Models
         public Preauthorization Preauthorization { get; set; }
 
         [DataMember(Name = "response_code")]
-        public String ResponseCode { get; set; }
+        public ResponseCode ResponseCode { get; set; }
 
         [DataMember(Name = "fees")]
         public List<Fee> Fees { get; set; }
+
+        [DataMember(Name = "is_fraud")]
+        public bool IsFraud { get; set; }
+
+        [DataMember(Name = "short_id")]
+        public string ShortId { get; set; }
 
       }
 }

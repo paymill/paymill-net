@@ -13,38 +13,6 @@ using PaymillWrapper.Net;
 
 namespace PaymillWrapper.Service
 {
-/*
-   
-    public class PaymentService : AbstractService<Payment>
-    {
-        public PaymentService(HttpClientRest client)
-            : base(client)
-        {
-        }
-
-
-
-        /// <summary>
-        /// To get the details of an existing payment you’ll need to supply the payment ID
-        /// </summary>
-        /// <param name="clientID">Payment identifier</param>
-        /// <returns>Payment-object</returns>
-        public Payment Get(string paymentID)
-        {
-            return get<Payment>(Resource.Payments, paymentID);
-        }
-
-        /// <summary>
-        /// This function deletes a payment
-        /// </summary>
-        /// <param name="clientID">Payment identifier</param>
-        /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool Remove(string paymentID)
-        {
-            return remove<Payment>(Resource.Payments, paymentID);
-        }
-
-*/
     public class PaymentService : AbstractService<Payment>
     {
         public PaymentService(HttpClient client, string apiUrl)
@@ -52,48 +20,44 @@ namespace PaymillWrapper.Service
         {
         }
         /// <summary>
-        /// This function allows request a payment list
-        /// </summary>
-        /// <returns>Returns a list payments-object</returns>
-        public async Task< List<Payment> > GetPaymentsAsync()
-        {
-            return await ListAsync();
-        }
-
-        /// <summary>
-        /// This function allows request a payment list
-        /// </summary>
-        /// <param name="filter">Result filtered in the required way</param>
-        /// <returns>Returns a list payments-object</returns>
-        public async Task< List<Payment>> GetPaymentsByFilter(Filter filter)
-        {
-            return await ListAsync(filter);
-        }
-        /// <summary>
         /// This function creates a payment object
         /// </summary>
         /// <param name="token">payment token</param>
         /// <returns>New object-payment just created</returns>
-        public Payment Create(String token)
+        public async Task<Payment> CreateWithTokenAsync(String token)
         {
-            return Create(
+            ValidationUtils.ValidatesToken(token);
+            return await createAsync(
                 null,
                 new UrlEncoder().EncodeObject(new { Token = token }));
+        }
+        /// <summary>
+        /// Creates the with token and client.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <param name="client">The client.</param>
+        /// <returns></returns>
+        public async Task<Payment> CreateWithTokenAndClientAsync(String token, Client client)
+        {
+            ValidationUtils.ValidatesToken(token);
+            ValidationUtils.ValidatesClient(client);
+            return await createAsync(
+                null,
+                new UrlEncoder().EncodeObject(new { Token = token, Client = client.Id }));
         }
         /// <summary>
         /// This function creates a payment object with client
         /// </summary>
         /// <param name="token">payment token</param>
-        /// <param name="token">payment client</param>
+        /// <param name="clientId ">payment client id</param>
         /// <returns>New object-payment just created</returns>
-        public Payment Create(String token, String client)
+        public async Task<Payment> CreateWithTokenAndClientAsync(String token, String clientId)
         {
-            /*
-            return Create(
+            ValidationUtils.ValidatesToken(token);
+            ValidationUtils.ValidatesId(clientId);
+            return await createAsync(
                 null,
-                new UrlEncoder().EncodeObject(new { Token = token, Client = client }));
-             * */
-            return null;
+                new UrlEncoder().EncodeObject(new { Token = token, Client = clientId }));
         }
         protected override string GetResourceId(Payment obj)
         {

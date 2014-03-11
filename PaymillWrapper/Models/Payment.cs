@@ -11,16 +11,27 @@ namespace PaymillWrapper.Models
     /// <summary>
     /// The Payment object represents a payment with a credit card or via direct debit.
     /// </summary>
-    [JsonConverter(typeof(JsonParser<Payment>))]
     public class Payment : BaseModel
     {
        
         public enum TypePayment
         {
-            CREDITCARD, 
-            DEBIT
-        }
+            CreditCard, 
+            Debit,
 
+        }
+        public enum TypeCard
+        {
+            Visa, 
+            Mastercard, 
+            Mastro, 
+            Amex, 
+            Jcb,
+            Diners, 
+            Discover, 
+            ChinaUnionPay, 
+            Unknown
+        };
         /// <summary>
         /// enum(creditcard,debit)
         /// </summary>
@@ -38,7 +49,7 @@ namespace PaymillWrapper.Models
         /// Visa or Mastercard
         /// </summary>
         [DataMember(Name = "card_type")]
-        public string CardType { get; set; }
+        public TypeCard CardType { get; set; }
 
         /// <summary>
         /// Country

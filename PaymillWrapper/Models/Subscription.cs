@@ -12,7 +12,6 @@ namespace PaymillWrapper.Models
     /// Subscriptions allow you to charge recurring payments on a client’s credit card / to a client’s direct debit. 
     /// A subscription connects a client to the offers-object.
     /// </summary>
-    [JsonConverter(typeof(JsonParser<Subscription>))]
     public class Subscription : BaseModel
     {
         /// <summary>

@@ -4,21 +4,22 @@ namespace PaymillWrapper.Net
 {
     internal static class DateTimeExtensions
     {
-        private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
 
+        private static readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
+  
         public static int ToUnixTimestamp(this DateTime dateTime)
         {
-            return (int) (dateTime - UnixEpoch).TotalSeconds;
+            return (int)(dateTime - _unixEpoch).TotalSeconds;
         }
 
         public static DateTime ParseAsUnixTimestamp(this int timestamp)
         {
-            return UnixEpoch.AddSeconds(timestamp);
+            return _unixEpoch.AddSeconds(timestamp);
         }
 
         public static DateTime ParseAsUnixTimestamp(this long timestamp)
         {
-            return UnixEpoch.AddSeconds(timestamp);
+            return _unixEpoch.AddSeconds(timestamp);
         }
     }
 }

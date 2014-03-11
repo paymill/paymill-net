@@ -14,9 +14,9 @@ namespace PaymillWrapper.Models
     {
         public enum RefundStatus
         {
-            OPEN, 
-            REFUNDED, 
-            FAILED
+            Open, 
+            Refunded, 
+            Failed
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace PaymillWrapper.Models
         {
             get
             {
-                return Amount / 100;
+                return Amount / 100.0;
             }
         }
 
@@ -62,6 +62,6 @@ namespace PaymillWrapper.Models
         public bool Livemode { get; set; }
 
         [DataMember(Name = "response_code")]
-        public int ResponseCode;
+        public ResponseCode ResponseCode;
     }
 }

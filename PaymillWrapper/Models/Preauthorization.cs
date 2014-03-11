@@ -13,12 +13,12 @@ namespace PaymillWrapper.Models
     {
         public enum PreauthorizationStatus
         {
-            OPEN,
-            PENDING,
-            CLOSED,
-            FAILED, 
-            DELETE,
-            PREAUTH
+            Open,
+            Pending,
+            Closed,
+            Failed, 
+            Delete,
+            Preauth
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace PaymillWrapper.Models
         {
             get
             {
-                return Amount / 100;
+                return Amount / 100.0;
             }
         }
 
@@ -73,7 +73,7 @@ namespace PaymillWrapper.Models
         public String AppId;
 
        [DataMember(Name = "status")]
-       public Preauthorization Status;
+       public PreauthorizationStatus Status;
 
     }
 }

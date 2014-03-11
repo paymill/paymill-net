@@ -58,7 +58,7 @@ namespace UnitTest.Net
             Offer offer = new Offer ();
             offer.Name = "TestOffer";
             offer.Amount = 100;
-            offer.Interval = 10;
+            offer.Interval = new Interval("10 Day");
             offer.Currency = "USD";
             string reply = urlEncoder.EncodeUpdate(offer);
             Assert.AreEqual("name=TestOffer", reply);
@@ -82,7 +82,7 @@ namespace UnitTest.Net
         {
             UrlEncoder urlEncoder = new UrlEncoder();
             Transaction trans = new Transaction();
-            trans.Status =Transaction.TypeStatus.CLOSED;
+            trans.Status =Transaction.TypeStatus.Closed;
             trans.Payment = new Payment() { Id = "pay_1234", Code = "Test Code" };
             trans.Token = "token";
             trans.Description = "description";

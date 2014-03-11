@@ -17,7 +17,19 @@ namespace UnitTest.Net
             _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
         }
         [TestMethod]
-        public void CreateClient()
+        public void CreateClientWithDescription()
+        {
+            Client client = _paymill.ClientService.CreateWithDescriptionAsync("Lovely Client").Result;
+            Assert.IsFalse(String.IsNullOrWhiteSpace(client.Id), "CreateClient Fail");
+        }
+        [TestMethod]
+        public void CreateClientWithEmail()
+        {
+            Client client = _paymill.ClientService.CreateWithEmailAsync("lovely-client@example.com").Result;
+            Assert.IsFalse(String.IsNullOrWhiteSpace(client.Id), "CreateClient Fail");
+        }
+        [TestMethod]
+        public void CreateClientWithEmailAndDescription()
         {
             Client client = _paymill.ClientService.CreateWithEmailAndDescriptionAsync("lovely-client@example.com", "Lovely Client").Result;
             Assert.IsFalse(String.IsNullOrWhiteSpace(client.Id), "CreateClient Fail");
@@ -31,12 +43,12 @@ namespace UnitTest.Net
         }
 
         [TestMethod]
-        public void RemoveClient()
+        public void DeleteClient()
         {
             Client client = _paymill.ClientService.CreateWithEmailAndDescriptionAsync("lovely-client@example.com", "Lovely Client").Result;
             Assert.IsFalse(String.IsNullOrWhiteSpace( client.Id), "CreateClient Fail");
             Boolean result = _paymill.ClientService.DeleteAsync(client.Id).Result;
-            Assert.IsTrue(result, "Remove  Offer");
+            Assert.IsTrue(result, "Remove Client");
         }
         [TestMethod]
         public void UpdateClient()
