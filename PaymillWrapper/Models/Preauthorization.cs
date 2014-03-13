@@ -69,5 +69,11 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "Token")]
         public string Token { get; set; }
 
+        /// <summary>
+        /// A token generated through JavaScript-Bridge Paymill
+        /// </summary>
+        [DataMember(Name = "status")]
+        public Preauthorization.TypeStatus Status;
+
     }
 }

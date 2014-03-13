@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PaymillWrapper.Net;
 using PaymillWrapper.Models;
+using PaymillWrapper;
 
 namespace UnitTest.Net
 {
@@ -64,14 +65,13 @@ namespace UnitTest.Net
         public void EncodeTransaction()
         {
             URLEncoder urlEncoder = new URLEncoder();
-
             Transaction transaction = new Transaction();
             transaction.Token = "098f6bcd4621d373cade4e832627b4f6";
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
             transaction.Description = "Test";
 
-            string expected = "amount=3500&currency=EUR&token=098f6bcd4621d373cade4e832627b4f6&description=Test";
+            string expected = "amount=3500&currency=EUR&source=paymill-net-0.1.1.2&token=098f6bcd4621d373cade4e832627b4f6&description=Test";
             string reply = urlEncoder.EncodeTransaction(transaction, null);
 
             Assert.AreEqual(expected, reply);
@@ -81,13 +81,12 @@ namespace UnitTest.Net
         public void EncodePreauthorization()
         {
             URLEncoder urlEncoder = new URLEncoder();
-
             Preauthorization preauthorization = new Preauthorization();
             preauthorization.Amount = 3500;
             preauthorization.Currency = "EUR";
             preauthorization.Payment = new Payment() { Id = "pay_4c159fe95d3be503778a" };
 
-            string expected = "amount=3500&currency=EUR&payment=pay_4c159fe95d3be503778a";
+            string expected = "amount=3500&currency=EUR&source=paymill-net-0.1.1.2&payment=pay_4c159fe95d3be503778a";
             string reply = urlEncoder.EncodePreauthorization(preauthorization);
 
             Assert.AreEqual(expected, reply);

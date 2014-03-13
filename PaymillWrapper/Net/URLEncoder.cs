@@ -61,10 +61,11 @@ namespace PaymillWrapper.Net
         public string EncodeTransaction(Transaction data, Fee fee)
         {
             StringBuilder sb = new StringBuilder();
+            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
 
             this.addKeyValuePair(sb, "amount", data.Amount);
             this.addKeyValuePair(sb, "currency", data.Currency);
-
+            this.addKeyValuePair(sb, "source", srcValue);
             if (fee != null)
             {
                 this.addKeyValuePair(sb, "fee_amount", fee.Amount);
@@ -91,10 +92,11 @@ namespace PaymillWrapper.Net
         public string EncodePreauthorization(Preauthorization data)
         {
             StringBuilder sb = new StringBuilder();
-
+            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
+ 
             this.addKeyValuePair(sb, "amount", data.Amount);
             this.addKeyValuePair(sb, "currency", data.Currency);
-
+            this.addKeyValuePair(sb, "source", srcValue);
             if (!string.IsNullOrEmpty(data.Token))
                 this.addKeyValuePair(sb, "token", data.Token);
 

@@ -9,6 +9,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
 using PaymillWrapper.Service;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace PaymillWrapper
 {
@@ -62,6 +64,19 @@ namespace PaymillWrapper
             AbstractService reply = (AbstractService)Activator.CreateInstance(typeof(AbstractService),Client);
 
             return reply;
+        }
+        public static String GetProjectName()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Attribute[] attributes = AssemblyMetadataAttribute.GetCustomAttributes(assembly, typeof(AssemblyMetadataAttribute));
+            var srcAtribute = attributes.FirstOrDefault(x => (x as AssemblyMetadataAttribute).Key == "source");
+            return ( srcAtribute != null ? (srcAtribute as AssemblyMetadataAttribute).Value : String.Empty);
+        }
+        public static String GetProjectVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.FileVersion;
         }
     }
 }
