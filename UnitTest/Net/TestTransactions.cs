@@ -16,17 +16,12 @@ namespace UnitTest.Net
         {
             _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
         }
-       
+
         [TestMethod]
         public void UpdateTransaction()
         {
-            Transaction transaction = new Transaction();
-             Payment payment = _paymill.PaymentService.CreateWithTokenAsync("098f6bcd4621d373cade4e832627b4f6").Result;
-            transaction.Amount = 3500;
-            transaction.Currency = "EUR";
-            transaction.Description = "Test API c#";
-            transaction.Payment = payment;
-            transaction = _paymill.TransactionService.Create(transaction, null);
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync("098f6bcd4621d373cade4e832627b4f6").Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAsync(payment, 3500, "EUR", "Test API C#").Result;
             transaction.Client = _paymill.ClientService.CreateWithEmailAndDescriptionAsync("javicantos22@hotmail.es", "Test API").Result;
 
             Assert.IsTrue(transaction.Id != String.Empty, "Create Transaction Fail");
@@ -39,7 +34,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void ListTransaction()
         {
-            var list = _paymill.TransactionService.GetTransactionsAsync().Result;
+            var list = _paymill.TransactionService.ListAsync().Result;
             Assert.IsTrue(list.Count > 0, "List Transaction Failed");
         }
     }
