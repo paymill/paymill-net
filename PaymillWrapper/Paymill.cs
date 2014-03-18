@@ -1,10 +1,17 @@
-
-﻿using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using PaymillWrapper.Models;
+using PaymillWrapper.Net;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using PaymillWrapper.Models;
+using System.Web;
 using PaymillWrapper.Service;
+using System.Reflection;
+using System.Diagnostics;
+
 
 namespace PaymillWrapper
 {
@@ -23,6 +30,20 @@ namespace PaymillWrapper
             _refundService = new Lazy<RefundService>(() => new RefundService(Client, ApiUrl));
             _subscriptionService = new Lazy<SubscriptionService>(() => new SubscriptionService(Client, ApiUrl));
             _transactionService = new Lazy<TransactionService>(() => new TransactionService(Client, ApiUrl));
+            _webhookService = new Lazy<WebhookService>(() => new WebhookService(Client, ApiUrl));
+        }
+        public static String GetProjectName()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Attribute[] attributes = AssemblyMetadataAttribute.GetCustomAttributes(assembly, typeof(AssemblyMetadataAttribute));
+            var srcAtribute = attributes.FirstOrDefault(x => (x as AssemblyMetadataAttribute).Key == "source");
+            return (srcAtribute != null ? (srcAtribute as AssemblyMetadataAttribute).Value : String.Empty);
+        }
+        public static String GetProjectVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.FileVersion;
         }
 
         public static string ApiKey { get; private set; }
@@ -56,6 +77,7 @@ namespace PaymillWrapper
         private readonly Lazy<RefundService> _refundService;
         private readonly Lazy<SubscriptionService> _subscriptionService;
         private readonly Lazy<TransactionService> _transactionService;
+        private readonly Lazy<WebhookService> _webhookService;
         #endregion
 
         #region Public services
@@ -78,6 +100,11 @@ namespace PaymillWrapper
         {
             get { return _preauthorizationService.Value; }
         }
+        public WebhookService WebhookService
+        {
+            get { return _webhookService.Value; }
+        }
+
 
         public RefundService RefundService
         {

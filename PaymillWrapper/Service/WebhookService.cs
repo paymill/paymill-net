@@ -8,80 +8,37 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
-    class WebhookService : AbstractService<Webhook>
+    public class WebhookService : AbstractService<Webhook>
     {
-        public WebhookService(HttpClientRest webhook)
-            : base(Resource.Webhooks, webhook, Paymill.ApiUrl)
+        public WebhookService(System.Net.Http.HttpClient webhook, string apiUrl)
+            : base(Resource.Webhooks, webhook, apiUrl)
         {
         }
 
-        public Webhook Create(Webhook obj)
+        public async Task<Webhook> CreateEmailWebhookAsync(String email, Webhook.EventType[] eventTypes)
         {
-            if (obj.Url == null)
+            String encodeParams = new UrlEncoder().EncodeObject(new
             {
-                return CreateEmail(obj.Email, obj.EventTypes);
-            }
+                email = email,
+                event_types = UrlEncoder.ConvertEventsArr(eventTypes)
+            });
 
-            return CreateUrl(obj.Url, obj.EventTypes);
-        }
-      
-      
-        public Webhook CreateUrl(Uri url, params PaymillWrapper.Models.EventType[] eventTypes)
-        {
-           /*
-            if (url == null)
-            {
-                throw new NullReferenceException("url");
-            }
-            if (eventTypes == null)
-            {
-                throw new NullReferenceException("eventTypes");
-            }
-            return Create(
-                   null,
-                   new UrlEncoder().EncodeObject(new {
-                            url = url.AbsoluteUri,
-                            event_types = UrlEncoder.ConvertEventsArr(eventTypes) 
-                   }));
-            * */
-            return null;
+            return await createAsync(encodeParams);
         }
 
-        /// <summary>
-        /// This funcion create webhook by email
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="eventTypes"></param>
-        /// <returns></returns>
-        public Webhook CreateEmail(String email, params PaymillWrapper.Models.EventType[] eventTypes)
+
+        public async Task<Webhook> CreateUrlWebhookAsync(Uri url, params Webhook.EventType[] eventTypes)
         {
-            /*
-            if (email == null)
+            String encodeParams = new UrlEncoder().EncodeObject(new
             {
-                throw new NullReferenceException("email");
-            }
-            if (eventTypes == null)
-            {
-                throw new NullReferenceException("eventTypes");
-            }
-            return Create(
-                   null,
-                   new UrlEncoder().EncodeObject(new { 
-                       email = email,
-                       event_types = UrlEncoder.ConvertEventsArr(eventTypes) 
-                   }));*/
-            return null;
+                url = url.AbsoluteUri,
+                event_types = UrlEncoder.ConvertEventsArr(eventTypes)
+            });
+
+            return await createAsync(encodeParams);
         }
+
         
-       
-        /// <summary>
-        /// this function return all webhooks
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Webhook>> GetWebhooks()
-        {
-            return await ListAsync(null);
-        }
         protected override string GetResourceId(Webhook obj)
         {
             return obj.Id;

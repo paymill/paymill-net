@@ -16,6 +16,13 @@ namespace PaymillWrapper.Net
             charset = Encoding.UTF8;
         }
 
+        /// <summary>
+        /// Encodes the specified data.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        /// <exception cref="PaymillWrapper.Exceptions.PaymillException"></exception>
         public string Encode<T>(Object data)
         {
             var props = typeof(T).GetProperties();
@@ -36,6 +43,11 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Encodes the object.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public string EncodeObject(Object data)
         {
             var props = data.GetType().GetProperties();
@@ -49,6 +61,11 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Encodes the update.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         public string EncodeUpdate(Object data)
         {
             var props = data.GetType().GetProperties();
@@ -71,6 +88,28 @@ namespace PaymillWrapper.Net
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Converts the events arr.
+        /// </summary>
+        /// <param name="eventTypes">The event types.</param>
+        /// <returns></returns>
+        public static String ConvertEventsArr(params PaymillWrapper.Models.EventBaseType[] eventTypes)
+        {
+            List<String> typesList = new List<String>();
+            foreach (PaymillWrapper.Models.EventBaseType evt in eventTypes)
+            {
+                typesList.Add(evt.ToString());
+            }
+
+            return String.Join(",", typesList.ToArray());
+        }
+        /// <summary>
+        /// Adds the key value pair.
+        /// </summary>
+        /// <param name="sb">The sb.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <exception cref="PaymillWrapper.Exceptions.PaymillException"></exception>
         private void addKeyValuePair(StringBuilder sb, string key, object value)
         {
             string reply = "";

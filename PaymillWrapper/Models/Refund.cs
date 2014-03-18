@@ -62,6 +62,6 @@ namespace PaymillWrapper.Models
         public bool Livemode { get; set; }
 
         [DataMember(Name = "response_code")]
-        public ResponseCode ResponseCode;
+        public int ResponseCode;
     }
 }

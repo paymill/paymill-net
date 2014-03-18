@@ -28,7 +28,6 @@ namespace PaymillWrapper.Service
         {
             ValidationUtils.ValidatesToken(token);
             return await createAsync(
-                null,
                 new UrlEncoder().EncodeObject(new { Token = token }));
         }
         /// <summary>
@@ -42,7 +41,6 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesClient(client);
             return await createAsync(
-                null,
                 new UrlEncoder().EncodeObject(new { Token = token, Client = client.Id }));
         }
         /// <summary>
@@ -56,7 +54,6 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesId(clientId);
             return await createAsync(
-                null,
                 new UrlEncoder().EncodeObject(new { Token = token, Client = clientId }));
         }
         protected override string GetResourceId(Payment obj)

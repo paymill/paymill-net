@@ -25,7 +25,7 @@ namespace PaymillWrapper.Models
         public String Payment { get; set; }
 
         [DataMember(Name = "amount")]
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         [DataMember(Name = "billed_at")]
         public DateTime? BilledAt { get; set; }

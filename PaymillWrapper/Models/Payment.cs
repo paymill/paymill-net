@@ -107,6 +107,13 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "app_id")]
         public string AppId { get; set; }
 
-     
+        public Payment(String id)
+        {
+            Id = id;
+        }
+        public Payment()
+        {
+
+        }
     }
 }

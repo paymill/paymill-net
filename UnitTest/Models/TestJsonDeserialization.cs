@@ -100,7 +100,7 @@ namespace UnitTest.Models
             Assert.AreEqual("tran_54645bcb98ba7acfe204", p.Transaction.Id);
             Assert.IsFalse(p.Livemode);
             Assert.AreEqual(Refund.RefundStatus.Refunded, p.Status);
-            Assert.AreEqual(ResponseCode.Success, p.ResponseCode);
+            Assert.AreEqual(200, p.ResponseCode);
             Assert.AreEqual("foo", p.Description);
             Assert.AreEqual(1349947042, p.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1349947042, p.UpdatedAt.ToUnixTimestamp());
@@ -136,7 +136,7 @@ namespace UnitTest.Models
             Assert.AreEqual(59.00, t.AmountFormatted);
             Assert.IsNull(t.Refunds);
             Assert.IsNull(t.Preauthorization);
-            Assert.AreEqual(ResponseCode.Success, t.ResponseCode);
+            Assert.AreEqual(200, t.ResponseCode);
             Assert.IsFalse(t.IsFraud);
             Assert.AreEqual("7357.7357.7357", t.ShortId);
             Assert.AreEqual(new DateTime(2013, 10, 1, 7, 28, 45, DateTimeKind.Utc), t.CreatedAt, "Created at");

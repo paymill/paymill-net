@@ -6,38 +6,11 @@ using PaymillWrapper.Net;
 
 namespace PaymillWrapper.Service
 {
-/*    public class PreauthorizationService : AbstractService<Preauthorization>
-    {
-        public PreauthorizationService(HttpClientRest client)
-            : base(client)
-        {
-        }
-
-        /// <summary>
-        /// This function allows request a preauthorization list
-        /// </summary>
-        /// <returns>Returns a list preauthorizations-object</returns>
-        public List<Preauthorization> GetPreauthorizations()
-        {
-            return getList<Preauthorization>(Resource.Preauthorizations);
-        }
-
-        /// <summary>
-        /// This function allows request a preauthorization list
-        /// </summary>
-        /// <param name="filter">Result filtered in the required way</param>
-        /// <returns>Returns a list preauthorization-object</returns>
-        public List<Preauthorization> GetPreauthorizationsByFilter(Filter filter)
-        {
-            return getList<Preauthorization>(Resource.Preauthorizations, filter);
-        }
-
-*/
 
 
     public class PreauthorizationService : AbstractService<Preauthorization>
     {
-        public PreauthorizationService(HttpClient client, string apiUrl) 
+        public PreauthorizationService(HttpClient client, string apiUrl)
             : base(Resource.Preauthorizations, client, apiUrl)
         {
         }
@@ -46,29 +19,44 @@ namespace PaymillWrapper.Service
         {
             return obj.Id;
         }
-          /// <summary>
-        /// This function creates a transaction object
+        /// <summary>
+        /// Creates Use either a token or an existing payment to Authorizes the given amount with the given token.
         /// </summary>
-        /// <param name="token">token</param>
-        ///  <param name="amount">amount</param>
-        /// <param name="currency">currency</param>
-        /// <returns>New object-transaction just add</returns>
-        public Preauthorization CreateWithToken(String token, int amount, String currency)
+        /// <param name="token">The identifier of a token.</param>
+        ///  <param name="amount">Amount (in cents) which will be charged.</param>
+        /// <param name="currency">ISO 4217 formatted currency code.</param>
+        /// <returns>Object with the Preauthorization as sub object.d</returns>
+        public async Task<Preauthorization> CreateWithToken(String token, int amount, String currency)
         {
-           /* return Create(
-                 null,
-                 new UrlEncoder().EncodePreauthorization(token, amount, currency));
-            * */
-            return null;
+            ValidationUtils.ValidatesToken(token);
+            ValidationUtils.ValidatesAmount(amount);
+            ValidationUtils.ValidatesCurrency(currency);
+            return await createAsync(
+                 new UrlEncoder().EncodeObject(new { Token = token, Amount = amount, Currency = currency }));
         }
-        public Preauthorization CreateWithPayment(Payment payment, int amount, String currency)
+        /// <summary>
+        /// Authorizes the given amount with the given Payment. Works only for credit cards. Direct debit not supported.
+        /// </summary>
+        /// <param name="payment">The Payment itself (only creditcard-object)</param>
+        /// <param name="amount">Amount (in cents) which will be charged.</param>
+        /// <param name="currency">ISO 4217 formatted currency code.</param>
+        /// <returns>Transaction object with the Preauthorization as sub object.</returns>
+        public async Task<Preauthorization> CreateWithPayment(Payment payment, int amount, String currency)
         {
-            /*
-            return Create(
-                null,
-                new UrlEncoder().EncodePreauthorization(payment, amount, currency));
-             * */
-            return null;
+            ValidationUtils.ValidatesPayment(payment);
+            ValidationUtils.ValidatesAmount(amount);
+            ValidationUtils.ValidatesCurrency(currency);
+
+            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
+
+            return await createAsync(
+                new UrlEncoder().EncodeObject(new
+                {
+                    Payment = payment,
+                    Amount = amount,
+                    Currency = currency,
+                    Source = srcValue
+                }));
         }
     }
 }

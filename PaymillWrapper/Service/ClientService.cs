@@ -13,7 +13,8 @@ namespace PaymillWrapper.Service
     public class ClientService : AbstractService<Client>
     {
         public ClientService(HttpClient client,
-            string apiUrl): base(Resource.Clients, client, apiUrl)
+            string apiUrl)
+            : base(Resource.Clients, client, apiUrl)
         {
 
         }
@@ -62,7 +63,6 @@ namespace PaymillWrapper.Service
         public async Task<Client> CreateWithEmailAndDescriptionAsync(String email, String description)
         {
             return await createAsync(
-                null,
                 new UrlEncoder().EncodeObject(new { Email = email, Description = description }));
         }
         protected override string GetResourceId(Client obj)

@@ -23,6 +23,10 @@ namespace PaymillWrapper.Models
             Preauth,
             Chargeback
         }
+        public Transaction(String id)
+        {
+            Id = id;
+        }
         public Transaction()
         {
             this.Fees = new List<Fee>();
@@ -119,7 +123,7 @@ namespace PaymillWrapper.Models
         public Preauthorization Preauthorization { get; set; }
 
         [DataMember(Name = "response_code")]
-        public ResponseCode ResponseCode { get; set; }
+        public int ResponseCode { get; set; }
 
         [DataMember(Name = "fees")]
         public List<Fee> Fees { get; set; }
@@ -130,5 +134,5 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "short_id")]
         public string ShortId { get; set; }
 
-      }
+    }
 }

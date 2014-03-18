@@ -39,8 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\PaymillWrapper\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
@@ -62,8 +63,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Models\MultipleResults.cs" />
-    <Compile Include="Models\TestJsonDeserialization.cs" />
+    <Compile Include="Models\TestJsonDeserialization.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\TestClients.cs" />
     <Compile Include="Net\TestHttpClientRest.cs" />
+    <Compile Include="Net\TestOffers.cs" />
+    <Compile Include="Net\TestPayments.cs" />
+    <Compile Include="Net\TestTransactions.cs" />
+    <Compile Include="Net\TestWebhooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Net\TestURLEncoder.cs" />
   </ItemGroup>
@@ -80,7 +88,6 @@
     <None Include="app.config" />
     <EmbeddedResource Include="Models\Input\webhook_email.json" />
     <EmbeddedResource Include="Models\Input\webhook_url.json" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PaymillWrapper\PaymillWrapper.csproj">

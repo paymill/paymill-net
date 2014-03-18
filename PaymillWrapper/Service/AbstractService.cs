@@ -56,18 +56,13 @@ namespace PaymillWrapper.Service
         /// <summary>
         /// Creates the asynchronous.
         /// </summary>
-        /// <param name="id">The identifier.</param>
         /// <param name="encodeParams">The encode parameters.</param>
         /// <returns></returns>
-        protected async Task<T> createAsync(string id, string encodeParams)
+        protected async Task<T> createAsync(string encodeParams)
         {
             T reply = default(T);
             var content = new StringContent(encodeParams);
             var requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
-            if (!string.IsNullOrEmpty(id))
-            {
-                requestUri += "/" + id;
-            }
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
             reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());

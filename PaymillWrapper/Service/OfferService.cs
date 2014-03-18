@@ -9,87 +9,54 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
-/*
-    public class OfferService : AbstractService<Offer>
-    {
-        public OfferService(HttpClientRest client):base(client)
-        {
-        }
 
-
-        /// <summary>
-        /// To get the details of an existing offer you’ll need to supply the offer ID
-        /// </summary>
-        /// <param name="clientID">Offer identifier</param>
-        /// <returns>Offer-object</returns>
-        public Offer Get(string offerID)
-        {
-            return get<Offer>(Resource.Offers, offerID);
-        }
-
-        /// <summary>
-        /// This function deletes a offer
-        /// </summary>
-        /// <param name="clientID">Offer identifier</param>
-        /// <returns>Return true if remove was ok, false if not possible</returns>
-        public bool Remove(string offerID)
-        {
-            return remove<Offer>(Resource.Offers, offerID);
-        }
-
-        /// <summary>
-        /// This function updates the data of a offer
-        /// </summary>
-        /// <param name="client">Object-offer</param>
-        /// <returns>Object-offer just updated</returns>
-        public Offer Update(Offer offer)
-        {
-            return update<Offer>(
-                Resource.Offers,
-                offer,
-                offer.Id,
-                new URLEncoder().EncodeOfferUpdate(offer));
-        }
-*/
     public class OfferService : AbstractService<Offer>
     {
         public OfferService(HttpClient client, string apiUrl)
             : base(Resource.Offers, client, apiUrl)
         {
         }
-       
+
+
         /// <summary>
-        /// This function allows request a offer list
+        /// Creates an offer via the API.
         /// </summary>
-        /// <returns>Returns a list offers-object</returns>
-        public async Task< List<Offer>> GetOffers()
+        /// <param name="amount">Amount in cents > 0.</param>
+        /// <param name="currency">ISO 4217 formatted currency code.</param>
+        /// <param name="interval">Defining how often the Client should be charged. Format: number DAY | WEEK | MONTH | YEAR</param>
+        /// <param name="name">Your name for this offer</param>
+        /// <returns>Object with id, which represents a PAYMILL offer.</returns>
+        public async Task<Offer> CreateAsync(int amount, String currency, String interval, String name)
         {
-            return await ListAsync();
+            return await CreateAsync(amount, currency, interval, name, null);
         }
 
         /// <summary>
-        /// This function allows request a offer list
+        /// Creates an offer via the API.
         /// </summary>
-        /// <param name="filter">Result filtered in the required way</param>
-        /// <returns>Returns a list offer-object</returns>
-        public async Task< List<Offer> > GetOffersByFilter(Filter filter)
+        /// <param name="amount">Amount in cents > 0.</param>
+        /// <param name="currency">ISO 4217 formatted currency code.</param>
+        /// <param name="interval">Defining how often the Client should be charged. Format: number DAY | WEEK | MONTH | YEAR</param>
+        /// <param name="name">Your name for this offer</param>
+        /// <param name="trialPeriodDays">Give it a try or charge directly. Can be null</param>
+        /// <returns>Object with id, which represents a PAYMILL offer</returns>
+        public async Task<Offer> CreateAsync(int amount, String currency, String interval, String name, int? trialPeriodDays)
         {
-            return await ListAsync(filter);
-        }
+            ValidationUtils.ValidatesAmount(amount);
+            ValidationUtils.ValidatesCurrency(currency);
+            ValidationUtils.ValidatesInterval(interval);
+            ValidationUtils.ValidatesName(name);
+            ValidationUtils.ValidatesTrialPeriodDays(trialPeriodDays);
 
-        /// <summary>
-        /// This function creates a offer object
-        /// </summary>
-        /// <param name="client">Object-offer</param>
-        /// <returns>New object-offer just add</returns>
-        public Offer Create(Offer offer)
-        {
-            /*
-            return Create(
-                null,
-                new UrlEncoder().EncodeOfferAdd(offer));
-             * */
-            return null;
+            return await createAsync(
+                    new UrlEncoder().EncodeObject(new
+                    {
+                        Amount = amount,
+                        Currency = currency,
+                        Interval = interval,
+                        Name = name,
+                        Trial_Period_Days = trialPeriodDays
+                    }));
         }
         protected override string GetResourceId(Offer obj)
         {

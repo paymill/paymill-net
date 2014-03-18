@@ -65,7 +65,14 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "subscription_count")]
         public SubscriptionCount SubscriptionCount { get; set; }
 
+        public Offer(String id)
+        {
+            Id = id;
+        }
+        public Offer()
+        {
 
+        }
     }
 
     [DataContract]
@@ -76,6 +83,7 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "inactive")]
         public int Inactive { get; set; }
     }
+
     [Newtonsoft.Json.JsonConverter(typeof(StringToIntervalConverter))]
     public class Interval
     {

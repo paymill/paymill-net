@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
+[assembly: AssemblyMetadata("source", "paymill-net")]
 // Si establece ComVisible como false, los tipos de este ensamblado no estarán visibles 
 // para los componentes COM. Si necesita obtener acceso a un tipo de este ensamblado desde 
 // COM, establezca el atributo ComVisible como true en este tipo.

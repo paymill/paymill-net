@@ -22,15 +22,15 @@ namespace PaymillWrapper.Service
                 throw new ArgumentException("Token can not be blank");
         }
 
-        static internal void ValidatesTrialPeriodDays(int trialPeriodDays)
+        static internal void ValidatesTrialPeriodDays(int? trialPeriodDays)
         {
-            if (trialPeriodDays != null && trialPeriodDays < 0)
+            if (trialPeriodDays.HasValue && trialPeriodDays.Value < 0)
                 throw new ArgumentException("Trial period days can not blank or be negative");
         }
 
-        static internal void ValidatesAmount(int amount)
+        static internal void ValidatesAmount(int? amount)
         {
-            if (amount == null || amount < 0)
+            if (amount.HasValue || amount.Value < 0)
                 throw new ArgumentException("Amount can not be blank or negative");
         }
 
@@ -56,12 +56,12 @@ namespace PaymillWrapper.Service
         {
             if (fee != null)
             {
-                if (fee.Amount != null && String.IsNullOrWhiteSpace(fee.Payment))
+                if (fee.Amount.HasValue && String.IsNullOrWhiteSpace(fee.Payment))
                     throw new ArgumentException("When fee amount is given, fee payment is mandatory");
-                if (fee.Amount == null && String.IsNullOrEmpty(fee.Payment) == false)
+                if (fee.Amount.HasValue && String.IsNullOrEmpty(fee.Payment) == false)
                     throw new ArgumentException("When fee payment is given, fee amount is mandatory");
 
-                if (fee.Amount != null && String.IsNullOrEmpty(fee.Payment) == false)
+                if (fee.Amount.HasValue && String.IsNullOrEmpty(fee.Payment) == false)
                 {
                     if (fee.Amount < 0)
                         throw new ArgumentException("Fee amount can not be negative");
