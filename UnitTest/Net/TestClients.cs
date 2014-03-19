@@ -4,6 +4,7 @@ using PaymillWrapper;
 using PaymillWrapper.Service;
 using System.Collections.Generic;
 using PaymillWrapper.Models;
+using PaymillWrapper.Net;
 
 namespace UnitTest.Net
 {
@@ -41,7 +42,14 @@ namespace UnitTest.Net
             List<Client> clientsList = _paymill.ClientService.ListAsync().Result;
             Assert.IsTrue(clientsList.Count > 0, "Remove  Offer");
         }
-
+        [TestMethod]
+        public void GetClientsWithParameters()
+        {
+            Filter filter = new Filter();
+            filter.Add("email", "javicantos22@hotmail.es"); //OK
+            List<Client> lstClients = _paymill.ClientService.ListAsync(filter).Result;
+            Assert.IsTrue(lstClients.FindAll(x => x.Email == "javicantos22@hotmail.es").Count == lstClients.Count);
+        }
         [TestMethod]
         public void DeleteClient()
         {

@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using PaymillWrapper.Exceptions;
+using Newtonsoft.Json;
 
 namespace PaymillWrapper.Service
 {
@@ -41,8 +42,7 @@ namespace PaymillWrapper.Service
                 requestUri += String.Format("?{0}", filter.ToString());
             HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
-            lst = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(data);
-            return lst;
+            return JsonConvert.DeserializeObject<MultipleResults<T>>(data,new UnixTimestampConverter()).Data;
         }
 
         /// <summary>
@@ -65,8 +65,7 @@ namespace PaymillWrapper.Service
             var requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
-            return reply;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
         }
 
         public async Task<T> GetAsync(string id)
@@ -79,8 +78,7 @@ namespace PaymillWrapper.Service
 
             HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
-            return reply;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
         }
 
         public async Task<bool> DeleteAsync(string id)
@@ -105,8 +103,7 @@ namespace PaymillWrapper.Service
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            reply = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, new UnixTimestampConverter());
-            return reply;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
         }
 
         /// <summary>
@@ -117,13 +114,13 @@ namespace PaymillWrapper.Service
         /// <exception cref="PaymillRequestException"></exception>
         private async static Task<String> readReponseMessage(HttpResponseMessage response)
         {
-            var jsonArray = response.Content.ReadAsAsync<JObject>();
             if (response.IsSuccessStatusCode)
             {
-                return (await jsonArray)["data"].ToString();
+                return await response.Content.ReadAsStringAsync();
             }
             else
             {
+                var jsonArray = response.Content.ReadAsAsync<JObject>();
                 string error = (await jsonArray)["error"].ToString();
                 throw new PaymillRequestException(error, response.StatusCode);
             }

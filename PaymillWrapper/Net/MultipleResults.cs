@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace PaymillWrapper.Models
+namespace PaymillWrapper.Net
 {
     [DataContract]
     internal class SingleResult<T>
@@ -17,7 +17,7 @@ namespace PaymillWrapper.Models
     internal class MultipleResults<T>
     {
         [DataMember(Name = "data")]
-        public IList<T> Data { get; set; }
+        public List<T> Data { get; set; }
 
         [DataMember(Name = "mode")]
         public string Mode { get; set; }

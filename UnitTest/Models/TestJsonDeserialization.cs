@@ -32,7 +32,13 @@ namespace UnitTest.Models
             return JsonConvert.DeserializeObject<MultipleResults<T>>(GetInputFile(filename),
                 new UnixTimestampConverter()).Data;
         }
-
+        [TestMethod]
+        public void TestClients()
+        {
+            var clients = ReadResults<Client>("clients.json");
+            int hotmailAcounts = clients.Count(x=> x.Email == "javicantos22@hotmail.es");
+            Assert.IsTrue(hotmailAcounts == clients.Count(), "Invalid clients count");
+        }
         [TestMethod]
         public void TestClient()
         {

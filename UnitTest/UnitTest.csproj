@@ -62,7 +62,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Models\MultipleResults.cs" />
     <Compile Include="Models\TestJsonDeserialization.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +87,7 @@
     <None Include="app.config" />
     <EmbeddedResource Include="Models\Input\webhook_email.json" />
     <EmbeddedResource Include="Models\Input\webhook_url.json" />
+    <EmbeddedResource Include="Models\Input\clients.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PaymillWrapper\PaymillWrapper.csproj">

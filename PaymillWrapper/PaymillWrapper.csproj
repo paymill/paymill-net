@@ -68,6 +68,7 @@
     <Compile Include="Net\Filter.cs" />
     <Compile Include="Net\JsonParser.cs" />
     <Compile Include="Net\HttpClientRest.cs" />
+    <Compile Include="Net\MultipleResults.cs" />
     <Compile Include="Net\UnixTimestampConverter.cs" />
     <Compile Include="Net\URLEncoder.cs" />
     <Compile Include="Paymill.cs" />
