@@ -3,7 +3,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PaymillWrapper.Net
+namespace PaymillWrapper.Utils
 {
     class UnixTimestampConverter : DateTimeConverterBase
     {

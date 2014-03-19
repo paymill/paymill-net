@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using PaymillWrapper.Exceptions;
 
 namespace UnitTest.Net

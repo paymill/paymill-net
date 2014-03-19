@@ -4,6 +4,7 @@ using PaymillWrapper;
 using PaymillWrapper.Service;
 using System.Collections.Generic;
 using PaymillWrapper.Models;
+using PaymillWrapper.Utils;
 
 namespace UnitTest.Net
 {
@@ -11,18 +12,157 @@ namespace UnitTest.Net
     public class TestTransactions
     {
         Paymill _paymill = null;
+        String testToken = "098f6bcd4621d373cade4e832627b4f6";
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
+            _paymill = new Paymill("0ecdb65b3c7caeb2e10932699dacd50c");
+        }
+        [TestMethod]
+        public void CreateTransactionWithToken()
+        {
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 3500, "EUR").Result;
+            Assert.IsFalse(String.IsNullOrEmpty( transaction.Id));
+            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
+        }
+        [TestMethod]
+        public void CreateTransactionWithTokenAndDescription()
+        {
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 3500, "EUR", "Bar").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsTrue(transaction.Description == "Bar");
+            Assert.IsTrue(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Amount == 3500);
+        }
+        [TestMethod]
+        public void CreateTransactionWithPayment()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAsync(payment, 3500, "USD").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsFalse(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 3500);
+            Assert.IsTrue(transaction.Payment.Id == payment.Id);
+        }
+        [TestMethod]
+        public void CreateTransactionWithPaymentId()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAsync(payment.Id, 4500, "USD", "Bar boo").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsFalse(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 4500);
+            Assert.IsTrue(transaction.Payment.Id == payment.Id);
+            Assert.IsTrue(transaction.Description == "Bar boo");
+        }
+        [TestMethod]
+        public void CreateTransactionWithPaymentAndClient()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Client client = _paymill.ClientService.CreateAsync().Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAndClientAsync(payment, client, 4200, "USD").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsFalse(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 4200);
+            Assert.IsTrue(transaction.Payment.Id == payment.Id);
+            Assert.IsTrue(transaction.Client.Id == client.Id);
+            Assert.IsTrue(transaction.Description == "Bar boo");
+        }
+        [TestMethod]
+        public void CreateTransactionWithPaymentIdAndClientId()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Client client = _paymill.ClientService.CreateAsync().Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAndClientAsync(payment.Id, client.Id, 4200, "USD").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsFalse(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 4200);
+            Assert.IsTrue(transaction.Payment.Id == payment.Id);
+            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
+            Assert.IsTrue(transaction.Client.Id == client.Id);
+            Assert.IsTrue(transaction.Description == "Bar boo");
         }
 
         [TestMethod]
+        public void CreateTransactionWithPaymentAndClientAndDescrition()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Client client = _paymill.ClientService.CreateAsync().Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAndClientAsync(payment, client, 4200, "EUR", "Bar bar").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsTrue(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Amount == 4200);
+            Assert.IsTrue(transaction.Payment.Id == payment.Id);
+            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
+            Assert.IsTrue(transaction.Client.Id == client.Id);
+            Assert.IsTrue(transaction.Description == "Bar boo");
+        }
+        [TestMethod]
+        public void CreateTransactionWithPreauthorization()
+        {
+            Preauthorization preauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 4200, "USD").Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPreauthorizationAsync(preauthorization, 4200, "USD").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 4200);
+            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
+        }
+        [TestMethod]
+        public void CreateTransactionWithPreauthorizationAndDescription()
+        {
+            Preauthorization preauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 4200, "USD").Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPreauthorizationAsync(preauthorization, 4200, "USD", "Bar bar").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 4200);
+            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
+            Assert.IsTrue(transaction.Description == "Bar bar");
+        }
+       /* [TestMethod]
+        public void CreateTransactionWithTokenAndFee()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Fee fee = new Fee();
+            fee.Amount = 3200;
+            fee.Payment = payment.Id;
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAndFeeAsync(testToken, 4500, "USD", fee).Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 4500);
+            Assert.IsTrue(transaction.Fees[0].Amount == 3200);
+        }*/
+        /*       
+                    public async Task<Transaction> 
+                        public async Task<Transaction> CreateWithTokenAndFeeAsync(String token, int amount,
+                                                                  String currency, String description, Fee fee)
+       */
+        [TestMethod]
+        public void GetTransactions()
+        {
+            IReadOnlyCollection<Transaction> lstTransactions = _paymill.TransactionService.ListAsync().Result;
+            Assert.IsTrue(lstTransactions.Count > 0);
+        }
+        [TestMethod]
+        public void GetTransactionsWithParameters()
+        {
+
+            Filter filter = new Filter();
+            filter.Add("count", 1);
+            filter.Add("offset", 2);
+            IReadOnlyCollection<Transaction> lstTransactions = _paymill.TransactionService.ListAsync(filter).Result;
+
+            Assert.IsTrue(lstTransactions.Count > 0);
+        }
+        [TestMethod]
         public void UpdateTransaction()
         {
-            Payment payment = _paymill.PaymentService.CreateWithTokenAsync("098f6bcd4621d373cade4e832627b4f6").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             Transaction transaction = _paymill.TransactionService.CreateWithPaymentAsync(payment, 3500, "EUR", "Test API C#").Result;
-            transaction.Client = _paymill.ClientService.CreateWithEmailAndDescriptionAsync("javicantos22@hotmail.es", "Test API").Result;
+            transaction.Client = _paymill.ClientService.CreateWithEmailAndDescriptionAsync("lovely-client@example.com", "Test API").Result;
 
             Assert.IsTrue(transaction.Id != String.Empty, "Create Transaction Fail");
 

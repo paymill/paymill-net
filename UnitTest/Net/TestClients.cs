@@ -4,7 +4,7 @@ using PaymillWrapper;
 using PaymillWrapper.Service;
 using System.Collections.Generic;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 
 namespace UnitTest.Net
 {

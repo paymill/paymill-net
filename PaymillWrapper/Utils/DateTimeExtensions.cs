@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaymillWrapper.Net
+namespace PaymillWrapper.Utils
 {
     internal static class DateTimeExtensions
     {

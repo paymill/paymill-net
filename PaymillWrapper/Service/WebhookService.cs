@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
@@ -15,7 +15,7 @@ namespace PaymillWrapper.Service
         {
         }
 
-        public async Task<Webhook> CreateEmailWebhookAsync(String email, Webhook.EventType[] eventTypes)
+        public async Task<Webhook> CreateEmailWebhookAsync(String email, Webhook.WebhookEventType[] eventTypes)
         {
             String encodeParams = new UrlEncoder().EncodeObject(new
             {
@@ -23,11 +23,11 @@ namespace PaymillWrapper.Service
                 event_types = UrlEncoder.ConvertEventsArr(eventTypes)
             });
 
-            return await createAsync(encodeParams);
+            return await createAsync(null, encodeParams);
         }
 
 
-        public async Task<Webhook> CreateUrlWebhookAsync(Uri url, params Webhook.EventType[] eventTypes)
+        public async Task<Webhook> CreateUrlWebhookAsync(Uri url, params Webhook.WebhookEventType[] eventTypes)
         {
             String encodeParams = new UrlEncoder().EncodeObject(new
             {
@@ -35,7 +35,7 @@ namespace PaymillWrapper.Service
                 event_types = UrlEncoder.ConvertEventsArr(eventTypes)
             });
 
-            return await createAsync(encodeParams);
+            return await createAsync(null, encodeParams);
         }
 
         

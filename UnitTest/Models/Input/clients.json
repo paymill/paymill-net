@@ -1,0 +1,221 @@
+﻿{
+  "data": [
+    {
+      "id": "client_3a2561c2f4a29b18f41b",
+      "email": "javicantos22@hotmail.es",
+      "description": "Prueba API",
+      "app_id": null,
+      "updated_at": 1385145851,
+      "created_at": 1385145851,
+      "payment": [
+        {
+          "id": "pay_1de6d515efd5062af6383789",
+          "type": "creditcard",
+          "client": "client_3a2561c2f4a29b18f41b",
+          "card_type": "visa",
+          "country": null,
+          "expire_month": "12",
+          "expire_year": "2014",
+          "card_holder": "",
+          "last4": "1111",
+          "updated_at": 1385145918,
+          "created_at": 1385145918,
+          "app_id": null
+        }
+      ],
+      "subscription": null
+    },
+    {
+      "id": "client_e4fd0c3004a86c1e9fc6",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1386603703,
+      "created_at": 1386603703,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_0411942d93bcd74b7fe5",
+      "email": "javicantos22@hotmail.es",
+      "description": "Prueba API",
+      "app_id": null,
+      "updated_at": 1386687943,
+      "created_at": 1386687943,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_e08d2f94f995145f91c7",
+      "email": "javicantos22@hotmail.es",
+      "description": "Prueba API",
+      "app_id": null,
+      "updated_at": 1386688719,
+      "created_at": 1386688719,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_d53902b96d7e16e1aaec",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390384925,
+      "created_at": 1390384925,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_86d17f7fe81ee6bce0cf",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390385085,
+      "created_at": 1390385085,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_8690b29615a25c347f0f",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390385336,
+      "created_at": 1390385336,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_ab7115ef2b16fc86eee8",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390386817,
+      "created_at": 1390386817,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_bd945cfbb587b054dc12",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390825912,
+      "created_at": 1390825912,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_02bd0cb6f9828a49cf77",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390827167,
+      "created_at": 1390827167,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_dd839ce1350b8f699ec9",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1390857052,
+      "created_at": 1390857052,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_566e91074031628a4ac7",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1391030342,
+      "created_at": 1391030342,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_85e62ca3b5d3a4ab35b9",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1392973937,
+      "created_at": 1392973937,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_f8dbfde1727f4df27991",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1393496155,
+      "created_at": 1393496155,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_cee50001902abe07c463",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1393497191,
+      "created_at": 1393497191,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_37d853361533426ac2c0",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1393497221,
+      "created_at": 1393497221,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_407c97cf50ac5725b3ed",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1394126634,
+      "created_at": 1394126634,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_8b939ed9217b1352bbe6",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1394706037,
+      "created_at": 1394706037,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_99fcb7a4bde2aa3a1bd7",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1394707001,
+      "created_at": 1394707001,
+      "payment": [],
+      "subscription": null
+    },
+    {
+      "id": "client_b5ea71dab44df0e1f888",
+      "email": "javicantos22@hotmail.es",
+      "description": "Test API",
+      "app_id": null,
+      "updated_at": 1395141205,
+      "created_at": 1395141205,
+      "payment": [],
+      "subscription": null
+    }
+  ],
+  "data_count": "20",
+  "mode": "test"
+}

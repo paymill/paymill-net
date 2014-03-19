@@ -21,28 +21,28 @@ namespace UnitTest.Net
         public void CreateURLWebhook()
         {
             Webhook webhook = _paymill.WebhookService.CreateUrlWebhookAsync(new Uri("http://google.com"),
-                        Webhook.EventType.SUBSCRIPTION_SUCCEEDED,
-                        Webhook.EventType.SUBSCRIPTION_FAILED).Result;
+                        Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED,
+                        Webhook.WebhookEventType.SUBSCRIPTION_FAILED).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateURLWebhook Fail");
         }
         [TestMethod]
         [ExpectedException(typeof(PaymillRequestException))]
         public void CreateEmailWebhookFiled()
         {
-            Webhook.EventType[] eventTypes = { Webhook.EventType.SUBSCRIPTION_SUCCEEDED, Webhook.EventType.SUBSCRIPTION_FAILED };
+            Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("<your-webhook-email>", eventTypes).Result;
         }
         [TestMethod]
         public void CreateEmailWebhook()
         {
-            Webhook.EventType[] eventTypes = { Webhook.EventType.SUBSCRIPTION_SUCCEEDED, Webhook.EventType.SUBSCRIPTION_FAILED };
+            Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("test@email.com", eventTypes).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
         }
         [TestMethod]
         public void GetWebhook()
         {
-            Webhook.EventType[] eventTypes = { Webhook.EventType.SUBSCRIPTION_SUCCEEDED, Webhook.EventType.SUBSCRIPTION_FAILED };
+            Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("test@email.com", eventTypes).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
             Webhook newWebhook = _paymill.WebhookService.GetAsync(webhook.Id).Result;
@@ -52,7 +52,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void UpdateWebhook()
         {
-            Webhook.EventType[] eventTypes = { Webhook.EventType.SUBSCRIPTION_SUCCEEDED, Webhook.EventType.SUBSCRIPTION_FAILED };
+            Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("test@email.com", eventTypes).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
             // get
@@ -67,7 +67,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void RemoveWebhook()
         {
-            Webhook.EventType[] eventTypes = { Webhook.EventType.SUBSCRIPTION_SUCCEEDED, Webhook.EventType.SUBSCRIPTION_FAILED };
+            Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("test@email.com", eventTypes).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
             // get
@@ -78,7 +78,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void GetWebhooks()
         {
-            Webhook.EventType[] eventTypes = { Webhook.EventType.SUBSCRIPTION_SUCCEEDED, Webhook.EventType.SUBSCRIPTION_FAILED };
+            Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("test@email.com", eventTypes).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
             List<Webhook> resultList = _paymill.WebhookService.ListAsync().Result;

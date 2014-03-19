@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 
-namespace PaymillWrapper.Net
+namespace PaymillWrapper.Utils
 {
     public class HttpClientRest : HttpClient
     {

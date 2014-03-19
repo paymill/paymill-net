@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using Newtonsoft.Json;
 
 namespace UnitTest.Models
@@ -137,16 +137,16 @@ namespace UnitTest.Models
             Assert.AreEqual("client_db50b6496357e2700f00", t.Client.Id);
             Assert.AreEqual("pay_6bc452ea00f15be0225a1a6e", t.Payment.Id);
             Assert.IsFalse(t.Livemode);
-            Assert.AreEqual(Transaction.TypeStatus.Closed, t.Status);
+            Assert.AreEqual(Transaction.TransactionStatus.Closed, t.Status);
             Assert.AreEqual("Bar", t.Description);
             Assert.AreEqual(59.00, t.AmountFormatted);
             Assert.IsNull(t.Refunds);
             Assert.IsNull(t.Preauthorization);
-            Assert.AreEqual(200, t.ResponseCode);
+            Assert.AreEqual(20000, t.ResponseCode);
             Assert.IsFalse(t.IsFraud);
             Assert.AreEqual("7357.7357.7357", t.ShortId);
-            Assert.AreEqual(new DateTime(2013, 10, 1, 7, 28, 45, DateTimeKind.Utc), t.CreatedAt, "Created at");
-            Assert.AreEqual(new DateTime(2013, 10, 1, 7, 28, 45, DateTimeKind.Utc), t.UpdatedAt, "Updated at");
+            Assert.AreEqual(1395239167, t.CreatedAt.ToUnixTimestamp(), "Created at");
+            Assert.AreEqual(1395239167, t.UpdatedAt.ToUnixTimestamp(), "Updated at");
         }
     }
 }

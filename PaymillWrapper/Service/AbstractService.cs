@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -58,11 +58,29 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="encodeParams">The encode parameters.</param>
         /// <returns></returns>
-        protected async Task<T> createAsync(string encodeParams)
+        protected async Task<ST> createSubClassAsync<ST>(String subResource, string encodeParams)
         {
-            T reply = default(T);
             var content = new StringContent(encodeParams);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            var requestUri = _apiUrl + "/" + subResource.ToString().ToLower();
+            HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
+            String data = await readReponseMessage(response);
+            return JsonConvert.DeserializeObject<SingleResult<ST>>(data, new UnixTimestampConverter()).Data;
+        }
+        /// <summary>
+        /// Creates the asynchronous.
+        /// </summary>
+        /// <param name="encodeParams">The encode parameters.</param>
+        /// <returns></returns>
+        protected async Task<T> createAsync(String resourceId, string encodeParams)
+        {
+            var content = new StringContent(encodeParams);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             var requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
+            if (String.IsNullOrEmpty(resourceId) == false)
+            {
+                requestUri += "/" + resourceId;
+            }
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
             return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
@@ -70,8 +88,6 @@ namespace PaymillWrapper.Service
 
         public async Task<T> GetAsync(string id)
         {
-            T reply = default(T);
-      
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
             if (!string.IsNullOrEmpty(id))
                 requestUri += "/" + id;
@@ -81,7 +97,7 @@ namespace PaymillWrapper.Service
             return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public virtual async Task<bool> DeleteAsync(string id)
         {
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + id;
             HttpResponseMessage response = httpClient.DeleteAsync(requestUri).Result;
@@ -93,9 +109,8 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
-        public async Task<T> UpdateAsync(T obj)
+        public virtual async Task<T> UpdateAsync(T obj)
         {
-            T reply = default(T);
             String resourceId = GetResourceId(obj);
             var encoder = new UrlEncoder();
             var content = new StringContent(encoder.EncodeUpdate(obj));

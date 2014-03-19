@@ -1,16 +1,17 @@
 ﻿using Newtonsoft.Json;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
-
+using PaymillWrapper.Utils;
 namespace PaymillWrapper.Models
 {
     /// <summary>
     /// The Payment object represents a payment with a credit card or via direct debit.
     /// </summary>
+    [JsonConverter(typeof(StringToBaseModelConverter<Payment>))]
     public class Payment : BaseModel
     {
        

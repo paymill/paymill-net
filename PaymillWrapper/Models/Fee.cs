@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +32,8 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "currency")]
         public String Currency { get; set; }
+
+        [DataMember(Name = "application")]
+        public String application{ get; set; }
     }
 }

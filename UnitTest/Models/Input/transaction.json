@@ -1,57 +1,52 @@
 ﻿{
-  "data": {
-    "id": "tran_6983a8d95b03a594a34acd529fb5",
-    "amount": "5900",
-    "origin_amount": 5900,
-    "status": "closed",
-    "description": "Bar",
-    "livemode": false,
-    "refunds": null,
-    "currency": "NOK",
-    "created_at": 1380608925,
-    "updated_at": 1380608925,
-    "response_code": 20000,
-    "short_id": "7357.7357.7357",
-    "is_fraud": false,
-    "invoices": [],
-    "app_id": null,
-    "fees": [],
-    "payment": {
-      "id": "pay_6bc452ea00f15be0225a1a6e",
-      "type": "creditcard",
-      "client": "client_db50b6496357e2700f00",
-      "card_type": "visa",
-      "country": null,
-      "expire_month": "12",
-      "expire_year": "2013",
-      "card_holder": "",
-      "last4": "1111",
-      "created_at": 1380608872,
-      "updated_at": 1380608925,
-      "app_id": null
-    },
-    "client": {
-      "id": "client_db50b6496357e2700f00",
-      "email": "vegard@example.org",
-      "description": "Vegard Andreas Larsen",
-      "created_at": 1380522988,
-      "updated_at": 1380522988,
-      "app_id": null,
-      "payment": [
-        "pay_130cb5a80f608155b5ae9fa7",
-        "pay_34eb115851795b1a15b9c7f2",
-        "pay_6784b29b2e3f757682d81dc0",
-        "pay_6bc452ea00f15be0225a1a6e",
-        "pay_4b062ef9a1350144995b8883",
-        "pay_f8067f1b480c7fbf4345d44c",
-        "pay_a9539b0abc1fff6f2f5f783d",
-        "pay_28000980cf8edc7187a0c9d6",
-        "pay_3ae58ee93f833c0f1c6dce5b",
-        "pay_811bab4dada951b5478dfe5e"
-      ],
-      "subscription": null
-    },
-    "preauthorization": null
-  },
-  "mode": "test"
+	"data":{
+		"id":"tran_6983a8d95b03a594a34acd529fb5",
+		"amount":"5900",
+		"origin_amount":5900,
+		"status":"closed",
+		"description":"Bar",
+		"livemode":false,
+		"refunds":null,
+		"client":{
+			"id":"client_db50b6496357e2700f00",
+			"email":null,
+			"description":null,
+			"app_id":null,
+			"updated_at":1395239167,
+			"created_at":1395239167,
+			"payment":[
+				"pay_983a0c8e7f98ec82a8445823"
+			],
+			"subscription":null
+		},
+		"currency":"USD",
+		"created_at":1395239167,
+		"updated_at":1395239167,
+		"response_code":20000,
+		"short_id":"7357.7357.7357",
+		"is_fraud":false,
+		"invoices":[
+
+		],
+		"app_id":null,
+		"preauthorization":null,
+		"fees":[
+
+		],
+		"payment":{
+			"id":"pay_6bc452ea00f15be0225a1a6e",
+			"type":"creditcard",
+			"client":"client_b645f7e235fe5106820d",
+			"card_type":"visa",
+			"country":null,
+			"expire_month":"12",
+			"expire_year":"2015",
+			"card_holder":"",
+			"last4":"1111",
+			"updated_at":1395239167,
+			"created_at":1395239167,
+			"app_id":null
+		}
+	},
+	"mode":"test"
 }

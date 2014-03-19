@@ -4,6 +4,7 @@ using PaymillWrapper;
 using PaymillWrapper.Service;
 using System.Collections.Generic;
 using PaymillWrapper.Models;
+using PaymillWrapper.Utils;
 
 namespace UnitTest.Net
 {
@@ -26,6 +27,7 @@ namespace UnitTest.Net
         {
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
+            Assert.IsTrue(newOffer.CreatedAt.Date  == DateTime.Now.Date, "CreateOffer Fail");
         }
         [TestMethod]
         public void RemoveOffer()
@@ -33,9 +35,39 @@ namespace UnitTest.Net
   
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
-
             Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id).Result;
             Assert.IsTrue(result, "Remove  Offer Failed");
+        }
+        [TestMethod]
+        public void GetOffer()
+        {
+            Offer newOffer = createOffer();
+            Offer offer = _paymill.OfferService.GetAsync(newOffer.Id).Result;
+            Assert.IsTrue(String.Compare(offer.Id, newOffer.Id) ==0 , "Get Offer failed");
+        }
+        [TestMethod]
+        public void UpdateOffer()
+        {
+            Offer newOffer = createOffer();
+            newOffer.Name = "Oferta 48";
+            Offer updatedOffer = _paymill.OfferService.UpdateAsync(newOffer).Result;
+            Assert.IsTrue(String.Compare(updatedOffer.Name, "Oferta 48") == 0, "Update offer failed");
+        }
+        [TestMethod]
+        public void GetAllOffers()
+        {
+            Offer newOffer = createOffer();
+            List<Offer> lstOffers = _paymill.OfferService.ListAsync().Result;
+            Assert.IsTrue(lstOffers.Count > 0, "List offers failed");
+        }
+        [TestMethod]
+        public void GetOffersWithParameters()
+        {
+            Offer newOffer = createOffer();
+            Filter filter = new Filter();
+            filter.Add("interval", "MONTH"); //OK
+            List<Offer> lstOffers = _paymill.OfferService.ListAsync(filter).Result;
+            Assert.IsTrue(lstOffers.Count > 0, "List offers failed");
         }
     }
 }

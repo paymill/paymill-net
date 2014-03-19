@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 
 namespace PaymillWrapper.Service
 {
@@ -26,13 +26,20 @@ namespace PaymillWrapper.Service
         ///  <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Object with the Preauthorization as sub object.d</returns>
-        public async Task<Preauthorization> CreateWithToken(String token, int amount, String currency)
+        public async Task<Preauthorization> CreateWithTokenAsync(String token, int amount, String currency)
         {
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
-            return await createAsync(
+
+            Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Transactions.ToString(),
                  new UrlEncoder().EncodeObject(new { Token = token, Amount = amount, Currency = currency }));
+            if (replyTransaction != null)
+            {
+                return replyTransaction.Preauthorization;
+            }
+
+            return null;
         }
         /// <summary>
         /// Authorizes the given amount with the given Payment. Works only for credit cards. Direct debit not supported.
@@ -41,7 +48,7 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object with the Preauthorization as sub object.</returns>
-        public async Task<Preauthorization> CreateWithPayment(Payment payment, int amount, String currency)
+        public async Task<Preauthorization> CreateWithPaymentAsync(Payment payment, int amount, String currency)
         {
             ValidationUtils.ValidatesPayment(payment);
             ValidationUtils.ValidatesAmount(amount);
@@ -49,7 +56,7 @@ namespace PaymillWrapper.Service
 
             String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
 
-            return await createAsync(
+            return await createAsync(null, 
                 new UrlEncoder().EncodeObject(new
                 {
                     Payment = payment,

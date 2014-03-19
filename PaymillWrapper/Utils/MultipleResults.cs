@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace PaymillWrapper.Net
+namespace PaymillWrapper.Utils
 {
     [DataContract]
     internal class SingleResult<T>

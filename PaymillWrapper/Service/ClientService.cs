@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Net.Http;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
@@ -62,7 +62,7 @@ namespace PaymillWrapper.Service
         /// </returns>
         public async Task<Client> CreateWithEmailAndDescriptionAsync(String email, String description)
         {
-            return await createAsync(
+            return await createAsync(null, 
                 new UrlEncoder().EncodeObject(new { Email = email, Description = description }));
         }
         protected override string GetResourceId(Client obj)

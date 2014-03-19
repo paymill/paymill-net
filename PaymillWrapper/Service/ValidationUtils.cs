@@ -30,7 +30,7 @@ namespace PaymillWrapper.Service
 
         static internal void ValidatesAmount(int? amount)
         {
-            if (amount.HasValue || amount.Value < 0)
+            if (amount.HasValue == false || amount.Value < 0)
                 throw new ArgumentException("Amount can not be blank or negative");
         }
 
@@ -58,12 +58,13 @@ namespace PaymillWrapper.Service
             {
                 if (fee.Amount.HasValue && String.IsNullOrWhiteSpace(fee.Payment))
                     throw new ArgumentException("When fee amount is given, fee payment is mandatory");
-                if (fee.Amount.HasValue && String.IsNullOrEmpty(fee.Payment) == false)
+
+                if (fee.Amount.HasValue == false && String.IsNullOrEmpty(fee.Payment) == false)
                     throw new ArgumentException("When fee payment is given, fee amount is mandatory");
 
                 if (fee.Amount.HasValue && String.IsNullOrEmpty(fee.Payment) == false)
                 {
-                    if (fee.Amount < 0)
+                    if (fee.Amount.Value < 0)
                         throw new ArgumentException("Fee amount can not be negative");
                     if (!fee.Payment.StartsWith("pay_"))
                     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace PaymillWrapper.Net
+namespace PaymillWrapper.Utils
 {
     public class Filter
     {

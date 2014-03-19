@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\EventType.cs" />
+    <Compile Include="Models\EnumBaseType.cs" />
     <Compile Include="Models\Fee.cs" />
     <Compile Include="Models\MultipleResults.cs" />
     <Compile Include="Models\Preauthorization.cs" />
@@ -64,13 +64,13 @@
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\Updateable.cs" />
     <Compile Include="Models\Webhook.cs" />
-    <Compile Include="Net\DateTimeExtensions.cs" />
-    <Compile Include="Net\Filter.cs" />
-    <Compile Include="Net\JsonParser.cs" />
-    <Compile Include="Net\HttpClientRest.cs" />
-    <Compile Include="Net\MultipleResults.cs" />
-    <Compile Include="Net\UnixTimestampConverter.cs" />
-    <Compile Include="Net\URLEncoder.cs" />
+    <Compile Include="Utils\DateTimeExtensions.cs" />
+    <Compile Include="Utils\Filter.cs" />
+    <Compile Include="Utils\CustomConverter.cs" />
+    <Compile Include="Utils\HttpClientRest.cs" />
+    <Compile Include="Utils\MultipleResults.cs" />
+    <Compile Include="Utils\UnixTimestampConverter.cs" />
+    <Compile Include="Utils\URLEncoder.cs" />
     <Compile Include="Paymill.cs" />
     <Compile Include="Exceptions\PaymillException.cs" />
     <Compile Include="Exceptions\PaymillRequestException.cs" />

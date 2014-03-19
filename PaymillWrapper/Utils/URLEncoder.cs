@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using PaymillWrapper.Models;
-namespace PaymillWrapper.Net
+namespace PaymillWrapper.Utils
 {
     public class UrlEncoder
     {
@@ -93,10 +93,10 @@ namespace PaymillWrapper.Net
         /// </summary>
         /// <param name="eventTypes">The event types.</param>
         /// <returns></returns>
-        public static String ConvertEventsArr(params PaymillWrapper.Models.EventBaseType[] eventTypes)
+        public static String ConvertEventsArr(params PaymillWrapper.Models.EnumBaseType[] eventTypes)
         {
             List<String> typesList = new List<String>();
-            foreach (PaymillWrapper.Models.EventBaseType evt in eventTypes)
+            foreach (PaymillWrapper.Models.EnumBaseType evt in eventTypes)
             {
                 typesList.Add(evt.ToString());
             }

@@ -1,4 +1,4 @@
-﻿using PaymillWrapper.Net;
+﻿using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,9 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Transaction : BaseModel
     {
-        public enum TypeStatus
+        public enum TransactionStatus
         {
-            PartialRefunded,
+            Partial_Refunded,
             Refunded,
             Closed,
             Failed,
@@ -71,7 +71,7 @@ namespace PaymillWrapper.Models
         /// Indicates the current status of this transaction, e.g closed means the transaction is sucessfully transfered, refunded means that the amount is fully or in parts refunded
         /// </summary>
         [DataMember(Name = "status")]
-        public TypeStatus Status { get; set; }
+        public TransactionStatus Status { get; set; }
 
         /// <summary>
         /// Need a additional description for this transaction? Maybe your shopping cart ID or something like that?

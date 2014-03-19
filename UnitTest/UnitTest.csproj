@@ -65,6 +65,10 @@
     <Compile Include="Models\TestJsonDeserialization.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Net\TestSubscriptions.cs" />
+    <Compile Include="Net\TestRefunds.cs" />
+    <Compile Include="Net\TestFilter.cs" />
+    <Compile Include="Net\TestPreauthorization.cs" />
     <Compile Include="Net\TestClients.cs" />
     <Compile Include="Net\TestHttpClientRest.cs" />
     <Compile Include="Net\TestOffers.cs" />

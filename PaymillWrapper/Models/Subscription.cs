@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

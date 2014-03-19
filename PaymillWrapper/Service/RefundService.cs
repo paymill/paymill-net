@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace PaymillWrapper.Service
         {
         }
 
-        
+
         /// <summary>
         /// This function refunds a <see cref="Transaction"/> that has been created previously and was refunded in parts or wasn’t refunded at
         /// all. The inserted amount will be refunded to the credit card / direct debit of the original <see cref="Transaction" />. There will
@@ -88,7 +88,20 @@ namespace PaymillWrapper.Service
         {
             ValidationUtils.ValidatesAmount(amount);
 
-            return await createAsync(new UrlEncoder().EncodeObject(new { Amount = amount, Description = description }));
+            return await createAsync(transaction.Id,
+                new UrlEncoder().EncodeObject(new
+                {
+                    Amount = amount,
+                    Description = description
+                }
+                ));
+        }
+        public override async Task<Refund> UpdateAsync(Refund obj)
+        {
+            return await Task<Refund>.Factory.StartNew(() =>
+            {
+                throw new PaymillWrapper.Exceptions.PaymillException("Now Supported");
+            });
         }
         protected override string GetResourceId(Refund obj)
         {

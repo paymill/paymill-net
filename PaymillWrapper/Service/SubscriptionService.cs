@@ -1,6 +1,6 @@
 using System.Net.Http;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -88,7 +88,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesOffer(offer);
             ValidationUtils.ValidatesPayment(payment);
 
-            return await createAsync(new UrlEncoder().EncodeObject(new { Offer = offer.Id, Payment = payment.Id, Start_At = trialStart }));
+            return await createAsync(null, new UrlEncoder().EncodeObject(new { Offer = offer.Id, Payment = payment.Id, Start_At = trialStart }));
         }
 
 
@@ -168,7 +168,14 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesClient(client);
 
 
-            return await createAsync(new UrlEncoder().EncodeObject(new { Offer = offer.Id, Payment = payment.Id, Client = client.Id, Start_At = trialStart }));
+            return await createAsync(null, new UrlEncoder().EncodeObject(
+                new
+                {
+                    Offer = offer.Id,
+                    Payment = payment.Id,
+                    Client = client.Id,
+                    Start_At = trialStart
+                }));
         }
     }
 }

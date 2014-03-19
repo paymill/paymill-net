@@ -1,7 +1,7 @@
 
 ﻿using System.Net.Http;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -72,15 +72,15 @@ namespace PaymillWrapper.Service
 
             String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
 
-            return await createAsync(new UrlEncoder().EncodeObject(new
+            return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
                 Token = token,
                 Amount = amount,
                 Currency = currency,
                 source = srcValue,
                 description = description,
-                Fee_Amount = fee.Amount,
-                Fee_Payment = fee.Payment
+                Fee_Amount = fee != null ? fee.Amount : null,
+                Fee_Payment = fee != null ? fee.Payment : null
             }));
         }
 
@@ -122,7 +122,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
             String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
-            return await createAsync(new UrlEncoder().EncodeObject(new
+            return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
                 Payment = payment.Id,
                 Amount = amount,
@@ -189,7 +189,7 @@ namespace PaymillWrapper.Service
 
             String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
 
-            return await createAsync(new UrlEncoder().EncodeObject(new
+            return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
                 Payment = payment.Id,
                 client = client.Id,
@@ -268,7 +268,7 @@ namespace PaymillWrapper.Service
 
             String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
 
-            return await createAsync(new UrlEncoder().EncodeObject(new
+            return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
                 preauthorization = preauthorizationId,
                 Amount = amount,

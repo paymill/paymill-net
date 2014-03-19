@@ -1,6 +1,6 @@
 using Newtonsoft.Json.Linq;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

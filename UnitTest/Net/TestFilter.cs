@@ -2,8 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PaymillWrapper.Net;
 using PaymillWrapper.Models;
+using PaymillWrapper.Utils;
 
 namespace UnitTest.Net
 {

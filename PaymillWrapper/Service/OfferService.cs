@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PaymillWrapper.Models;
-using PaymillWrapper.Net;
+using PaymillWrapper.Utils;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -48,7 +48,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesName(name);
             ValidationUtils.ValidatesTrialPeriodDays(trialPeriodDays);
 
-            return await createAsync(
+            return await createAsync(null, 
                     new UrlEncoder().EncodeObject(new
                     {
                         Amount = amount,

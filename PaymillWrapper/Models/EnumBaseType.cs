@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
-    public class EventBaseType
+    public class EnumBaseType
     {
         private readonly String name;
-        private static List<EventBaseType> createdEvents = new List<EventBaseType>();
-        protected EventBaseType(String name)
+        private static List<EnumBaseType> createdEvents = new List<EnumBaseType>();
+        protected EnumBaseType(String name)
         {
             this.name = name;
             createdEvents.Add(this);
@@ -19,9 +19,9 @@ namespace PaymillWrapper.Models
         {
             return name;
         }
-        public static EventBaseType GetEventByName(String name)
+        public static EnumBaseType GetEventByName(String name)
         {
-            return EventBaseType.createdEvents.Find(x => String.Compare(x.name, name) == 0);
+            return EnumBaseType.createdEvents.Find(x => String.Compare(x.name, name) == 0);
         }
     }
 }

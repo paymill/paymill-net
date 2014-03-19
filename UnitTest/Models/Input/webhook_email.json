@@ -1,0 +1,16 @@
+﻿{
+  "data": {
+     "id":"hook_40237e20a7d5a231d99b",
+     "email":"lovely-client@example.com",
+     "livemode":false,
+     "event_types":[
+         "transaction.succeeded",
+         "transaction.failed"
+     ],
+     "created_at":1358982000,
+     "updated_at":1358982000,
+     "active":true,
+     "app_id":null
+},
+  "mode": "test"
+}
