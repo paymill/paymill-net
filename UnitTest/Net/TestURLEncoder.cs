@@ -111,6 +111,45 @@ namespace UnitTest.Net
 
             Assert.AreEqual(expected, reply);
         }
+        [TestMethod]
+        public void EncodeNullableObject()
+        {
+            UrlEncoder urlEncoder = new UrlEncoder();
+            DateTime? trialStart = new DateTime(2014, 3, 20);
+            DateTime? trialEnd = null;
+            String encodedObject = urlEncoder.EncodeObject( new
+                {
+                    Offer = "OfferId",
+                    Payment = "PaymentId",
+                    Client = "clientId",
+                    Start_At = trialStart,
+                    End_At = trialEnd
+                });
 
+            Assert.IsNotNull(encodedObject);
+            Assert.AreEqual(encodedObject, "offer=OfferId&payment=PaymentId&client=clientId&start_at=1395266400");
+        }
+        [TestMethod]
+        public void EncodeNullableIntObject()
+        {
+            UrlEncoder urlEncoder = new UrlEncoder();
+            int? trialPeriodDays = 100;
+            int? trialPeriodMinutes = null;
+            String encodedObject = urlEncoder.EncodeObject(new
+            {
+                Amount = "amount",
+                Currency = "currency",
+                Interval = "interval",
+                Name = "name",
+                Trial_Period_Days = trialPeriodDays,
+                Trial_Period_Minutes = trialPeriodMinutes
+            });
+
+            Assert.IsNotNull(encodedObject);
+            Assert.AreEqual(encodedObject, "amount=amount&currency=currency&interval=interval&name=name&trial_period_days=100");
+        }
+        /*
+         * 
+         */
     }
 }

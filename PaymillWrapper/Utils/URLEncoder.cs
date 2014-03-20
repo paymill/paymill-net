@@ -56,7 +56,9 @@ namespace PaymillWrapper.Utils
             {
                 object value = prop.GetValue(data, null);
                 if (value != null)
+                {
                     this.addKeyValuePair(sb, prop.Name.ToLower(), value);
+                }
             }
 
             return sb.ToString();
@@ -82,7 +84,7 @@ namespace PaymillWrapper.Utils
                 }
                 if (value != null)
                 {
-                    this.addKeyValuePair(sb, updateProps.Name.ToLower(), value.ToString());
+                    this.addKeyValuePair(sb, updateProps.Name.ToLower(), value.ToString().ToLower());
                 }
             }
 
@@ -124,7 +126,14 @@ namespace PaymillWrapper.Utils
                 }
                 else if (value.GetType().Equals(typeof(DateTime)))
                 {
-                    if (value.Equals(DateTime.MinValue)) reply="";
+                    if (value.Equals(DateTime.MinValue))
+                    {
+                        reply = "";
+                    }
+                    else
+                    {
+                        reply = ((DateTime)value).ToUnixTimestamp().ToString();
+                    }
                 }
                 else
                 {

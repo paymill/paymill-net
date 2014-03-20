@@ -12,131 +12,114 @@ namespace UnitTest.Net
     public class TestSubscriptions
     {
         Paymill _paymill = null;
+        String testToken = "098f6bcd4621d373cade4e832627b4f6";
+
         [TestInitialize]
         public void Initialize()
         {
             _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
         }
-
-      /*  [TestMethod]
-        public void GetSubscriptions()
+        [TestMethod]
+        public void TestCreateWithPayment()
         {
-            Console.WriteLine("Waiting request list subscriptions...");
-            List<Subscription> lstSubscriptions = pm.SubscriptionService.List();
+            Offer offer = _paymill.OfferService.CreateAsync(1500, "EUR", "1 MONTH", "Test API", 3).Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
 
-            foreach (Subscription s in lstSubscriptions)
-            {
-                Utilities.printObject(s);
-            }
-
-            Console.Read();
+            Subscription subscription = _paymill.SubscriptionService.CreateWithOfferAndPaymentAsync(offer, payment).Result;
+            Assert.IsNotNull(subscription);
+            Assert.IsNotNull(subscription.Client);
+            Assert.IsFalse(subscription.CancelAtPeriodEnd);
         }
-        public void GetSubscriptionsWithParameters()
+
+        [TestMethod]
+        public void CreateWithPaymentAndClientWithOfferWithoutTrial()
         {
-            Console.WriteLine("Waiting request list subscriptions with parameters...");
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", "1 WEEK", "Offer No Trial").Result;
 
-            Filter filter = new Filter();
-            filter.Add("count", 1); //OK
-            filter.Add("offset", 2); //OK
-            filter.Add("offer", "offer_32008ddd39954e71ed48"); //KO
-            List<Subscription> lstSubscriptions = pm.SubscriptionService.GetSubscriptionsByFilter(filter);
-
-            foreach (Subscription s in lstSubscriptions)
-            {
-                Utilities.printObject(s);
-            }
-
-            Console.Read();
+            Subscription subscriptionNoTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
+            Assert.IsNull(subscriptionNoTrial.TrialStart);
+            Assert.IsNull(subscriptionNoTrial.TrialEnd);
         }
-       
-        private Subscription createSubsription()
+
+        [TestMethod]
+        public void CreateWithPaymentClientAndTrialWithOfferWithoutTrial()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
-            ClientService clientService = Paymill.GetService<ClientService>();
-            OfferService offerService = Paymill.GetService<OfferService>();
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial").Result;
 
-            var client = clientService.Create("test@mail.com", "test");
-            var offer = ОfferSamples.CreateOfferObject();
-
-            Subscription subscription = new Subscription();
-            subscription.Client = client;
-            subscription.Offer = offer;
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            string token = "098f6bcd4621d373cade4e832627b4f6";
-            Payment payment = paymentService.Create(token, client.Id);
-            subscription.Payment = payment;
-            return offerService.Subscribe(offer, client, payment);
-        
+            long trialStart = DateTime.Now.AddDays(1).Ticks;
+            Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
+            Assert.IsNotNull(subscriptionWithTrial.TrialStart);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Year, new DateTime(trialStart).Year);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Month, new DateTime(trialStart).Month);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Day, new DateTime(trialStart).Day);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Hour, new DateTime(trialStart).Hour);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Minute, new DateTime(trialStart).Minute);
         }
-        public void AddSubscription()
+
+        [TestMethod]
+        public void CreateWithPaymentAndClient_WithOfferWithTrial_shouldReturnSubscriptionWithTrialEqualsTrialInOffer()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            OfferService offerService = Paymill.GetService<OfferService>();
-            Client client = new Client() { Id = "client_bbe895116de80b6141fd" };
-            Offer offer = new Offer() { Id = "offer_32008ddd39954e71ed48" };
-            Payment payment = new Payment() { Id = "pay_81ec02206e9b9c587513" };
-            Subscription newSubscription = offerService.Subscribe(offer, client, payment);
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2225, "EUR", "1 WEEK", "Offer With Trial", 2).Result;
 
-            Utilities.printObject(newSubscription);
-            Console.Read();
+            Subscription subscription = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
+            Assert.IsNotNull(subscription.TrialStart);
+            Assert.AreEqual(subscription.TrialEnd.Value, subscription.TrialStart.Value.AddDays(2));
         }
-        public void GetSubscription()
+
+        [TestMethod]
+        public void CreateWithPaymentClientAndTrial_WithOfferWithTrial_shouldReturnSubscriptionWithTrialEqualsTrialInSubscription()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
 
-            Console.WriteLine("Request subscription...");
-            string subscriptionID = "sub_25523ba98729754be371";
-            Subscription subscription = susbscriptionService.Get(subscriptionID);
-            Utilities.printObject(subscription);
-
-            Subscription subscription1 = susbscriptionService.Get("sub_ca7ed15bc2c8e97e29f2");
-            Utilities.printObject(subscription1);
-            Console.Read();
+            long trialStart = DateTime.Now.AddDays(1).Ticks;
+            Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
+            Assert.IsNotNull(subscriptionWithTrial.TrialStart);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Year, new DateTime(trialStart).Year);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Month, new DateTime(trialStart).Month);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Day, new DateTime(trialStart).Day);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Hour, new DateTime(trialStart).Hour);
+            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Minute, new DateTime(trialStart).Minute);
         }
-        public void UpdateSubscription()
+        [TestMethod]
+        [ExpectedException(typeof(PaymillWrapper.Exceptions.PaymillException))]
+        public void testCreateWithPaymentAndClient_shouldFail()
         {
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
 
-            OfferService offerService = Paymill.GetService<OfferService>();
-            PaymentService paymentService = Paymill.GetService<PaymentService>();
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
-            ClientService clientService = Paymill.GetService<ClientService>();
-            Client newClient = clientService.Create("javicantos22@hotmail.es", "Test API");
-            string token = "098f6bcd4621d373cade4e832627b4f6";
-            Payment payment = paymentService.Create(token, newClient.Id);
-            Offer offer = ОfferSamples.CreateOfferObject();
-            Subscription newSubscription = offerService.Subscribe(offer, newClient, payment);
-            Subscription subs = susbscriptionService.Get(newSubscription.Id);
-            subs.Offer = offer;
-            subs.Payment = payment;
-            subs.CancelAtPeriodEnd = true;
-            var updatedSubscription = susbscriptionService.Update(subs);
-
-            Console.WriteLine("SubscriptionID:" + updatedSubscription.Id);
-            Console.Read();
+            _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Wait();
         }
-        public void RemoveSubscription()
+
+        [TestMethod]
+        public void testUpdate()
         {
-            // se elimina correctamente pero el json de respuesta no devuelve vacio 
 
-            Paymill.ApiKey = Properties.Settings.Default.ApiKey;
-            Paymill.ApiUrl = Properties.Settings.Default.ApiUrl;
-            SubscriptionService susbscriptionService = Paymill.GetService<SubscriptionService>();
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
+            Offer offer2 = _paymill.OfferService.CreateAsync(1500, "EUR", "1 MONTH", "Test API", 3).Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
 
-            Console.WriteLine("Removing subscription...");
+            String offerId = subscription.Offer.Id;
+            String subscriptionId = subscription.Id;
 
-            string subscriptionID = "sub_569df922b4506cd73030";
-            bool reply = susbscriptionService.Remove(subscriptionID);
+            subscription.CancelAtPeriodEnd = true;
+            subscription.Offer = offer2;
+            var updatedSubscrition = _paymill.SubscriptionService.UpdateAsync(subscription).Result;
 
-            Console.WriteLine("Result remove:" + reply);
-            Console.Read();
+            Assert.IsFalse(String.Equals(updatedSubscrition.Offer.Id, offerId));
+            Assert.AreEqual(subscription.Offer.Id, offer2.Id);
+            Assert.AreEqual(subscription.Id, subscriptionId);
+            Assert.IsTrue(subscription.CancelAtPeriodEnd);
         }
-        */
     }
 }
