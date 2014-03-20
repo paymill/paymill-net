@@ -26,17 +26,18 @@ namespace UnitTest.Net
             Assert.IsFalse(lstPayments.Count == 0, "GetPayments Fail");
         }
 
-        [TestMethod]
+ /*       [TestMethod]
         public void GetPaymentsWithParameters()
         {
-            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Client client = _paymill.ClientService.CreateWithEmailAndDescriptionAsync("lovely-client@example.com", "Lovely Client").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Filter filter = new Filter();
-            filter.Add("count", 5);
+            filter.Add("client", 5);
             filter.Add("offset", 41);
             List<Payment> lstPayments = _paymill.PaymentService.ListAsync(filter).Result;
 
             Assert.IsFalse(lstPayments.Count > 0, "GetPayments Fail");
-        }
+        }*/
         [TestMethod]
         public void GetPayment()
         {
@@ -72,7 +73,6 @@ namespace UnitTest.Net
             Assert.IsTrue(reply, "RemovePayment Fail");
         }
         [TestMethod]
-        [ExpectedException(typeof(PaymillRequestException))]
         public void DeletePaymentWithException()
         {
             Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;

@@ -36,7 +36,15 @@ namespace UnitTest.Net
             Assert.IsFalse(lstPreauthorizations.Count == 0, "Get Preauthorization Failed");
         }
         [TestMethod]
-        public void CreatePreauthorization()
+        public void CreatePreauthorizationWithToken()
+        {
+            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 3500, "EUR").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(newPreauthorization.Id), "Create Preauthorization Failed");
+            Assert.IsTrue(newPreauthorization.Amount == 3500, "Create Preauthorization Failed");
+            Assert.IsTrue(newPreauthorization.Currency == "EUR", "Create Preauthorization Failed");
+        }
+        [TestMethod]
+        public void CreatePreauthorizationWithPayment()
         {
             Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithPaymentAsync(payment, 3500, "EUR").Result;
@@ -47,11 +55,13 @@ namespace UnitTest.Net
         [TestMethod]
         public void RemovePreauthorization()
         {
-            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 3500, "EUR").Result;
-            Console.WriteLine("PreauthorizationID:" + newPreauthorization.Id);
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithPaymentAsync(payment, 3500, "EUR").Result;
             Assert.IsFalse(String.IsNullOrEmpty(newPreauthorization.Id), "Create Preauthorization Failed");
             Assert.IsTrue(newPreauthorization.Amount == 3500, "Create Preauthorization Failed");
             Assert.IsTrue(newPreauthorization.Currency == "EUR", "Create Preauthorization Failed");
+            Boolean result = _paymill.PreauthorizationService.DeleteAsync(newPreauthorization.Id).Result;
+            Assert.IsTrue(result);
         }
         [TestMethod]
         public void GetPreauthorization()

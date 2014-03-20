@@ -38,42 +38,52 @@ namespace UnitTest.Net
         [TestMethod]
         public void RefundTransactionIdWithAmount()
         {
-            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 1000, "USD").Result;
-            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction.Id, 500).Result;
+            var rand = new Random((int)DateTime.Now.Ticks);
+            int randomValue = rand.Next(1000, 9999);
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, randomValue, "USD").Result;
+            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction.Id, randomValue).Result;
             Assert.IsTrue(newRefund.Status == Refund.RefundStatus.Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Partial_Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Amount == 500);
+            Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Refunded, "Create Refund succeed");
+            Assert.IsTrue(newRefund.Transaction.Amount == 0);
             Assert.IsTrue(newRefund.Transaction.ResponseCode == 20000);
         }
         [TestMethod]
         public void RefundTransactionWithAmount()
         {
-            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 1000, "USD").Result;
-            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction, 500).Result;
+            var rand = new Random((int)DateTime.Now.Ticks);
+            int randomValue = rand.Next(1000, 9999);
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, randomValue, "USD").Result;
+            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction, randomValue).Result;
             Assert.IsTrue(newRefund.Status == Refund.RefundStatus.Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Partial_Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Amount == 500);
+            Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Refunded, "Create Refund succeed");
+            Assert.IsTrue(newRefund.Transaction.Amount == 0);
             Assert.IsTrue(newRefund.Transaction.ResponseCode == 20000);
         }
         [TestMethod]
         public void RefundTransactionIdAndAmountAndDescrition()
         {
-            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 1000, "USD").Result;
-            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction.Id, 500, "Go to bar").Result;
+            var rand = new Random((int)DateTime.Now.Ticks);
+            int randomValue = rand.Next(1000, 9999);
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, randomValue, "USD").Result;
+            int refInt = randomValue/2;
+            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction.Id, refInt, "Go to bar").Result;
             Assert.IsTrue(newRefund.Status == Refund.RefundStatus.Refunded, "Create Refund succeed");
             Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Partial_Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Amount == 500);
+            Assert.IsTrue(newRefund.Transaction.Amount == (randomValue - refInt));
             Assert.IsTrue(newRefund.Transaction.ResponseCode == 20000);
             Assert.IsTrue(newRefund.Description == "Go to bar");
+            _paymill.RefundService.RefundTransactionAsync(transaction.Id, (randomValue - refInt), "Go to bar").Wait();
         }
         [TestMethod]
         public void RefundTransactionAndAmountAndDescrition()
         {
-            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 1000, "USD").Result;
-            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction, 500, "Go to bar").Result;
+            var rand = new Random((int)DateTime.Now.Ticks);
+            int randomValue = rand.Next(1000, 9999);
+            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, randomValue, "USD").Result;
+            Refund newRefund = _paymill.RefundService.RefundTransactionAsync(transaction, randomValue, "Go to bar").Result;
             Assert.IsTrue(newRefund.Status == Refund.RefundStatus.Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Partial_Refunded, "Create Refund succeed");
-            Assert.IsTrue(newRefund.Transaction.Amount == 500);
+            Assert.IsTrue(newRefund.Transaction.Status == Transaction.TransactionStatus.Refunded, "Create Refund succeed");
+            Assert.IsTrue(newRefund.Transaction.Amount == 0);
             Assert.IsTrue(newRefund.Transaction.ResponseCode == 20000);
             Assert.IsTrue(newRefund.Description == "Go to bar");
         }

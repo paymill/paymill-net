@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
-   
     public class Webhook : BaseModel
     {
         [DataMember(Name = "url"),
@@ -21,8 +21,11 @@ namespace PaymillWrapper.Models
         Updateable(Name = "email")]
         public String Email { get; set; }
 
+        [DataMember(Name = "app_id" )]
+        public String  AppId{get; private set;}
+
         [DataMember(Name = "event_types")]
-         public WebhookEventType[] EventTypes { get; set; }
+        public WebhookEventType[] EventTypes { get; set; }
 
         [DataContract]
         public sealed class WebhookEventType : EnumBaseType
@@ -37,7 +40,7 @@ namespace PaymillWrapper.Models
             public static readonly Webhook.WebhookEventType SUBSCRIPTION_UPDATED = new WebhookEventType("subscription.updated");
             public static readonly Webhook.WebhookEventType SUBSCRIPTION_DELETED = new WebhookEventType("subscription.deleted");
             public static readonly Webhook.WebhookEventType TRANSACTION_SUCCEEDED = new WebhookEventType("transaction.succeeded");
-            public static readonly Webhook.WebhookEventType TRANSACTION_FAILED = new WebhookEventType("");
+            public static readonly Webhook.WebhookEventType TRANSACTION_FAILED = new WebhookEventType("transaction.failed");
             public static readonly Webhook.WebhookEventType TRANSACTION_CREATED = new WebhookEventType("transaction.created");
             public static readonly Webhook.WebhookEventType PAYOUT_TRANSFERRED = new WebhookEventType("payout.transferred");
             public static readonly Webhook.WebhookEventType INVOICE_AVAILABLE = new WebhookEventType("invoice.available");
@@ -45,10 +48,11 @@ namespace PaymillWrapper.Models
             public static readonly Webhook.WebhookEventType APP_MERCHANT_DEACTIVATED = new WebhookEventType("app.merchant.deactivated");
             public static readonly Webhook.WebhookEventType APP_MERCHANT_REJECTED = new WebhookEventType("app.merchant.rejected");
             public static readonly Webhook.WebhookEventType CLIENT_UPDATED = new WebhookEventType("client.updated");
-            private WebhookEventType (String name):base(name)
-	        {
+            private WebhookEventType(String name)
+                : base(name)
+            {
 
-	        }
+            }
         }
 
     }

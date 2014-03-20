@@ -89,18 +89,18 @@ namespace UnitTest.Net
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Minute, new DateTime(trialStart).Minute);
         }
         [TestMethod]
-        [ExpectedException(typeof(PaymillWrapper.Exceptions.PaymillException))]
-        public void testCreateWithPaymentAndClient_shouldFail()
+        [ExpectedException(typeof(AggregateException))]
+        public void CreateWithPaymentAndClient_shouldFail()
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
-            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client.Id).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(900, "EUR", "1 WEEK", "Offer No Trial").Result;
 
-            _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Wait();
+            _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, null).Wait();
         }
 
         [TestMethod]
-        public void testUpdate()
+        public void TestUpdate()
         {
 
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;

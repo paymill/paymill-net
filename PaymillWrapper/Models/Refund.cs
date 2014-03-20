@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,6 +12,7 @@ namespace PaymillWrapper.Models
     /// Refunds are own objects with own calls for existing transactions. 
     /// The refunded amount will be credited to the account of the client.
     /// </summary>
+    [JsonConverter(typeof(StringToBaseModelConverter<Refund>))]
     public class Refund : BaseModel
     {
         public enum RefundStatus

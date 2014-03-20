@@ -26,7 +26,7 @@ namespace UnitTest.Net
             Assert.IsTrue(webhook.Id != String.Empty, "CreateURLWebhook Fail");
         }
         [TestMethod]
-        [ExpectedException(typeof(PaymillRequestException))]
+        [ExpectedException(typeof(AggregateException))]
         public void CreateEmailWebhookFiled()
         {
             Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };

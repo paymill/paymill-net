@@ -60,8 +60,8 @@ namespace UnitTest.Net
         [TestMethod]
         public void CreateTransactionWithPaymentAndClient()
         {
-            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             Client client = _paymill.ClientService.CreateAsync().Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Transaction transaction = _paymill.TransactionService.CreateWithPaymentAndClientAsync(payment, client, 4200, "USD").Result;
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsFalse(transaction.Currency == "EUR");
@@ -69,13 +69,13 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Amount == 4200);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
             Assert.IsTrue(transaction.Client.Id == client.Id);
-            Assert.IsTrue(transaction.Description == "Bar boo");
+            Assert.IsNull(transaction.Description);
         }
         [TestMethod]
         public void CreateTransactionWithPaymentIdAndClientId()
         {
-            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             Client client = _paymill.ClientService.CreateAsync().Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Transaction transaction = _paymill.TransactionService.CreateWithPaymentAndClientAsync(payment.Id, client.Id, 4200, "USD").Result;
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsFalse(transaction.Currency == "EUR");
@@ -84,14 +84,14 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
             Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
             Assert.IsTrue(transaction.Client.Id == client.Id);
-            Assert.IsTrue(transaction.Description == "Bar boo");
+            Assert.IsNull(transaction.Description);
         }
 
         [TestMethod]
         public void CreateTransactionWithPaymentAndClientAndDescrition()
         {
-            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             Client client = _paymill.ClientService.CreateAsync().Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Transaction transaction = _paymill.TransactionService.CreateWithPaymentAndClientAsync(payment, client, 4200, "EUR", "Bar bar").Result;
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsTrue(transaction.Currency == "EUR");
@@ -99,7 +99,7 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
             Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
             Assert.IsTrue(transaction.Client.Id == client.Id);
-            Assert.IsTrue(transaction.Description == "Bar boo");
+            Assert.IsTrue(transaction.Description == "Bar bar");
         }
         [TestMethod]
         public void CreateTransactionWithPreauthorization()

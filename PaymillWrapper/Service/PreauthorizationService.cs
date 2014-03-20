@@ -32,7 +32,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
 
-            Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Transactions.ToString(),
+            Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
                  new UrlEncoder().EncodeObject(new { Token = token, Amount = amount, Currency = currency }));
             if (replyTransaction != null)
             {
@@ -56,14 +56,27 @@ namespace PaymillWrapper.Service
 
             String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
 
-            return await createAsync(null, 
-                new UrlEncoder().EncodeObject(new
+            Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
+                new UrlEncoder().EncodeObject(new 
                 {
-                    Payment = payment,
+                    Payment = payment.Id,
                     Amount = amount,
                     Currency = currency,
                     Source = srcValue
                 }));
+            if (replyTransaction != null)
+            {
+                return replyTransaction.Preauthorization;
+            }
+
+            return null;
+        }
+        public override async Task<Preauthorization> UpdateAsync(Preauthorization obj)
+        {
+            return await Task<Preauthorization>.Factory.StartNew(() =>
+            {
+                throw new PaymillWrapper.Exceptions.PaymillException("Now Supported");
+            });
         }
     }
 }

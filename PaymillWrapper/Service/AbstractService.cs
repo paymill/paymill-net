@@ -42,7 +42,7 @@ namespace PaymillWrapper.Service
                 requestUri += String.Format("?{0}", filter.ToString());
             HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<MultipleResults<T>>(data,new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<MultipleResults<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace PaymillWrapper.Service
             var requestUri = _apiUrl + "/" + subResource.ToString().ToLower();
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<ST>>(data, new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<SingleResult<ST>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
         }
         /// <summary>
         /// Creates the asynchronous.
@@ -83,7 +83,7 @@ namespace PaymillWrapper.Service
             }
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
         }
 
         public async Task<T> GetAsync(string id)
@@ -94,7 +94,7 @@ namespace PaymillWrapper.Service
 
             HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
         }
 
         public virtual async Task<bool> DeleteAsync(string id)
@@ -118,7 +118,7 @@ namespace PaymillWrapper.Service
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
         }
 
         /// <summary>
@@ -127,16 +127,16 @@ namespace PaymillWrapper.Service
         /// <param name="response">The response.</param>
         /// <returns></returns>
         /// <exception cref="PaymillRequestException"></exception>
-        private async static Task<String> readReponseMessage(HttpResponseMessage response)
+        private static Task<String> readReponseMessage(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                return response.Content.ReadAsStringAsync();
             }
             else
             {
-                var jsonArray = response.Content.ReadAsAsync<JObject>();
-                string error = (await jsonArray)["error"].ToString();
+                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
+                string error = jsonArray["error"].ToString();
                 throw new PaymillRequestException(error, response.StatusCode);
             }
         }

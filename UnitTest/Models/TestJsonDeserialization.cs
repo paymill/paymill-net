@@ -24,13 +24,14 @@ namespace UnitTest.Models
 
         private static T ReadResult<T>(string filename)
         {
-            return JsonConvert.DeserializeObject<SingleResult<T>>(GetInputFile(filename), new UnixTimestampConverter()).Data;
+            return JsonConvert.DeserializeObject<SingleResult<T>>(GetInputFile(filename), new UnixTimestampConverter(),
+                new StringToWebhookEventTypeConverter()).Data;
         }
 
         private static IEnumerable<T> ReadResults<T>(string filename)
         {
             return JsonConvert.DeserializeObject<MultipleResults<T>>(GetInputFile(filename),
-                new UnixTimestampConverter()).Data;
+                new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
         }
         [TestMethod]
         public void TestClients()
@@ -38,6 +39,32 @@ namespace UnitTest.Models
             var clients = ReadResults<Client>("clients.json");
             int hotmailAcounts = clients.Count(x=> x.Email == "javicantos22@hotmail.es");
             Assert.IsTrue(hotmailAcounts == clients.Count(), "Invalid clients count");
+        }
+        [TestMethod]
+        public void TestWebhookUrl()
+        {
+            var webhook = ReadResult<Webhook>("webhook_url.json");
+            Assert.AreEqual("hook_40237e20a7d5a231d99b", webhook.Id);
+            Assert.AreEqual("http://lovely-client.com/", webhook.Url.AbsoluteUri);
+            Assert.AreEqual(false, webhook.livemode);
+            Assert.AreEqual(1358982000, webhook.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1358982000, webhook.UpdatedAt.ToUnixTimestamp());
+            Assert.AreEqual(2, webhook.EventTypes.Count());
+            Assert.AreEqual(Webhook.WebhookEventType.TRANSACTION_SUCCEEDED, webhook.EventTypes[0]);
+            Assert.AreEqual(Webhook.WebhookEventType.TRANSACTION_FAILED, webhook.EventTypes[1]);
+        }
+        [TestMethod]
+        public void TestWebhookEmail()
+        {
+            var webhook = ReadResult<Webhook>("webhook_email.json");
+            Assert.AreEqual("hook_40237e20a7d5a231d99b", webhook.Id);
+            Assert.AreEqual("lovely-client@example.com", webhook.Email);
+            Assert.AreEqual(false, webhook.livemode);
+            Assert.AreEqual(1358982000, webhook.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1358982000, webhook.UpdatedAt.ToUnixTimestamp());
+            Assert.AreEqual(2, webhook.EventTypes.Count());
+            Assert.AreEqual(Webhook.WebhookEventType.TRANSACTION_SUCCEEDED, webhook.EventTypes[0]);
+            Assert.AreEqual(Webhook.WebhookEventType.TRANSACTION_FAILED, webhook.EventTypes[1]);
         }
         [TestMethod]
         public void TestClient()
@@ -101,15 +128,15 @@ namespace UnitTest.Models
         public void TestRefund()
         {
             var p = ReadResult<Refund>("refund.json");
-            Assert.AreEqual("refund_87bc404a95d5ce616049", p.Id);
-            Assert.AreEqual(0.42, p.AmountFormatted);
-            Assert.AreEqual("tran_54645bcb98ba7acfe204", p.Transaction.Id);
+            Assert.AreEqual("refund_66b4ad3bc514a2ac0eb8", p.Id);
+            Assert.AreEqual(5.00, p.AmountFormatted);
+            Assert.AreEqual("tran_88fb15ddf21039335ff910653c65", p.Transaction.Id);
             Assert.IsFalse(p.Livemode);
             Assert.AreEqual(Refund.RefundStatus.Refunded, p.Status);
-            Assert.AreEqual(200, p.ResponseCode);
-            Assert.AreEqual("foo", p.Description);
-            Assert.AreEqual(1349947042, p.CreatedAt.ToUnixTimestamp());
-            Assert.AreEqual(1349947042, p.UpdatedAt.ToUnixTimestamp());
+            Assert.AreEqual(20000, p.ResponseCode);
+            Assert.IsNull(p.Description);
+            Assert.AreEqual(1395238945, p.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1395238945, p.UpdatedAt.ToUnixTimestamp());
         }
 
         [TestMethod]

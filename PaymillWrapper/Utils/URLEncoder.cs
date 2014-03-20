@@ -50,6 +50,9 @@ namespace PaymillWrapper.Utils
         /// <returns></returns>
         public string EncodeObject(Object data)
         {
+            if(data.GetType().Name.Contains("AnonymousType") == false){
+                throw new ArgumentException("Invalid object to encode");
+            }
             var props = data.GetType().GetProperties();
             StringBuilder sb = new StringBuilder();
             foreach (var prop in props)
@@ -77,14 +80,18 @@ namespace PaymillWrapper.Utils
             {
                 object value = prop.GetValue(data, null);
                 var updateProps = (Updateable)prop.GetCustomAttributes(typeof(Updateable), false).First();
-                if (updateProps.OnlyProperty != null)
+                if (updateProps.OnlyProperty != null && value != null)
                 {
                     var valueProp = value.GetType().GetProperty(updateProps.OnlyProperty);
                     value = valueProp.GetValue(value, null);
                 }
                 if (value != null)
                 {
-                    this.addKeyValuePair(sb, updateProps.Name.ToLower(), value.ToString().ToLower());
+                    if (value is Boolean)
+                    {
+                        value = value.ToString().ToLower();
+                    }
+                    this.addKeyValuePair(sb, updateProps.Name.ToLower(), value.ToString());
                 }
             }
 
