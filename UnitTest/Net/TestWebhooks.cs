@@ -81,8 +81,8 @@ namespace UnitTest.Net
             Webhook.WebhookEventType[] eventTypes = { Webhook.WebhookEventType.SUBSCRIPTION_SUCCEEDED, Webhook.WebhookEventType.SUBSCRIPTION_FAILED };
             Webhook webhook = _paymill.WebhookService.CreateEmailWebhookAsync("test@email.com", eventTypes).Result;
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
-            List<Webhook> resultList = _paymill.WebhookService.ListAsync().Result;
-            Assert.IsTrue(resultList.Count > 0, "Get Webhooks failed");
+            PaymillList<Webhook> resultList = _paymill.WebhookService.ListAsync().Result;
+            Assert.IsTrue(resultList.DataCount > 0, "Get Webhooks failed");
 
         }
     }

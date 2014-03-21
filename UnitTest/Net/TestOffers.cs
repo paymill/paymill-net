@@ -57,7 +57,7 @@ namespace UnitTest.Net
         public void GetAllOffers()
         {
             Offer newOffer = createOffer();
-            List<Offer> lstOffers = _paymill.OfferService.ListAsync().Result;
+            List<Offer> lstOffers = _paymill.OfferService.ListAsync().Result.Data;
             Assert.IsTrue(lstOffers.Count > 0, "List offers failed");
         }
         [TestMethod]

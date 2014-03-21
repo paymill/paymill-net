@@ -22,8 +22,8 @@ namespace UnitTest.Net
         [TestMethod]
         public void GetPayments()
         {
-            IReadOnlyCollection<Payment> lstPayments = _paymill.PaymentService.ListAsync().Result;
-            Assert.IsFalse(lstPayments.Count == 0, "GetPayments Fail");
+            PaymillList<Payment> lstPayments = _paymill.PaymentService.ListAsync().Result;
+            Assert.IsFalse(lstPayments.DataCount == 0, "GetPayments Fail");
         }
 
  /*       [TestMethod]

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PaymillWrapper.Models
+namespace PaymillWrapper.Utils
 {
     public class EnumBaseType
     {

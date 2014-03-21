@@ -143,8 +143,8 @@ namespace UnitTest.Net
         [TestMethod]
         public void GetTransactions()
         {
-            IReadOnlyCollection<Transaction> lstTransactions = _paymill.TransactionService.ListAsync().Result;
-            Assert.IsTrue(lstTransactions.Count > 0);
+            PaymillList<Transaction> lstTransactions = _paymill.TransactionService.ListAsync().Result;
+            Assert.IsTrue(lstTransactions.DataCount > 0);
         }
         [TestMethod]
         public void GetTransactionsWithParameters()
@@ -175,7 +175,7 @@ namespace UnitTest.Net
         public void ListTransaction()
         {
             var list = _paymill.TransactionService.ListAsync().Result;
-            Assert.IsTrue(list.Count > 0, "List Transaction Failed");
+            Assert.IsTrue(list.DataCount > 0, "List Transaction Failed");
         }
     }
 }

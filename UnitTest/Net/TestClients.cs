@@ -39,7 +39,7 @@ namespace UnitTest.Net
         public void GetClientsList()
         {
             _paymill.ClientService.CreateWithEmailAndDescriptionAsync("lovely-client@example.com", "Lovely Client").Wait();
-            List<Client> clientsList = _paymill.ClientService.ListAsync().Result;
+            List<Client> clientsList = _paymill.ClientService.ListAsync().Result.Data;
             Assert.IsTrue(clientsList.Count > 0, "Remove  Offer");
         }
         [TestMethod]

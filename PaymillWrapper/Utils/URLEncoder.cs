@@ -50,7 +50,8 @@ namespace PaymillWrapper.Utils
         /// <returns></returns>
         public string EncodeObject(Object data)
         {
-            if(data.GetType().Name.Contains("AnonymousType") == false){
+            if (data.GetType().Name.Contains("AnonymousType") == false)
+            {
                 throw new ArgumentException("Invalid object to encode");
             }
             var props = data.GetType().GetProperties();
@@ -102,10 +103,10 @@ namespace PaymillWrapper.Utils
         /// </summary>
         /// <param name="eventTypes">The event types.</param>
         /// <returns></returns>
-        public static String ConvertEventsArr(params PaymillWrapper.Models.EnumBaseType[] eventTypes)
+        public static String ConvertEventsArr(params EnumBaseType[] eventTypes)
         {
             List<String> typesList = new List<String>();
-            foreach (PaymillWrapper.Models.EnumBaseType evt in eventTypes)
+            foreach (EnumBaseType evt in eventTypes)
             {
                 typesList.Add(evt.ToString());
             }
@@ -163,5 +164,36 @@ namespace PaymillWrapper.Utils
             }
 
         }
+        private void encodeFilterParameters(StringBuilder sb, Object filter)
+        {
+
+        }
+        private String encodeOrderParameter(Object order)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            return sb.ToString(); ;
+        }
+        public String EncodeFilterParameters(Object filter, Object order, int? count, int? offset)
+        {
+            StringBuilder sb = new StringBuilder();
+            encodeFilterParameters(sb, filter);
+            String orderParams = encodeOrderParameter(order);
+
+            if (sb.Length > 0 && !orderParams.StartsWith("_"))
+            {
+                this.addKeyValuePair(sb, "order", orderParams);
+            }
+            if (count.HasValue && count.Value > 0)
+            {
+                this.addKeyValuePair(sb, "count", count.Value);
+            }
+            if (offset.HasValue && offset.Value >= 0)
+            {
+                this.addKeyValuePair(sb, "offset", offset.Value);
+            }
+            return sb.ToString();
+        }
+
     }
 }

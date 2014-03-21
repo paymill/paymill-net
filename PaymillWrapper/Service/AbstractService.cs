@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace PaymillWrapper.Service
 {
-    public abstract class AbstractService<T> 
+    public abstract class AbstractService<T>
     {
         private readonly Resource _resource;
         protected readonly HttpClient httpClient;
@@ -30,29 +30,60 @@ namespace PaymillWrapper.Service
         protected abstract string GetResourceId(T obj);
 
         /// <summary>
-        /// Lists the asynchronous.
+        /// This function returns a List of PAYMILL objects.
         /// </summary>
-        /// <param name="filter">The filter.</param>
         /// <returns></returns>
-        public async Task<List<T> > ListAsync(Filter filter)
+        public async Task<PaymillWrapper.Models.PaymillList<T>> ListAsync()
         {
-            var lst = new List<T>();
-            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
-            if (filter != null)
-                requestUri += String.Format("?{0}", filter.ToString());
-            HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
-            String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<MultipleResults<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
+            return await listAsync(null, null, null, null);
         }
 
         /// <summary>
-        /// Lists the asynchronous.
+        /// This function returns a <see cref="PaymillList"/> of PAYMILL objects, overriding the default count and offset.
         /// </summary>
-        /// <returns></returns>
-        public async Task<List<T> > ListAsync()
+        /// <param name="count">Max count of returned objects in the PaymillList</param>
+        /// <param name="offset">The offset to start from.</param>
+        /// <returns>{@link PaymillList} which contains a {@link List} of PAYMILL {@link Client}s and their total count.</returns>
+        public async Task<PaymillWrapper.Models.PaymillList<T>> ListAsync(int? count, int? offset)
         {
-            return await ListAsync(null);
+            return await listAsync(null, null, count, offset);
         }
+
+        /// <summary>
+        /// This function returns a <see cref="PaymillList"/>of PAYMILL objects. In which order this list is returned depends on the
+        /// </summary>
+        /// <param name="filter">Filter or null</param>
+        /// <param name="order">Order or null.</param>
+        /// <returns>PaymillList which contains a List of PAYMILL object and their total count.</returns>
+        protected async Task<PaymillWrapper.Models.PaymillList<T>> listAsync(Object filter, Object order)
+        {
+            return await listAsync(filter, order, null, null);
+        }
+
+        /// <summary>
+        /// This function returns a <see cref="PaymillList"/> of PAYMILL  objects. In which order this list is returned depends on the
+        /// optional parameters. If null is given, no filter or order will be applied, overriding the default count and
+        /// offset.
+        /// </summary>
+        /// <param name="filter">Filter or null</param>
+        /// <param name="order">Order or null.</param>
+        /// <param name="count">Max count of returned objects in the PaymillList</param>
+        /// <param name="offset">The offset to start from.</param>
+        /// <returns>PaymillList which contains a List of PAYMILL objects and their total count.</returns>
+        protected async Task<PaymillWrapper.Models.PaymillList<T>> listAsync(Object filter, Object order, int? count, int? offset)
+        {
+            var encoder = new UrlEncoder();
+            String encodedParam = encoder.EncodeFilterParameters(filter, order, count, offset);
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower();
+            UriBuilder urlBuilder = new UriBuilder(requestUri);
+            urlBuilder.Query = encodedParam;
+            HttpResponseMessage response = httpClient.GetAsync(urlBuilder.Uri).Result;
+            String data = await readReponseMessage(response);
+            return JsonConvert.DeserializeObject<PaymillWrapper.Models.PaymillList<T>>(data, 
+                                new UnixTimestampConverter(), 
+                                new StringToWebhookEventTypeConverter());
+        }
+
         /// <summary>
         /// Creates the asynchronous.
         /// </summary>

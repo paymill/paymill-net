@@ -53,9 +53,10 @@
   <ItemGroup>
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\EnumBaseType.cs" />
+    <Compile Include="Models\PaymillList.cs" />
+    <Compile Include="Models\SnakeCase.cs" />
+    <Compile Include="Utils\EnumBaseType.cs" />
     <Compile Include="Models\Fee.cs" />
-    <Compile Include="Models\MultipleResults.cs" />
     <Compile Include="Models\Preauthorization.cs" />
     <Compile Include="Models\Offer.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Models\Updateable.cs" />
     <Compile Include="Models\Webhook.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
-    <Compile Include="Utils\Filter.cs" />
     <Compile Include="Utils\CustomConverter.cs" />
     <Compile Include="Utils\HttpClientRest.cs" />
     <Compile Include="Utils\MultipleResults.cs" />
