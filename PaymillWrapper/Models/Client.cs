@@ -49,6 +49,17 @@ namespace PaymillWrapper.Models
         {
             Id = id;
         }
+
+        public static Client.Filter CreateFilter()
+        {
+            return new Client.Filter();
+        }
+
+        public static Client.Order CreateOrder()
+        {
+            return new Client.Order();
+        }
+
         public sealed class Filter
         {
             [SnakeCase(Value = "payment")]
@@ -72,7 +83,7 @@ namespace PaymillWrapper.Models
             [SnakeCase(Value = "updated_at")]
             private String updatedAt;
 
-            private Filter()
+            internal Filter()
             {
             }
 
@@ -136,7 +147,8 @@ namespace PaymillWrapper.Models
 
             [SnakeCase(Value = "desc", Order = true)]
             private Boolean desc;
-            private Order()
+
+            internal Order()
             {
 
             }

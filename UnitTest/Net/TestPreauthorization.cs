@@ -25,7 +25,7 @@ namespace UnitTest.Net
             PaymillList<Preauthorization> lstPreauthorizations = _paymill.PreauthorizationService.ListAsync().Result;
             Assert.IsFalse(lstPreauthorizations.DataCount == 0, "Get Preauthorization Failed");
         }
-        [TestMethod]
+      /*  [TestMethod]
         public void GetPreauthorizationsWithParameters()
         {
 
@@ -34,7 +34,7 @@ namespace UnitTest.Net
             filter.Add("offset", 2);
             PaymillList<Preauthorization> lstPreauthorizations = _paymill.PreauthorizationService.ListAsync(filter).Result;
             Assert.IsFalse(lstPreauthorizations.DataCount == 0, "Get Preauthorization Failed");
-        }
+        }*/
         [TestMethod]
         public void CreatePreauthorizationWithToken()
         {

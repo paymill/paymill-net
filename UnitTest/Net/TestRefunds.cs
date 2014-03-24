@@ -27,14 +27,14 @@ namespace UnitTest.Net
             PaymillList<Refund> lstRefunds = _paymill.RefundService.ListAsync().Result;
             Assert.IsTrue(lstRefunds.DataCount > 0, "List Refunds failed");
         }
-        [TestMethod]
+    /*    [TestMethod]
         public void GetRefundsWithFilters()
         {
             Filter filter = new Filter();
             filter.Add("count", 5);
             PaymillList<Refund> lstRefunds = _paymill.RefundService.ListAsync(filter).Result;
             Assert.IsTrue(lstRefunds.DataCount > 0, "List Refunds failed");
-        }
+        }*/
         [TestMethod]
         public void RefundTransactionIdWithAmount()
         {

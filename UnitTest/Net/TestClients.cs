@@ -43,12 +43,29 @@ namespace UnitTest.Net
             Assert.IsTrue(clientsList.Count > 0, "Remove  Offer");
         }
         [TestMethod]
-        public void GetClientsWithParameters()
+        public void ListFilterByEmail()
         {
-            Filter filter = new Filter();
-            filter.Add("email", "javicantos22@hotmail.es"); //OK
-            List<Client> lstClients = _paymill.ClientService.ListAsync(filter).Result;
-            Assert.IsTrue(lstClients.FindAll(x => x.Email == "javicantos22@hotmail.es").Count == lstClients.Count);
+            _paymill.ClientService.CreateWithEmailAsync("john.rambo@qaiware.com").Wait();
+            Client.Filter filter = Client.CreateFilter().ByEmail("john.rambo@qaiware.com");
+
+            PaymillList<Client> wrapper = _paymill.ClientService.ListAsync(filter, null).Result;
+            List<Client> clients = wrapper.Data;
+ 
+            Assert.IsNotNull(clients);
+            Assert.IsFalse(clients.Count == 0);
+
+            Assert.AreEqual(clients[0].Email, "john.rambo@qaiware.com");
+            foreach (var client in clients)
+            {
+                ValidateClient(client);
+            }
+        }
+        private void ValidateClient(Client client)
+        {
+            Assert.IsNotNull(client);
+            Assert.IsFalse(String.IsNullOrWhiteSpace(client.Id));
+            Assert.IsNotNull(client.CreatedAt);
+            Assert.IsNotNull(client.UpdatedAt);
         }
         [TestMethod]
         public void DeleteClient()

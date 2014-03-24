@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using PaymillWrapper.Models;
+using System.Reflection;
 namespace PaymillWrapper.Utils
 {
     public class UrlEncoder
@@ -166,13 +167,54 @@ namespace PaymillWrapper.Utils
         }
         private void encodeFilterParameters(StringBuilder sb, Object filter)
         {
+            if (filter != null)
+            {
+                var props = filter.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var snakeProps = props.Where(x => x.GetCustomAttributes(typeof(SnakeCase), false).Length > 0);
+                foreach (var prop in snakeProps)
+                {
+                    object value = prop.GetValue(filter);
+                    var snakeProp = (SnakeCase)prop.GetCustomAttributes(typeof(SnakeCase), false).First();
+                    if (value != null)
+                    {
+                        if (value is Boolean)
+                        {
+                            value = value.ToString().ToLower();
+                        }
+                        this.addKeyValuePair(sb, snakeProp.Value.ToLower(), value.ToString());
+                    }
+                }
+            }
 
         }
         private String encodeOrderParameter(Object order)
         {
-            StringBuilder sb = new StringBuilder();
+            String orderEntry = String.Empty;
+            String sortEntry = String.Empty;
+            if (order != null)
+            {
+                var props = order.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var snakeProps = props.Where(x => x.GetCustomAttributes(typeof(SnakeCase), false).Length > 0);
 
-            return sb.ToString(); ;
+                foreach (var prop in snakeProps)
+                {
+                    object value = prop.GetValue(order);
+                    var snakeProp = (SnakeCase)prop.GetCustomAttributes(typeof(SnakeCase), false).First();
+                    if (( value as Boolean?) == true)
+                    {
+                        if (snakeProp.Order)
+                        {
+                            orderEntry += "_" + snakeProp.Value;
+                        }
+                        else
+                        {
+                            sortEntry = snakeProp.Value;
+                        }
+                    }
+                }
+            }
+            return sortEntry + orderEntry;
+
         }
         public String EncodeFilterParameters(Object filter, Object order, int? count, int? offset)
         {
@@ -180,7 +222,8 @@ namespace PaymillWrapper.Utils
             encodeFilterParameters(sb, filter);
             String orderParams = encodeOrderParameter(order);
 
-            if (sb.Length > 0 && !orderParams.StartsWith("_"))
+            if (String.IsNullOrWhiteSpace(orderParams) == false 
+                    && !orderParams.StartsWith("_"))
             {
                 this.addKeyValuePair(sb, "order", orderParams);
             }

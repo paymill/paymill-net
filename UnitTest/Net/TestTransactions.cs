@@ -146,7 +146,7 @@ namespace UnitTest.Net
             PaymillList<Transaction> lstTransactions = _paymill.TransactionService.ListAsync().Result;
             Assert.IsTrue(lstTransactions.DataCount > 0);
         }
-        [TestMethod]
+ /*       [TestMethod]
         public void GetTransactionsWithParameters()
         {
 
@@ -156,7 +156,7 @@ namespace UnitTest.Net
             IReadOnlyCollection<Transaction> lstTransactions = _paymill.TransactionService.ListAsync(filter).Result;
 
             Assert.IsTrue(lstTransactions.Count > 0);
-        }
+        }*/
         [TestMethod]
         public void UpdateTransaction()
         {
