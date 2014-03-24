@@ -14,30 +14,19 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Payment>))]
     public class Payment : BaseModel
     {
-       
-        public enum TypePayment
+
+        public enum PaymentType
         {
-            CreditCard, 
+            CreditCard,
             Debit,
 
         }
-        public enum TypeCard
-        {
-            Visa, 
-            Mastercard, 
-            Mastro, 
-            Amex, 
-            Jcb,
-            Diners, 
-            Discover, 
-            ChinaUnionPay, 
-            Unknown
-        };
+
         /// <summary>
         /// enum(creditcard,debit)
         /// </summary>
         [DataMember(Name = "type")]
-        public TypePayment Type { get; set; }
+        public PaymentType Type { get; set; }
 
         // Credit card attributes
         /// <summary>
@@ -50,7 +39,7 @@ namespace PaymillWrapper.Models
         /// Visa or Mastercard
         /// </summary>
         [DataMember(Name = "card_type")]
-        public TypeCard CardType { get; set; }
+        public CardTypes CardType { get; set; }
 
         /// <summary>
         /// Country
@@ -101,7 +90,7 @@ namespace PaymillWrapper.Models
         /// </summary>
         [DataMember(Name = "account")]
         public string Account { get; set; }
-    
+
         /// <summary>
         /// App (ID) that created this offer or null if created by yourself
         /// </summary>
@@ -117,7 +106,26 @@ namespace PaymillWrapper.Models
 
         }
 
-       /* public static Payment.Filter createFilter()
+        [DataContract]
+        public sealed class CardTypes : EnumBaseType
+        {
+            public static readonly Payment.CardTypes VISA = new CardTypes("visa");
+            public static readonly Payment.CardTypes MASTERCARD = new CardTypes("mastercard");
+            public static readonly Payment.CardTypes MAESTRO = new CardTypes("maestro");
+            public static readonly Payment.CardTypes AMEX = new CardTypes("amex");
+            public static readonly Payment.CardTypes JCB = new CardTypes("jcb");
+            public static readonly Payment.CardTypes DINERS = new CardTypes("diners");
+            public static readonly Payment.CardTypes DISCOVER = new CardTypes("discover");
+            public static readonly Payment.CardTypes CHINA_UNION_PAY = new CardTypes("china_union_pay");
+            public static readonly Payment.CardTypes UNKNOWN = new CardTypes("unknown");
+            private CardTypes(String name)
+                : base(name)
+            {
+
+            }
+           
+        }
+        public static Payment.Filter createFilter()
         {
             return new Payment.Filter();
         }
@@ -126,61 +134,54 @@ namespace PaymillWrapper.Models
         {
             return new Payment.Order();
         }
-         public final static class Filter {
+        public sealed class Filter : BaseFilter
+        {
 
-    [SnakeCase(Value ="card_type" )]
-    private String cardType;
+            [SnakeCase(Value = "card_type")]
+            private String cardType;
 
-    [SnakeCase(Value ="created_at" )]
-    private String createdAt;
 
-    private Filter() {
-   
-    }
+            internal Filter()
+            {
 
-    public Payment.Filter ByCardType( final Payment.CardType cardType ) {
-      this.cardType = cardType.getValue();
-      return this;
-    }
+            }
 
-    public Payment.Filter ByCreatedAt( final Date startCreatedAt, final Date endCreatedAt ) {
-      this.createdAt = String.valueOf( startCreatedAt.getTime() ) + "-" + String.valueOf( endCreatedAt.getTime() );
-      return this;
-    }
-  }
+            public Payment.Filter ByCardType(Payment.CardTypes cardType)
+            {
+                this.cardType = cardType.ToString();
+                return this;
+            }
+        }
 
-  public final static class Order {
+        public sealed class Order : BaseOrder
+        {
 
-    [SnakeCase(Value ="created_at" )
-    private boolean createdAt;
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
 
-    [SnakeCase(Value =value = "asc", order = true )
-    private boolean asc;
+            internal Order()
+            {
 
-    [SnakeCase(Value =value = "desc", order = true )
-    private boolean desc;
+            }
 
-    private Order() {
-      super();
-    }
+            public Payment.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
 
-    public Payment.Order asc() {
-      this.asc = true;
-      this.desc = false;
-      return this;
-    }
+            public Payment.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
 
-    public Payment.Order desc() {
-      this.asc = false;
-      this.desc = true;
-      return this;
-    }
+            public Payment.Order ByCreatedAt()
+            {
+                this.createdAt = true;
+                return this;
+            }
+        }
 
-    public Payment.Order byCreatedAt() {
-      this.createdAt = true;
-      return this;
-    }
-  }
-        */
     }
 }

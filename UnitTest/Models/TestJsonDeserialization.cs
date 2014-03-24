@@ -24,19 +24,20 @@ namespace UnitTest.Models
 
         private static T ReadResult<T>(string filename)
         {
-            return JsonConvert.DeserializeObject<SingleResult<T>>(GetInputFile(filename), new UnixTimestampConverter(),
-                new StringToWebhookEventTypeConverter()).Data;
+            String data = GetInputFile(filename);
+            return PaymillWrapper.Service.AbstractService<T>.ReadResult<T>(data);
         }
 
-        private static IEnumerable<T> ReadResults<T>(string filename)
+        private static PaymillList<T> ReadResults<T>(string filename)
         {
-            return JsonConvert.DeserializeObject<MultipleResults<T>>(GetInputFile(filename),
-                new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
+            String data = GetInputFile(filename);
+            return PaymillWrapper.Service.AbstractService<T>.ReadResults<T>(data);
+ 
         }
         [TestMethod]
         public void TestClients()
         {
-            var clients = ReadResults<Client>("clients.json");
+            var clients = ReadResults<Client>("clients.json").Data;
             int hotmailAcounts = clients.Count(x=> x.Email == "javicantos22@hotmail.es");
             Assert.IsTrue(hotmailAcounts == clients.Count(), "Invalid clients count");
         }
@@ -99,9 +100,9 @@ namespace UnitTest.Models
         {
             var payment = ReadResult<Payment>("payment.json");
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", payment.Id);
-            Assert.AreEqual(Payment.TypePayment.CreditCard, payment.Type);
+            Assert.AreEqual(Payment.PaymentType.CreditCard, payment.Type);
             Assert.AreEqual("client_11cc57776f7954925cf9", payment.Client);
-            Assert.AreEqual(Payment.TypeCard.Mastercard, payment.CardType);
+            Assert.AreEqual(Payment.CardTypes.MASTERCARD, payment.CardType);
             Assert.IsNull(payment.Country);
             Assert.AreEqual(12, payment.ExpireMonth);
             Assert.AreEqual(2014, payment.ExpireYear);
@@ -110,11 +111,21 @@ namespace UnitTest.Models
             Assert.AreEqual(1381489629, payment.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1381489629, payment.UpdatedAt.ToUnixTimestamp());
         }
+        [TestMethod]
+        public void TestPayments()
+        {
+            var payments = ReadResults<Payment>("payments.json").Data;
+            Assert.AreEqual(payments.Count(), 20);
+            foreach (var payment in payments)
+            {
+                Assert.IsNotNull(payment.Id);
+            }
+        }
         
         [TestMethod]
         public void TestPreauthorization()
         {
-            var p = ReadResults<Preauthorization>("preauthorizations.json").FirstOrDefault();
+            var p = ReadResults<Preauthorization>("preauthorizations.json").Data.FirstOrDefault();
             Assert.AreEqual("preauth_31eb90495837447f76b7", p.Id);
             Assert.AreEqual("client_11cc57776f7954925cf9", p.Client.Id);
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", p.Payment.Id);

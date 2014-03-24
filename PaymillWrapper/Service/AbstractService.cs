@@ -79,9 +79,7 @@ namespace PaymillWrapper.Service
             urlBuilder.Query = encodedParam;
             HttpResponseMessage response = httpClient.GetAsync(urlBuilder.Uri).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<PaymillWrapper.Models.PaymillList<T>>(data, 
-                                new UnixTimestampConverter(), 
-                                new StringToWebhookEventTypeConverter());
+            return ReadResults<T>(data);
         }
 
         /// <summary>
@@ -96,7 +94,7 @@ namespace PaymillWrapper.Service
             var requestUri = _apiUrl + "/" + subResource.ToString().ToLower();
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<ST>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
+            return ReadResult<ST>(data);
         }
         /// <summary>
         /// Creates the asynchronous.
@@ -114,7 +112,7 @@ namespace PaymillWrapper.Service
             }
             HttpResponseMessage response = httpClient.PostAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
+            return ReadResult<T>(data);
         }
 
         public async Task<T> GetAsync(string id)
@@ -125,7 +123,7 @@ namespace PaymillWrapper.Service
 
             HttpResponseMessage response = httpClient.GetAsync(requestUri).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
+            return ReadResult<T>(data);
         }
 
         public virtual async Task<bool> DeleteAsync(string id)
@@ -149,7 +147,7 @@ namespace PaymillWrapper.Service
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-            return JsonConvert.DeserializeObject<SingleResult<T>>(data, new UnixTimestampConverter(), new StringToWebhookEventTypeConverter()).Data;
+            return ReadResult<T>(data);
         }
 
         /// <summary>
@@ -171,5 +169,22 @@ namespace PaymillWrapper.Service
                 throw new PaymillRequestException(error, response.StatusCode);
             }
         }
+        internal static TE ReadResult<TE>(string data)
+        {
+            return JsonConvert.DeserializeObject<SingleResult<TE>>(data, customConverters).Data;
+        }
+
+        internal static PaymillWrapper.Models.PaymillList<TE> ReadResults<TE>(string data)
+        {
+            return JsonConvert.DeserializeObject<PaymillWrapper.Models.PaymillList<TE>>(data,
+                                customConverters);
+        }
+
+        internal static Newtonsoft.Json.JsonConverter[] customConverters = { new UnixTimestampConverter(), 
+                                                                             new StringToWebhookEventTypeConverter(),
+                                                                             new StringToPaymentCardTypesConverter(),
+                                                                             new StringToNIntConverter()
+                                                                          };
+
     }
 }

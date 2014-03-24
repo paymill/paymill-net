@@ -91,6 +91,7 @@
     <EmbeddedResource Include="Models\Input\webhook_email.json" />
     <EmbeddedResource Include="Models\Input\webhook_url.json" />
     <EmbeddedResource Include="Models\Input\clients.json" />
+    <EmbeddedResource Include="Models\Input\payments.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PaymillWrapper\PaymillWrapper.csproj">
