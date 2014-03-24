@@ -116,5 +116,71 @@ namespace PaymillWrapper.Models
         {
 
         }
+
+       /* public static Payment.Filter createFilter()
+        {
+            return new Payment.Filter();
+        }
+
+        public static Payment.Order createOrder()
+        {
+            return new Payment.Order();
+        }
+         public final static class Filter {
+
+    [SnakeCase(Value ="card_type" )]
+    private String cardType;
+
+    [SnakeCase(Value ="created_at" )]
+    private String createdAt;
+
+    private Filter() {
+   
+    }
+
+    public Payment.Filter ByCardType( final Payment.CardType cardType ) {
+      this.cardType = cardType.getValue();
+      return this;
+    }
+
+    public Payment.Filter ByCreatedAt( final Date startCreatedAt, final Date endCreatedAt ) {
+      this.createdAt = String.valueOf( startCreatedAt.getTime() ) + "-" + String.valueOf( endCreatedAt.getTime() );
+      return this;
+    }
+  }
+
+  public final static class Order {
+
+    [SnakeCase(Value ="created_at" )
+    private boolean createdAt;
+
+    [SnakeCase(Value =value = "asc", order = true )
+    private boolean asc;
+
+    [SnakeCase(Value =value = "desc", order = true )
+    private boolean desc;
+
+    private Order() {
+      super();
+    }
+
+    public Payment.Order asc() {
+      this.asc = true;
+      this.desc = false;
+      return this;
+    }
+
+    public Payment.Order desc() {
+      this.asc = false;
+      this.desc = true;
+      return this;
+    }
+
+    public Payment.Order byCreatedAt() {
+      this.createdAt = true;
+      return this;
+    }
+  }
+        */
     }
 }

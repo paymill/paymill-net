@@ -60,7 +60,7 @@ namespace PaymillWrapper.Models
             return new Client.Order();
         }
 
-        public sealed class Filter
+        public sealed class Filter : BaseModel.BaseFilter
         {
             [SnakeCase(Value = "payment")]
             private String paymentId;
@@ -77,11 +77,6 @@ namespace PaymillWrapper.Models
             [SnakeCase(Value = "email")]
             private String email;
 
-            [SnakeCase(Value = "created_at")]
-            private String createdAt;
-
-            [SnakeCase(Value = "updated_at")]
-            private String updatedAt;
 
             internal Filter()
             {
@@ -116,21 +111,20 @@ namespace PaymillWrapper.Models
                 this.offerId = offerId;
                 return this;
             }
-
             public Client.Filter ByCreatedAt(DateTime startCreatedAt, DateTime endCreatedAt)
             {
-                this.createdAt = String.Format("{0}-{1}", startCreatedAt.ToUnixTimestamp(), endCreatedAt.ToUnixTimestamp());
+                base.byCreatedAt(startCreatedAt, endCreatedAt);
                 return this;
             }
 
             public Client.Filter ByUpdatedAt(DateTime startUpdatedAt, DateTime endUpdatedAt)
             {
-                this.updatedAt = String.Format("{0}-{1}", startUpdatedAt.ToUnixTimestamp(), endUpdatedAt.ToUnixTimestamp());
+                base.byUpdatedAt(startUpdatedAt, endUpdatedAt);
                 return this;
             }
         }
 
-        public sealed class Order
+        public sealed class Order : BaseModel.BaseOrder
         {
 
             [SnakeCase(Value = "email")]
@@ -142,31 +136,10 @@ namespace PaymillWrapper.Models
             [SnakeCase(Value = "creditcard")]
             private Boolean creditCard;
 
-            [SnakeCase(Value = "asc", Order = true)]
-            private Boolean asc;
-
-            [SnakeCase(Value = "desc", Order = true)]
-            private Boolean desc;
-
             internal Order()
             {
 
             }
-
-            public Client.Order Asc()
-            {
-                this.asc = true;
-                this.desc = false;
-                return this;
-            }
-
-            public Client.Order Desc()
-            {
-                this.asc = false;
-                this.desc = true;
-                return this;
-            }
-
             public Client.Order ByCreatedAt()
             {
                 this.email = false;
@@ -188,6 +161,17 @@ namespace PaymillWrapper.Models
                 this.email = true;
                 this.createdAt = false;
                 this.creditCard = false;
+                return this;
+            }
+            public Client.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Client.Order Desc()
+            {
+                base.setDesc();
                 return this;
             }
         }

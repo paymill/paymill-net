@@ -73,7 +73,149 @@ namespace PaymillWrapper.Models
         {
 
         }
+
+        public static Offer.Filter CreateFilter()
+        {
+            return new Offer.Filter();
+        }
+
+        public static Offer.Order CreateOrder()
+        {
+            return new Offer.Order();
+        }
+
+        public sealed class Filter: BaseModel.BaseFilter
+        {
+
+            [SnakeCase(Value = "name")]
+            private String name;
+
+            [SnakeCase(Value = "trial_period_days")]
+            private String trialPeriodDays;
+
+            [SnakeCase(Value = "amount")]
+            private String amount;
+
+
+            internal Filter()
+            {
+
+            }
+
+            public Offer.Filter ByName(String name)
+            {
+                this.name = name;
+                return this;
+            }
+
+            public Offer.Filter ByTrialPeriodDays(int trialPeriodDays)
+            {
+                this.trialPeriodDays = trialPeriodDays.ToString();
+                return this;
+            }
+
+            public Offer.Filter ByAmount(int amount)
+            {
+                this.amount = amount.ToString();
+                return this;
+            }
+
+            public Offer.Filter byAmountGreaterThan(int amount)
+            {
+                this.amount = ">" + amount.ToString();
+                return this;
+            }
+
+            public Offer.Filter ByAmountLessThan(int amount)
+            {
+                this.amount = "<" + amount.ToString();
+                return this;
+            }
+            public Offer.Filter ByCreatedAt(DateTime startCreatedAt, DateTime endCreatedAt)
+            {
+                base.byCreatedAt(startCreatedAt, endCreatedAt);
+                return this;
+            }
+
+            public Offer.Filter ByUpdatedAt(DateTime startUpdatedAt, DateTime endUpdatedAt)
+            {
+                base.byUpdatedAt(startUpdatedAt, endUpdatedAt);
+                return this;
+            }
+         }
+
+        public class Order: BaseModel.BaseOrder
+        {
+
+            [SnakeCase(Value = "interval")]
+            private Boolean interval;
+
+            [SnakeCase(Value = "amount")]
+            private Boolean amount;
+
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
+
+            [SnakeCase(Value = "trial_period_days")]
+            private Boolean trialPeriodDays;
+
+            internal Order()
+            {
+
+            }
+
+            public Offer.Order ByInterval()
+            {
+                this.interval = true;
+                this.amount = false;
+                this.createdAt = false;
+                this.trialPeriodDays = false;
+                return this;
+            }
+
+            public Offer.Order ByAmount()
+            {
+                this.interval = false;
+                this.amount = true;
+                this.createdAt = false;
+                this.trialPeriodDays = false;
+                return this;
+            }
+
+            public Offer.Order ByCreatedAt()
+            {
+                this.interval = false;
+                this.amount = false;
+                this.createdAt = true;
+                this.trialPeriodDays = false;
+                return this;
+            }
+
+            public Offer.Order ByTrialPeriodDays()
+            {
+                this.interval = false;
+                this.amount = false;
+                this.createdAt = true;
+                this.trialPeriodDays = false;
+                return this;
+            }
+            public Offer.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Offer.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
+        }
+
     }
+
+
+
 
     [DataContract]
     public class SubscriptionCount

@@ -12,6 +12,7 @@ namespace UnitTest.Net
     public class TestOffers
     {
         Paymill _paymill = null;
+        const int offerAmount = 1500;
         [TestInitialize]
         public void Initialize()
         {
@@ -19,7 +20,7 @@ namespace UnitTest.Net
         }
         private Offer createOffer()
         {
-            Offer newOffer = _paymill.OfferService.CreateAsync(1500, "EUR", "1 MONTH", "Test API", 3).Result;
+            Offer newOffer = _paymill.OfferService.CreateAsync(offerAmount, "EUR", "1 MONTH", "Test API", 3).Result;
             return newOffer;
         }
         [TestMethod]
@@ -60,15 +61,33 @@ namespace UnitTest.Net
             List<Offer> lstOffers = _paymill.OfferService.ListAsync().Result.Data;
             Assert.IsTrue(lstOffers.Count > 0, "List offers failed");
         }
-        /*
         [TestMethod]
-        public void GetOffersWithParameters()
+        public void ListOfferByAmountDesc()
         {
             Offer newOffer = createOffer();
-            Filter filter = new Filter();
-            filter.Add("interval", "MONTH"); //OK
-            List<Offer> lstOffers = _paymill.OfferService.ListAsync(filter).Result;
-            Assert.IsTrue(lstOffers.Count > 0, "List offers failed");
-        }*/
+            Offer.Order order = Offer.CreateOrder().ByCreatedAt().Desc();
+
+            PaymillList<Offer> wrapper = _paymill.OfferService.ListAsync(null, order).Result;
+            List<Offer> offers = wrapper.Data;
+
+            Assert.IsNotNull(offers);
+            Assert.IsFalse(offers.Count == 0);
+            Assert.AreEqual(offers[0].Amount, offerAmount);
+        }
+
+        [TestMethod]
+        public void testListFilterByAmount()
+        {
+            Offer newOffer = createOffer();
+            Offer.Filter filter = Offer.CreateFilter().ByAmount(offerAmount);
+
+            PaymillList<Offer> wrapper = _paymill.OfferService.ListAsync(filter, null).Result;
+            List<Offer> offers = wrapper.Data;
+
+            Assert.IsNotNull(offers);
+            Assert.IsFalse(offers.Count == 0);
+        }
+
+       
     }
 }
