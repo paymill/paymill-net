@@ -25,16 +25,6 @@ namespace UnitTest.Net
             PaymillList<Preauthorization> lstPreauthorizations = _paymill.PreauthorizationService.ListAsync().Result;
             Assert.IsFalse(lstPreauthorizations.DataCount == 0, "Get Preauthorization Failed");
         }
-      /*  [TestMethod]
-        public void GetPreauthorizationsWithParameters()
-        {
-
-            Filter filter = new Filter();
-            filter.Add("count", 1);
-            filter.Add("offset", 2);
-            PaymillList<Preauthorization> lstPreauthorizations = _paymill.PreauthorizationService.ListAsync(filter).Result;
-            Assert.IsFalse(lstPreauthorizations.DataCount == 0, "Get Preauthorization Failed");
-        }*/
         [TestMethod]
         public void CreatePreauthorizationWithToken()
         {
@@ -69,7 +59,45 @@ namespace UnitTest.Net
             PaymillList<Preauthorization> lstPreauthorizations = _paymill.PreauthorizationService.ListAsync().Result;
             Preauthorization preauthorization = _paymill.PreauthorizationService.GetAsync(lstPreauthorizations.Data[0].Id).Result;
             Assert.IsFalse(String.IsNullOrEmpty(preauthorization.Id), "Create Preauthorization Failed");
-  
+
+        }
+       [TestMethod]
+        public void ListOrderByOffer()
+        {
+            Preauthorization.Order orderDesc = Preauthorization.CreateOrder().ByCreatedAt().Desc();
+            Preauthorization.Order orderAsc = Preauthorization.CreateOrder().ByCreatedAt().Asc();
+
+            List<Preauthorization> preauthorizationDesc = _paymill.PreauthorizationService.ListAsync(null, orderDesc).Result.Data;
+            List<Preauthorization> preauthorizationAsc = _paymill.PreauthorizationService.ListAsync(null, orderAsc).Result.Data;
+
+            Assert.AreNotEqual(preauthorizationDesc[0].Id, preauthorizationAsc[0].Id);
+            Assert.AreNotEqual(preauthorizationDesc[preauthorizationDesc.Count - 1].Id, preauthorizationAsc[0].Id);
+        }
+
+       [TestMethod]
+        public void ListOrderByFilterAmountGreaterThan()
+        {
+            int amount = 300;
+            Preauthorization.Filter filter = Preauthorization.CreateFilter().ByAmountGreaterThan(amount);
+            List<Preauthorization> preauthorization = _paymill.PreauthorizationService.ListAsync(filter, null).Result.Data;
+            Assert.IsFalse(preauthorization.Count == 0);
+            foreach (var pre in preauthorization)
+            {
+                Assert.IsFalse(pre.Amount <= amount);
+            }
+        }
+
+        [TestMethod]
+        public void ListOrderByFilterAmountLessThan()
+        {
+            int amount = 30000;
+            Preauthorization.Filter filter = Preauthorization.CreateFilter().ByAmountLessThan(amount);
+            List<Preauthorization> preauthorizations = _paymill.PreauthorizationService.ListAsync(filter, null).Result.Data;
+            Assert.IsFalse(preauthorizations.Count == 0);
+            foreach (var pre in preauthorizations)
+            {
+                Assert.IsFalse(pre.Amount >= amount);
+            }
         }
     }
 }

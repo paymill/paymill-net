@@ -15,10 +15,7 @@ namespace PaymillWrapper.Service
         {
         }
 
-        protected override string GetResourceId(Preauthorization obj)
-        {
-            return obj.Id;
-        }
+       
         /// <summary>
         /// Creates Use either a token or an existing payment to Authorizes the given amount with the given token.
         /// </summary>
@@ -77,6 +74,36 @@ namespace PaymillWrapper.Service
             {
                 throw new PaymillWrapper.Exceptions.PaymillException("Now Supported");
             });
+        }
+        /// <summary>
+        /// This function returns a <see cref="PaymillList"/>of PAYMILL Client objects. In which order this list is returned depends on the
+        /// </summary>
+        /// <param name="filter">Filter or null</param>
+        /// <param name="order">Order or null.</param>
+        /// <returns>PaymillList which contains a List of PAYMILL Client object and their total count.</returns>
+        public async Task<PaymillWrapper.Models.PaymillList<Preauthorization>> ListAsync(Preauthorization.Filter filter, Preauthorization.Order order)
+        {
+            return await base.listAsync(filter, order, null, null);
+        }
+
+        /// <summary>
+        /// This function returns a <see cref="PaymillList"/> of PAYMILL objects. In which order this list is returned depends on the
+        /// optional parameters. If null is given, no filter or order will be applied, overriding the default count and
+        /// offset.
+        /// </summary>
+        /// <param name="filter">Filter or null</param>
+        /// <param name="order">Order or null.</param>
+        /// <param name="count">Max count of returned objects in the PaymillList</param>
+        /// <param name="offset">The offset to start from.</param>
+        /// <returns>PaymillList which contains a List of PAYMILL objects and their total count.</returns>
+        public async Task<PaymillWrapper.Models.PaymillList<Preauthorization>> ListAsync(Preauthorization.Filter filter, Preauthorization.Order order, int? count, int? offset)
+        {
+            return await base.listAsync(filter, order, count, offset);
+        }
+
+        protected override string GetResourceId(Preauthorization obj)
+        {
+            return obj.Id;
         }
     }
 }

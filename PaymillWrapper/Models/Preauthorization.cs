@@ -16,7 +16,7 @@ namespace PaymillWrapper.Models
             Open,
             Pending,
             Closed,
-            Failed, 
+            Failed,
             Delete,
             Preauth
         }
@@ -69,11 +69,99 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "token")]
         public string Token { get; set; }
 
-       [DataMember(Name = "app_id")]
+        [DataMember(Name = "app_id")]
         public String AppId;
 
-       [DataMember(Name = "status")]
-       public PreauthorizationStatus Status;
+        [DataMember(Name = "status")]
+        public PreauthorizationStatus Status;
+
+        public static Preauthorization.Filter CreateFilter()
+        {
+            return new Preauthorization.Filter();
+        }
+
+        public static Preauthorization.Order CreateOrder()
+        {
+            return new Preauthorization.Order();
+        }
+
+        public sealed class Filter : BaseFilter
+        {
+
+            [SnakeCase(Value = "client")]
+            private String clientId;
+
+            [SnakeCase(Value = "payment")]
+            private String paymentId;
+
+            [SnakeCase(Value = "amount")]
+            private String amount;
+
+
+            internal Filter()
+            {
+            }
+
+            public Preauthorization.Filter ByClientId(String clientId)
+            {
+                this.clientId = clientId;
+                return this;
+            }
+
+            public Preauthorization.Filter ByPaymentId(String paymentId)
+            {
+                this.paymentId = paymentId;
+                return this;
+            }
+
+            public Preauthorization.Filter ByAmount(int amount)
+            {
+                this.amount = amount.ToString();
+                return this;
+            }
+
+            public Preauthorization.Filter ByAmountGreaterThan(int amount)
+            {
+                this.amount = ">" + amount.ToString();
+                return this;
+            }
+
+            public Preauthorization.Filter ByAmountLessThan(int amount)
+            {
+                this.amount = "<" + amount.ToString();
+                return this;
+            }
+        }
+
+        public sealed class Order : BaseOrder
+        {
+
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
+
+            internal Order()
+            {
+            }
+
+            public Preauthorization.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Preauthorization.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
+
+            public Preauthorization.Order ByCreatedAt()
+            {
+                this.createdAt = true;
+                return this;
+            }
+
+        }
 
     }
 }
