@@ -57,17 +57,100 @@ namespace PaymillWrapper.Models
         /// </summary>
         [DataMember(Name = "client")]
         public Client Client { get; set; }
-       
+
 
         /// <summary>
         /// Payment
         /// </summary>
-        [DataMember(Name = "payment"), 
-        Updateable(Name = "payment", OnlyProperty="Id")]
-        public Payment Payment { get;set;}
+        [DataMember(Name = "payment"),
+        Updateable(Name = "payment", OnlyProperty = "Id")]
+        public Payment Payment { get; set; }
 
-       [DataMember(Name = "app_id")]
+        [DataMember(Name = "app_id")]
         public String AppId { get; set; }
-     }
+
+
+        public static Subscription.Filter CreateFilter()
+        {
+            return new Subscription.Filter();
+        }
+
+        public static Subscription.Order CreateOrder()
+        {
+            return new Subscription.Order();
+        }
+
+        public class Filter : BaseFilter
+        {
+
+            [SnakeCase(Value = "offer")]
+            private String offerId;
+
+            internal Filter()
+            {
+
+            }
+            public Subscription.Filter ByOfferId(String offerId)
+            {
+                this.offerId = offerId;
+                return this;
+            }
+        }
+        public class Order : BaseOrder
+        {
+            [SnakeCase(Value = "offer")]
+            private Boolean offer;
+
+            [SnakeCase(Value = "canceled_at")]
+            private Boolean canceledAt;
+
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
+
+            internal Order()
+            {
+
+            }
+
+            public Subscription.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Subscription.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
+
+            public Subscription.Order ByOffer()
+            {
+                this.offer = true;
+                this.createdAt = false;
+                this.canceledAt = false;
+                return this;
+            }
+
+            public Subscription.Order ByCanceledAt()
+            {
+                this.offer = false;
+                this.createdAt = false;
+                this.canceledAt = true;
+                return this;
+            }
+
+            public Subscription.Order ByCreatedAt()
+            {
+                this.offer = false;
+                this.createdAt = true;
+                this.canceledAt = false;
+                return this;
+            }
+
+        }
+
+
+    }
 
 }

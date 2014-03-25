@@ -83,7 +83,26 @@ namespace UnitTest.Net
             Assert.IsTrue(webhook.Id != String.Empty, "CreateEmailWebhook Fail");
             PaymillList<Webhook> resultList = _paymill.WebhookService.ListAsync().Result;
             Assert.IsTrue(resultList.DataCount > 0, "Get Webhooks failed");
+        }
+        [TestMethod]
+        public void ListWebhooks()
+        {
+            var list = _paymill.WebhookService.ListAsync().Result;
+            Assert.IsTrue(list.DataCount > 0, "List Webhooks Failed");
+        }
+        [TestMethod]
+        public void ListOrderByCreatedAt()
+        {
+            Webhook.Order orderDesc = Webhook.CreateOrder().ByCreatedAt().Desc();
+            Webhook.Order orderAsc = Webhook.CreateOrder().ByCreatedAt().Asc();
 
+            List<Webhook> webhooksDesc = _paymill.WebhookService.ListAsync(null, orderDesc).Result.Data;
+            List<Webhook> webhooksAsc = _paymill.WebhookService.ListAsync(null, orderAsc).Result.Data;
+            if (webhooksDesc.Count > 1
+                && webhooksAsc.Count > 1)
+            {
+                Assert.AreNotEqual(webhooksDesc[0].Id, webhooksAsc[0].Id);
+            }
         }
     }
 }

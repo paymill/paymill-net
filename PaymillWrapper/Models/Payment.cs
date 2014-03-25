@@ -106,7 +106,7 @@ namespace PaymillWrapper.Models
 
         }
 
-        [DataContract]
+         [Newtonsoft.Json.JsonConverter(typeof(StringToPaymentCardTypesConverter))]
         public sealed class CardTypes : EnumBaseType
         {
             public static readonly Payment.CardTypes VISA = new CardTypes("visa");

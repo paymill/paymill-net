@@ -134,5 +134,116 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "short_id")]
         public string ShortId { get; set; }
 
+        public static Transaction.Filter CreateFilter()
+        {
+            return new Transaction.Filter();
+        }
+
+        public static Transaction.Order CreateOrder()
+        {
+            return new Transaction.Order();
+        }
+
+        public sealed class Filter : BaseFilter
+        {
+
+            [SnakeCase(Value = "client")]
+            private String clientId;
+
+            [SnakeCase(Value = "payment")]
+            private String paymentId;
+
+            [SnakeCase(Value = "amount")]
+            private String amount;
+
+            [SnakeCase(Value = "description")]
+            private String description;
+
+
+            [SnakeCase(Value = "status")]
+            private String status;
+
+            internal Filter()
+            {
+
+            }
+
+            public Transaction.Filter ByClientId(String clientId)
+            {
+                this.clientId = clientId;
+                return this;
+            }
+
+            public Transaction.Filter ByPaymentId(String paymentId)
+            {
+                this.paymentId = paymentId;
+                return this;
+            }
+
+            public Transaction.Filter ByAmount(int amount)
+            {
+                this.amount = amount.ToString();
+                return this;
+            }
+
+            public Transaction.Filter ByAmountGreaterThan(int amount)
+            {
+                this.amount = ">" + amount.ToString();
+                return this;
+            }
+
+            public Transaction.Filter ByAmountLessThan(int amount)
+            {
+                this.amount = "<" + amount.ToString();
+                return this;
+            }
+
+            public Transaction.Filter ByDescription(String description)
+            {
+                this.description = description;
+                return this;
+            }
+
+
+
+            public Transaction.Filter ByStatus(Transaction.TransactionStatus status)
+            {
+                this.status = status.ToString();
+                return this;
+            }
+        }
+
+        public sealed class Order : BaseOrder
+        {
+
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
+
+
+            internal Order()
+            {
+
+            }
+
+            public Transaction.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Transaction.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
+
+            public Transaction.Order ByCreatedAt()
+            {
+                this.createdAt = true;
+                return this;
+            }
+
+        }
+
     }
 }

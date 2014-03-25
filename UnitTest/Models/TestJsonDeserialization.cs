@@ -166,6 +166,16 @@ namespace UnitTest.Models
             Assert.AreEqual(1381489644, s.UpdatedAt.ToUnixTimestamp(), "Updated at");
             Assert.AreEqual(1384171644, s.NextCaptureAt.ToUnixTimestamp(), "Next capture at");
         }
+        [TestMethod]
+        public void TestSubscriptions()
+        {
+            var subs = ReadResults<Subscription>("subscriptions.json");
+            Assert.AreEqual(subs.DataCount, 95);
+            foreach (var sub in subs.Data)
+            {
+                Assert.IsNotNull(sub.Id);
+            }
+        }
 
         [TestMethod]
         public void TestTransaction()

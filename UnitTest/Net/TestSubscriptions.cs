@@ -121,5 +121,23 @@ namespace UnitTest.Net
             Assert.AreEqual(subscription.Id, subscriptionId);
             Assert.IsTrue(subscription.CancelAtPeriodEnd);
         }
+
+        [TestMethod]
+        public void ListOrderByCreatedAt()
+        {
+            Subscription.Order orderDesc = Subscription.CreateOrder().ByCreatedAt().Desc();
+            Subscription.Order orderAsc = Subscription.CreateOrder().ByCreatedAt().Asc();
+
+            List<Subscription> subscriptionsDesc = _paymill.SubscriptionService.ListAsync(null, orderDesc).Result.Data;
+            List<Subscription> subscriptionsAsc = _paymill.SubscriptionService.ListAsync(null, orderAsc).Result.Data;
+            if (subscriptionsAsc.Count > 1
+                && subscriptionsDesc.Count > 1)
+            {
+                Assert.AreNotEqual(subscriptionsDesc[0].Id, subscriptionsAsc[0].Id);
+            }
+        }
+
+       
+
     }
 }

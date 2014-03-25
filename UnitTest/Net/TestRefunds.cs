@@ -27,14 +27,6 @@ namespace UnitTest.Net
             PaymillList<Refund> lstRefunds = _paymill.RefundService.ListAsync().Result;
             Assert.IsTrue(lstRefunds.DataCount > 0, "List Refunds failed");
         }
-    /*    [TestMethod]
-        public void GetRefundsWithFilters()
-        {
-            Filter filter = new Filter();
-            filter.Add("count", 5);
-            PaymillList<Refund> lstRefunds = _paymill.RefundService.ListAsync(filter).Result;
-            Assert.IsTrue(lstRefunds.DataCount > 0, "List Refunds failed");
-        }*/
         [TestMethod]
         public void RefundTransactionIdWithAmount()
         {
@@ -100,6 +92,29 @@ namespace UnitTest.Net
             PaymillList<Refund> refunds = _paymill.RefundService.ListAsync().Result;
             Refund refund =_paymill.RefundService.GetAsync(refunds.Data[0].Id).Result;
             Assert.IsFalse(String.IsNullOrEmpty(refund.Id));
+        }
+        [TestMethod]
+        public void ListOrderByFilterAmountGreaterThan()
+        {
+            int amount = 300;
+            Refund.Filter filter = Refund.CreateFilter().ByAmountGreaterThan(amount);
+            List<Refund> refunds = _paymill.RefundService.ListAsync(filter, null).Result.Data;
+            foreach (var pre in refunds)
+            {
+                Assert.IsFalse(pre.Amount <= amount);
+            }
+        }
+
+        [TestMethod]
+        public void ListOrderByFilterAmountLessThan()
+        {
+            int amount = 600;
+            Refund.Filter filter = Refund.CreateFilter().ByAmountLessThan(amount);
+            List<Refund> refunds = _paymill.RefundService.ListAsync(filter, null).Result.Data;
+            foreach (var pre in refunds)
+            {
+                Assert.IsFalse(pre.Amount >= amount);
+            }
         }
     }
 }

@@ -60,15 +60,15 @@ namespace PaymillWrapper.Utils
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(int);
+            return ( objectType == typeof(int));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
-                return int.MinValue;
+                return default(int);
             if (reader.TokenType == JsonToken.Integer)
-                return reader.Value;
+                return Convert.ToInt32(reader.Value);
 
             if (reader.TokenType == JsonToken.String)
             {

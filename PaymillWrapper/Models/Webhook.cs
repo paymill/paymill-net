@@ -22,13 +22,13 @@ namespace PaymillWrapper.Models
         Updateable(Name = "email")]
         public String Email { get; set; }
 
-        [DataMember(Name = "app_id" )]
-        public String  AppId{get; private set;}
+        [DataMember(Name = "app_id")]
+        public String AppId { get; private set; }
 
         [DataMember(Name = "event_types")]
         public WebhookEventType[] EventTypes { get; set; }
 
-        [DataContract]
+        [Newtonsoft.Json.JsonConverter(typeof(StringToWebhookEventTypeConverter))]
         public sealed class WebhookEventType : EnumBaseType
         {
             public static readonly Webhook.WebhookEventType CHARGEBACK_EXECUTED = new WebhookEventType("chargeback.executed");
@@ -55,6 +55,100 @@ namespace PaymillWrapper.Models
 
             }
         }
+
+        public static Webhook.Filter CreateFilter()
+        {
+            return new Webhook.Filter();
+        }
+
+        public static Webhook.Order CreateOrder()
+        {
+            return new Webhook.Order();
+        }
+
+        public sealed class Filter : BaseFilter
+        {
+
+            [SnakeCase(Value = "url")]
+            private String url;
+
+            [SnakeCase(Value = "email")]
+            private String email;
+
+
+            internal Filter()
+            {
+            }
+
+            public Webhook.Filter ByUrl(String url)
+            {
+                this.url = url;
+                return this;
+            }
+
+            public Webhook.Filter ByEmail(String email)
+            {
+                this.email = email;
+                return this;
+            }
+        }
+
+        public sealed class Order : BaseOrder
+        {
+
+            [SnakeCase(Value = "url")]
+            private Boolean url;
+
+            [SnakeCase(Value = "email")]
+            private Boolean email;
+
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
+
+
+            internal Order()
+            {
+
+            }
+
+            public Webhook.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Webhook.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
+
+            public Webhook.Order ByCreatedAt()
+            {
+                this.email = false;
+                this.createdAt = true;
+                this.url = false;
+                return this;
+            }
+
+            public Webhook.Order ByUrl()
+            {
+                this.email = false;
+                this.createdAt = false;
+                this.url = true;
+                return this;
+            }
+
+            public Webhook.Order ByEmail()
+            {
+                this.email = true;
+                this.createdAt = false;
+                this.url = false;
+                return this;
+            }
+
+        }
+
 
     }
 }

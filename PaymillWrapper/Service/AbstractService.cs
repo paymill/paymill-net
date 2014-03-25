@@ -180,11 +180,7 @@ namespace PaymillWrapper.Service
                                 customConverters);
         }
 
-        internal static Newtonsoft.Json.JsonConverter[] customConverters = { new UnixTimestampConverter(), 
-                                                                             new StringToWebhookEventTypeConverter(),
-                                                                             new StringToPaymentCardTypesConverter(),
-                                                                             new StringToNIntConverter()
-                                                                          };
-
+        internal static Newtonsoft.Json.JsonConverter[] customConverters = { new UnixTimestampConverter(),
+                                                                            new StringToNIntConverter()};
     }
 }

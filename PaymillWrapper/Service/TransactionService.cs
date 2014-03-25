@@ -277,6 +277,32 @@ namespace PaymillWrapper.Service
                 description = description
             }));
         }
+
+        /// This function returns a <see cref="PaymillList"/>of PAYMILL Client objects. In which order this list is returned depends on the
+        /// </summary>
+        /// <param name="filter">Filter or null</param>
+        /// <param name="order">Order or null.</param>
+        /// <returns>PaymillList which contains a List of PAYMILL Client object and their total count.</returns>
+        public async Task<PaymillWrapper.Models.PaymillList<Transaction>> ListAsync(Transaction.Filter filter, Transaction.Order order)
+        {
+            return await base.listAsync(filter, order, null, null);
+        }
+
+        /// <summary>
+        /// This function returns a <see cref="PaymillList"/> of PAYMILL objects. In which order this list is returned depends on the
+        /// optional parameters. If null is given, no filter or order will be applied, overriding the default count and
+        /// offset.
+        /// </summary>
+        /// <param name="filter">Filter or null</param>
+        /// <param name="order">Order or null.</param>
+        /// <param name="count">Max count of returned objects in the PaymillList</param>
+        /// <param name="offset">The offset to start from.</param>
+        /// <returns>PaymillList which contains a List of PAYMILL objects and their total count.</returns>
+        public async Task<PaymillWrapper.Models.PaymillList<Transaction>> ListAsync(Transaction.Filter filter, Transaction.Order order, int? count, int? offset)
+        {
+            return await base.listAsync(filter, order, count, offset);
+        }
+
         protected override string GetResourceId(Transaction obj)
         {
             return obj.Id;

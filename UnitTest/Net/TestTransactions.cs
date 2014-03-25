@@ -122,41 +122,27 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
             Assert.IsTrue(transaction.Description == "Bar bar");
         }
-       /* [TestMethod]
-        public void CreateTransactionWithTokenAndFee()
-        {
-            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
-            Fee fee = new Fee();
-            fee.Amount = 3200;
-            fee.Payment = payment.Id;
-            Transaction transaction = _paymill.TransactionService.CreateWithTokenAndFeeAsync(testToken, 4500, "USD", fee).Result;
-            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
-            Assert.IsTrue(transaction.Currency == "USD");
-            Assert.IsTrue(transaction.Amount == 4500);
-            Assert.IsTrue(transaction.Fees[0].Amount == 3200);
-        }*/
-        /*       
-                    public async Task<Transaction> 
-                        public async Task<Transaction> CreateWithTokenAndFeeAsync(String token, int amount,
-                                                                  String currency, String description, Fee fee)
-       */
+      
         [TestMethod]
         public void GetTransactions()
         {
             PaymillList<Transaction> lstTransactions = _paymill.TransactionService.ListAsync().Result;
             Assert.IsTrue(lstTransactions.DataCount > 0);
         }
- /*       [TestMethod]
-        public void GetTransactionsWithParameters()
+        [TestMethod]
+        public void ListOrderByCreatedAt()
         {
+            Transaction.Order orderDesc = Transaction.CreateOrder().ByCreatedAt().Desc();
+            Transaction.Order orderAsc = Transaction.CreateOrder().ByCreatedAt().Asc();
 
-            Filter filter = new Filter();
-            filter.Add("count", 1);
-            filter.Add("offset", 2);
-            IReadOnlyCollection<Transaction> lstTransactions = _paymill.TransactionService.ListAsync(filter).Result;
-
-            Assert.IsTrue(lstTransactions.Count > 0);
-        }*/
+            List<Transaction> transactionsDesc = _paymill.TransactionService.ListAsync(null, orderDesc).Result.Data;
+            List<Transaction> transactionsAsc = _paymill.TransactionService.ListAsync(null, orderAsc).Result.Data;
+            if (transactionsDesc.Count > 1
+                && transactionsAsc.Count > 1)
+            {
+                Assert.AreNotEqual(transactionsDesc[0].Id, transactionsAsc[0].Id);
+            }
+        }
         [TestMethod]
         public void UpdateTransaction()
         {

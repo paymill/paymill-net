@@ -17,8 +17,8 @@ namespace PaymillWrapper.Models
     {
         public enum RefundStatus
         {
-            Open, 
-            Refunded, 
+            Open,
+            Refunded,
             Failed
         }
 
@@ -66,5 +66,136 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "response_code")]
         public int ResponseCode;
+
+
+        public static Refund.Filter CreateFilter()
+        {
+            return new Refund.Filter();
+        }
+
+        public static Refund.Order CreateOrder()
+        {
+            return new Refund.Order();
+        }
+
+        public sealed class Filter : BaseFilter
+        {
+
+            [SnakeCase(Value = "client")]
+            private String clientId;
+
+            [SnakeCase(Value = "transaction")]
+            private String transactionId;
+
+            [SnakeCase(Value = "amount")]
+            private String amount;
+
+            internal Filter()
+            {
+
+            }
+
+            public Refund.Filter ByClientId(String clientId)
+            {
+                this.clientId = clientId;
+                return this;
+            }
+
+            public Refund.Filter ByTransactionId(String transactionId)
+            {
+                this.transactionId = transactionId;
+                return this;
+            }
+
+            public Refund.Filter ByAmount(int amount)
+            {
+                this.amount = amount.ToString();
+                return this;
+            }
+
+            public Refund.Filter ByAmountGreaterThan(int amount)
+            {
+                this.amount = ">" + amount.ToString();
+                return this;
+            }
+
+            public Refund.Filter ByAmountLessThan(int amount)
+            {
+                this.amount = "<" + amount.ToString();
+                return this;
+            }
+
+
+        }
+
+        public sealed class Order : BaseOrder
+        {
+            [SnakeCase(Value = "transaction")]
+            private Boolean transaction;
+
+            [SnakeCase(Value = "client")]
+            private Boolean client;
+
+            [SnakeCase(Value = "amount")]
+            private Boolean amount;
+
+            [SnakeCase(Value = "created_at")]
+            private Boolean createdAt;
+
+
+            internal Order()
+            {
+
+            }
+
+            public Refund.Order Asc()
+            {
+                base.setAsc();
+                return this;
+            }
+
+            public Refund.Order Desc()
+            {
+                base.setDesc();
+                return this;
+            }
+
+            public Refund.Order ByTransaction()
+            {
+                this.transaction = true;
+                this.client = false;
+                this.amount = false;
+                this.createdAt = false;
+                return this;
+            }
+
+            public Refund.Order ByClient()
+            {
+                this.transaction = false;
+                this.client = true;
+                this.amount = false;
+                this.createdAt = false;
+                return this;
+            }
+
+            public Refund.Order ByAmount()
+            {
+                this.transaction = false;
+                this.client = false;
+                this.amount = true;
+                this.createdAt = false;
+                return this;
+            }
+
+            public Refund.Order ByCreatedAt()
+            {
+                this.transaction = false;
+                this.client = false;
+                this.amount = false;
+                this.createdAt = true;
+                return this;
+            }
+
+        }
     }
 }

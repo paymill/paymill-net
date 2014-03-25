@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
+    [DataContract]
     public sealed class PaymillList<T>
     {
         public PaymillList()
@@ -14,6 +15,10 @@ namespace PaymillWrapper.Models
             Data = new List<T>();
         }
 
+        [DataMember(Name = "mode")]
+        public string Mode { get; set; }
+
+        [DataMember(Name = "data")]
         public List<T> Data { get; set; }
 
         [DataMember(Name = "data_count")]
