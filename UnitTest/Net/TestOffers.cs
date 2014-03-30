@@ -76,7 +76,7 @@ namespace UnitTest.Net
         }
 
         [TestMethod]
-        public void testListFilterByAmount()
+        public void ListFilterByAmount()
         {
             Offer newOffer = createOffer();
             Offer.Filter filter = Offer.CreateFilter().ByAmount(offerAmount);

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
+  
     /// <summary>
     /// Convert json object to object of type T. If converts failed it tries to create object with explicit contructor and set property Id
     /// </summary>
@@ -30,7 +31,6 @@ namespace PaymillWrapper.Utils
                 JObject jObject = JObject.Load(reader);
                 T target = (T)Activator.CreateInstance(typeof(T));
                 serializer.Populate(jObject.CreateReader(), target);
-
                 return target;
             }
             catch
@@ -88,31 +88,11 @@ namespace PaymillWrapper.Utils
             writer.WriteValue(value);
         }
     }
-    public class StringToWebhookEventTypeConverter : Newtonsoft.Json.JsonConverter
+    public class StringToBaseEnumTypeConverter<T> : Newtonsoft.Json.JsonConverter  where T : EnumBaseType
     {
         public override bool CanConvert(Type objectType)
         {
-            if (objectType == typeof(PaymillWrapper.Models.Webhook.WebhookEventType))
-                return true;
-
-            return false;
-        }
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            String value = reader.Value.ToString();
-            return PaymillWrapper.Models.Webhook.WebhookEventType.GetEventByName(value);
-
-        }
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteRawValue(value.ToString());
-        }
-    }
-    public class StringToPaymentCardTypesConverter : Newtonsoft.Json.JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            if (objectType == typeof(PaymillWrapper.Models.Payment.CardTypes))
+            if (objectType == typeof(T))
                 return true;
 
             return false;
@@ -122,12 +102,9 @@ namespace PaymillWrapper.Utils
             if (reader.Value != null)
             {
                 String value = reader.Value.ToString();
-                return PaymillWrapper.Models.Payment.CardTypes.GetEventByName(value);
+                return EnumBaseType.GetItemByValue(value, typeof(T));
             }
-            else
-            {
-                return PaymillWrapper.Models.Payment.CardTypes.GetEventByName("unknown");
-            }
+            return null;
 
         }
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -135,6 +112,7 @@ namespace PaymillWrapper.Utils
             writer.WriteRawValue(value.ToString());
         }
     }
+
     public class StringToIntervalConverter : Newtonsoft.Json.JsonConverter
     {
         public override bool CanConvert(Type objectType)

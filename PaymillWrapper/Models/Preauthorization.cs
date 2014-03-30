@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PaymillWrapper.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,16 +12,26 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Preauthorization : BaseModel
     {
-        public enum PreauthorizationStatus
+        [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<PreauthorizationStatus>))]
+        public sealed class PreauthorizationStatus : EnumBaseType
         {
-            Open,
-            Pending,
-            Closed,
-            Failed,
-            Delete,
-            Preauth
-        }
+            public static readonly Preauthorization.PreauthorizationStatus OPEN = new PreauthorizationStatus("open");
+            public static readonly Preauthorization.PreauthorizationStatus PENDING = new PreauthorizationStatus("pending");
+            public static readonly Preauthorization.PreauthorizationStatus CLOSED = new PreauthorizationStatus("closed");
+            public static readonly Preauthorization.PreauthorizationStatus FAILED = new PreauthorizationStatus("failed");
+            public static readonly Preauthorization.PreauthorizationStatus DELETE = new PreauthorizationStatus("delete");
+            public static readonly Preauthorization.PreauthorizationStatus PREAUTH = new PreauthorizationStatus("preauth");
+            public static readonly Preauthorization.PreauthorizationStatus UNKNOWN = new PreauthorizationStatus("", true);
+            private PreauthorizationStatus(String value, Boolean unknowValue = false)
+                : base(value, unknowValue)
+            {
 
+            }
+            public PreauthorizationStatus()
+                : base("", false)
+            {
+            }
+        }
         /// <summary>
         /// Amount of this transaction
         /// </summary>

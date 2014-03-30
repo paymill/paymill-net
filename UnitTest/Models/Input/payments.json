@@ -4,7 +4,7 @@
                         "id":"pay_af0833d81780e3aec6ec69dd",
                         "type":"creditcard",
                         "client":"client_70bc5e02c550cb0efe2e",
-                        "card_type":null,
+                        "card_type":"japan",
                         "country":null,
                         "bin":null,
                         "expire_month":"",

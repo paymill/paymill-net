@@ -84,7 +84,7 @@ namespace PaymillWrapper.Models
             return new Offer.Order();
         }
 
-        public sealed class Filter: BaseModel.BaseFilter
+        public sealed class Filter : BaseModel.BaseFilter
         {
 
             [SnakeCase(Value = "name")]
@@ -142,9 +142,9 @@ namespace PaymillWrapper.Models
                 base.byUpdatedAt(startUpdatedAt, endUpdatedAt);
                 return this;
             }
-         }
+        }
 
-        public class Order: BaseModel.BaseOrder
+        public class Order : BaseModel.BaseOrder
         {
 
             [SnakeCase(Value = "interval")]
@@ -213,10 +213,6 @@ namespace PaymillWrapper.Models
         }
 
     }
-
-
-
-
     [DataContract]
     public class SubscriptionCount
     {
@@ -229,15 +225,26 @@ namespace PaymillWrapper.Models
     [Newtonsoft.Json.JsonConverter(typeof(StringToIntervalConverter))]
     public class Interval
     {
-        public enum TypeUnit
+        [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<TypeUnit>))]
+        public sealed class TypeUnit : EnumBaseType
         {
-            DAY,
-            WEEK,
-            MONTH,
-            YEAR
+            public static readonly Interval.TypeUnit DAY = new TypeUnit("CreditCard");
+            public static readonly Interval.TypeUnit WEEK = new TypeUnit("Debit");
+            public static readonly Interval.TypeUnit MONTH = new TypeUnit("Debit");
+            public static readonly Interval.TypeUnit YEAR = new TypeUnit("Debit");
+            public static readonly Interval.TypeUnit UNKNOWN = new TypeUnit("", true);
+            private TypeUnit(String name, Boolean unknowValue = false)
+                : base(name, unknowValue)
+            {
+
+            }
+            public TypeUnit()
+                : base("", false)
+            {
+            }
         }
         public int Count { get; set; }
-        public TypeUnit Unit { get; set; }
+        public EnumBaseType Unit { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Count"/> class.
@@ -255,16 +262,9 @@ namespace PaymillWrapper.Models
         /// <param name="value">The value.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentException">Invalid value for Interval.Unit</exception>
-        private static TypeUnit CreateUnit(String value)
+        private static EnumBaseType CreateUnit(String value)
         {
-            foreach (TypeUnit unit in Enum.GetValues(typeof(TypeUnit)))
-            {
-                if (String.Compare(unit.ToString(), value, true) == 0)
-                {
-                    return unit;
-                }
-            }
-            throw new ArgumentException("Invalid value for Interval.Unit");
+            return TypeUnit.GetItemByValue(value, typeof(TypeUnit));
         }
         /// <summary>
         /// Returns a string that represents the current object.

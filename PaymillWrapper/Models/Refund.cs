@@ -15,13 +15,24 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Refund>))]
     public class Refund : BaseModel
     {
-        public enum RefundStatus
-        {
-            Open,
-            Refunded,
-            Failed
-        }
 
+        [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<RefundStatus>))]
+        public sealed class RefundStatus : EnumBaseType
+        {
+            public static readonly Refund.RefundStatus OPEN = new RefundStatus("open");
+            public static readonly Refund.RefundStatus REFUNDED = new RefundStatus("refunded");
+            public static readonly Refund.RefundStatus FAILED = new RefundStatus("failed");
+            public static readonly Refund.RefundStatus UNKNOWN = new RefundStatus("", true);
+            private RefundStatus(String value, Boolean unknowValue = false)
+                : base(value, unknowValue)
+            {
+
+            }
+            public RefundStatus()
+                : base("", false)
+            {
+            }
+        }
         /// <summary>
         /// Transactions-object
         /// </summary>

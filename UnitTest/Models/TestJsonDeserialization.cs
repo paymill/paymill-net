@@ -100,7 +100,7 @@ namespace UnitTest.Models
         {
             var payment = ReadResult<Payment>("payment.json");
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", payment.Id);
-            Assert.AreEqual(Payment.PaymentType.CreditCard, payment.Type);
+            Assert.AreEqual(Payment.PaymentType.CREDIT_CARD, payment.Type);
             Assert.AreEqual("client_11cc57776f7954925cf9", payment.Client);
             Assert.AreEqual(Payment.CardTypes.MASTERCARD, payment.CardType);
             Assert.IsNull(payment.Country);
@@ -111,26 +111,28 @@ namespace UnitTest.Models
             Assert.AreEqual(1381489629, payment.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1381489629, payment.UpdatedAt.ToUnixTimestamp());
         }
+
         [TestMethod]
         public void TestPayments()
         {
             var payments = ReadResults<Payment>("payments.json").Data;
             Assert.AreEqual(payments.Count(), 20);
-            foreach (var payment in payments)
+            foreach (var pa in payments)
             {
-                Assert.IsNotNull(payment.Id);
+                Assert.IsNotNull(pa.Id);
             }
         }
         
         [TestMethod]
         public void TestPreauthorization()
         {
+            var paym = new Payment();
             var p = ReadResults<Preauthorization>("preauthorizations.json").Data.FirstOrDefault();
             Assert.AreEqual("preauth_31eb90495837447f76b7", p.Id);
             Assert.AreEqual("client_11cc57776f7954925cf9", p.Client.Id);
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", p.Payment.Id);
             Assert.IsFalse(p.Livemode);
-            Assert.AreEqual(Preauthorization.PreauthorizationStatus.Closed, p.Status);
+            Assert.AreEqual(Preauthorization.PreauthorizationStatus.CLOSED, p.Status);
             Assert.AreEqual(1349948920, p.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1349948920, p.UpdatedAt.ToUnixTimestamp());
         }
@@ -143,7 +145,7 @@ namespace UnitTest.Models
             Assert.AreEqual(5.00, p.AmountFormatted);
             Assert.AreEqual("tran_88fb15ddf21039335ff910653c65", p.Transaction.Id);
             Assert.IsFalse(p.Livemode);
-            Assert.AreEqual(Refund.RefundStatus.Refunded, p.Status);
+            Assert.AreEqual(Refund.RefundStatus.REFUNDED, p.Status);
             Assert.AreEqual(20000, p.ResponseCode);
             Assert.IsNull(p.Description);
             Assert.AreEqual(1395238945, p.CreatedAt.ToUnixTimestamp());
@@ -185,7 +187,7 @@ namespace UnitTest.Models
             Assert.AreEqual("client_db50b6496357e2700f00", t.Client.Id);
             Assert.AreEqual("pay_6bc452ea00f15be0225a1a6e", t.Payment.Id);
             Assert.IsFalse(t.Livemode);
-            Assert.AreEqual(Transaction.TransactionStatus.Closed, t.Status);
+            Assert.AreEqual(Transaction.TransactionStatus.CLOSED, t.Status);
             Assert.AreEqual("Bar", t.Description);
             Assert.AreEqual(59.00, t.AmountFormatted);
             Assert.IsNull(t.Refunds);

@@ -11,10 +11,23 @@ namespace PaymillWrapper.Models
 {
     public class Fee
     {
-        public enum FeeType
+        [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<FeeType>))]
+        public sealed class FeeType : EnumBaseType
         {
-            APPLICATION
-        };
+            public static readonly Fee.FeeType APPLICATION = new FeeType("application");
+            public static readonly Fee.FeeType UNKNOWN = new FeeType("", true);
+
+            private FeeType(String value, Boolean unknowValue = false)
+                : base(value, unknowValue)
+            {
+
+            }
+            public FeeType()
+                : base("", false)
+            {
+            }
+        }
+
         [DataMember(Name = "type")]
         public FeeType Type { get; set; }
 

@@ -12,17 +12,30 @@ namespace PaymillWrapper.Models
     /// </summary>
     public class Transaction : BaseModel
     {
-        public enum TransactionStatus
+        [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<TransactionStatus>))]
+        public sealed class TransactionStatus : EnumBaseType
         {
-            Partial_Refunded,
-            Refunded,
-            Closed,
-            Failed,
-            Pending,
-            Open,
-            Preauth,
-            Chargeback
+            public static readonly Transaction.TransactionStatus PARTIAL_REFUNDED = new TransactionStatus("partial_refunded");
+            public static readonly Transaction.TransactionStatus REFUNDED = new TransactionStatus("refunded");
+            public static readonly Transaction.TransactionStatus CLOSED = new TransactionStatus("closed");
+            public static readonly Transaction.TransactionStatus FAILED = new TransactionStatus("failed");
+            public static readonly Transaction.TransactionStatus PENDING = new TransactionStatus("pending");
+            public static readonly Transaction.TransactionStatus OPEN = new TransactionStatus("open");
+            public static readonly Transaction.TransactionStatus PREAUTH = new TransactionStatus("preauth");
+            public static readonly Transaction.TransactionStatus CHARGEBACK = new TransactionStatus("chargeback");
+            public static readonly Transaction.TransactionStatus UNKNOWN = new TransactionStatus("", true);
+            private TransactionStatus(String value, Boolean unknowValue = false)
+                : base(value, unknowValue)
+            {
+
+            }
+            public TransactionStatus()
+                : base("", false)
+            {
+            }
         }
+
+
         public Transaction(String id)
         {
             Id = id;

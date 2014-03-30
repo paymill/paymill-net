@@ -28,7 +28,7 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "event_types")]
         public WebhookEventType[] EventTypes { get; set; }
 
-        [Newtonsoft.Json.JsonConverter(typeof(StringToWebhookEventTypeConverter))]
+        [JsonConverter(typeof(StringToBaseEnumTypeConverter<WebhookEventType>))]
         public sealed class WebhookEventType : EnumBaseType
         {
             public static readonly Webhook.WebhookEventType CHARGEBACK_EXECUTED = new WebhookEventType("chargeback.executed");
@@ -49,10 +49,15 @@ namespace PaymillWrapper.Models
             public static readonly Webhook.WebhookEventType APP_MERCHANT_DEACTIVATED = new WebhookEventType("app.merchant.deactivated");
             public static readonly Webhook.WebhookEventType APP_MERCHANT_REJECTED = new WebhookEventType("app.merchant.rejected");
             public static readonly Webhook.WebhookEventType CLIENT_UPDATED = new WebhookEventType("client.updated");
-            private WebhookEventType(String name)
-                : base(name)
+            public static readonly Webhook.WebhookEventType UNKNOWN = new WebhookEventType("", true);
+            private WebhookEventType(String value, Boolean unknowValue = false)
+                : base(value, unknowValue)
             {
 
+            }
+            public WebhookEventType()
+                : base("", false)
+            {
             }
         }
 
