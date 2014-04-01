@@ -11,11 +11,11 @@ namespace UnitTest.Net
     [TestClass]
     public class TestClients
     {
-        Paymill _paymill = null;
+        PaymillContext _paymill = null;
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
+            _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
         }
         [TestMethod]
         public void CreateClientWithDescription()

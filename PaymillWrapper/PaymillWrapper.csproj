@@ -71,7 +71,7 @@
     <Compile Include="Utils\MultipleResults.cs" />
     <Compile Include="Utils\UnixTimestampConverter.cs" />
     <Compile Include="Utils\URLEncoder.cs" />
-    <Compile Include="Paymill.cs" />
+    <Compile Include="PaymillContext.cs" />
     <Compile Include="Exceptions\PaymillException.cs" />
     <Compile Include="Exceptions\PaymillRequestException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

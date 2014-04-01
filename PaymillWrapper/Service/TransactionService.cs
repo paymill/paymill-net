@@ -70,7 +70,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesCurrency(currency);
             ValidationUtils.ValidatesFee(fee);
 
-            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
+            String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
 
             return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
@@ -121,7 +121,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesPayment(payment);
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
-            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
+            String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
             return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
                 Payment = payment.Id,
@@ -187,7 +187,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
 
-            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
+            String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
 
             return await createAsync(null, new UrlEncoder().EncodeObject(new
             {
@@ -266,7 +266,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
 
-            String srcValue = String.Format("{0}-{1}", Paymill.GetProjectName(), Paymill.GetProjectVersion());
+            String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
 
             return await createAsync(null, new UrlEncoder().EncodeObject(new
             {

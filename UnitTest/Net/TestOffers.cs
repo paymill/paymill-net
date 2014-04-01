@@ -11,12 +11,12 @@ namespace UnitTest.Net
     [TestClass]
     public class TestOffers
     {
-        Paymill _paymill = null;
+        PaymillContext _paymill = null;
         const int offerAmount = 1500;
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
+            _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
         }
         private Offer createOffer()
         {

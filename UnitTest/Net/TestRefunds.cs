@@ -13,13 +13,13 @@ namespace UnitTest.Net
     public class TestRefundes
     {
 
-        Paymill _paymill = null;
+        PaymillContext _paymill = null;
         String testToken = "098f6bcd4621d373cade4e832627b4f6";
 
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new Paymill("9a4129b37640ea5f62357922975842a1");
+            _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
         }
         [TestMethod]
         public void GetRefunds()
