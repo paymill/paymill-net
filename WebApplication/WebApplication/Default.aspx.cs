@@ -16,8 +16,6 @@ namespace WebApplication
         {
             if (IsPostBack == false)
             {
-                Paymill.ApiKey = "YOUR PRIVATE KEY";
-                Paymill.ApiUrl = "https://api.paymill.de/v2";
             }
         }
 
@@ -25,19 +23,12 @@ namespace WebApplication
         {
             if (IsValid)
             {
+                PaymillContext paymill = new PaymillContext("YOUR PRIVATE KEY");
                 String token = hToken.Value;
-                PaymentService paymentService = Paymill.GetService<PaymentService>();
-                Payment payment = paymentService.Create(token);
-                TransactionService transactionService = Paymill.GetService<TransactionService>();
-                Transaction transaction = new Transaction();
-                transaction.Amount = int.Parse(tbAmount.Text);
-                transaction.Currency = tbCurrency.Text;
-                transaction.Description = "Test API c#";
-                transaction.Payment = payment;
-                transaction = transactionService.Create(transaction, null);
-
+                Payment payment = paymill.PaymentService.CreateWithTokenAsync(token).Result;
+                int amount = int.Parse(tbAmount.Text);
+                Transaction transaction = paymill.TransactionService.CreateWithPaymentAsync(payment, amount, tbCurrency.Text, "Test API c#").Result;
                 /// Yout Transaction Is Complete 
-
             }
         }
     }

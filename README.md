@@ -36,7 +36,8 @@ Initialize the library by providing your api key:
 ```cs
   PaymillContext paymillContext = new PaymillContext( "<YOUR PRIVATE API KEY>" );
 ```
-PaymillContecxt loads the context of PAYMILL for a single account, by providing a merchants private key. It creates 8 services, which represents the PAYMILL API:
+PaymillContext loads the context of PAYMILL for a single account, by providing a merchants private key. It creates 8 services, which represents the PAYMILL API:
+
  * ClientService
  * OfferService
  * PaymentService
@@ -107,7 +108,7 @@ This will load only clients with email john.rambo@paymill.com, order descending 
 In order to update an object simply call a service's update() method:
 ```cs
   clientServive.UpdateAsync( client );
-```c
+```
 The update method also refreshes the the given instance. For example: If you changed the value of 'CreatedAt' locally and  pass the instance to the Update() method, it will be refreshed with the data from PAYMILL. Because 'CreatedAt' is not updateable field your change will be lost.
 
 ### Deleting objects
