@@ -16,6 +16,7 @@ namespace UnitTest.Net
         [TestInitialize]
         public void Initialize()
         {
+
             _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
         }
         private Offer createOffer()
@@ -29,11 +30,11 @@ namespace UnitTest.Net
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
             Assert.IsTrue(newOffer.CreatedAt.Date == DateTime.Now.Date, "CreateOffer Fail");
+
         }
         [TestMethod]
         public void RemoveOffer()
         {
-
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
             Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id).Result;

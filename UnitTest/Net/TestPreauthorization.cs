@@ -7,6 +7,7 @@ using PaymillWrapper.Models;
 using PaymillWrapper.Exceptions;
 using PaymillWrapper.Utils;
 
+
 namespace UnitTest.Net
 {
     [TestClass]
@@ -18,10 +19,12 @@ namespace UnitTest.Net
         public void Initialize()
         {
             _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
+
         }
         [TestMethod]
         public void GetPreauthorizations()
         {
+
             PaymillList<Preauthorization> lstPreauthorizations = _paymill.PreauthorizationService.ListAsync().Result;
             Assert.IsFalse(lstPreauthorizations.DataCount == 0, "Get Preauthorization Failed");
         }
@@ -98,6 +101,7 @@ namespace UnitTest.Net
             {
                 Assert.IsFalse(pre.Amount >= amount);
             }
+
         }
     }
 }

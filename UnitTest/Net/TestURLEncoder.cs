@@ -45,10 +45,8 @@ namespace UnitTest.Net
             transaction.Amount = 3500;
             transaction.Currency = "EUR";
             transaction.Description = "Test";
-
             string expected = "description=Test";
             string reply = urlEncoder.EncodeUpdate(transaction);
-
             Assert.AreEqual(expected, reply);
         }
         [TestMethod]

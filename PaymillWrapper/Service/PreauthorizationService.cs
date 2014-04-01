@@ -52,7 +52,6 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesCurrency(currency);
 
             String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
-
             Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
                 new UrlEncoder().EncodeObject(new 
                 {
