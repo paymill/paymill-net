@@ -24,11 +24,11 @@ PM> Install-Package PaymillWrapper
 More info [here](https://www.nuget.org/packages/PaymillWrapper/)
 
 ### Manual
-Download the lastest stable release from https://paymill.codeplex.com/.
+Download the lastest stable release from https://paymill.codeplex.com/releases.
 
 ## What's new
 
-We have released version 3. This version is not backwards compatible with version 2. Concrete changes in the changelog.
+We have released version 2. This version is not backwards compatible with version 1. Concrete changes in the changelog.
 
 ## Usage
 
@@ -133,6 +133,7 @@ or
 + Add filters and orders.
 + Hide API url.
 + Change all enums to EnumBaseType.
++ Merge with [digitalcreations / paymillsharp](https://github.com/digitalcreations/paymillsharp)
 
 ### 1.2.1
 * Add source field and Status for Preauthorization.
