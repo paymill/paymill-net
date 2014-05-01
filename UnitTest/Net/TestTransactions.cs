@@ -143,7 +143,23 @@ namespace UnitTest.Net
                 Assert.AreNotEqual(transactionsDesc[0].Id, transactionsAsc[0].Id);
             }
         }
+        [TestMethod]
+        public void GetTransactionsById()
+        {
+            Transaction.Order orderDesc = Transaction.CreateOrder().ByCreatedAt().Desc();
+            Transaction.Order orderAsc = Transaction.CreateOrder().ByCreatedAt().Asc();
 
+            List<Transaction> transactionsDesc = _paymill.TransactionService.ListAsync(null, orderDesc).Result.Data;
+            List<Transaction> transactionsAsc = _paymill.TransactionService.ListAsync(null, orderAsc).Result.Data;
+            if (transactionsDesc.Count > 1
+                && transactionsAsc.Count > 1)
+            {
+                foreach (var tran in transactionsDesc)
+                {
+                   var getTr = _paymill.TransactionService.GetAsync(tran.Id).Result;
+                }
+             }
+        }
 
         [TestMethod]
         public void UpdateTransaction()
