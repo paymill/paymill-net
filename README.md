@@ -144,6 +144,16 @@ or
 ### 1.0
 Create library.
 
+## Contributors
+
+To contribute to the wrapper, please fork it and create a pull request.
+
+Thanks to:
+
+* [jcantos](https://github.com/jcantos) for the original wrapper.
+* [digitalcreations](https://github.com/digitalcreations) for the core changes for v2.
+* all [contributors](https://github.com/paymill/paymill-net/graphs/contributors)
+
 ## License
 
 Copyright 2013 PAYMILL GmbH.
