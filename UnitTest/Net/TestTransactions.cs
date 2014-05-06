@@ -104,7 +104,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void CreateTransactionWithPreauthorization()
         {
-            Preauthorization preauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 4200, "USD").Result;
+            Preauthorization preauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 4200, "USD", null).Result;
             Transaction transaction = _paymill.TransactionService.CreateWithPreauthorizationAsync(preauthorization, 4200, "USD").Result;
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsTrue(transaction.Currency == "USD");
@@ -114,7 +114,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void CreateTransactionWithPreauthorizationAndDescription()
         {
-            Preauthorization preauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 4200, "USD").Result;
+            Preauthorization preauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 4200, "USD", null).Result;
             Transaction transaction = _paymill.TransactionService.CreateWithPreauthorizationAsync(preauthorization, 4200, "USD", "Bar bar").Result;
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsTrue(transaction.Currency == "USD");

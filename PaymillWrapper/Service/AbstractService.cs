@@ -134,6 +134,18 @@ namespace PaymillWrapper.Service
             return true;
         }
         /// <summary>
+        /// Delete object the asynchronous.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        public virtual async Task<bool> DeleteAsync(T obj)
+        {
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + GetResourceId(obj);
+            HttpResponseMessage response = httpClient.DeleteAsync(requestUri).Result;
+            await readReponseMessage(response);
+            return true;
+        }
+        /// <summary>
         /// Updates the asynchronous.
         /// </summary>
         /// <param name="obj">The object.</param>

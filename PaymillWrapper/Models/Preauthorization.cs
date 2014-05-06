@@ -86,6 +86,9 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "status")]
         public PreauthorizationStatus Status;
 
+        [DataMember(Name = "description")]
+        public String Description;
+
         public static Preauthorization.Filter CreateFilter()
         {
             return new Preauthorization.Filter();

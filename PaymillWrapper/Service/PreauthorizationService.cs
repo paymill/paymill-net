@@ -15,7 +15,6 @@ namespace PaymillWrapper.Service
         {
         }
 
-       
         /// <summary>
         /// Creates Use either a token or an existing payment to Authorizes the given amount with the given token.
         /// </summary>
@@ -25,12 +24,32 @@ namespace PaymillWrapper.Service
         /// <returns>Object with the Preauthorization as sub object.d</returns>
         public async Task<Preauthorization> CreateWithTokenAsync(String token, int amount, String currency)
         {
+           
+            return await CreateWithTokenAsync(token, amount, currency, null);
+        }
+        /// <summary>
+        /// Creates Use either a token or an existing payment to Authorizes the given amount with the given token.
+        /// </summary>
+        /// <param name="token">The identifier of a token.</param>
+        ///  <param name="amount">Amount (in cents) which will be charged.</param>
+        /// <param name="currency">ISO 4217 formatted currency code.</param>
+        /// <param name="description">A short description for the preauthorization</param>
+        /// <returns>Object with the Preauthorization as sub object.d</returns>
+        public async Task<Preauthorization> CreateWithTokenAsync(String token, int amount, String currency, String description)
+        {
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
 
             Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
-                 new UrlEncoder().EncodeObject(new { Token = token, Amount = amount, Currency = currency }));
+                 new UrlEncoder().EncodeObject(new
+                 {
+                     Token = token,
+                     Amount = amount,
+                     Currency = currency,
+                     Description = description
+                 }));
+
             if (replyTransaction != null)
             {
                 return replyTransaction.Preauthorization;
@@ -38,6 +57,7 @@ namespace PaymillWrapper.Service
 
             return null;
         }
+
         /// <summary>
         /// Authorizes the given amount with the given Payment. Works only for credit cards. Direct debit not supported.
         /// </summary>
@@ -47,18 +67,32 @@ namespace PaymillWrapper.Service
         /// <returns>Transaction object with the Preauthorization as sub object.</returns>
         public async Task<Preauthorization> CreateWithPaymentAsync(Payment payment, int amount, String currency)
         {
+            return await CreateWithPaymentAsync(payment, amount, currency, null);
+        }
+
+        /// <summary>
+        /// Authorizes the given amount with the given Payment. Works only for credit cards. Direct debit not supported.
+        /// </summary>
+        /// <param name="payment">The Payment itself (only creditcard-object)</param>
+        /// <param name="amount">Amount (in cents) which will be charged.</param>
+        /// <param name="currency">ISO 4217 formatted currency code.</param>
+        /// <param name="description">A short description for the preauthorization</param>
+        /// <returns>Transaction object with the Preauthorization as sub object.</returns>
+        public async Task<Preauthorization> CreateWithPaymentAsync(Payment payment, int amount, String currency, String description)
+        {
             ValidationUtils.ValidatesPayment(payment);
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
 
             String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
             Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
-                new UrlEncoder().EncodeObject(new 
+                new UrlEncoder().EncodeObject(new
                 {
                     Payment = payment.Id,
                     Amount = amount,
                     Currency = currency,
-                    Source = srcValue
+                    Source = srcValue,
+                    Description = description
                 }));
             if (replyTransaction != null)
             {

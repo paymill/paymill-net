@@ -31,19 +31,21 @@ namespace UnitTest.Net
         [TestMethod]
         public void CreatePreauthorizationWithToken()
         {
-            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 3500, "EUR").Result;
+            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithTokenAsync(testToken, 3500, "EUR", "Descr").Result;
             Assert.IsFalse(String.IsNullOrEmpty(newPreauthorization.Id), "Create Preauthorization Failed");
             Assert.IsTrue(newPreauthorization.Amount == 3500, "Create Preauthorization Failed");
             Assert.IsTrue(newPreauthorization.Currency == "EUR", "Create Preauthorization Failed");
+            Assert.IsTrue( String.Compare(newPreauthorization.Description, "Descr") == 0);
         }
         [TestMethod]
         public void CreatePreauthorizationWithPayment()
         {
             Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
-            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithPaymentAsync(payment, 3500, "EUR").Result;
+            Preauthorization newPreauthorization = _paymill.PreauthorizationService.CreateWithPaymentAsync(payment, 3500, "EUR", "Descr").Result;
             Assert.IsFalse(String.IsNullOrEmpty(newPreauthorization.Id), "Create Preauthorization Failed");
             Assert.IsTrue(newPreauthorization.Amount == 3500, "Create Preauthorization Failed");
             Assert.IsTrue(newPreauthorization.Currency == "EUR", "Create Preauthorization Failed");
+            Assert.IsTrue(String.Compare(newPreauthorization.Description, "Descr") == 0);
         }
         [TestMethod]
         public void RemovePreauthorization()
