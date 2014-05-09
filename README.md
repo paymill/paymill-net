@@ -124,6 +124,9 @@ or
 
 ## Changelog
 
+### 2.1.0
++ Add Description in Preauthorization
+
 ### 2.0.0
 * Change library to asynchronous programming.
 + Add factory methods for all objects.
