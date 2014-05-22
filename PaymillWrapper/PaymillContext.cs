@@ -34,11 +34,7 @@ namespace PaymillWrapper
         }
         public static String GetProjectName()
         {
-           /* Assembly assembly = Assembly.GetExecutingAssembly();
-            Attribute[] attributes = AssemblyMetadataAttribute.GetCustomAttributes(assembly, typeof(AssemblyMetadataAttribute));
-            var srcAtribute = attributes.FirstOrDefault(x => (x as AssemblyMetadataAttribute).Key == "source");
-            return (srcAtribute != null ? (srcAtribute as AssemblyMetadataAttribute).Value : String.Empty);*/
-            return "paymill-net";
+           return "paymill-net";
         }
         public static String GetProjectVersion()
         {

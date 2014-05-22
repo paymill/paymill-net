@@ -170,17 +170,30 @@ namespace PaymillWrapper.Service
         /// <exception cref="PaymillRequestException"></exception>
         private static Task<String> readReponseMessage(HttpResponseMessage response)
         {
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return response.Content.ReadAsStringAsync();
+                String json = response.Content.ReadAsStringAsync().Result;
+                var jsonArray = JObject.Parse(json);
+                if (jsonArray["data"] != null)
+                {
+                    return response.Content.ReadAsStringAsync();
+                }
+                else if (jsonArray["error"] != null)
+                {
+                    string error = jsonArray["error"].ToString();
+                    throw new PaymillRequestException(error, response.StatusCode);
+                }
             }
-            else
+            catch (System.IO.IOException exc)
             {
-                var jsonArray = response.Content.ReadAsAsync<JObject>().Result;
-                string error = jsonArray["error"].ToString();
-                throw new PaymillRequestException(error, response.StatusCode);
+                throw new PaymillException(exc.Message);
             }
+            return Task.Run(() =>
+                {
+                    return String.Empty;
+                });
         }
+
         internal static TE ReadResult<TE>(string data)
         {
             return JsonConvert.DeserializeObject<SingleResult<TE>>(data, customConverters).Data;

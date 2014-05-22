@@ -45,6 +45,7 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Amount == 3500);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
         }
+
         [TestMethod]
         public void CreateTransactionWithPaymentId()
         {
