@@ -121,8 +121,20 @@ or
 ```cs
   clientService.DeleteAsync( client );
 ```
+### Updating objects
+Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch real paymill exception you must use:
+```cs
+ }catch(AggregateException  ex){
+
+  PaymillException paymillEx = ex.InnerException;
+
+}
+```
 
 ## Changelog
+
+### 2.1.1
++ Fix problem in parsing response of some transactions.
 
 ### 2.1.0
 + Add Description in Preauthorization
