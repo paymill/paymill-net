@@ -133,6 +133,9 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 
 ## Changelog
 
+### 2.1.2
++ Made Subscription's next_capture_at nullable.
+
 ### 2.1.1
 + Fix problem in parsing response of some transactions.
 
