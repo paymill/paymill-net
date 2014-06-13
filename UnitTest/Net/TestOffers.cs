@@ -29,8 +29,7 @@ namespace UnitTest.Net
         {
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
-            Assert.IsTrue(newOffer.CreatedAt.Date == DateTime.Now.Date, "CreateOffer Fail");
-
+  
         }
         [TestMethod]
         public void RemoveOffer()

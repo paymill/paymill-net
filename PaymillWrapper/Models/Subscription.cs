@@ -12,6 +12,7 @@ namespace PaymillWrapper.Models
     /// Subscriptions allow you to charge recurring payments on a client’s credit card / to a client’s direct debit. 
     /// A subscription connects a client to the offers-object.
     /// </summary>
+    [JsonConverter(typeof(StringToBaseModelConverter<Subscription>))]
     public class Subscription : BaseModel
     {
         /// <summary>
@@ -44,7 +45,7 @@ namespace PaymillWrapper.Models
         /// Next charge date.
         /// </summary>
         [DataMember(Name = "next_capture_at")]
-        public DateTime NextCaptureAt { get; set; }
+        public DateTime? NextCaptureAt { get; set; }
 
         /// <summary>
         /// Cancel date

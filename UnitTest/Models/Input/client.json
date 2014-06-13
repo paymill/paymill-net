@@ -9,7 +9,9 @@
                 "payment":[
 
                 ],
-                "subscription":null
+               "subscription":[
+				"sub_2c3af703dff3cc9990b3"
+			]
         },
         "mode":"test"
 }

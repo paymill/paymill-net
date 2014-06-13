@@ -23,8 +23,7 @@ namespace UnitTest.Net
         {
             Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 3500, "EUR").Result;
             Assert.IsFalse(String.IsNullOrEmpty( transaction.Id));
-            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
-        }
+         }
         [TestMethod]
         public void CreateTransactionWithTokenAndDescription()
         {
@@ -83,7 +82,6 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Currency == "USD");
             Assert.IsTrue(transaction.Amount == 4200);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
-            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
             Assert.IsTrue(transaction.Client.Id == client.Id);
             Assert.IsNull(transaction.Description);
         }
@@ -98,7 +96,6 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Currency == "EUR");
             Assert.IsTrue(transaction.Amount == 4200);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
-            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
             Assert.IsTrue(transaction.Client.Id == client.Id);
             Assert.IsTrue(transaction.Description == "Bar bar");
         }
@@ -110,7 +107,6 @@ namespace UnitTest.Net
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsTrue(transaction.Currency == "USD");
             Assert.IsTrue(transaction.Amount == 4200);
-            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
         }
         [TestMethod]
         public void CreateTransactionWithPreauthorizationAndDescription()
@@ -120,7 +116,6 @@ namespace UnitTest.Net
             Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
             Assert.IsTrue(transaction.Currency == "USD");
             Assert.IsTrue(transaction.Amount == 4200);
-            Assert.IsTrue(transaction.CreatedAt.Date == DateTime.Now.Date);
             Assert.IsTrue(transaction.Description == "Bar bar");
         }
       

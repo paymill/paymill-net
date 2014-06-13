@@ -77,7 +77,7 @@ namespace UnitTest.Models
             Assert.AreEqual(1340199740, client.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1340199760, client.UpdatedAt.ToUnixTimestamp());
             Assert.AreEqual(0, client.Payments.Count);
-            Assert.IsNull(client.Subscriptions);
+            Assert.IsNotNull(client.Subscriptions);
         }
 
         [TestMethod]
@@ -156,17 +156,17 @@ namespace UnitTest.Models
         public void TestSubscription()
         {
             var s = ReadResult<Subscription>("subscription.json");
-            Assert.AreEqual("sub_666b6315d641420f7897", s.Id);
-            Assert.AreEqual("offer_caef7c90466b540cf8d1", s.Offer.Id);
-            Assert.AreEqual("client_11cc57776f7954925cf9", s.Client.Id);
-            Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", s.Payment.Id);
+            Assert.AreEqual("sub_2c3af703dff3cc9990b3", s.Id);
+            Assert.AreEqual("offer_9a8d20d7a52d1cbecd6c", s.Offer.Id);
+            Assert.AreEqual("client_a64eacffe5e67b784eac", s.Client.Id);
+            Assert.AreEqual("pay_86be5e6c3547b752cb4ce93c", s.Payment.Id);
             Assert.IsFalse(s.Livemode);
             Assert.IsFalse(s.CancelAtPeriodEnd);
             Assert.IsNull(s.TrialEnd);
             Assert.IsNull(s.TrialStart);
-            Assert.AreEqual(1381489644, s.CreatedAt.ToUnixTimestamp(), "Created at");
-            Assert.AreEqual(1381489644, s.UpdatedAt.ToUnixTimestamp(), "Updated at");
-            Assert.AreEqual(1384171644, s.NextCaptureAt.ToUnixTimestamp(), "Next capture at");
+            Assert.AreEqual(1402488673, s.CreatedAt.ToUnixTimestamp(), "Created at");
+            Assert.AreEqual(1402488731, s.UpdatedAt.ToUnixTimestamp(), "Updated at");
+            Assert.IsNull(s.NextCaptureAt);
         }
         [TestMethod]
         public void TestSubscriptions()

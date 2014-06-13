@@ -1,69 +1,73 @@
 ﻿{
-  "data": {
-    "id": "sub_666b6315d641420f7897",
-    "offer": {
-      "id": "offer_caef7c90466b540cf8d1",
-      "name": "Test Offer",
-      "amount": 4200,
-      "currency": "EUR",
-      "interval": "1 MONTH",
-      "trial_period_days": 0,
-      "created_at": 1381489358,
-      "updated_at": 1381489358,
-      "subscription_count": {
-        "active": "1",
-        "inactive": 0
-      },
-      "app_id": null
-    },
-    "livemode": false,
-    "cancel_at_period_end": false,
-    "trial_start": null,
-    "trial_end": null,
-    "next_capture_at": 1384171644,
-    "created_at": 1381489644,
-    "updated_at": 1381489644,
-    "canceled_at": null,
-    "app_id": null,
-    "payment": {
-      "id": "pay_9eb3371ae4ca3a51ab255a2e",
-      "type": "creditcard",
-      "client": "client_11cc57776f7954925cf9",
-      "card_type": "visa",
-      "country": null,
-      "expire_month": "12",
-      "expire_year": "2014",
-      "card_holder": "",
-      "last4": "1111",
-      "created_at": 1381489629,
-      "updated_at": 1381489629,
-      "app_id": null
-    },
-    "client": {
-      "id": "client_11cc57776f7954925cf9",
-      "email": "lovely-client@example.com",
-      "description": "Lovely Client",
-      "created_at": 1381489281,
-      "updated_at": 1381489281,
-      "app_id": null,
-      "payment": [
-        {
-          "id": "pay_9eb3371ae4ca3a51ab255a2e",
-          "type": "creditcard",
-          "client": "client_11cc57776f7954925cf9",
-          "card_type": "visa",
-          "country": null,
-          "expire_month": "12",
-          "expire_year": "2014",
-          "card_holder": "",
-          "last4": "1111",
-          "created_at": 1381489629,
-          "updated_at": 1381489629,
-          "app_id": null
-        }
-      ],
-      "subscription": null
-    }
-  },
-  "mode": "test"
+	"data":{
+		"id":"sub_2c3af703dff3cc9990b3",
+		"offer":{
+			"id":"offer_9a8d20d7a52d1cbecd6c",
+			"name":"Premium",
+			"amount":20000,
+			"currency":"EUR",
+			"interval":"1 MONTH",
+			"trial_period_days":0,
+			"created_at":1401455894,
+			"updated_at":1401455894,
+			"subscription_count":{
+				"active":"7",
+				"inactive":"214"
+			},
+			"app_id":null
+		},
+		"livemode":false,
+		"cancel_at_period_end":false,
+		"trial_start":null,
+		"trial_end":null,
+		"next_capture_at":null,
+		"created_at":1402488673,
+		"updated_at":1402488731,
+		"canceled_at":1402488731,
+		"payment":{
+			"id":"pay_86be5e6c3547b752cb4ce93c",
+			"type":"creditcard",
+			"client":"client_a64eacffe5e67b784eac",
+			"card_type":"visa",
+			"country":"DE",
+			"bin":"411111",
+			"expire_month":"12",
+			"expire_year":"2015",
+			"card_holder":"",
+			"last4":"1111",
+			"updated_at":1402488672,
+			"created_at":1402488514,
+			"app_id":null
+		},
+		"app_id":null,
+		"client":{
+			"id":"client_a64eacffe5e67b784eac",
+			"email":null,
+			"description":"UserId: integration_test_user_635380961157998113",
+			"app_id":null,
+			"updated_at":1402488672,
+			"created_at":1402488672,
+			"payment":[
+				{
+					"id":"pay_86be5e6c3547b752cb4ce93c",
+					"type":"creditcard",
+					"client":"client_a64eacffe5e67b784eac",
+					"card_type":"visa",
+					"country":"DE",
+					"bin":"411111",
+					"expire_month":"12",
+					"expire_year":"2015",
+					"card_holder":"",
+					"last4":"1111",
+					"updated_at":1402488672,
+					"created_at":1402488514,
+					"app_id":null
+				}
+			],
+			"subscription":[
+				"sub_2c3af703dff3cc9990b3"
+			]
+		}
+	},
+	"mode":"test"
 }

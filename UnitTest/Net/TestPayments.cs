@@ -34,7 +34,6 @@ namespace UnitTest.Net
             Payment paymentFromService = _paymill.PaymentService.GetAsync(payment.Id).Result;
 
             Assert.IsFalse(String.IsNullOrEmpty(paymentFromService.Id), "Get Payment failed");
-            Assert.IsTrue(paymentFromService.CreatedAt.Date == DateTime.Now.Date, "Get Payment failed");
         }
 
         [TestMethod]
