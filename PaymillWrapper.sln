@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymillWrapper", "PaymillWr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{33477E75-1E7D-40F3-AFCD-473F96875053}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication\WebApplication.csproj", "{45FA76BB-0383-4C88-B0E3-86CBF29B1553}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication", "MvcApplication\MvcApplication.csproj", "{B72C0B12-D34F-45F6-9F55-F83778A921F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,10 @@ Global
 		{33477E75-1E7D-40F3-AFCD-473F96875053}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33477E75-1E7D-40F3-AFCD-473F96875053}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33477E75-1E7D-40F3-AFCD-473F96875053}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45FA76BB-0383-4C88-B0E3-86CBF29B1553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45FA76BB-0383-4C88-B0E3-86CBF29B1553}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45FA76BB-0383-4C88-B0E3-86CBF29B1553}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45FA76BB-0383-4C88-B0E3-86CBF29B1553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72C0B12-D34F-45F6-9F55-F83778A921F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72C0B12-D34F-45F6-9F55-F83778A921F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72C0B12-D34F-45F6-9F55-F83778A921F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72C0B12-D34F-45F6-9F55-F83778A921F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
