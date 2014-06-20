@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MvcApplication.Models
+namespace Mvc5Application.Models
 {
     public class PaymillForm
     {

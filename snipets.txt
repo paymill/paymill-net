@@ -1,0 +1,326 @@
+- Authentication
+PaymillContext paymillContext = new PaymillContext("8ff0a7e854a6ba29518962b29654a395");
+ClientService clientService = paymillContext.getClientService();
+
+---------------------Payments----------------------
+
+-Create new Credit Card Payment with TOKEN
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.CreateWithTokenAsync("098f6bcd4621d373cade4e832627b4f6").Result;
+
+-Create new Credit Card Payment with TOKEN & CLIENT
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.CreateWithTokenAndClientAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    "client_88a388d9dd48f86c3136"
+).Result;
+
+
+-Create new Debit Payment with ...TOKEN
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6"
+).Result;
+
+-Create new Debit Payment with ...TOKEN & CLIENT
+PaymentService paymentService = paymillContext.PaymentService;
+ Payment payment = paymentService.CreateWithTokenAndClientAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    "client_88a388d9dd48f86c3136"
+).Result;
+
+-Payment Details
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.GetAsync("pay_917018675b21ca03c4fb").Result;
+
+-List Payments
+PaymentService paymentService = paymillContext.PaymentService;
+PaymillList<Payment> payments = paymentService.ListAsync().Result;
+
+-Remove Payment
+PaymentService paymentService = paymillContext.PaymentService;
+paymentService.DeleteAsync("pay_3af44644dd6d25c820a8").Result;
+
+---------------------Preauthorizations----------------------
+
+--Create new Preauthorization with TOKEN
+PreauthorizationService preauthorizationService = paymillContext.PreauthorizationService;
+Transaction transaction = preauthorizationService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    4200,
+    "EUR"
+).Result;
+
+--Create new Preauthorization with PAYMENT
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6"
+).Result;
+PreauthorizationService preauthorizationService = paymillContext.PreauthorizationService;
+Transaction transaction = preauthorizationService.CreateWithPaymentAsync(
+    payment,
+    4200,
+    "EUR"
+).Result;
+
+
+
+-Preauthorization Details
+PreauthorizationService preauthorizationService = paymillContext.PreauthorizationService;
+Preauthorization preauthorization = preauthorizationService.GetAsync(
+    "preauth_31eb90495837447f76b7"
+).Result;
+
+-Remove Preauthorizations
+PreauthorizationService preauthorizationService = paymillContext.PreauthorizationService;
+preauthorizationService.DeleteAsync( "preauth_31eb90495837447f76b7" ).Result;
+
+-List Preauthorizations
+PreauthorizationService preauthorizationService = paymillContext.PreauthorizationService;
+PaymillList<Preauthorization> preauthorizations = preauthorizationService.ListAsync().Result;
+
+---------------------Transactions----------------------
+
+----Create new Transaction with PAYMENT
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6"
+).Result;
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.CreateWithTokenAsync(
+    payment,
+    4200,
+    "EUR",
+    "Test Transaction"
+).Result;
+
+----Create new Transaction with TOKEN
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    4200,
+    "EUR",
+    "Test Transaction"
+).Result;
+
+---Create new Transaction with CLIENT & PAYMENT
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.CreateWithPaymentAndClientAsync(
+    "pay_a818b847db6ce5ff636f",
+    "client_c781b1d2f7f0f664b4d9",
+    4200,
+    "EUR"
+).Result;
+
+--Create new Transaction with PREAUTHORIZATION
+PreauthorizationService preauthorizationService = paymillContext.PreauthorizationService;
+Preauthorization preauthorization = preauthorizationService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    4200,
+    "EUR"
+).Result;
+
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = this.transactionService.CreateWithPreauthorizationAsync(
+    preauthorization,
+    4200,
+    "EUR"
+).Result;
+
+--Create new Transaction with APP FEE
+Fee fee = new Fee();
+fee.Amount =  420;
+fee.Payment = "pay_3af44644dd6d25c820a8";
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.CreateWithTokenAndFeeAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    4200,
+    "EUR",
+    fee
+).Result;
+
+-Get Transaction
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.GetAsync("tran_023d3b5769321c649435").Result;
+
+-Update Transaction
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.GetAsync("tran_023d3b5769321c649435").Result;
+transaction.Description = "My updated transaction description";
+transactionService.UpdateAsync(transaction).Result;
+
+-List Transactions
+TransactionService transactionService = paymillContext.TransactionService;
+PaymillList<Transaction> transactions = transactionService.ListAsync().Result;
+
+---------------------Refunds----------------------
+
+-Refund Transaction
+TransactionService transactionService = paymillContext.TransactionService;
+Transaction transaction = transactionService.CreateWithTokenAsync(
+    "098f6bcd4621d373cade4e832627b4f6",
+    4200,
+    "EUR",
+    "For refund"
+).Result;
+RefundService = paymillContext.RefundService;
+Refund refund = refundService.RefundTransactionAsync( 
+    transaction, 
+    1000, 
+    "Sample Description" 
+).Result;
+
+--Refund Details
+RefundService refundService = paymillContext.RefundService();
+Refund refund = refundService.GetAsync("refund_773ab6f9cd03428953c9").Result;
+
+--List Refunds
+RefundService refundService = paymillContext.RefundService;
+PaymillList<Refund> refunds = refundService.ListAsync;
+
+---------------------Clients----------------------
+
+--Create new Client
+ClientService clientService = paymillContext.ClientService;
+Client client = clientService.CreateWithEmailAndDescriptionAsync(
+    "lovely-client@example.com",
+    "Lovely Client"
+).Result;
+
+--Client Details
+ClientService clientService = paymillContext.ClientService;
+Client client = clientService.GetAsync("client_88a388d9dd48f86c3136").Result;
+
+--Update Client
+ClientService clientService = paymillContext.ClientService;
+Client client = clientService.GetAsync("client_88a388d9dd48f86c3136").Result;
+client.Description = "My Lovely Client";
+clientService.UpdateAsync( client ).Result;
+
+--Remove Client
+ClientService clientService = paymillContext.ClientService;
+clientService.DeleteAsync("client_88a388d9dd48f86c3136").Result;
+
+--List Clients
+ClientService clientService = paymillContext.ClientService;
+PaymillList<Client> clients = clientService.ListAsync().Result;
+
+---------------------Offers----------------------
+
+--Create new Offer
+OfferService offerService = paymillContext.OfferService;
+Offer offer = offerService.CreateAsync("4200", "EUR", "1 MONTH", "Superabo", 30).Result;
+
+--Offer Details
+OfferService offerService = paymillContext.OfferService;
+Offer offer = offerService.GetAsync("offer_40237e20a7d5a231d99b").Result;
+
+--Update Offer
+OfferService offerService = paymillContext.OfferService;
+Offer offer = offerService.GetAsync("offer_40237e20a7d5a231d99b").Result;
+offer.Name = "Extended Test Offer";
+offerService.UpdateAsync( offer ).Result;
+
+--Remove Offer
+OfferService offerService = paymillContext.OfferService;
+offerService.DeleteAsync("offer_40237e20a7d5a231d99b").Result;
+
+--List Offer
+OfferService offerService = paymillContext.OfferService;
+PaymillList<Offer> offers = offerService.ListAsync().Result;
+
+---------------------Subscriptions----------------------
+
+--Create new Subscription
+ClientService clientService = paymillContext.ClientService;
+Client client = clientService.GetAsync("client_64b025ee5955abd5af66").Result;
+OfferService offerService = paymillContext.OfferService;
+Offer offer = offerService.GetAsync("offer_40237e20a7d5a231d99b").Result;
+PaymentService paymentService = paymillContext.PaymentService;
+Payment payment = paymentService.GetAsync("pay_95ba26ba2c613ebb0ca8").Result;
+SubscriptionService subscriptionService = paymillContext.SubscriptionService;
+Subscription subscription = subscriptionService.CreateWithOfferPaymentAndClientAsync(
+    offer,
+    payment,
+    client
+).Result;
+
+--Subscription Details
+SubscriptionService subscriptionService = paymillContext.SubscriptionService;
+Subscription subscription = subscriptionService.GetAsync("sub_dc180b755d10da324864").Result;
+
+--Update Subscription
+SubscriptionService subscriptionService = paymillContext.SubscriptionService;
+Subscription subscription = subscriptionService.GetAsync(
+    "sub_dc180b755d10da324864"
+).Result;
+subscription.CancelAtPeriodEnd = true ;
+subscriptionService.UpdateAsync( subscription ).Result;
+
+--Remove Subscription
+SubscriptionService subscriptionService = paymillContext.SubscriptionService;
+subscriptionService.DeleteAsync("sub_dc180b755d10da324864").Result;
+
+--List Subscriptions
+SubscriptionService subscriptionService = paymillContext.SubscriptionService;
+PaymillList<Subscription> subscriptions = subscriptionService.ListAsync().Result;
+
+
+-------------------------Webhooks----------------------------------------------
+
+--Create new URL Webhook
+WebhookService webhookService = paymillContext.WebhookService;
+EventType[] eventTypes = new EventType[] {
+    EventType.CLIENT_UPDATED,
+    EventType.TRANSACTION_SUCCEEDED
+}.Result;
+Webhook webhook = webhookService.CreateUrlWebhookAsync(
+    "<your-webhook-url>",
+    eventTypes
+).Result;
+			
+--Create new E-Mail Webhook
+WebhookService webhookService = paymillContext.WebhookService;
+EventType[] eventTypes = new EventType[] {
+    EventType.CLIENT_UPDATED,
+    EventType.TRANSACTION_SUCCEEDED
+};
+Webhook webhook = webhookService.CreateEmailWebhookAsync(
+    "<your-webhook-email>",
+    eventTypes
+).Result;
+
+--Webhook Details
+WebhookService webhookService = paymillContext.WebhookService;
+Webhook webhook = webhookService.GetAsync("hook_40237e20a7d5a231d99b").Result;
+
+--Update Webhook
+WebhookService webhookService = paymillContext.WebhookService;
+Webhook webhook = webhookService.GetAsync("hook_40237e20a7d5a231d99b").Result;
+webhook.Email = "test1@mail.com";
+webhookService.UpdateAsync( webhook ).Wait();
+
+--Remove Webhook
+WebhookService webhookService = paymillContext.WebhookService;
+Webhook webhook = webhookService.DeleteAsync("hook_40237e20a7d5a231d99b").Result;
+
+--List Webhooks
+WebhookService webhookService = paymillContext.WebhookService;
+PaymillList<Webhook> webhooks = webhookService.ListAsync();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

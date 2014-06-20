@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcApplication.Controllers
+namespace Mvc5Application.Controllers
 {
     public class PaymentController : Controller
     {
