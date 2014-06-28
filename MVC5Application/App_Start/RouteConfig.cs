@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MVC5Application
+namespace WebApplication1
 {
     public class RouteConfig
     {
@@ -14,9 +14,9 @@ namespace MVC5Application
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
+                name: "{Payment",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Payment", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
