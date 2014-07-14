@@ -67,7 +67,6 @@ namespace UnitTest.Net
             bool reply = _paymill.PaymentService.DeleteAsync(payment.Id).Result;
             Assert.IsTrue(reply, "RemovePayment Fail");
         }
-
         [TestMethod]
         public void ListOrderByCreatedAt()
         {

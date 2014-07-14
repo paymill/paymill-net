@@ -228,11 +228,11 @@ namespace PaymillWrapper.Models
         [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<TypeUnit>))]
         public sealed class TypeUnit : EnumBaseType
         {
-            public static readonly Interval.TypeUnit DAY = new TypeUnit("CreditCard");
-            public static readonly Interval.TypeUnit WEEK = new TypeUnit("Debit");
-            public static readonly Interval.TypeUnit MONTH = new TypeUnit("Debit");
-            public static readonly Interval.TypeUnit YEAR = new TypeUnit("Debit");
-            public static readonly Interval.TypeUnit UNKNOWN = new TypeUnit("", true);
+            public static readonly Interval.TypeUnit DAY;
+            public static readonly Interval.TypeUnit WEEK;
+            public static readonly Interval.TypeUnit MONTH;
+            public static readonly Interval.TypeUnit YEAR;
+            public static readonly Interval.TypeUnit UNKNOWN;
             private TypeUnit(String name, Boolean unknowValue = false)
                 : base(name, unknowValue)
             {
@@ -241,6 +241,14 @@ namespace PaymillWrapper.Models
             public TypeUnit()
                 : base("", false)
             {
+            }
+            static TypeUnit()
+            {
+                DAY = new TypeUnit("CreditCard");
+                WEEK = new TypeUnit("Debit");
+                MONTH = new TypeUnit("Debit");
+                YEAR = new TypeUnit("Debit");
+                UNKNOWN = new TypeUnit("", true);
             }
         }
         public int Count { get; set; }

@@ -15,15 +15,15 @@ namespace PaymillWrapper.Models
         [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<TransactionStatus>))]
         public sealed class TransactionStatus : EnumBaseType
         {
-            public static readonly Transaction.TransactionStatus PARTIAL_REFUNDED = new TransactionStatus("partial_refunded");
-            public static readonly Transaction.TransactionStatus REFUNDED = new TransactionStatus("refunded");
-            public static readonly Transaction.TransactionStatus CLOSED = new TransactionStatus("closed");
-            public static readonly Transaction.TransactionStatus FAILED = new TransactionStatus("failed");
-            public static readonly Transaction.TransactionStatus PENDING = new TransactionStatus("pending");
-            public static readonly Transaction.TransactionStatus OPEN = new TransactionStatus("open");
-            public static readonly Transaction.TransactionStatus PREAUTH = new TransactionStatus("preauth");
-            public static readonly Transaction.TransactionStatus CHARGEBACK = new TransactionStatus("chargeback");
-            public static readonly Transaction.TransactionStatus UNKNOWN = new TransactionStatus("", true);
+            public static readonly Transaction.TransactionStatus PARTIAL_REFUNDED;
+            public static readonly Transaction.TransactionStatus REFUNDED;
+            public static readonly Transaction.TransactionStatus CLOSED;
+            public static readonly Transaction.TransactionStatus FAILED;
+            public static readonly Transaction.TransactionStatus PENDING;
+            public static readonly Transaction.TransactionStatus OPEN;
+            public static readonly Transaction.TransactionStatus PREAUTH;
+            public static readonly Transaction.TransactionStatus CHARGEBACK;
+            public static readonly Transaction.TransactionStatus UNKNOWN;
             private TransactionStatus(String value, Boolean unknowValue = false)
                 : base(value, unknowValue)
             {
@@ -32,6 +32,19 @@ namespace PaymillWrapper.Models
             public TransactionStatus()
                 : base("", false)
             {
+            }
+            static TransactionStatus()
+            {
+                PARTIAL_REFUNDED = new TransactionStatus("partial_refunded");
+                REFUNDED = new TransactionStatus("refunded");
+                CLOSED = new TransactionStatus("closed");
+                FAILED = new TransactionStatus("failed");
+                PENDING = new TransactionStatus("pending");
+                OPEN = new TransactionStatus("open");
+                PREAUTH = new TransactionStatus("preauth");
+                CHARGEBACK = new TransactionStatus("chargeback");
+                UNKNOWN = new TransactionStatus("", true);
+
             }
         }
 

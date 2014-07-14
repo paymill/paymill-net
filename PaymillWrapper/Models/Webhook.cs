@@ -31,25 +31,25 @@ namespace PaymillWrapper.Models
         [JsonConverter(typeof(StringToBaseEnumTypeConverter<WebhookEventType>))]
         public sealed class WebhookEventType : EnumBaseType
         {
-            public static readonly Webhook.WebhookEventType CHARGEBACK_EXECUTED = new WebhookEventType("chargeback.executed");
-            public static readonly Webhook.WebhookEventType REFUND_SUCCEEDED = new WebhookEventType("refund.succeeded");
-            public static readonly Webhook.WebhookEventType REFUND_CREATED = new WebhookEventType("refund.created");
-            public static readonly Webhook.WebhookEventType REFUND_FAILED = new WebhookEventType("refund.failed");
-            public static readonly Webhook.WebhookEventType SUBSCRIPTION_SUCCEEDED = new WebhookEventType("subscription.succeeded");
-            public static readonly Webhook.WebhookEventType SUBSCRIPTION_CREATED = new WebhookEventType("subscription.created");
-            public static readonly Webhook.WebhookEventType SUBSCRIPTION_FAILED = new WebhookEventType("subscription.failed");
-            public static readonly Webhook.WebhookEventType SUBSCRIPTION_UPDATED = new WebhookEventType("subscription.updated");
-            public static readonly Webhook.WebhookEventType SUBSCRIPTION_DELETED = new WebhookEventType("subscription.deleted");
-            public static readonly Webhook.WebhookEventType TRANSACTION_SUCCEEDED = new WebhookEventType("transaction.succeeded");
-            public static readonly Webhook.WebhookEventType TRANSACTION_FAILED = new WebhookEventType("transaction.failed");
-            public static readonly Webhook.WebhookEventType TRANSACTION_CREATED = new WebhookEventType("transaction.created");
-            public static readonly Webhook.WebhookEventType PAYOUT_TRANSFERRED = new WebhookEventType("payout.transferred");
-            public static readonly Webhook.WebhookEventType INVOICE_AVAILABLE = new WebhookEventType("invoice.available");
-            public static readonly Webhook.WebhookEventType APP_MERCHANT_ACTIVATED = new WebhookEventType("app.merchant.activated");
-            public static readonly Webhook.WebhookEventType APP_MERCHANT_DEACTIVATED = new WebhookEventType("app.merchant.deactivated");
-            public static readonly Webhook.WebhookEventType APP_MERCHANT_REJECTED = new WebhookEventType("app.merchant.rejected");
-            public static readonly Webhook.WebhookEventType CLIENT_UPDATED = new WebhookEventType("client.updated");
-            public static readonly Webhook.WebhookEventType UNKNOWN = new WebhookEventType("", true);
+            public static readonly Webhook.WebhookEventType CHARGEBACK_EXECUTED;
+            public static readonly Webhook.WebhookEventType REFUND_SUCCEEDED;
+            public static readonly Webhook.WebhookEventType REFUND_CREATED;
+            public static readonly Webhook.WebhookEventType REFUND_FAILED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_SUCCEEDED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_CREATED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_FAILED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_UPDATED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_DELETED;
+            public static readonly Webhook.WebhookEventType TRANSACTION_SUCCEEDED;
+            public static readonly Webhook.WebhookEventType TRANSACTION_FAILED;
+            public static readonly Webhook.WebhookEventType TRANSACTION_CREATED;
+            public static readonly Webhook.WebhookEventType PAYOUT_TRANSFERRED;
+            public static readonly Webhook.WebhookEventType INVOICE_AVAILABLE;
+            public static readonly Webhook.WebhookEventType APP_MERCHANT_ACTIVATED;
+            public static readonly Webhook.WebhookEventType APP_MERCHANT_DEACTIVATED;
+            public static readonly Webhook.WebhookEventType APP_MERCHANT_REJECTED;
+            public static readonly Webhook.WebhookEventType CLIENT_UPDATED;
+            public static readonly Webhook.WebhookEventType UNKNOWN;
             private WebhookEventType(String value, Boolean unknowValue = false)
                 : base(value, unknowValue)
             {
@@ -58,6 +58,29 @@ namespace PaymillWrapper.Models
             public WebhookEventType()
                 : base("", false)
             {
+            }
+            static WebhookEventType()
+            {
+                CHARGEBACK_EXECUTED = new WebhookEventType("chargeback.executed");
+                REFUND_SUCCEEDED = new WebhookEventType("refund.succeeded");
+                REFUND_CREATED = new WebhookEventType("refund.created");
+                REFUND_FAILED = new WebhookEventType("refund.failed");
+                SUBSCRIPTION_SUCCEEDED = new WebhookEventType("subscription.succeeded");
+                SUBSCRIPTION_CREATED = new WebhookEventType("subscription.created");
+                SUBSCRIPTION_FAILED = new WebhookEventType("subscription.failed");
+                SUBSCRIPTION_UPDATED = new WebhookEventType("subscription.updated");
+                SUBSCRIPTION_DELETED = new WebhookEventType("subscription.deleted");
+                TRANSACTION_SUCCEEDED = new WebhookEventType("transaction.succeeded");
+                TRANSACTION_FAILED = new WebhookEventType("transaction.failed");
+                TRANSACTION_CREATED = new WebhookEventType("transaction.created");
+                PAYOUT_TRANSFERRED = new WebhookEventType("payout.transferred");
+                INVOICE_AVAILABLE = new WebhookEventType("invoice.available");
+                APP_MERCHANT_ACTIVATED = new WebhookEventType("app.merchant.activated");
+                APP_MERCHANT_DEACTIVATED = new WebhookEventType("app.merchant.deactivated");
+                APP_MERCHANT_REJECTED = new WebhookEventType("app.merchant.rejected");
+                CLIENT_UPDATED = new WebhookEventType("client.updated");
+                UNKNOWN = new WebhookEventType("", true);
+
             }
         }
 

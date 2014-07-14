@@ -50,14 +50,13 @@ namespace UnitTest.Net
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial").Result;
 
-            long trialStart = DateTime.Now.AddDays(1).Ticks;
+            long trialStart = DateTime.Now.AddDays(5).Ticks;
             Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
             Assert.IsNotNull(subscriptionWithTrial.TrialStart);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Year, new DateTime(trialStart).Year);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Month, new DateTime(trialStart).Month);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Day, new DateTime(trialStart).Day);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Hour, new DateTime(trialStart).Hour);
-            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Minute, new DateTime(trialStart).Minute);
         }
 
         [TestMethod]
@@ -79,14 +78,13 @@ namespace UnitTest.Net
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
 
-            long trialStart = DateTime.Now.AddDays(1).Ticks;
+            long trialStart = DateTime.Now.AddDays(5).Ticks;
             Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
             Assert.IsNotNull(subscriptionWithTrial.TrialStart);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Year, new DateTime(trialStart).Year);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Month, new DateTime(trialStart).Month);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Day, new DateTime(trialStart).Day);
             Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Hour, new DateTime(trialStart).Hour);
-            Assert.AreEqual(subscriptionWithTrial.TrialEnd.Value.Minute, new DateTime(trialStart).Minute);
         }
         [TestMethod]
         [ExpectedException(typeof(AggregateException))]

@@ -21,7 +21,7 @@ namespace Mvc5Application.Controllers
         [HttpPost]
         public ActionResult Submit(Models.PaymillForm form)
         {
-            PaymillContext paymill = new PaymillContext("YOUR PRIVATE KEY");
+            PaymillContext paymill = new PaymillContext("YOUR Private Key");
             string token = Request.Form["hToken"];	
             Transaction transaction = paymill.TransactionService.CreateWithTokenAsync(token, form.Amount, form.Currency).Result;
            return Content("Payment Succeed");

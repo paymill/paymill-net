@@ -84,7 +84,9 @@
     <Content Include="Content\Styles\paymill_styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\creditcardBrandDetection.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -99,6 +101,7 @@
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\Write To File.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

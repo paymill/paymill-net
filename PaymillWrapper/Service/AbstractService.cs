@@ -9,6 +9,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using PaymillWrapper.Exceptions;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Configuration;
 
 namespace PaymillWrapper.Service
 {
@@ -159,9 +161,10 @@ namespace PaymillWrapper.Service
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
+ 
             return ReadResult<T>(data);
         }
-
+      
         /// <summary>
         /// Reads the reponse message.
         /// </summary>

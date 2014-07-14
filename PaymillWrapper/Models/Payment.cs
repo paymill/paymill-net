@@ -16,9 +16,9 @@ namespace PaymillWrapper.Models
         [JsonConverter(typeof(StringToBaseEnumTypeConverter<PaymentType>))]
         public sealed class PaymentType : EnumBaseType
         {
-            public static readonly Payment.PaymentType CREDIT_CARD = new PaymentType("creditcard");
-            public static readonly Payment.PaymentType DEBIT = new PaymentType("debit");
-            public static readonly Payment.PaymentType UNKNOWN = new PaymentType("", true);
+            public static readonly Payment.PaymentType CREDIT_CARD;
+            public static readonly Payment.PaymentType DEBIT;
+            public static readonly Payment.PaymentType UNKNOWN;
 
             public PaymentType()
                 : base("", false)
@@ -29,19 +29,25 @@ namespace PaymillWrapper.Models
             {
 
             }
+            static PaymentType()
+            {
+                CREDIT_CARD = new PaymentType("creditcard");
+                DEBIT = new PaymentType("debit");
+                UNKNOWN = new PaymentType("", true);
+            }
         }
         [JsonConverter(typeof(StringToBaseEnumTypeConverter<CardTypes>))]
         public sealed class CardTypes : EnumBaseType
         {
-            public static readonly Payment.CardTypes VISA = new CardTypes("visa");
-            public static readonly Payment.CardTypes MASTERCARD = new CardTypes("mastercard");
-            public static readonly Payment.CardTypes MAESTRO = new CardTypes("maestro");
-            public static readonly Payment.CardTypes AMEX = new CardTypes("amex");
-            public static readonly Payment.CardTypes JCB = new CardTypes("jcb");
-            public static readonly Payment.CardTypes DINERS = new CardTypes("diners");
-            public static readonly Payment.CardTypes DISCOVER = new CardTypes("discover");
-            public static readonly Payment.CardTypes CHINA_UNION_PAY = new CardTypes("china_union_pay");
-            public static readonly Payment.CardTypes UNKNOWN = new CardTypes("unknown", true);
+            public static readonly Payment.CardTypes VISA;
+            public static readonly Payment.CardTypes MASTERCARD;
+            public static readonly Payment.CardTypes MAESTRO;
+            public static readonly Payment.CardTypes AMEX;
+            public static readonly Payment.CardTypes JCB;
+            public static readonly Payment.CardTypes DINERS;
+            public static readonly Payment.CardTypes DISCOVER;
+            public static readonly Payment.CardTypes CHINA_UNION_PAY;
+            public static readonly Payment.CardTypes UNKNOWN;
             private CardTypes(String value, Boolean unknowValue = false)
                 : base(value, unknowValue)
             {
@@ -51,7 +57,18 @@ namespace PaymillWrapper.Models
                 : base("", false)
             {
             }
-
+            static CardTypes()
+            {
+                VISA = new CardTypes("visa");
+                MASTERCARD = new CardTypes("mastercard");
+                MAESTRO = new CardTypes("maestro");
+                AMEX = new CardTypes("amex");
+                JCB = new CardTypes("jcb");
+                DINERS = new CardTypes("diners");
+                DISCOVER = new CardTypes("discover");
+                CHINA_UNION_PAY = new CardTypes("china_union_pay");
+                UNKNOWN = new CardTypes("unknown", true);
+            }
         }
         /// <summary>
         /// creditcard, debit

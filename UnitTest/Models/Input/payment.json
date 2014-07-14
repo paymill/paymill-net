@@ -1,17 +1,17 @@
 ﻿{
-        "data":{
-                "id":"pay_9eb3371ae4ca3a51ab255a2e",
-                "type":"creditcard",
-                "client":"client_11cc57776f7954925cf9",
-                "card_type":"mastercard",
-                "country":null,
-                "expire_month":"12",
-                "expire_year":"2014",
-                "card_holder":"Joddle Botten",
-                "last4":"1111",
-                "created_at":1381489629,
-                "updated_at":1381489629,
-                "app_id":null
-        },
-        "mode":"test"
+data: {
+id: "pay_9eb3371ae4ca3a51ab255a2e",
+type: "creditcard",
+client: "client_11cc57776f7954925cf9",
+card_type: "mastercard",
+country: null,
+expire_month: "12",
+expire_year: "2014",
+card_holder: "Joddle Botten",
+last4: "1111",
+created_at: 1381489629,
+updated_at: 1381489629,
+app_id: null
+},
+mode: "test"
 }

@@ -1,52 +1,48 @@
 ﻿{
-	"data":{
-		"id":"tran_6983a8d95b03a594a34acd529fb5",
-		"amount":"5900",
-		"origin_amount":5900,
-		"status":"closed",
-		"description":"Bar",
-		"livemode":false,
-		"refunds":null,
-		"client":{
-			"id":"client_db50b6496357e2700f00",
-			"email":null,
-			"description":null,
-			"app_id":null,
-			"updated_at":1395239167,
-			"created_at":1395239167,
-			"payment":[
-				"pay_983a0c8e7f98ec82a8445823"
-			],
-			"subscription":null
-		},
-		"currency":"USD",
-		"created_at":1395239167,
-		"updated_at":1395239167,
-		"response_code":20000,
-		"short_id":"7357.7357.7357",
-		"is_fraud":false,
-		"invoices":[
-
-		],
-		"app_id":null,
-		"preauthorization":null,
-		"fees":[
-
-		],
-		"payment":{
-			"id":"pay_6bc452ea00f15be0225a1a6e",
-			"type":"creditcard",
-			"client":"client_b645f7e235fe5106820d",
-			"card_type":"visa",
-			"country":null,
-			"expire_month":"12",
-			"expire_year":"2015",
-			"card_holder":"",
-			"last4":"1111",
-			"updated_at":1395239167,
-			"created_at":1395239167,
-			"app_id":null
-		}
-	},
-	"mode":"test"
+data: {
+id: "tran_6983a8d95b03a594a34acd529fb5",
+amount: "5900",
+origin_amount: 5900,
+status: "closed",
+description: "Bar",
+livemode: false,
+refunds: null,
+client: {
+id: "client_db50b6496357e2700f00",
+email: null,
+description: null,
+app_id: null,
+updated_at: 1395239167,
+created_at: 1395239167,
+payment: [
+"pay_983a0c8e7f98ec82a8445823"
+],
+subscription: null
+},
+currency: "USD",
+created_at: 1395239167,
+updated_at: 1395239167,
+response_code: 20000,
+short_id: "7357.7357.7357",
+is_fraud: false,
+invoices: [ ],
+app_id: null,
+preauthorization: null,
+fees: [ ],
+payment: {
+id: "pay_6bc452ea00f15be0225a1a6e",
+type: "creditcard",
+client: "client_b645f7e235fe5106820d",
+card_type: "visa",
+country: null,
+expire_month: "12",
+expire_year: "2015",
+card_holder: "",
+last4: "1111",
+updated_at: 1395239167,
+created_at: 1395239167,
+app_id: null
+}
+},
+mode: "test"
 }
