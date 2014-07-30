@@ -50,7 +50,7 @@ namespace UnitTest.Net
 
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client.Id).Result;
             Assert.IsFalse(payment.Id == String.Empty, "CreatePayment With Client Fail");
-            Assert.IsFalse(payment.Client != client.Id, "Client does not match");
+            Assert.IsFalse(payment.Client.Id != client.Id, "Client does not match");
         }
 
         [TestMethod]

@@ -101,7 +101,7 @@ namespace UnitTest.Models
             var payment = ReadResult<Payment>("payment.json");
             Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", payment.Id);
             Assert.AreEqual(Payment.PaymentType.CREDIT_CARD, payment.Type);
-            Assert.AreEqual("client_11cc57776f7954925cf9", payment.Client);
+            Assert.AreEqual("client_11cc57776f7954925cf9", payment.Client.Id);
             Assert.AreEqual(Payment.CardTypes.MASTERCARD, payment.CardType);
             Assert.IsNull(payment.Country);
             Assert.AreEqual(12, payment.ExpireMonth);

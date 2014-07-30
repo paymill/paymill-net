@@ -28,7 +28,7 @@ namespace PaymillWrapper.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// List creditcard-object or directdebit-object
+        /// List of credit card/direct debit. Please note, that the payment objects might only contain valid ids.
         /// </summary>
         [DataMember(Name = "payment")]
         public List<Payment> Payments { get; set; }

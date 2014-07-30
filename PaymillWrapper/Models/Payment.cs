@@ -81,7 +81,7 @@ namespace PaymillWrapper.Models
         /// The identifier of a client (client-object)
         /// </summary>
         [DataMember(Name = "client")]
-        public string Client { get; set; }
+        public Client Client { get; set; }
 
         /// <summary>
         /// Visa or Mastercard
