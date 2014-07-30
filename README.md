@@ -133,6 +133,12 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 
 ## Changelog
 
+### 2.1.4
++ improving client and payment object deserialization.
++ Improving interval, adding weekday.
++ Add new web hook types for subscriptions.
+
+
 ### 2.1.2
 + Made Subscription's next_capture_at nullable.
 
