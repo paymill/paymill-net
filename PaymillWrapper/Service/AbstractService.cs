@@ -164,7 +164,7 @@ namespace PaymillWrapper.Service
  
             return ReadResult<T>(data);
         }
-      
+       
         /// <summary>
         /// Reads the reponse message.
         /// </summary>

@@ -50,6 +50,10 @@ namespace PaymillWrapper.Models
             public static readonly Webhook.WebhookEventType APP_MERCHANT_REJECTED;
             public static readonly Webhook.WebhookEventType CLIENT_UPDATED;
             public static readonly Webhook.WebhookEventType UNKNOWN;
+            public static readonly Webhook.WebhookEventType  SUBSCRIPTION_EXPIRING;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_DEACTIVATED;
+            public static readonly Webhook.WebhookEventType  SUBSCRIPTION_ACTIVATED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_CANCELED;
             private WebhookEventType(String value, Boolean unknowValue = false)
                 : base(value, unknowValue)
             {
@@ -80,6 +84,10 @@ namespace PaymillWrapper.Models
                 APP_MERCHANT_REJECTED = new WebhookEventType("app.merchant.rejected");
                 CLIENT_UPDATED = new WebhookEventType("client.updated");
                 UNKNOWN = new WebhookEventType("", true);
+                SUBSCRIPTION_EXPIRING = new WebhookEventType("subscription.expiring");
+                SUBSCRIPTION_DEACTIVATED = new WebhookEventType("subscription.deactivated");
+                SUBSCRIPTION_ACTIVATED = new WebhookEventType("subscription.activated");
+                SUBSCRIPTION_CANCELED = new WebhookEventType("subscription.activated");
 
             }
         }

@@ -21,7 +21,7 @@ namespace UnitTest.Net
         }
         private Offer createOffer()
         {
-            Offer newOffer = _paymill.OfferService.CreateAsync(offerAmount, "EUR", "1 MONTH", "Test API", 3).Result;
+            Offer newOffer = _paymill.OfferService.CreateAsync(offerAmount, "EUR", Interval.period(1, Interval.TypeUnit.MONTH), "Test API", 3).Result;
             return newOffer;
         }
         [TestMethod]

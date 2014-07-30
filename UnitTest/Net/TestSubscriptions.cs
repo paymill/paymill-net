@@ -22,7 +22,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void TestCreateWithPayment()
         {
-            Offer offer = _paymill.OfferService.CreateAsync(1500, "EUR", "1 MONTH", "Test API", 3).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(1500, "EUR", Interval.period( 1, Interval.TypeUnit.MONTH ), "Test API", 3).Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
 
             Subscription subscription = _paymill.SubscriptionService.CreateWithOfferAndPaymentAsync(offer, payment).Result;
@@ -36,7 +36,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", "1 WEEK", "Offer No Trial").Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period( 1, Interval.TypeUnit.WEEK ), "Offer No Trial").Result;
 
             Subscription subscriptionNoTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
             Assert.IsNull(subscriptionNoTrial.TrialStart);
@@ -48,7 +48,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial").Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period( 1, Interval.TypeUnit.WEEK ), "Offer No Trial").Result;
 
             long trialStart = DateTime.Now.AddDays(5).Ticks;
             Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
@@ -64,7 +64,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2225, "EUR", "1 WEEK", "Offer With Trial", 2).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2225, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer With Trial", 2).Result;
 
             Subscription subscription = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
             Assert.IsNotNull(subscription.TrialStart);
@@ -76,7 +76,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period( 1, Interval.TypeUnit.WEEK ), "Offer No Trial", 2).Result;
 
             long trialStart = DateTime.Now.AddDays(5).Ticks;
             Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
@@ -92,7 +92,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client.Id).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(900, "EUR", "1 WEEK", "Offer No Trial").Result;
+            Offer offer = _paymill.OfferService.CreateAsync(900, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
 
             _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, null).Wait();
         }
@@ -103,8 +103,8 @@ namespace UnitTest.Net
 
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", "1 WEEK", "Offer No Trial", 2).Result;
-            Offer offer2 = _paymill.OfferService.CreateAsync(1500, "EUR", "1 MONTH", "Test API", 3).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial", 2).Result;
+            Offer offer2 = _paymill.OfferService.CreateAsync(1500, "EUR", Interval.period(1, Interval.TypeUnit.MONTH), "Test API", 3).Result;
             Subscription subscription = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
 
             String offerId = subscription.Offer.Id;

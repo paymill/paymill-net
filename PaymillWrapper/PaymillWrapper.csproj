@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Interval.cs" />
     <Compile Include="Models\PaymillList.cs" />
     <Compile Include="Models\SnakeCase.cs" />
     <Compile Include="Utils\EnumBaseType.cs" />

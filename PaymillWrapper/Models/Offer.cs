@@ -42,7 +42,7 @@ namespace PaymillWrapper.Models
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
         [DataMember(Name = "interval")]
-        public Interval Interval { get; set; }
+        public Interval.Period Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?
@@ -222,68 +222,5 @@ namespace PaymillWrapper.Models
         public int Inactive { get; set; }
     }
 
-    [Newtonsoft.Json.JsonConverter(typeof(StringToIntervalConverter))]
-    public class Interval
-    {
-        [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<TypeUnit>))]
-        public sealed class TypeUnit : EnumBaseType
-        {
-            public static readonly Interval.TypeUnit DAY;
-            public static readonly Interval.TypeUnit WEEK;
-            public static readonly Interval.TypeUnit MONTH;
-            public static readonly Interval.TypeUnit YEAR;
-            public static readonly Interval.TypeUnit UNKNOWN;
-            private TypeUnit(String name, Boolean unknowValue = false)
-                : base(name, unknowValue)
-            {
-
-            }
-            public TypeUnit()
-                : base("", false)
-            {
-            }
-            static TypeUnit()
-            {
-                DAY = new TypeUnit("CreditCard");
-                WEEK = new TypeUnit("Debit");
-                MONTH = new TypeUnit("Debit");
-                YEAR = new TypeUnit("Debit");
-                UNKNOWN = new TypeUnit("", true);
-            }
-        }
-        public int Count { get; set; }
-        public EnumBaseType Unit { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Count"/> class.
-        /// </summary>
-        /// <param name="interval">The interval.</param>
-        public Interval(String interval)
-        {
-            String[] parts = interval.Split(' ');
-            this.Count = int.Parse(parts[0]);
-            this.Unit = CreateUnit(parts[1]);
-        }
-        /// <summary>
-        /// Creates the unit.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentException">Invalid value for Interval.Unit</exception>
-        private static EnumBaseType CreateUnit(String value)
-        {
-            return TypeUnit.GetItemByValue(value, typeof(TypeUnit));
-        }
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>
-        /// A string that represents the current object.
-        /// </returns>
-        public override String ToString()
-        {
-            return String.Format("{0} {1}", this.Count, this.Unit);
-        }
-
-    }
+   
 }

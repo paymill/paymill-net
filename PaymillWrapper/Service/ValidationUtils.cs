@@ -45,12 +45,18 @@ namespace PaymillWrapper.Service
             if (String.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name can not be blank");
         }
-
-        static internal void ValidatesInterval(String interval)
+        static internal void validatesIntervalPeriod(Interval.Period interval)
         {
-            if (String.IsNullOrWhiteSpace(interval))
-                throw new ArgumentException("Interval can not be blank");
+            if (interval.Interval < 1)
+            {
+                throw new ArgumentException("Interval must be greater than zero");
+            }
+            if (interval.Unit == null)
+            {
+                throw new ArgumentException("Interval unit cannot be null");
+            }
         }
+
 
         static internal void ValidatesFee(Fee fee)
         {
