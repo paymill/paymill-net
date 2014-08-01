@@ -11,6 +11,7 @@ namespace PaymillWrapper.Models
     [DataContract]
     public class BaseModel
     {
+
         /// <summary>
         /// Unique identifier
         /// </summary>

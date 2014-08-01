@@ -9,7 +9,15 @@ namespace PaymillWrapper.Service
 {
     internal class ValidationUtils
     {
-
+        static internal void ValidatesIntervalPeriodWithChargeDay(Interval.PeriodWithChargeDay interval)
+        {
+           if( interval.Interval < 1 ) {
+               throw new ArgumentException("Interval must be greater than zero");
+           }
+           if( interval.Unit == null ) {
+               throw new ArgumentException("Interval unit cannot be null");
+           }
+         }
         static internal void ValidatesId(String id)
         {
             if (String.IsNullOrWhiteSpace(id))
@@ -45,7 +53,7 @@ namespace PaymillWrapper.Service
             if (String.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name can not be blank");
         }
-        static internal void validatesIntervalPeriod(Interval.Period interval)
+        static internal void ValidatesIntervalPeriod(Interval.Period interval)
         {
             if (interval.Interval < 1)
             {

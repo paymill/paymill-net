@@ -15,6 +15,45 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Subscription>))]
     public class Subscription : BaseModel
     {
+
+        public int Amount { get; set; }
+
+        [DataMember(Name = "temp_amount")]
+        private int tempAmount { get; set; }
+
+
+        [DataMember(Name = "temp_amount")]
+        public int TempAmount { get; set; }
+
+        [DataMember(Name = "currency"),
+        Updateable(Name = "currency")]
+        public String Currency { get; set; }
+
+
+        [DataMember(Name = "name"),
+        Updateable(Name = "name")]
+        public String Name { get; set; }
+
+
+        [DataMember(Name = "interval"),
+        Updateable(Name = "interval")]
+        public Interval.PeriodWithChargeDay Interval { get; set; }
+
+
+        [DataMember(Name = "is_canceled")]
+        public Boolean IsCanceled { get; set; }
+
+        [DataMember(Name = "is_canceled")]
+        public Boolean IsDeleted { get; set; }
+
+        [DataMember(Name = "period_of_validity")]
+        public Interval.Period PeriodOfValidity { get; set; }
+
+
+        [DataMember(Name = "end_of_periods")]
+        public DateTime EndOfPeriod { get; set; }
+
+
         /// <summary>
         /// Hash describing the offer which is subscribed to the client
         /// </summary>
@@ -53,12 +92,12 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "canceled_at")]
         public DateTime? CanceledAt { get; set; }
 
+        public SubscriptionStatus Status { get; set; }
         /// <summary>
         /// Client
         /// </summary>
         [DataMember(Name = "client")]
         public Client Client { get; set; }
-
 
         /// <summary>
         /// Payment
@@ -70,6 +109,36 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "app_id")]
         public String AppId { get; set; }
 
+        [JsonConverter(typeof(StringToBaseEnumTypeConverter<SubscriptionStatus>))]
+        public class SubscriptionStatus : EnumBaseType
+        {
+
+            public static readonly Subscription.Status ACTIVE;
+            public static readonly Subscription.Status INACTIVE;
+
+            static Status()
+            {
+                ACTIVE = new Status("active");
+                INACTIVE = new Status("inactive");
+            }
+
+            private Status(String value, Boolean unknowValue = false)
+                : base(value, unknowValue)
+            {
+
+            }
+            public Status()
+                : base("", false)
+            {
+            }
+
+
+            public static Status Create(String value)
+            {
+                return (Status)EnumBaseType.GetItemByValue(value, typeof(Status));
+            }
+
+        }
 
         public static Subscription.Filter CreateFilter()
         {
@@ -148,6 +217,157 @@ namespace PaymillWrapper.Models
                 this.canceledAt = false;
                 return this;
             }
+
+        }
+        public static Creator Create(Payment payment, int amount, String currency, String interval)
+        {
+            return new Creator(payment, amount, currency, new Interval.PeriodWithChargeDay(interval));
+
+        }
+
+        public static Creator Create(String paymentId, int amount, String currency, String interval)
+        {
+            return new Creator(new Payment(paymentId), amount, currency, new Interval.PeriodWithChargeDay(interval));
+
+        }
+
+        public static Creator Create(Payment payment, int amount, String currency, Interval.PeriodWithChargeDay interval)
+        {
+            return new Creator(payment, amount, currency, interval);
+
+        }
+
+        public static Creator Create(String paymentId, int amount, String currency, Interval.PeriodWithChargeDay interval)
+        {
+            return new Creator(new Payment(paymentId), amount, currency, interval);
+        }
+
+        public static Creator Create(Payment payment, Offer offer)
+        {
+            return new Creator(payment, offer);
+        }
+
+        public static Creator Create(String paymentId, Offer offer)
+        {
+            return new Creator(new Payment(paymentId), offer);
+
+        }
+
+        public static Creator Create(String paymentId, String offerId)
+        {
+            return new Creator(new Payment(paymentId), new Offer(offerId));
+
+        }
+
+        public static Creator Create(Payment payment, String offerId)
+        {
+            return new Creator(payment, new Offer(offerId));
+
+        }
+
+        /**
+  * Due to the large number of optional parameters, this class is the recommended way to create subscriptions
+  */
+        public sealed class Creator
+        {
+
+            public Payment Payment { get; set; }
+            public Client Client { get; set; }
+            public Offer Offer { get; set; }
+            public int Amount { get; set; }
+            public String Currency { get; set; }
+            public Interval.PeriodWithChargeDay Interval { get; set; }
+            public DateTime StartAt { get; set; }
+            public String Name { get; set; }
+            public Interval.Period PeriodOfValidity { get; set; }
+
+            internal Creator(Payment payment, int amount, String currency, Interval.PeriodWithChargeDay interval)
+            {
+                this.Payment = payment;
+                this.Amount = amount;
+                this.Currency = currency;
+                this.Interval = interval;
+            }
+
+            internal Creator(Payment payment, Offer offer)
+            {
+                this.Payment = payment;
+                this.Offer = offer;
+            }
+
+            public Creator withClient(Client client)
+            {
+                this.Client = client;
+                return this;
+            }
+
+            public Creator WithClient(String clientId)
+            {
+                this.Client = new Client(clientId);
+                return this;
+            }
+
+            public Creator WithOffer(Offer offer)
+            {
+                this.Offer = offer;
+                return this;
+            }
+
+            public Creator WithOffer(String offerId)
+            {
+                this.Offer = new Offer(offerId);
+                return this;
+            }
+
+            public Creator WithAmount(int amount)
+            {
+                this.Amount = amount;
+                return this;
+            }
+
+            public Creator WithCurrency(String currency)
+            {
+                this.Currency = currency;
+                return this;
+            }
+
+            public Creator WithInterval(Interval.PeriodWithChargeDay interval)
+            {
+                this.Interval = interval;
+                return this;
+            }
+
+            public Creator WithInterval(String interval)
+            {
+                this.Interval = new Interval.PeriodWithChargeDay(interval);
+                return this;
+            }
+
+            public Creator WithStartDate(DateTime startAt)
+            {
+                this.StartAt = startAt;
+                return this;
+            }
+
+            public Creator WithName(String name)
+            {
+                this.Name = name;
+                return this;
+            }
+
+            public Creator WithPeriodOfValidity(Interval.Period period)
+            {
+                this.PeriodOfValidity = period;
+                return this;
+            }
+
+            public Creator WithPeriodOfValidity(String period)
+            {
+                this.PeriodOfValidity = new Interval.Period(period);
+                return this;
+            }
+
+
 
         }
 

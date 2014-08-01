@@ -19,7 +19,7 @@ namespace PaymillWrapper
     {
         public PaymillContext(String apiKey)
         {
-            ApiUrl = @"https://api.paymill.com/v2";
+            ApiUrl = @"https://api.paymill.com/v2.1";
             if (string.IsNullOrEmpty(apiKey))
                 throw new ArgumentException("You need to set an API key", "apiKey");
             ApiKey = apiKey;

@@ -44,7 +44,7 @@ namespace PaymillWrapper.Service
         {
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
-            ValidationUtils.validatesIntervalPeriod(interval);
+            ValidationUtils.ValidatesIntervalPeriod(interval);
             ValidationUtils.ValidatesName(name);
             ValidationUtils.ValidatesTrialPeriodDays(trialPeriodDays);
 

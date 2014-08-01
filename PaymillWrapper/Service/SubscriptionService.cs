@@ -14,163 +14,6 @@ namespace PaymillWrapper.Service
         {
         }
 
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client" /> and an <see cref="Offer" />. 
-        /// A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer" />s, but only one <see cref="Subscription" />
-        /// to the same <see cref="Offer" />. The
-        /// <see cref="Client" />s is charged for each billing interval entered. 
-        /// NOTE:
-        /// This call will use the <see cref="Client" /> from the <see cref="Payment" /> object.
-        /// </summary>
-        /// <param name="offer">An Offer to subscribe to.</param>
-        /// <param name="payment">A Payment used for charging.</param>
-        /// <returns>Subscription which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferAndPaymentAsync(Offer offer, Payment payment)
-        {
-            return await CreateWithOfferAndPaymentAsync(offer, payment, null);
-        }
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client} and an <see cref="Offer" />. A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer" />s, but only one <see cref="Subscription" /> to the same <see cref="Offer" />. The
-        /// <see cref="Client" />s is charged for each billing interval entered.
-        /// NOTE:
-        /// This call will use the <see cref="Client" /> from the <see cref="Payment" /> object.
-        /// </summary>
-        /// <param name="offerId">An Offer" to subscribe to</param>
-        /// <param name="paymentId">A Payment" used for charging..</param>
-        /// <returns><see cref="Subscription" />, which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferAndPaymentAsync(String offerId, String paymentId)
-        {
-
-            return await CreateWithOfferAndPaymentAsync(new Offer(offerId), new Payment(paymentId));
-        }
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client" /> 
-        /// and an <see cref="Offer" />. A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer}s, but only one <see cref="Subscription" /> 
-        /// to the same <see cref="Offer" />. The
-        /// <see cref="Client" />s is charged for each billing interval entered. 
-        ///  This call will use the <see cref="Client" /> from the <see cref="Payment" /> object.
-        /// </summary>
-        /// <param name="offerId">The Id of an Offe to subscribe to.</param>
-        /// <param name="paymentId">The Id of a Payment used for charging.</param>
-        /// <param name="trialStart">Date representing trial period start.</param>
-        /// <returns>Subscription which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferAndPaymentAsync(String offerId, String paymentId, DateTime? trialStart)
-        {
-            return await CreateWithOfferAndPaymentAsync(new Offer(offerId), new Payment(paymentId), trialStart);
-        }
-
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> 
-        /// between a <see cref="Client" /> and an <see cref="Offer" />. A <see cref="Client" /> can have several
-        ///  <see cref="Subscription" />s to different <see cref="Offer}s, but only one <see cref="Subscription" /> 
-        ///  to the same <see cref="Offer" />. The
-        ///  <see cref="Client" />s is charged for each billing interval entered.
-        ///  NOTE:
-        ///  This call will use the <see cref="Client" /> from the <see cref="Payment" /> object.
-        /// </summary>
-        /// <param name="offer">An Offer to subscribe to.</param>
-        /// <param name="payment">A <see Payment used for charging.</param>
-        /// <param name="trialStart">Date representing trial period start.</param>
-        /// <returns>Subscription, which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferAndPaymentAsync(Offer offer, Payment payment, DateTime? trialStart)
-        {
-            ValidationUtils.ValidatesOffer(offer);
-            ValidationUtils.ValidatesPayment(payment);
-
-            return await createAsync(null, new UrlEncoder().EncodeObject(new { Offer = offer.Id, Payment = payment.Id, Start_At = trialStart }));
-        }
-
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client" /> and an <see cref="Offer" />. 
-        /// A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer" />s, but only one <see cref="Subscription" /> 
-        /// to the same <see cref="Offer" />. The
-        /// <see cref="Client" />s is charged for each billing interval entered. 
-        /// NOTE:
-        /// If <see cref="Client" /> not provided the <see cref="Client" /> from the payment is being used..
-        /// </summary>
-        /// <param name="offer">An Offer to subscribe to.</param>
-        /// <param name="payment">A Payment used for charging..</param>
-        /// <param name="client">A Client to subscribe.</param>
-        /// <returns>Subscription, which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferPaymentAndClientAsync(Offer offer, Payment payment, Client client)
-        {
-            return await CreateWithOfferPaymentAndClientAsync(offer, payment, client, null);
-        }
-
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client" /> and an <see cref="Offer}. A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer" />s, but only one <see cref="Subscription" /> to the same <see cref="Offer" />. The
-        /// <see cref="Client" />s is charged for each billing interval entered. <br />
-        /// NOTE:
-        /// If <see cref="Client" /> not provided the <see cref="Client" /> from the payment is being used.
-        /// </summary>
-        /// <param name="offerId">The Id of an Offer to subscribe to.</param>
-        /// <param name="paymentId">The Id of a Payment used for charging.</param>
-        /// <param name="clientId">The Id of a Client to subscribe.</param>
-        /// <returns>Subscription, which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferPaymentAndClientAsync(String offerId, String paymentId, String clientId)
-        {
-            return await CreateWithOfferPaymentAndClientAsync(new Offer(offerId), new Payment(paymentId), new Client(clientId), null);
-        }
-
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client} and an <see cref="Offer" />. 
-        /// A <see cref="Client" /> can have several
-        ///  <see cref="Subscription" />s to different <see cref="Offer" />s, 
-        ///  but only one <see cref="Subscription" /> to the same <see cref="Offer}. The
-        ///  <see cref="Client" />s is charged for each billing interval entered. <br />
-        ///  NOTE:
-        ///  If <see cref="Client" /> not provided the <see cref="Client" /> from the payment is being used.
-        /// </summary>
-        /// <param name="offerId">The Id of an Offer to subscribe to.</param>
-        /// <param name="paymentId">The Id of a Payment used for charging.</param>
-        /// <param name="clientId"> The Id of a Client to subscribe.</param>
-        /// <param name="trialStart">Date representing trial period start.</param>
-        /// <returns>Subscription, which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferPaymentAndClientAsync(String offerId, String paymentId, String clientId, DateTime? trialStart)
-        {
-            return await CreateWithOfferPaymentAndClientAsync(new Offer(offerId), new Payment(paymentId), new Client(clientId), trialStart);
-        }
-
-        /// <summary>
-        /// This function creates a <see cref="Subscription" /> between a <see cref="Client" /> and an <see cref="Offer" />.
-        /// A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer" />s, 
-        /// but only one <see cref="Subscription" /> to the same <see cref="Offer" />. The
-        /// <see cref="Client" />s is charged for each billing interval entered. 
-        /// NOTE:
-        /// If <see cref="Client" /> not provided the <see cref="Client" /> from the payment is being used.
-        /// </summary>
-        /// <param name="offer">An Offer to subscribe to.</param>
-        /// <param name="payment">A Payment used for charging.</param>
-        /// <param name="client">A Client to subscribe.</param>
-        /// <param name="trialStart">Date representing trial period start.</param>
-        /// <returns>Subscription, which allows you to charge recurring payments.</returns>
-        public async Task<Subscription> CreateWithOfferPaymentAndClientAsync(Offer offer, Payment payment, Client client, DateTime? trialStart)
-        {
-            ValidationUtils.ValidatesOffer(offer);
-            ValidationUtils.ValidatesPayment(payment);
-            ValidationUtils.ValidatesClient(client);
-
-            return await createAsync(null, new UrlEncoder().EncodeObject(
-                new
-                {
-                    Offer = offer.Id,
-                    Payment = payment.Id,
-                    Client = client.Id,
-                    Start_At = trialStart
-                }));
-        }
         /// <summary>
         /// This function returns a <see cref="PaymillList"/>of PAYMILL Client objects. In which order this list is returned depends on the
         /// </summary>
@@ -197,11 +40,94 @@ namespace PaymillWrapper.Service
             return await base.listAsync(filter, order, count, offset);
         }
 
+        /// 
+        ///  This function creates a {@link Subscription}. Use any of the static create methods in {@link Subscription} and include
+        ///  additional options.<br />
+        ///  <strong>Example:</strong><br />
+        ///  <blockquote>
+        ///  
+        ///  <pre>
+        ///  paymill.getSubscriptionService().create( Subscription.create( "pay_123", "offer_123" ).withClient( "client_123" ))
+        ///  paymill.getSubscriptionService().create( Subscription.create( "pay_123", "offer_123" ).withAmount( 100 )) overrides the amount of "offer_123" and sets
+        ///  it to 100 for this subscription
+        /// </pre>
+        /// 
+        /// </blockquote>
+        /// @param creator
+        ///          see {@link Subscription.Creator}.
+        /// @return the subscription.
+        //
+
+        public async Task<Subscription> CreateAsync(PaymillWrapper.Models.Subscription.Creator creator)
+        {
+            return await CreateAsync(creator.Payment, creator.Client, creator.Offer, creator.Amount, creator.Currency, creator.Interval,
+                creator.StartAt, creator.Name, creator.PeriodOfValidity);
+        }
+
+       
+        public async Task<Subscription> CreateAsync(Payment payment, Client client, Offer offer, int? amount, String currency, Interval.PeriodWithChargeDay interval, DateTime startAt,
+            String name, Interval.Period periodOfValidity)
+        {
+
+            if (offer == null && (amount == null || currency == null || interval == null))
+            {
+                throw new ArgumentException("Either an offer or amount, currency and interval must be set, when creating a subscription");
+            }
+
+            ValidationUtils.ValidatesPayment(payment);
+            if (client != null)
+            {
+                ValidationUtils.ValidatesClient(client);
+            }
+            if (offer != null)
+            {
+                ValidationUtils.ValidatesOffer(offer);
+            }
+            if (amount != null)
+            {
+                ValidationUtils.ValidatesAmount(amount);
+                //params.add( "amount", String.valueOf( amount ) );
+            }
+            if (currency != null)
+            {
+                ValidationUtils.ValidatesCurrency(currency);
+            }
+            if (interval != null)
+            {
+                ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
+            }
+            if (startAt != null)
+            {
+                // params.add( "start_at", String.valueOf( startAt.getTime() / 1000 ) );
+            }
+
+            if (periodOfValidity != null)
+            {
+                ValidationUtils.ValidatesIntervalPeriod(periodOfValidity);
+                //params.add( "period_of_validity", periodOfValidity.toString() );
+            }
+            return await createAsync(null,
+                        new UrlEncoder().EncodeObject(new
+                        {
+                            payment = payment.Id,
+                            client = client != null ? client.Id : null,
+                            offer = offer != null ? offer.Id : null,
+                            amount = amount.HasValue ? amount.Value.ToString() : null,
+                            currency = currency != null ? currency : null,
+                            interval = interval != null ? interval.ToString() : null,
+                            startAt = startAt != null ? (startAt.Millisecond / 1000).ToString() : null,
+                            name = name != null ? name : null,
+                            periodOfValidity = periodOfValidity != null ? periodOfValidity.ToString() : null
+
+                        }));
+            //return RestfulUtils.create( SubscriptionService.PATH, params, Subscription.class, super.httpClient );
+        }
 
         protected override string GetResourceId(Subscription obj)
         {
             return obj.Id;
         }
+
 
     }
 }
