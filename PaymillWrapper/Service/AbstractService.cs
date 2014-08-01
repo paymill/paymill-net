@@ -164,7 +164,23 @@ namespace PaymillWrapper.Service
  
             return ReadResult<T>(data);
         }
-       
+        /// <summary>
+        /// Updates the asynchronous with custom params
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        public virtual async Task<T> UpdateParamAsync(T obj, Object param)
+        {
+            String resourceId = GetResourceId(obj);
+            var encoder = new UrlEncoder();
+            var content = new StringContent(encoder.EncodeUpdate(param));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
+            HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
+            String data = await readReponseMessage(response);
+
+            return ReadResult<T>(data);
+        }
         /// <summary>
         /// Reads the reponse message.
         /// </summary>

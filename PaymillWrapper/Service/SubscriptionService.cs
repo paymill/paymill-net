@@ -64,7 +64,7 @@ namespace PaymillWrapper.Service
                 creator.StartAt, creator.Name, creator.PeriodOfValidity);
         }
 
-       
+
         public async Task<Subscription> CreateAsync(Payment payment, Client client, Offer offer, int? amount, String currency, Interval.PeriodWithChargeDay interval, DateTime startAt,
             String name, Interval.Period periodOfValidity)
         {
@@ -122,6 +122,81 @@ namespace PaymillWrapper.Service
                         }));
             //return RestfulUtils.create( SubscriptionService.PATH, params, Subscription.class, super.httpClient );
         }
+
+
+
+        public async Task<Subscription> CreateAsync(String paymentId, String clientId, String offerId, int amount, String currency, Interval.PeriodWithChargeDay interval,
+   DateTime startAt, String name, Interval.Period periodOfValidity)
+        {
+            return await CreateAsync(new Payment(paymentId), new Client(clientId), new Offer(offerId), amount, currency, interval, startAt, name, periodOfValidity);
+        }
+
+
+        public async Task<Subscription> PauseAsync(Subscription subscription)
+        {
+            return await UpdateParamAsync(subscription, new { param = true });
+        }
+        public async Task<Subscription> PauseAsync(String subscriptionId)
+        {
+            return await this.PauseAsync(new Subscription() { Id = subscriptionId });
+        }
+
+        public async Task<Subscription> UnpauseAsync(Subscription subscription)
+        {
+            return await UpdateParamAsync(subscription, new { param = false });
+        }
+
+
+        public async Task<Subscription> UnpauseAsync(String subscriptionId)
+        {
+            return await this.UnpauseAsync(new Subscription() { Id = subscriptionId });
+        }
+
+        public async Task<Subscription> ChangeAmountAsync(String subscriptionId, int amount)
+        {
+            return await ChangeAmountAsync(new Subscription(subscriptionId), amount);
+        }
+        public async Task<Subscription> ChangeAmountAsync(String subscriptionId, int amount, String currency, Interval.PeriodWithChargeDay interval)
+        {
+            return await ChangeAmountAsync(new Subscription(subscriptionId), amount, currency, interval);
+        }
+        public async Task<Subscription> ChangeAmountAsync(Subscription subscription, int amount)
+        {
+            return await changeAmountAsync(subscription, amount, 1, null, null);
+        }
+
+        public async Task<Subscription> ChangeAmountAsync(Subscription subscription, int amount, String currency, Interval.PeriodWithChargeDay interval)
+        {
+            return await changeAmountAsync(subscription, amount, 1, currency, interval);
+        }
+        public async Task<Subscription> ChangeAmountTemporaryAsync(Subscription subscription, int amount)
+        {
+            return await changeAmountAsync(subscription, amount, 0, null, null);
+        }
+
+        public async Task<Subscription> ChangeAmountTemporaryAsync(String subscriptionId, int amount)
+        {
+            return await ChangeAmountTemporaryAsync(new Subscription(subscriptionId), amount);
+        }
+
+        private async Task<Subscription> changeAmountAsync(Subscription subscription, int amount, int type, String currency, Interval.PeriodWithChargeDay interval)
+        {
+              Dictionary<String, String> param = new Dictionary<String, String>();
+              param["amount"] = amount.ToString();
+              param["amount_change_type"] = type.ToString(); 
+            if (currency != null)
+            {
+                ValidationUtils.ValidatesCurrency(currency);
+                param["currency"] = currency; 
+            }
+            if (interval != null)
+            {
+                ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
+                param["interval"] = interval.ToString(); 
+            }
+            return await UpdateParamAsync(subscription, param);
+        }
+
 
         protected override string GetResourceId(Subscription obj)
         {

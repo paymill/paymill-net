@@ -15,7 +15,13 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Subscription>))]
     public class Subscription : BaseModel
     {
-
+        public Subscription ()
+        {
+        }
+        public Subscription (String id)
+        {
+            Id = id;
+        }
         public int Amount { get; set; }
 
         [DataMember(Name = "temp_amount")]
