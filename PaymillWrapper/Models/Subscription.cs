@@ -119,29 +119,29 @@ namespace PaymillWrapper.Models
         public class SubscriptionStatus : EnumBaseType
         {
 
-            public static readonly Subscription.Status ACTIVE;
-            public static readonly Subscription.Status INACTIVE;
+            public static readonly Subscription.SubscriptionStatus ACTIVE;
+            public static readonly Subscription.SubscriptionStatus INACTIVE;
 
-            static Status()
+            static SubscriptionStatus()
             {
-                ACTIVE = new Status("active");
-                INACTIVE = new Status("inactive");
+                ACTIVE = new SubscriptionStatus("active");
+                INACTIVE = new SubscriptionStatus("inactive");
             }
 
-            private Status(String value, Boolean unknowValue = false)
+            private SubscriptionStatus(String value, Boolean unknowValue = false)
                 : base(value, unknowValue)
             {
 
             }
-            public Status()
+            public SubscriptionStatus()
                 : base("", false)
             {
             }
 
 
-            public static Status Create(String value)
+            public static SubscriptionStatus Create(String value)
             {
-                return (Status)EnumBaseType.GetItemByValue(value, typeof(Status));
+                return (SubscriptionStatus)EnumBaseType.GetItemByValue(value, typeof(SubscriptionStatus));
             }
 
         }
