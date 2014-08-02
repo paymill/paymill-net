@@ -120,7 +120,6 @@ namespace PaymillWrapper.Service
                             periodOfValidity = periodOfValidity != null ? periodOfValidity.ToString() : null
 
                         }));
-            //return RestfulUtils.create( SubscriptionService.PATH, params, Subscription.class, super.httpClient );
         }
 
 
@@ -181,22 +180,101 @@ namespace PaymillWrapper.Service
 
         private async Task<Subscription> changeAmountAsync(Subscription subscription, int amount, int type, String currency, Interval.PeriodWithChargeDay interval)
         {
-              Dictionary<String, String> param = new Dictionary<String, String>();
-              param["amount"] = amount.ToString();
-              param["amount_change_type"] = type.ToString(); 
+            Dictionary<String, String> param = new Dictionary<String, String>();
+            param["amount"] = amount.ToString();
+            param["amount_change_type"] = type.ToString();
             if (currency != null)
             {
                 ValidationUtils.ValidatesCurrency(currency);
-                param["currency"] = currency; 
+                param["currency"] = currency;
             }
             if (interval != null)
             {
                 ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
-                param["interval"] = interval.ToString(); 
+                param["interval"] = interval.ToString();
             }
             return await UpdateParamAsync(subscription, param);
         }
 
+        public async Task<Subscription> ChangeOfferChangeCaptureDateAndRefundAsync(Subscription subscription, Offer offer)
+        {
+            return await changeOfferAsync(subscription, offer, 2);
+        }
+        public async Task<Subscription> ChangeOfferKeepCaptureDateAndRefundAsync(Subscription subscription, Offer offer)
+        {
+            return await changeOfferAsync(subscription, offer, 1);
+        }
+
+
+        public async Task<Subscription> ChangeOfferKeepCaptureDateNoRefundAsync(Subscription subscription, Offer offer)
+        {
+            return await changeOfferAsync(subscription, offer, 0);
+        }
+
+        private async Task<Subscription> changeOfferAsync(Subscription subscription, Offer offer, int type)
+        {
+            ValidationUtils.ValidatesOffer(offer);
+            Dictionary<String, String> param = new Dictionary<String, String>();
+            param["offer"] = offer.Id;
+            param["offer_change_type"] = type.ToString();
+            return await UpdateParamAsync(subscription, param);
+        }
+
+
+        public async Task<Subscription> EndTrialAsync(Subscription subscription)
+        {
+            Dictionary<String, String> param = new Dictionary<String, String>();
+            param["trial_end"] = "false";
+            return await UpdateParamAsync(subscription, param);
+        }
+
+        public async Task<Subscription> LimitValidityAsync(Subscription subscription, Interval.Period newValidity)
+        {
+            Dictionary<String, String> param = new Dictionary<String, String>();
+            ValidationUtils.ValidatesIntervalPeriod(newValidity);
+            param["period_of_validity"] = newValidity.ToString();
+            return await UpdateParamAsync(subscription, param);
+        }
+
+        public async Task<Subscription> LimitValidityAsync(Subscription subscription, String newValidity)
+        {
+            return await LimitValidityAsync(subscription, new Interval.Period(newValidity));
+        }
+
+        public async Task<Subscription> UnlimitValidityAsync(Subscription subscription)
+        {
+            Dictionary<String, String> param = new Dictionary<String, String>();
+            param["period_of_validity"] = "remove";
+            return await UpdateParamAsync(subscription, param);
+        }
+
+        public async Task<Subscription> DeleteAsync(Subscription subscription)
+        {
+            return await this.DeleteAsync(subscription, true);
+        }
+
+        public async Task<Subscription> DeleteAsync(String subscriptionId)
+        {
+            return await this.DeleteAsync(new Subscription(subscriptionId));
+        }
+
+        public async Task<Subscription> CancelAsync(Subscription subscription)
+        {
+            return await this.DeleteAsync(subscription, false);
+        }
+
+        public async Task<Subscription> CancelAsync(String subscriptionId)
+        {
+            return await this.CancelAsync(new Subscription(subscriptionId));
+        }
+
+        private async Task<Subscription> DeleteAsync(Subscription subscription, Boolean remove)
+        {
+            Dictionary<String, String> param = new Dictionary<String, String>();
+            param["remove"] = "remove";
+            param["remove"] = remove.ToString();
+            return await UpdateParamAsync(subscription, param);
+        }
 
         protected override string GetResourceId(Subscription obj)
         {
