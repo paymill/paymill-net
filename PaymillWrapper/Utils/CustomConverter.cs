@@ -112,6 +112,27 @@ namespace PaymillWrapper.Utils
             writer.WriteRawValue(value.ToString());
         }
     }
+
+    public class StringToPeriodWithChargeDaydConverter : Newtonsoft.Json.JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            if (objectType == typeof(String))
+                return true;
+
+            return false;
+        }
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            String value = reader.Value.ToString();
+            return new Interval.PeriodWithChargeDay(value);
+
+        }
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteRawValue(value.ToString());
+        }
+    }
     public class StringToPeriodConverter : Newtonsoft.Json.JsonConverter
     {
         public override bool CanConvert(Type objectType)

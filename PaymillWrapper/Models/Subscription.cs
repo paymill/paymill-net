@@ -15,21 +15,11 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Subscription>))]
     public class Subscription : BaseModel
     {
-        public Subscription ()
-        {
-        }
-        public Subscription (String id)
-        {
-            Id = id;
-        }
+       [DataMember(Name = "amount")]
         public int Amount { get; set; }
 
         [DataMember(Name = "temp_amount")]
-        private int tempAmount { get; set; }
-
-
-        [DataMember(Name = "temp_amount")]
-        public int TempAmount { get; set; }
+        public int? TempAmount { get; set; }
 
         [DataMember(Name = "currency"),
         Updateable(Name = "currency")]
@@ -47,10 +37,10 @@ namespace PaymillWrapper.Models
 
 
         [DataMember(Name = "is_canceled")]
-        public Boolean IsCanceled { get; set; }
+        public Boolean Canceled { get; set; }
 
-        [DataMember(Name = "is_canceled")]
-        public Boolean IsDeleted { get; set; }
+        [DataMember(Name = "is_deleted")]
+        public Boolean Deleted { get; set; }
 
         [DataMember(Name = "period_of_validity")]
         public Interval.Period PeriodOfValidity { get; set; }
@@ -98,6 +88,7 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "canceled_at")]
         public DateTime? CanceledAt { get; set; }
 
+        [DataMember(Name = "status")]
         public SubscriptionStatus Status { get; set; }
         /// <summary>
         /// Client
@@ -289,9 +280,9 @@ namespace PaymillWrapper.Models
 
             internal Creator(Payment payment, int amount, String currency, Interval.PeriodWithChargeDay interval)
             {
-                this.Payment = payment;
-                this.Amount = amount;
-                this.Currency = currency;
+                Payment = payment;
+                Amount = amount;
+                Currency = currency;
                 this.Interval = interval;
             }
 
@@ -301,7 +292,7 @@ namespace PaymillWrapper.Models
                 this.Offer = offer;
             }
 
-            public Creator withClient(Client client)
+            public Creator WithClient(Client client)
             {
                 this.Client = client;
                 return this;
@@ -327,49 +318,49 @@ namespace PaymillWrapper.Models
 
             public Creator WithAmount(int amount)
             {
-                this.Amount = amount;
+                Amount = amount;
                 return this;
             }
 
             public Creator WithCurrency(String currency)
             {
-                this.Currency = currency;
+                Currency = currency;
                 return this;
             }
 
             public Creator WithInterval(Interval.PeriodWithChargeDay interval)
             {
-                this.Interval = interval;
+                Interval = interval;
                 return this;
             }
 
             public Creator WithInterval(String interval)
             {
-                this.Interval = new Interval.PeriodWithChargeDay(interval);
+                Interval = new Interval.PeriodWithChargeDay(interval);
                 return this;
             }
 
             public Creator WithStartDate(DateTime startAt)
             {
-                this.StartAt = startAt;
+                StartAt = startAt;
                 return this;
             }
 
             public Creator WithName(String name)
             {
-                this.Name = name;
+                Name = name;
                 return this;
             }
 
             public Creator WithPeriodOfValidity(Interval.Period period)
             {
-                this.PeriodOfValidity = period;
+                PeriodOfValidity = period;
                 return this;
             }
 
             public Creator WithPeriodOfValidity(String period)
             {
-                this.PeriodOfValidity = new Interval.Period(period);
+                PeriodOfValidity = new Interval.Period(period);
                 return this;
             }
 

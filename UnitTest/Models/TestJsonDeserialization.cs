@@ -122,7 +122,7 @@ namespace UnitTest.Models
                 Assert.IsNotNull(pa.Id);
             }
         }
-        
+      
         [TestMethod]
         public void TestPreauthorization()
         {
@@ -167,6 +167,22 @@ namespace UnitTest.Models
             Assert.AreEqual(1402488673, s.CreatedAt.ToUnixTimestamp(), "Created at");
             Assert.AreEqual(1402488731, s.UpdatedAt.ToUnixTimestamp(), "Updated at");
             Assert.IsNull(s.NextCaptureAt);
+        }
+        [TestMethod]
+        public void TestSubscriptionA21()
+        {
+            var s = ReadResult<Subscription>("subscription21.json");
+            Assert.AreEqual("sub_1b9204eb96fc4897a691", s.Id);
+            Assert.AreEqual("offer_22c0cf3f088cbed0b549", s.Offer.Id);
+            Assert.AreEqual("client_4f83fc456a8658d2ea8e", s.Client.Id);
+            Assert.AreEqual("pay_884e471b9fe6d9e3b38675d4", s.Payment.Id);
+            Assert.IsFalse(s.Livemode);
+            Assert.IsFalse(s.CancelAtPeriodEnd);
+            Assert.IsNotNull(s.TrialEnd);
+            Assert.IsNotNull(s.TrialStart);
+            Assert.AreEqual(s.Amount, 4500);
+            Assert.AreEqual(s.TempAmount, null);
+            Assert.AreEqual(s.PeriodOfValidity.ToString(), new Interval.Period("1 YEAR").ToString());
         }
         [TestMethod]
         public void TestSubscriptions()

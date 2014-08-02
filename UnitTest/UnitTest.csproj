@@ -93,6 +93,7 @@
     <EmbeddedResource Include="Models\Input\clients.json" />
     <EmbeddedResource Include="Models\Input\payments.json" />
     <EmbeddedResource Include="Models\Input\subscriptions.json" />
+    <EmbeddedResource Include="Models\Input\subscription21.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

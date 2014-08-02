@@ -13,30 +13,78 @@ namespace UnitTest.Net
     {
         PaymillContext _paymill = null;
         String testToken = "098f6bcd4621d373cade4e832627b4f6";
+        private int amount = 900;
+        private Interval.Period interval;
+        private String currency = "EUR";
+        private Offer offer2;
+        private String name = "Chuck Testa";
 
         [TestInitialize]
         public void Initialize()
         {
             _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
+            interval = Interval.period(1, Interval.TypeUnit.MONTH);
+            this.offer2 = _paymill.OfferService.CreateAsync(this.amount * 2, this.currency, this.interval, "Updated " + this.name).Result;
+           
         }
         [TestMethod]
-        public void TestCreateWithPayment()
+        public void TestCreateWithPaymentAndOffer()
         {
-            Offer offer = _paymill.OfferService.CreateAsync(1500, "EUR", Interval.period( 1, Interval.TypeUnit.MONTH ), "Test API", 3).Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
-
-            Subscription subscription = _paymill.SubscriptionService.CreateWithOfferAndPaymentAsync(offer, payment).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, offer)).Result;
             Assert.IsNotNull(subscription);
             Assert.IsNotNull(subscription.Client);
-            Assert.IsFalse(subscription.CancelAtPeriodEnd);
+            Assert.AreEqual(subscription.Payment.Id, payment.Id);
+            Assert.AreEqual(subscription.Offer.Id, offer.Id);
         }
 
+        [TestMethod]
+        public void TestCreateWithPaymentAndOfferComplex()
+        {
+            DateTime tomorrow = DateTime.Now.AddDays(1);
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+
+            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
+
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, offer).WithClient(client)
+                .WithAmount(this.amount * 5).WithCurrency("EUR").WithInterval("2 WEEK,monday").WithName("test sub").WithOffer(this.offer2)
+                .WithPeriodOfValidity("1 YEAR").WithStartDate(tomorrow)).Result;
+
+            Assert.IsNotNull(subscription);
+            Assert.IsNotNull(subscription.Client);
+            Assert.AreEqual(subscription.Payment.Id, payment.Id);
+            Assert.AreEqual(subscription.Client.Id, client.Id);
+            Assert.AreEqual(subscription.Amount, (int)(this.amount * 5));
+            Assert.AreEqual(subscription.Currency, "EUR");
+            Assert.AreEqual(subscription.Interval.Interval, (int)2);
+            Assert.AreEqual(subscription.Interval.Unit, Interval.TypeUnit.WEEK);
+            Assert.AreEqual(subscription.Interval.Weekday, Interval.Weekday.MONDAY);
+
+            Assert.AreEqual(subscription.Name, "test sub");
+            Assert.AreEqual(subscription.PeriodOfValidity.Interval, (int)1);
+            Assert.AreEqual(subscription.PeriodOfValidity.Unit, Interval.TypeUnit.YEAR);
+            Assert.IsTrue(subscription.NextCaptureAt.Value > DateTime.Now);
+            Assert.AreEqual(subscription.Status, Subscription.SubscriptionStatus.ACTIVE);
+            Assert.IsFalse(subscription.Canceled);
+            Assert.IsFalse(subscription.Canceled);
+            Assert.IsFalse(subscription.Livemode);
+
+            Assert.IsNull(subscription.CanceledAt);
+            Assert.IsTrue(DatesAroundSame(subscription.CreatedAt, DateTime.Now));
+            Assert.IsTrue(DatesAroundSame(subscription.TrialStart.Value, DateTime.Now));
+            Assert.IsTrue(DatesAroundSame(subscription.TrialEnd.Value, tomorrow));
+            Assert.IsTrue(DatesAroundSame(subscription.NextCaptureAt.Value, tomorrow));
+            Assert.IsNull(subscription.TempAmount);
+        }
+        /*
         [TestMethod]
         public void CreateWithPaymentAndClientWithOfferWithoutTrial()
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period( 1, Interval.TypeUnit.WEEK ), "Offer No Trial").Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
 
             Subscription subscriptionNoTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client).Result;
             Assert.IsNull(subscriptionNoTrial.TrialStart);
@@ -48,7 +96,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period( 1, Interval.TypeUnit.WEEK ), "Offer No Trial").Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
 
             long trialStart = DateTime.Now.AddDays(5).Ticks;
             Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
@@ -76,7 +124,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period( 1, Interval.TypeUnit.WEEK ), "Offer No Trial", 2).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial", 2).Result;
 
             long trialStart = DateTime.Now.AddDays(5).Ticks;
             Subscription subscriptionWithTrial = _paymill.SubscriptionService.CreateWithOfferPaymentAndClientAsync(offer, payment, client, new DateTime(trialStart)).Result;
@@ -119,7 +167,7 @@ namespace UnitTest.Net
             Assert.AreEqual(subscription.Id, subscriptionId);
             Assert.IsTrue(subscription.CancelAtPeriodEnd);
         }
-
+        */
         [TestMethod]
         public void ListOrderByCreatedAt()
         {
@@ -135,7 +183,16 @@ namespace UnitTest.Net
             }
         }
 
-       
+        public static Boolean DatesAroundSame(DateTime first, DateTime second, int minutes)
+        {
+            long timespan = minutes * 60 * 1000;
+            return Math.Abs(first.Millisecond - second.Millisecond) < timespan;
+        }
+
+        public static Boolean DatesAroundSame(DateTime first, DateTime second)
+        {
+            return DatesAroundSame(first, second, 10);
+        }
 
     }
 }

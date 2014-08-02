@@ -110,7 +110,6 @@ namespace PaymillWrapper.Service
             if (amount != null)
             {
                 ValidationUtils.ValidatesAmount(amount);
-                //params.add( "amount", String.valueOf( amount ) );
             }
             if (currency != null)
             {
@@ -120,15 +119,9 @@ namespace PaymillWrapper.Service
             {
                 ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
             }
-            if (startAt != null)
-            {
-                // params.add( "start_at", String.valueOf( startAt.getTime() / 1000 ) );
-            }
-
             if (periodOfValidity != null)
             {
                 ValidationUtils.ValidatesIntervalPeriod(periodOfValidity);
-                //params.add( "period_of_validity", periodOfValidity.toString() );
             }
             return await createAsync(null,
                         new UrlEncoder().EncodeObject(new
@@ -139,9 +132,9 @@ namespace PaymillWrapper.Service
                             amount = amount.HasValue ? amount.Value.ToString() : null,
                             currency = currency != null ? currency : null,
                             interval = interval != null ? interval.ToString() : null,
-                            startAt = startAt != null ? (startAt.Millisecond / 1000).ToString() : null,
+                            start_at = startAt != null ? (DateTimeExtensions.ToUnixTimestamp(startAt)).ToString() : null,
                             name = name != null ? name : null,
-                            periodOfValidity = periodOfValidity != null ? periodOfValidity.ToString() : null
+                            period_of_validity = periodOfValidity != null ? periodOfValidity.ToString() : null
 
                         }));
         }
@@ -259,7 +252,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> ChangeAmountAsync(String subscriptionId, int amount)
         {
-            return await ChangeAmountAsync(new Subscription(subscriptionId), amount);
+            return await ChangeAmountAsync(new Subscription() { Id = subscriptionId }, amount);
         }
 
         /// <summary>
@@ -279,7 +272,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> ChangeAmountAsync(String subscriptionId, int amount, String currency, Interval.PeriodWithChargeDay interval)
         {
-            return await ChangeAmountAsync(new Subscription(subscriptionId), amount, currency, interval);
+            return await ChangeAmountAsync(new Subscription() { Id = subscriptionId }, amount, currency, interval);
         }
 
         /// <summary>
@@ -344,7 +337,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> ChangeAmountTemporaryAsync(String subscriptionId, int amount)
         {
-            return await ChangeAmountTemporaryAsync(new Subscription(subscriptionId), amount);
+            return await ChangeAmountTemporaryAsync(new Subscription() { Id = subscriptionId }, amount);
         }
 
         private async Task<Subscription> changeAmountAsync(Subscription subscription, int amount, int type, String currency, Interval.PeriodWithChargeDay interval)
@@ -523,7 +516,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> DeleteAsync(String subscriptionId)
         {
-            return await DeleteAsync(new Subscription(subscriptionId));
+            return await DeleteAsync(new Subscription() { Id = subscriptionId });
         }
 
         /// <summary>
@@ -551,7 +544,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> CancelAsync(String subscriptionId)
         {
-            return await CancelAsync(new Subscription(subscriptionId));
+            return await CancelAsync(new Subscription() { Id = subscriptionId });
         }
         /// <summary>
         /// Updates a subscription.Following fields will be updated: 

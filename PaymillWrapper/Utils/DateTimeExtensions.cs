@@ -11,7 +11,10 @@ namespace PaymillWrapper.Utils
         {
             return (int)(dateTime - unixEpoch).TotalSeconds;
         }
-
+        public static int ToUnixTimestampMiliseconds(this DateTime dateTime)
+        {
+            return (int)(dateTime - unixEpoch).TotalMilliseconds;
+        }
         public static DateTime ParseAsUnixTimestamp(this int timestamp)
         {
             return unixEpoch.AddSeconds(timestamp);
