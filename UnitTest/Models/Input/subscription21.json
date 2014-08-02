@@ -1,0 +1,67 @@
+﻿{
+	"data":{
+		"id":"sub_1b9204eb96fc4897a691",
+		"offer":{
+			"id":"offer_22c0cf3f088cbed0b549",
+			"name":"Updated Chuck Testa",
+			"amount":1800,
+			"currency":"EUR",
+			"interval":"1 MONTH",
+			"trial_period_days":0,
+			"created_at":1406994955,
+			"updated_at":1406994955,
+			"subscription_count":{
+				"active":"1",
+				"inactive":0
+			},
+			"app_id":null
+		},
+		"livemode":false,
+		"amount":4500,
+		"temp_amount":null,
+		"currency":"EUR",
+		"name":"test sub",
+		"interval":"2 WEEK,MONDAY",
+		"trial_start":1406995003,
+		"trial_end":1407084972,
+		"period_of_validity":"1 YEAR",
+		"end_of_period":1438531003,
+		"next_capture_at":1407084972,
+		"created_at":1406995003,
+		"updated_at":1406995003,
+		"canceled_at":null,
+		"payment":{
+			"id":"pay_884e471b9fe6d9e3b38675d4",
+			"type":"creditcard",
+			"client":"client_4f83fc456a8658d2ea8e",
+			"card_type":"visa",
+			"country":null,
+			"expire_month":"12",
+			"expire_year":"2015",
+			"card_holder":"",
+			"last4":"1111",
+			"updated_at":1406994988,
+			"created_at":1406994988,
+			"app_id":null,
+			"is_recurring":true,
+			"is_usable_for_preauthorization":true
+		},
+		"app_id":null,
+		"is_canceled":false,
+		"is_deleted":false,
+		"status":"active",
+		"client":{
+			"id":"client_4f83fc456a8658d2ea8e",
+			"email":"zendest@example.com",
+			"description":null,
+			"app_id":null,
+			"updated_at":1406994979,
+			"created_at":1406994979,
+			"payment":[
+				"pay_884e471b9fe6d9e3b38675d4"
+			],
+			"subscription":null
+		}
+	},
+	"mode":"test"
+}
