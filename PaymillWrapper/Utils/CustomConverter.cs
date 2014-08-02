@@ -144,8 +144,13 @@ namespace PaymillWrapper.Utils
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            String value = reader.Value.ToString();
-            return new Interval.Period(value);
+            if (reader.Value != null)
+            {
+                String value = reader.Value.ToString();
+                return new Interval.Period(value);
+            }
+            else
+                return null;
 
         }
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

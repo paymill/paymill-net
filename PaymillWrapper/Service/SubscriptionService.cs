@@ -89,7 +89,7 @@ namespace PaymillWrapper.Service
         ///          if set, the subscription will expire after this period.</param>
         /// <returns>the subscription.</returns>
         ///
-        public async Task<Subscription> CreateAsync(Payment payment, Client client, Offer offer, int? amount, String currency, Interval.PeriodWithChargeDay interval, DateTime startAt,
+        public async Task<Subscription> CreateAsync(Payment payment, Client client, Offer offer, int? amount, String currency, Interval.PeriodWithChargeDay interval, DateTime? startAt,
             String name, Interval.Period periodOfValidity)
         {
 
@@ -132,7 +132,7 @@ namespace PaymillWrapper.Service
                             amount = amount.HasValue ? amount.Value.ToString() : null,
                             currency = currency != null ? currency : null,
                             interval = interval != null ? interval.ToString() : null,
-                            start_at = startAt != null ? (DateTimeExtensions.ToUnixTimestamp(startAt)).ToString() : null,
+                            start_at = startAt.HasValue ? DateTimeExtensions.ToUnixTimestamp(startAt.Value).ToString() : null,
                             name = name != null ? name : null,
                             period_of_validity = periodOfValidity != null ? periodOfValidity.ToString() : null
 
@@ -142,7 +142,7 @@ namespace PaymillWrapper.Service
 
         /// <summary>
         /// This function creates a<see cref="Subscription" /> between a <see cref="Client" /> and an <see cref="Offer" />. A <see cref="Client" /> can have several
-        /// <see cref="Subscription" />s to different <see cref="Offer}s, but only one <see cref="Subscription" /> to the same <see cref="Offer" />. The
+        /// <see cref="Subscription" />s to different <see cref="Offer" />s, but only one <see cref="Subscription" /> to the same <see cref="Offer" />. The
         /// <see cref="Client" />s is charged for each billing interval entered. 
         /// </summary>
         /// 
@@ -169,8 +169,8 @@ namespace PaymillWrapper.Service
         ///          if set, the subscription will expire after this period.</param>
         /// <returns>the subscription</returns>
         ///
-        public async Task<Subscription> CreateAsync(String paymentId, String clientId, String offerId, int amount, String currency, Interval.PeriodWithChargeDay interval,
-   DateTime startAt, String name, Interval.Period periodOfValidity)
+        public async Task<Subscription> CreateAsync(String paymentId, String clientId, String offerId, int? amount, String currency, Interval.PeriodWithChargeDay interval,
+   DateTime? startAt, String name, Interval.Period periodOfValidity)
         {
             return await CreateAsync(new Payment(paymentId), new Client(clientId), new Offer(offerId), amount, currency, interval, startAt, name, periodOfValidity);
         }

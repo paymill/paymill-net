@@ -16,7 +16,7 @@ namespace PaymillWrapper.Models
     public class Subscription : BaseModel
     {
        [DataMember(Name = "amount")]
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         [DataMember(Name = "temp_amount")]
         public int? TempAmount { get; set; }
@@ -271,10 +271,10 @@ namespace PaymillWrapper.Models
             public Payment Payment { get; set; }
             public Client Client { get; set; }
             public Offer Offer { get; set; }
-            public int Amount { get; set; }
+            public int? Amount { get; set; }
             public String Currency { get; set; }
             public Interval.PeriodWithChargeDay Interval { get; set; }
-            public DateTime StartAt { get; set; }
+            public DateTime? StartAt { get; set; }
             public String Name { get; set; }
             public Interval.Period PeriodOfValidity { get; set; }
 
