@@ -24,7 +24,7 @@ namespace PaymillWrapper.Service
         /// <returns>Object with the Preauthorization as sub object.d</returns>
         public async Task<Preauthorization> CreateWithTokenAsync(String token, int amount, String currency)
         {
-           
+
             return await CreateWithTokenAsync(token, amount, currency, null);
         }
         /// <summary>
@@ -40,22 +40,16 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
-
-            Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
-                 new UrlEncoder().EncodeObject(new
-                 {
-                     Token = token,
-                     Amount = amount,
-                     Currency = currency,
-                     Description = description
-                 }));
-
-            if (replyTransaction != null)
-            {
-                return replyTransaction.Preauthorization;
-            }
-
-            return null;
+            String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
+            return await createAsync(null,
+                   new UrlEncoder().EncodeObject(new
+                   {
+                       Token = token,
+                       Amount = amount,
+                       Currency = currency,
+                       Description = description,
+                       Source = srcValue
+                   }));
         }
 
         /// <summary>
@@ -83,23 +77,16 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesPayment(payment);
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
-
             String srcValue = String.Format("{0}-{1}", PaymillContext.GetProjectName(), PaymillContext.GetProjectVersion());
-            Transaction replyTransaction = await createSubClassAsync<Transaction>(Resource.Preauthorizations.ToString(),
-                new UrlEncoder().EncodeObject(new
-                {
-                    Payment = payment.Id,
-                    Amount = amount,
-                    Currency = currency,
-                    Source = srcValue,
-                    Description = description
-                }));
-            if (replyTransaction != null)
-            {
-                return replyTransaction.Preauthorization;
-            }
-
-            return null;
+            return await createAsync(null,
+                   new UrlEncoder().EncodeObject(new
+                   {
+                       Payment = payment.Id,
+                       Amount = amount,
+                       Currency = currency,
+                       Source = srcValue,
+                       Description = description
+                   }));
         }
         public override async Task<Preauthorization> UpdateAsync(Preauthorization obj)
         {

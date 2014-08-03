@@ -55,7 +55,8 @@ namespace UnitTest.Net
             UrlEncoder urlEncoder = new UrlEncoder();
             Subscription subscription = new Subscription();
             subscription.Id = "sub_569df922b4506cd73030";
-            string expected = "cancel_at_period_end=true";
+            subscription.Offer = new Offer() { Id = "sub_569df922b4506cd73030" };
+            string expected = "offer=sub_569df922b4506cd73030";
             string reply = urlEncoder.EncodeUpdate(subscription);
             Assert.AreEqual(expected, reply);
         }

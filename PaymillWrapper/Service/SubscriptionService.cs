@@ -187,7 +187,7 @@ namespace PaymillWrapper.Service
         ///
         public async Task<Subscription> PauseAsync(Subscription subscription)
         {
-            return await UpdateParamAsync(subscription, new { pause = "true" });
+            return await updateParamAsync(subscription.Id, new { pause = "true" });
         }
         ///
         /// Temporary pauses a subscription. 
@@ -217,7 +217,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> UnpauseAsync(Subscription subscription)
         {
-            return await UpdateParamAsync(subscription, new { pause = "false" });
+            return await updateParamAsync(subscription.Id, new { pause = "false" });
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace PaymillWrapper.Service
             {
                 ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
             }
-            return await UpdateParamAsync(subscription, new {
+            return await updateParamAsync(subscription.Id, new {
                 amount = amount,
                 amount_change_type = type,
                 currency = currency != null ? currency : null,
@@ -421,7 +421,7 @@ namespace PaymillWrapper.Service
         private async Task<Subscription> changeOfferAsync(Subscription subscription, Offer offer, int type)
         {
             ValidationUtils.ValidatesOffer(offer);
-            return await UpdateParamAsync(subscription, new {
+            return await updateParamAsync(subscription.Id, new {
                 offer = offer.Id,
                 offer_change_type = type
             });
@@ -437,7 +437,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> EndTrialAsync(Subscription subscription)
         {
-            return await UpdateParamAsync(subscription, new { trial_end = "false" });
+            return await updateParamAsync(subscription.Id, new { trial_end = "false" });
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace PaymillWrapper.Service
         public async Task<Subscription> LimitValidityAsync(Subscription subscription, Interval.Period newValidity)
         {
             ValidationUtils.ValidatesIntervalPeriod(newValidity);
-            return await UpdateParamAsync(subscription, new { period_of_validity = newValidity.ToString() });
+            return await updateParamAsync(subscription.Id, new { period_of_validity = newValidity.ToString() });
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> UnlimitValidityAsync(Subscription subscription)
         {
-            return await UpdateParamAsync(subscription, new { period_of_validity = "remove" });
+            return await updateParamAsync(subscription.Id, new { period_of_validity = "remove" });
         }
 
 
@@ -570,7 +570,7 @@ namespace PaymillWrapper.Service
         /// 
         private async Task<Subscription> deleteAsync(Subscription subscription, Boolean remove)
         {
-            return await DeleteParamAsync(subscription, new { remove = remove.ToString().ToLower() });
+            return await deleteParamAsync(subscription.Id, new { remove = remove.ToString().ToLower() });
         }
 
 

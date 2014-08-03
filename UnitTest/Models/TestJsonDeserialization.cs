@@ -136,7 +136,7 @@ namespace UnitTest.Models
             Assert.AreEqual(1349948920, p.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1349948920, p.UpdatedAt.ToUnixTimestamp());
         }
-        
+       
         [TestMethod]
         public void TestRefund()
         {

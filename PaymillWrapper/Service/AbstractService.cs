@@ -152,11 +152,11 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
-        public virtual async Task<T> DeleteParamAsync(T obj, Object param)
+        protected virtual async Task<T> deleteParamAsync(String resourceId, Object param)
         {
             var encoder = new UrlEncoder();
-           
-            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + GetResourceId(obj);
+
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
             ;
             request.Content = new StringContent(encoder.EncodeObject(param));
@@ -164,6 +164,24 @@ namespace PaymillWrapper.Service
             HttpResponseMessage response = httpClient.SendAsync(request).Result;
             String data = await readReponseMessage(response);
             return ReadResult<T>(data);
+        }
+        /// <summary>
+        /// Delete object the asynchronous.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        protected async Task<Boolean> deleteParamBoolAsync(String resourceId, Object param)
+        {
+            var encoder = new UrlEncoder();
+
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+            ;
+            request.Content = new StringContent(encoder.EncodeObject(param));
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            HttpResponseMessage response = httpClient.SendAsync(request).Result;
+            await readReponseMessage(response);
+            return true;
         }
         /// <summary>
         /// Updates the asynchronous.
@@ -188,11 +206,24 @@ namespace PaymillWrapper.Service
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
-        public virtual async Task<T> UpdateParamAsync(T obj, Object param)
+        protected virtual async Task<T> updateParamAsync(String resourceId, Object param)
         {
-            String resourceId = GetResourceId(obj);
             var encoder = new UrlEncoder();
             var content = new StringContent(encoder.EncodeObject(param));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
+            HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
+            String data = await readReponseMessage(response);
+            return ReadResult<T>(data);
+        }
+        /// Updates the asynchronous with custom params
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        protected virtual async Task<T> updateWithContentAsync(String resourceId, string contentStr)
+        {
+
+            var content = new StringContent(contentStr);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;

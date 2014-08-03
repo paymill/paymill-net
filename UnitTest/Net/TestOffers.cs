@@ -36,7 +36,7 @@ namespace UnitTest.Net
         {
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
-            Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id).Result;
+            Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id, false).Result;
             Assert.IsTrue(result, "Remove  Offer Failed");
         }
         [TestMethod]
@@ -51,7 +51,7 @@ namespace UnitTest.Net
         {
             Offer newOffer = createOffer();
             newOffer.Name = "Oferta 48";
-            Offer updatedOffer = _paymill.OfferService.UpdateAsync(newOffer).Result;
+            Offer updatedOffer = _paymill.OfferService.UpdateAsync(newOffer, true).Result;
             Assert.IsTrue(String.Compare(updatedOffer.Name, "Oferta 48") == 0, "Update offer failed");
         }
         [TestMethod]
