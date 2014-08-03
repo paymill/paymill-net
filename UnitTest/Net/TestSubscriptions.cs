@@ -16,14 +16,21 @@ namespace UnitTest.Net
         private int amount = 900;
         private Interval.Period interval;
         private String currency = "EUR";
+        private Payment payment; 
         private Offer offer2;
+        private Offer offer1;
         private String name = "Chuck Testa";
+        private DateTime inAWeek = DateTime.Now.AddDays(7);
+        private DateTime inTwoWeeks = DateTime.Now.AddDays(14);
+        private DateTime inAMonth = DateTime.Now.AddMonths(1);
 
         [TestInitialize]
         public void Initialize()
         {
             _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
             interval = Interval.period(1, Interval.TypeUnit.MONTH);
+            this.payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            this.offer1 = _paymill.OfferService.CreateAsync(this.amount, this.currency, this.interval, this.name).Result;
             this.offer2 = _paymill.OfferService.CreateAsync(this.amount * 2, this.currency, this.interval, "Updated " + this.name).Result;
 
         }
@@ -91,191 +98,171 @@ namespace UnitTest.Net
         public void TestCreateWithPaymentAndClient_WithOfferWithoutTrial_shouldReturnSubscriptionWithNullTrialStartAndNullTrialEnd()
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
-            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync("098f6bcd4621d373cade4e832627b4f6", client).Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
             Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
 
             Subscription subscriptionNoTrial = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment.Id, offer).WithClient(client.Id)).Result;
             Assert.IsNull(subscriptionNoTrial.TrialStart);
             Assert.IsNull(subscriptionNoTrial.TrialEnd);
         }
-        /*
-          @Test
-          public void testCreateWithPaymentAndClient_WithOfferWithTrial_shouldReturnSubscriptionWithTrialEqualsTrialInOffer() {
-            Client client = clientService.createWithEmail( "zendest@example.com" );
-            Payment payment = paymentService.createWithTokenAndClient( "098f6bcd4621d373cade4e832627b4f6", client );
-            Offer offer = offerService.create( 2225, "EUR", Interval.period( 1, Interval.Unit.WEEK ), "Offer With Trial", 2 );
-            Subscription subscriptionWithOfferTrial = subscriptionService.create( Subscription.create( payment.getId(), offer ).withClient( client.getId() ) );
 
-            Assert.assertNotNull( subscriptionWithOfferTrial.getTrialStart() );
-            Assert.assertTrue( datesAroundSame( subscriptionWithOfferTrial.getTrialEnd(), DateUtils.addDays( new Date(), 2 ) ) );
-            Assert.assertTrue( datesAroundSame( subscriptionWithOfferTrial.getNextCaptureAt(), DateUtils.addDays( new Date(), 2 ) ) );
+        [TestMethod]
+        public void TestCreateWithPaymentAndClient_WithOfferWithTrial_shouldReturnSubscriptionWithTrialEqualsTrialInOffer()
+        {
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2225, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer With Trial", 2).Result;
+            Subscription subscriptionWithOfferTrial = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment.Id, offer).WithClient(client.Id)).Result;
 
-            this.subscriptions.add( subscriptionWithOfferTrial );
-          }
+            Assert.IsNotNull(subscriptionWithOfferTrial.TrialStart);
+            Assert.IsTrue(DatesAroundSame(subscriptionWithOfferTrial.TrialEnd.Value, DateTime.Now.AddDays(2)));
+            Assert.IsTrue(DatesAroundSame(subscriptionWithOfferTrial.NextCaptureAt.Value, DateTime.Now.AddDays(2)));
+        }
 
-          @Test
-          public void testCreateWithPaymentClientAndStartat_WithOfferWithTrial_shouldReturnSubscriptionWithTrialEqualsTrialInSubscription() {
-            Client client = clientService.createWithEmail( "zendest@example.com" );
-            Payment payment = paymentService.createWithTokenAndClient( "098f6bcd4621d373cade4e832627b4f6", client );
-            Offer offer = offerService.create( 2224, "EUR", Interval.period( 1, Interval.Unit.WEEK ), "Offer No Trial", 2 );
-            Subscription subscriptionWithOfferTrial = subscriptionService.create( Subscription.create( payment.getId(), offer ).withClient( client.getId() )
-                .withStartDate( DateUtils.addDays( new Date(), 5 ) ) );
+        [TestMethod]
+        public void TestCreateWithPaymentClientAndStartat_WithOfferWithTrial_shouldReturnSubscriptionWithTrialEqualsTrialInSubscription()
+        {
+            Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
+            Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2224, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial", 2).Result;
+            Subscription subscriptionWithOfferTrial = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment.Id, offer).WithClient(client.Id)
+                .WithStartDate(DateTime.Now.AddDays(5))).Result;
 
-            Assert.assertNotNull( subscriptionWithOfferTrial.getTrialStart() );
-            Assert.assertTrue( datesAroundSame( subscriptionWithOfferTrial.getTrialEnd(), DateUtils.addDays( new Date(), 5 ) ) );
-            Assert.assertTrue( datesAroundSame( subscriptionWithOfferTrial.getNextCaptureAt(), DateUtils.addDays( new Date(), 5 ) ) );
+            Assert.IsNotNull(subscriptionWithOfferTrial.TrialStart);
+            Assert.IsTrue(DatesAroundSame(subscriptionWithOfferTrial.TrialEnd.Value, DateTime.Now.AddDays(5)));
+            Assert.IsTrue(DatesAroundSame(subscriptionWithOfferTrial.NextCaptureAt.Value, DateTime.Now.AddDays(5)));
 
-            this.subscriptions.add( subscriptionWithOfferTrial );
-          }
+        }
 
-          @Test
-          public void testPauseAndUnpauseSubscription() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ) );
-            subscriptionService.pause( subscription );
-            Assert.assertEquals( subscription.getStatus(), Subscription.Status.INACTIVE );
-            subscriptionService.unpause( subscription );
-            Assert.assertEquals( subscription.getStatus(), Subscription.Status.ACTIVE );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), DateUtils.addWeeks( new Date(), 1 ) ) );
-            this.subscriptions.add( subscription );
-          }
+        [TestMethod]
+        public void TestPauseAndUnpauseSubscription()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, 1200, "EUR", "1 WEEK")).Result;
+            subscription = _paymill.SubscriptionService.PauseAsync(subscription).Result;
+            Assert.AreEqual(subscription.Status, Subscription.SubscriptionStatus.INACTIVE);
+            subscription = _paymill.SubscriptionService.UnpauseAsync(subscription).Result;
+            Assert.AreEqual(subscription.Status, Subscription.SubscriptionStatus.ACTIVE);
+            Assert.IsTrue(DatesAroundSame(subscription.NextCaptureAt.Value, DateTime.Now.AddDays(1)));
+        }
 
-          @Test
-          public void testChangeSubscriptionAmountPermanently() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ) );
-            subscriptionService.changeAmount( subscription, 2000 );
-            Assert.assertEquals( subscription.getAmount(), (Integer) 2000 );
-            Assert.assertNull( subscription.getTempAmount() );
-            this.subscriptions.add( subscription );
-          }
+        [TestMethod]
+        public void TestChangeSubscriptionAmountPermanently()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, 1200, "EUR", "1 WEEK")).Result;
+            subscription = _paymill.SubscriptionService.ChangeAmountAsync(subscription, 2000).Result;
+            Assert.AreEqual(subscription.Amount, (int)2000);
+            Assert.IsNull(subscription.TempAmount);
+        }
 
-          @Test
-          public void testChangeSubscriptionAmountTemp() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ) );
-            subscriptionService.changeAmountTemporary( subscription, 2000 );
-            Assert.assertEquals( subscription.getAmount(), (Integer) 1200 );
-            Assert.assertEquals( subscription.getTempAmount(), (Integer) 2000 );
-            this.subscriptions.add( subscription );
-          }
+        [TestMethod]
+        public void TestChangeSubscriptionAmountTemp()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, 1200, "EUR", "1 WEEK")).Result;
+            subscription = _paymill.SubscriptionService.ChangeAmountTemporaryAsync(subscription, 2000).Result;
+            Assert.AreEqual(subscription.Amount, (int)1200);
+            Assert.AreEqual(subscription.TempAmount, (int)2000);
+        }
 
-          @Test
-          public void testChangeOfferKeepNextCaptureNoRefund() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ) );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inAWeek ) );
-            subscriptionService.changeOfferKeepCaptureDateNoRefund( subscription, this.offer1 );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inAWeek ) );
-            this.subscriptions.add( subscription );
-          }
+        [TestMethod]
+        public void TestChangeOfferKeepNextCaptureNoRefund()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
 
-          @Test
-          public void testChangeOfferKeepNextCaptureAndRefund() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ) );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inAWeek ) );
-            subscriptionService.changeOfferKeepCaptureDateAndRefund( subscription, this.offer1 );
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, 1200, "EUR", "1 WEEK")).Result;
+            Assert.IsTrue(DatesAroundSame(subscription.NextCaptureAt.Value, inAWeek));
+            subscription = _paymill.SubscriptionService.ChangeOfferKeepCaptureDateNoRefundAsync(subscription, this.offer1).Result;
+            Assert.IsTrue(DatesAroundSame(subscription.NextCaptureAt.Value, inAWeek));
+        }
+
+        [TestMethod]
+        public void TestChangeOfferKeepNextCaptureAndRefund()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, 1200, "EUR", "1 WEEK")).Result;
+            Assert.IsTrue(DatesAroundSame(subscription.NextCaptureAt.Value, inAWeek));
+            subscription = _paymill.SubscriptionService.ChangeOfferKeepCaptureDateAndRefundAsync(subscription, this.offer1).Result;
             //TODO cannot be tested correctly as there
-            //Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inAWeek ) );
-            this.subscriptions.add( subscription );
-          }
 
-          @Test
-          public void testChangeOfferChangeNextCaptureAndRefund() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ).withStartDate( inTwoWeeks ) );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inTwoWeeks ) );
-            subscriptionService.changeOfferChangeCaptureDateAndRefund( subscription, this.offer1 );
+        }
+        
+          [TestMethod]
+          public void TestChangeOfferChangeNextCaptureAndRefund() {
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 1200, "EUR", "1 WEEK" ).WithStartDate( inTwoWeeks ) ).Result;
+            Assert.IsTrue( DatesAroundSame( subscription.NextCaptureAt.Value, inTwoWeeks ) );
+            subscription =_paymill.SubscriptionService.ChangeOfferChangeCaptureDateAndRefundAsync(subscription, this.offer1).Result;
             // when we call the above we trigger a transaction, so the nextCapture moves to offer1 interval - 1 month
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inAMonth ) );
-            this.subscriptions.add( subscription );
+            Assert.IsTrue( DatesAroundSame( subscription.NextCaptureAt.Value, inAMonth ) );
           }
 
-          @Test
-          public void testEndTrial() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ).withStartDate( inTwoWeeks ) );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), inTwoWeeks ) );
-            subscriptionService.endTrial( subscription );
-            Assert.assertTrue( datesAroundSame( subscription.getNextCaptureAt(), new Date() ) );
-            Assert.assertNull( subscription.getTrialEnd() );
-            this.subscriptions.add( subscription );
+          [TestMethod]
+          public void TestEndTrial() {
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 1200, "EUR", "1 WEEK" ).WithStartDate( inTwoWeeks ) ).Result;
+            Assert.IsTrue( DatesAroundSame( subscription.NextCaptureAt.Value, inTwoWeeks ) );
+            subscription = _paymill.SubscriptionService.EndTrialAsync( subscription ).Result;
+            Assert.IsTrue( DatesAroundSame( subscription.NextCaptureAt.Value, DateTime.Now ) );
+            Assert.IsNull( subscription.TrialEnd );
           }
 
-          @Test
-          public void testChangePeriodValidity() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "2 MONTH" ).withPeriodOfValidity( "1 YEAR" ) );
-            Assert.assertEquals( subscription.getPeriodOfValidity().getInterval(), (Integer) 1 );
-            Assert.assertEquals( subscription.getPeriodOfValidity().getUnit(), Interval.Unit.YEAR );
-            subscriptionService.limitValidity( subscription, "2 MONTH" );
-            Assert.assertEquals( subscription.getPeriodOfValidity().getInterval(), (Integer) 2 );
-            Assert.assertEquals( subscription.getPeriodOfValidity().getUnit(), Interval.Unit.MONTH );
-            subscriptionService.unlimitValidity( subscription );
-            Assert.assertNull( subscription.getPeriodOfValidity() );
-            this.subscriptions.add( subscription );
+          [TestMethod]
+          public void TestChangePeriodValidity() {
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 1200, "EUR", "2 MONTH" ).WithPeriodOfValidity( "1 YEAR" ) ).Result;
+            Assert.AreEqual( subscription.PeriodOfValidity.Interval, (int) 1 );
+            Assert.AreEqual( subscription.PeriodOfValidity.Unit, Interval.TypeUnit.YEAR );
+            subscription = _paymill.SubscriptionService.LimitValidityAsync(subscription, "2 MONTH").Result;
+            Assert.AreEqual( subscription.PeriodOfValidity.Interval, (int) 2 );
+            Assert.AreEqual( subscription.PeriodOfValidity.Unit, Interval.TypeUnit.MONTH );
+            subscription = _paymill.SubscriptionService.UnlimitValidityAsync(subscription).Result;
+            Assert.IsNull( subscription.PeriodOfValidity );
           }
 
-          @Test
-          public void testCancelSubscription() throws InterruptedException {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ).withInterval( "1 WEEK" ) );
-            subscriptionService.cancel( subscription );
+          [TestMethod]
+          public void TestCancelSubscription()/* throws InterruptedException */{
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 1200, "EUR", "1 WEEK" ).WithInterval( "1 WEEK" ) ).Result;
+            subscription = _paymill.SubscriptionService.CancelAsync(subscription).Result;
             //TODO this seems to be an API bug, as the subscription is not updated immediately. we "refresh"
-            Assert.assertEquals( subscription.getStatus(), Subscription.Status.INACTIVE );
-            Assert.assertEquals( subscription.getCanceled(), Boolean.TRUE );
-            Assert.assertEquals( subscription.getDeleted(), Boolean.FALSE );
-            this.subscriptions.add( subscription );
+            Assert.AreEqual( subscription.Status.Value.ToString() , Subscription.SubscriptionStatus.INACTIVE.ToString() );
+            Assert.AreEqual( subscription.Canceled, true);
+            Assert.AreEqual( subscription.Deleted, false );
           }
 
-          @Test
-          public void testDeleteSubscription() throws InterruptedException {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 1200, "EUR", "1 WEEK" ).withInterval( "1 WEEK" ) );
-            subscriptionService.delete( subscription );
+          [TestMethod]
+          public void TestDeleteSubscription(){
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 1200, "EUR", "1 WEEK" ).WithInterval( "1 WEEK" ) ).Result;
+            subscription = _paymill.SubscriptionService.DeleteAsync(subscription).Result;
             //TODO this seems to be an API bug, as the subscription is not updated immediately. we "refresh"
-            Assert.assertEquals( subscription.getStatus(), Subscription.Status.INACTIVE );
-            Assert.assertEquals( subscription.getCanceled(), Boolean.TRUE );
-            Assert.assertEquals( subscription.getDeleted(), Boolean.TRUE );
+            Assert.AreEqual( subscription.Status.ToString(), Subscription.SubscriptionStatus.INACTIVE.ToString() );
+            Assert.AreEqual( subscription.Canceled, true );
+            Assert.AreEqual( subscription.Deleted, true );
           }
 
-          @Test
-          public void testUpdateSubscription() {
-            Subscription subscription = subscriptionService.create( Subscription.create( this.payment, 2000, "EUR", "1 WEEK" ).withName( "test1" ) );
-            subscription.setCurrency( "USD" );
-            subscription.setInterval( Interval.periodWithChargeDay( 2, Interval.Unit.MONTH ) );
-            subscription.setName( "test2" );
-            subscriptionService.update( subscription );
-            Assert.assertEquals( subscription.getCurrency(), "USD" );
-            Assert.assertEquals( subscription.getInterval().getInterval(), (Integer) 2 );
-            Assert.assertEquals( subscription.getInterval().getUnit(), Interval.Unit.MONTH );
-            Assert.assertEquals( subscription.getName(), "test2" );
+          [TestMethod]
+          public void TestUpdateSubscription() {
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 2000, "EUR", "1 WEEK" ).WithName( "test1" ) ).Result;
+            subscription.Currency =  "USD" ;
+            subscription.Interval = Interval.periodWithChargeDay( 2, Interval.TypeUnit.MONTH ) ;
+            subscription.Name =  "test2" ;
+            subscription.Offer = null; // Do not update Offer
+            subscription = _paymill.SubscriptionService.UpdateAsync(subscription).Result;
+            Assert.AreEqual( subscription.Currency, "USD" );
+            Assert.AreEqual( subscription.Interval.Interval, (int) 2 );
+            Assert.AreEqual( subscription.Interval.Unit, Interval.TypeUnit.MONTH );
+            Assert.AreEqual( subscription.Name, "test2" );
+            Assert.IsNotNull(subscription.Offer.Id);
           }
-
-          // TODO[VNi]: There is an API error: No sorting by offer.
-          //@Test( )
-          public void testListOrderByOffer() {
-
-            subscriptionService.create( Subscription.create( payment, offer4 ) );
-            subscriptionService.create( Subscription.create( payment, offer5 ) );
-
-            Subscription.Order orderDesc = Subscription.createOrder().byOffer().desc();
-            Subscription.Order orderAsc = Subscription.createOrder().byOffer().asc();
-
-            List<Subscription> subscriptionsDesc = this.subscriptionService.list( null, orderDesc ).getData();
-
-            List<Subscription> subscriptionsAsc = this.subscriptionService.list( null, orderAsc ).getData();
-
-            Assert.assertNotEquals( subscriptionsDesc.get( 0 ).getOffer().getId(), subscriptionsAsc.get( 0 ).getOffer().getId() );
+          [TestMethod]
+          public void TestUpdateSubscriptionOffer()
+          {
+              Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(this.payment, 2000, "EUR", "1 WEEK").WithName("test1")).Result;
+              subscription.Currency = null;// Do not update Currency
+              subscription.Interval = null;// Do not update Interval
+              subscription.Name = null;// Do not update Name
+              subscription.Offer = this.offer1; 
+              subscription = _paymill.SubscriptionService.UpdateAsync(subscription).Result;
+              Assert.AreEqual(subscription.Offer.Id, this.offer1.Id);
           }
-
-          // @Test( dependsOnMethods = "testCreateWithPaymentAndOfferComplex" )
-          public void testListOrderByCreatedAt() {
-            Subscription.Order orderDesc = Subscription.createOrder().byCreatedAt().desc();
-            Subscription.Order orderAsc = Subscription.createOrder().byCreatedAt().asc();
-
-            List<Subscription> subscriptionsDesc = this.subscriptionService.list( null, orderDesc, 100000, 0 ).getData();
-            for( Subscription subscription : subscriptionsDesc ) {
-              if( subscription.getOffer() == null )
-                this.subscriptionService.get( subscription );
-            }
-
-            List<Subscription> subscriptionsAsc = this.subscriptionService.list( null, orderAsc, 100000, 0 ).getData();
-
-            Assert.assertEquals( subscriptionsDesc.get( 0 ).getId(), subscriptionsAsc.get( subscriptionsAsc.size() - 1 ).getId() );
-            Assert.assertEquals( subscriptionsDesc.get( subscriptionsDesc.size() - 1 ).getId(), subscriptionsAsc.get( 0 ).getId() );
-          }*/
         [TestMethod]
         public void ListOrderByCreatedAt()
         {

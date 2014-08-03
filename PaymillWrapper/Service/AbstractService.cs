@@ -148,6 +148,24 @@ namespace PaymillWrapper.Service
             return true;
         }
         /// <summary>
+        /// Delete object the asynchronous.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
+        public virtual async Task<T> DeleteParamAsync(T obj, Object param)
+        {
+            var encoder = new UrlEncoder();
+           
+            string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + GetResourceId(obj);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+            ;
+            request.Content = new StringContent(encoder.EncodeObject(param));
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            HttpResponseMessage response = httpClient.SendAsync(request).Result;
+            String data = await readReponseMessage(response);
+            return ReadResult<T>(data);
+        }
+        /// <summary>
         /// Updates the asynchronous.
         /// </summary>
         /// <param name="obj">The object.</param>
@@ -156,7 +174,8 @@ namespace PaymillWrapper.Service
         {
             String resourceId = GetResourceId(obj);
             var encoder = new UrlEncoder();
-            var content = new StringContent(encoder.EncodeUpdate(obj));
+            String paramStr = encoder.EncodeUpdate(obj);
+            var content = new StringContent(paramStr);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
@@ -173,12 +192,11 @@ namespace PaymillWrapper.Service
         {
             String resourceId = GetResourceId(obj);
             var encoder = new UrlEncoder();
-            var content = new StringContent(encoder.EncodeUpdate(param));
+            var content = new StringContent(encoder.EncodeObject(param));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
-
             return ReadResult<T>(data);
         }
         /// <summary>

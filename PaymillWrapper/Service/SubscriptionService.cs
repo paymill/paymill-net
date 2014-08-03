@@ -187,7 +187,7 @@ namespace PaymillWrapper.Service
         ///
         public async Task<Subscription> PauseAsync(Subscription subscription)
         {
-            return await UpdateParamAsync(subscription, new { param = true });
+            return await UpdateParamAsync(subscription, new { pause = "true" });
         }
         ///
         /// Temporary pauses a subscription. 
@@ -217,7 +217,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> UnpauseAsync(Subscription subscription)
         {
-            return await UpdateParamAsync(subscription, new { param = false });
+            return await UpdateParamAsync(subscription, new { pause = "false" });
         }
 
         /// <summary>
@@ -342,20 +342,20 @@ namespace PaymillWrapper.Service
 
         private async Task<Subscription> changeAmountAsync(Subscription subscription, int amount, int type, String currency, Interval.PeriodWithChargeDay interval)
         {
-            Dictionary<String, String> param = new Dictionary<String, String>();
-            param["amount"] = amount.ToString();
-            param["amount_change_type"] = type.ToString();
             if (currency != null)
             {
                 ValidationUtils.ValidatesCurrency(currency);
-                param["currency"] = currency;
             }
             if (interval != null)
             {
                 ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
-                param["interval"] = interval.ToString();
             }
-            return await UpdateParamAsync(subscription, param);
+            return await UpdateParamAsync(subscription, new {
+                amount = amount,
+                amount_change_type = type,
+                currency = currency != null ? currency : null,
+                interval = interval != null ? interval: null
+            });
         }
 
         /// <summary>
@@ -421,10 +421,10 @@ namespace PaymillWrapper.Service
         private async Task<Subscription> changeOfferAsync(Subscription subscription, Offer offer, int type)
         {
             ValidationUtils.ValidatesOffer(offer);
-            Dictionary<String, String> param = new Dictionary<String, String>();
-            param["offer"] = offer.Id;
-            param["offer_change_type"] = type.ToString();
-            return await UpdateParamAsync(subscription, param);
+            return await UpdateParamAsync(subscription, new {
+                offer = offer.Id,
+                offer_change_type = type
+            });
         }
 
         /// <summary>
@@ -437,9 +437,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> EndTrialAsync(Subscription subscription)
         {
-            Dictionary<String, String> param = new Dictionary<String, String>();
-            param["trial_end"] = "false";
-            return await UpdateParamAsync(subscription, param);
+            return await UpdateParamAsync(subscription, new { trial_end = "false" });
         }
 
         /// <summary>
@@ -454,10 +452,8 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> LimitValidityAsync(Subscription subscription, Interval.Period newValidity)
         {
-            Dictionary<String, String> param = new Dictionary<String, String>();
             ValidationUtils.ValidatesIntervalPeriod(newValidity);
-            param["period_of_validity"] = newValidity.ToString();
-            return await UpdateParamAsync(subscription, param);
+            return await UpdateParamAsync(subscription, new { period_of_validity = newValidity.ToString() });
         }
 
         /// <summary>
@@ -485,9 +481,7 @@ namespace PaymillWrapper.Service
         /// 
         public async Task<Subscription> UnlimitValidityAsync(Subscription subscription)
         {
-            Dictionary<String, String> param = new Dictionary<String, String>();
-            param["period_of_validity"] = "remove";
-            return await UpdateParamAsync(subscription, param);
+            return await UpdateParamAsync(subscription, new { period_of_validity = "remove" });
         }
 
 
@@ -576,10 +570,7 @@ namespace PaymillWrapper.Service
         /// 
         private async Task<Subscription> deleteAsync(Subscription subscription, Boolean remove)
         {
-            Dictionary<String, String> param = new Dictionary<String, String>();
-            param["remove"] = "remove";
-            param["remove"] = remove.ToString();
-            return await UpdateParamAsync(subscription, param);
+            return await DeleteParamAsync(subscription, new { remove = remove.ToString().ToLower() });
         }
 
 

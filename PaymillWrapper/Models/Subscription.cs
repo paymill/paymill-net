@@ -46,8 +46,8 @@ namespace PaymillWrapper.Models
         public Interval.Period PeriodOfValidity { get; set; }
 
 
-        [DataMember(Name = "end_of_periods")]
-        public DateTime EndOfPeriod { get; set; }
+        [DataMember(Name = "end_of_period")]
+        public DateTime? EndOfPeriod { get; set; }
 
 
         /// <summary>
@@ -63,12 +63,6 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "livemode")]
         public bool Livemode { get; set; }
 
-        /// <summary>
-        /// Cancel this subscription immediately or at the end of the current period?
-        /// </summary>
-        [DataMember(Name = "cancel_at_period_end"),
-        Updateable(Name = "cancel_at_period_end")]
-        public bool CancelAtPeriodEnd { get; set; }
 
         [DataMember(Name = "trial_start")]
         public DateTime? TrialStart { get; set; }
@@ -99,8 +93,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Payment
         /// </summary>
-        [DataMember(Name = "payment"),
-        Updateable(Name = "payment", OnlyProperty = "Id")]
+        [DataMember(Name = "payment")]
         public Payment Payment { get; set; }
 
         [DataMember(Name = "app_id")]

@@ -53,13 +53,10 @@ namespace UnitTest.Net
         public void EncodeSubscriptionUpdate()
         {
             UrlEncoder urlEncoder = new UrlEncoder();
-
             Subscription subscription = new Subscription();
-            subscription.CancelAtPeriodEnd = true;
             subscription.Id = "sub_569df922b4506cd73030";
             string expected = "cancel_at_period_end=true";
             string reply = urlEncoder.EncodeUpdate(subscription);
-
             Assert.AreEqual(expected, reply);
         }
         [TestMethod]

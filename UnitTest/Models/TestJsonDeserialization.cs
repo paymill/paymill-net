@@ -161,7 +161,6 @@ namespace UnitTest.Models
             Assert.AreEqual("client_a64eacffe5e67b784eac", s.Client.Id);
             Assert.AreEqual("pay_86be5e6c3547b752cb4ce93c", s.Payment.Id);
             Assert.IsFalse(s.Livemode);
-            Assert.IsFalse(s.CancelAtPeriodEnd);
             Assert.IsNull(s.TrialEnd);
             Assert.IsNull(s.TrialStart);
             Assert.AreEqual(1402488673, s.CreatedAt.ToUnixTimestamp(), "Created at");
@@ -177,7 +176,6 @@ namespace UnitTest.Models
             Assert.AreEqual("client_4f83fc456a8658d2ea8e", s.Client.Id);
             Assert.AreEqual("pay_884e471b9fe6d9e3b38675d4", s.Payment.Id);
             Assert.IsFalse(s.Livemode);
-            Assert.IsFalse(s.CancelAtPeriodEnd);
             Assert.IsNotNull(s.TrialEnd);
             Assert.IsNotNull(s.TrialStart);
             Assert.AreEqual(s.Amount, 4500);
