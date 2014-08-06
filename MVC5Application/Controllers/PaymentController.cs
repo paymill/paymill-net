@@ -22,9 +22,22 @@ namespace Mvc5Application.Controllers
         public ActionResult Submit(Models.PaymillForm form)
         {
             PaymillContext paymill = new PaymillContext("YOUR Private Key");
-            string token = Request.Form["hToken"];	
-            Transaction transaction = paymill.TransactionService.CreateWithTokenAsync(token, form.Amount, form.Currency).Result;
-           return Content("Payment Succeed");
+            string token = Request.Form["hToken"];
+            try
+            {
+                Transaction transaction = paymill.TransactionService.CreateWithTokenAsync(token, form.Amount, form.Currency).Result;
+                Transaction.TransactionStatus status = transaction.Status;
+                // You can check the transaction status like this : 
+                if (status == Transaction.TransactionStatus.PENDING)
+                {
+                    return Content("Payment PENDING");
+                }
+            }
+            catch(AggregateException  ex){
+                // or returns Error from server
+                return Content(ex.InnerException.Message);
+            }
+            return Content(""); 
         } 
     }
 }
