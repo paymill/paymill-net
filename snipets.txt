@@ -232,34 +232,60 @@ PaymillList<Offer> offers = offerService.ListAsync().Result;
 ---------------------Subscriptions----------------------
 
 --Create new Subscription
-ClientService clientService = paymillContext.ClientService;
-Client client = clientService.GetAsync("client_64b025ee5955abd5af66").Result;
-OfferService offerService = paymillContext.OfferService;
-Offer offer = offerService.GetAsync("offer_40237e20a7d5a231d99b").Result;
-PaymentService paymentService = paymillContext.PaymentService;
-Payment payment = paymentService.GetAsync("pay_95ba26ba2c613ebb0ca8").Result;
-SubscriptionService subscriptionService = paymillContext.SubscriptionService;
-Subscription subscription = subscriptionService.CreateWithOfferPaymentAndClientAsync(
-    offer,
-    payment,
-    client
-).Result;
+Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
+Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, offer)).Result;
+
 
 --Subscription Details
 SubscriptionService subscriptionService = paymillContext.SubscriptionService;
 Subscription subscription = subscriptionService.GetAsync("sub_dc180b755d10da324864").Result;
 
---Update Subscription
-SubscriptionService subscriptionService = paymillContext.SubscriptionService;
-Subscription subscription = subscriptionService.GetAsync(
-    "sub_dc180b755d10da324864"
-).Result;
-subscription.CancelAtPeriodEnd = true ;
-subscriptionService.UpdateAsync( subscription ).Result;
+--Pause Subscription
+subscription = _paymill.SubscriptionService.PauseAsync(subscription).Result;
 
---Remove Subscription
-SubscriptionService subscriptionService = paymillContext.SubscriptionService;
-subscriptionService.DeleteAsync("sub_dc180b755d10da324864").Result;
+--Unpause Subscription
+subscription = _paymill.SubscriptionService.UnpauseAsync(subscription).Result;
+
+-- Change Amount
+subscription = _paymill.SubscriptionService.ChangeAmountAsync(subscription, 2000).Result;
+
+-- Change Temp Amount
+ subscription = _paymill.SubscriptionService.ChangeAmountTemporaryAsync(subscription, 2000).Result;
+
+-- Change Offer Keep Capture Date No Refund
+subscription = _paymill.SubscriptionService.ChangeOfferKeepCaptureDateNoRefundAsync(subscription, newOffer ).Result;
+
+-- Change Offer Keep Next Capture And Refund
+subscription = _paymill.SubscriptionService.ChangeOfferKeepCaptureDateAndRefundAsync(subscription, newOffer).Result;
+
+-- End Trial
+subscription = _paymill.SubscriptionService.EndTrialAsync( subscription ).Result;
+
+-- Change Period Limited Validity
+subscription = _paymill.SubscriptionService.LimitValidityAsync(subscription, "2 MONTH").Result;
+
+-- Change Period Un Limited Validity
+subscription = _paymill.SubscriptionService.UnlimitValidityAsync(subscription).Result;
+
+-- Cancel
+subscription = _paymill.SubscriptionService.CancelAsync(subscription).Result;
+
+-- Update 
+subscription = _paymill.SubscriptionService.UpdateAsync(subscription).Result;
+
+-- Update Offer Only
+ Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(this.payment, 2000, "EUR", "1 WEEK").WithName("test1")).Result;
+subscription.Currency = null;// Do not update Currency
+subscription.Interval = null;// Do not update Interval
+subscription.Name = null;// Do not update Name
+subscription.Offer = this.offer1; 
+subscription = _paymill.SubscriptionService.UpdateAsync(subscription).Result;
+
+
+--Delete Subscription   
+subscription = _paymill.SubscriptionService.DeleteAsync(subscription).Result;
+
 
 --List Subscriptions
 SubscriptionService subscriptionService = paymillContext.SubscriptionService;

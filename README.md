@@ -28,7 +28,7 @@ Download the lastest stable release from https://paymill.codeplex.com/releases.
 
 ## What's new
 
-We have released version 2. This version is not backwards compatible with version 1. Concrete changes in the changelog.
+We have released version 3, which follows version 2.1 of the PAYMILL's REST API. This version is not backwards compatible with version 2, which follows version 2.0 of the PAYMILL's REST API. Concrete changes in the changelog.
 
 ## Usage
 
@@ -132,6 +132,12 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 ```
 
 ## Changelog
+
+### 3.0.0
++ Works with version 2.1 of PAYMILL's REST API.
++ update project dependencies
++ improvement: remove workaround for subscriptions without offer.
++ improvement: now preauthorizations can be created with description.
 
 ### 2.1.4
 + improving client and payment object deserialization.
