@@ -40,7 +40,7 @@ namespace PaymillWrapper.Models
         public List<Subscription> Subscriptions { get; set; }
 
         [DataMember(Name = "app_id")]
-        private String AppId;
+        private String appId;
 
         public Client()
         {

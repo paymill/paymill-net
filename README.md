@@ -26,6 +26,9 @@ More info [here](https://www.nuget.org/packages/PaymillWrapper/)
 ### Manual
 Download the lastest stable release from https://paymill.codeplex.com/releases.
 
+### Compile for .Net 4.0
+If you need to compile it for .Net 4.0 you should install [Async Targeting Pack] (http://blogs.msdn.com/b/bclteam/p/asynctargetingpackkb.aspx) through [Nuget](https://www.nuget.org/packages/Microsoft.Bcl.Async) as a replacement for the AsyncCTP.
+
 ## What's new
 
 We have released version 3, which follows version 2.1 of the PAYMILL's REST API. This version is not backwards compatible with version 2, which follows version 2.0 of the PAYMILL's REST API. Concrete changes in the changelog.
