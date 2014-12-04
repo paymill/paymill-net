@@ -36,7 +36,7 @@ namespace UnitTest.Net
         {
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
-            Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id, false).Result;
+            Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id, true).Result;
             Assert.IsTrue(result, "Remove  Offer Failed");
         }
         [TestMethod]

@@ -1,4 +1,5 @@
-﻿using PaymillWrapper.Utils;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace PaymillWrapper.Models
     /// <summary>
     /// A transaction is the charging of a credit card or a direct debit.
     /// </summary>
+    [JsonConverter(typeof(StringToBaseModelConverter<Preauthorization>))]
     public class Preauthorization : BaseModel
     {
         [Newtonsoft.Json.JsonConverter(typeof(StringToBaseEnumTypeConverter<PreauthorizationStatus>))]
@@ -67,6 +69,9 @@ namespace PaymillWrapper.Models
         /// </summary>
         [DataMember(Name = "client")]
         public Client Client { get; set; }
+
+        [DataMember(Name = "transaction")]
+        public Transaction Transaction { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
@@ -176,7 +181,7 @@ namespace PaymillWrapper.Models
             }
 
         }
-      
+
 
 
     }

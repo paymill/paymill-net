@@ -128,13 +128,14 @@ namespace UnitTest.Models
         {
             var paym = new Payment();
             var p = ReadResults<Preauthorization>("preauthorizations.json").Data.FirstOrDefault();
-            Assert.AreEqual("preauth_31eb90495837447f76b7", p.Id);
-            Assert.AreEqual("client_11cc57776f7954925cf9", p.Client.Id);
-            Assert.AreEqual("pay_9eb3371ae4ca3a51ab255a2e", p.Payment.Id);
+            Assert.AreEqual("preauth_15712bb463814a3e543d", p.Id);
+            Assert.AreEqual("client_2e3a152b2ca81396aab0", p.Client.Id);
+            Assert.AreEqual("pay_b6ba1f2d8f71b3631be18fb2", p.Payment.Id);
+            Assert.AreEqual("client_2e3a152b2ca81396aab0", p.Payment.Client.Id);
             Assert.IsFalse(p.Livemode);
             Assert.AreEqual(Preauthorization.PreauthorizationStatus.CLOSED, p.Status);
-            Assert.AreEqual(1349948920, p.CreatedAt.ToUnixTimestamp());
-            Assert.AreEqual(1349948920, p.UpdatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1417728267, p.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1417728268, p.UpdatedAt.ToUnixTimestamp());
         }
        
         [TestMethod]

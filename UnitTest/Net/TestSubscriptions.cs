@@ -235,7 +235,7 @@ namespace UnitTest.Net
             //TODO this seems to be an API bug, as the subscription is not updated immediately. we "refresh"
             Assert.AreEqual( subscription.Status.ToString(), Subscription.SubscriptionStatus.INACTIVE.ToString() );
             Assert.AreEqual( subscription.Canceled, true );
-            Assert.AreEqual( subscription.Deleted, true );
+            Assert.AreEqual( subscription.Deleted, false );
           }
 
           [TestMethod]

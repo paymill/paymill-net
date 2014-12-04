@@ -67,7 +67,7 @@ namespace UnitTest.Net
 
         }
        [TestMethod]
-        public void ListOrderByOffer()
+        public void ListOrderByOrder()
         {
             Preauthorization.Order orderDesc = Preauthorization.CreateOrder().ByCreatedAt().Desc();
             Preauthorization.Order orderAsc = Preauthorization.CreateOrder().ByCreatedAt().Asc();
