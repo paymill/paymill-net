@@ -136,6 +136,9 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 
 ## Changelog
 
+### 3.0.1
++ Added Transaction property missing in preauth.
+
 ### 3.0.0
 + Works with version 2.1 of PAYMILL's REST API.
 + update project dependencies
