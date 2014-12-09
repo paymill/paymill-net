@@ -206,7 +206,7 @@ namespace UnitTest.Models
             Assert.AreEqual("Bar", t.Description);
             Assert.AreEqual(59.00, t.AmountFormatted);
             Assert.IsNull(t.Refunds);
-            Assert.IsNull(t.Preauthorization);
+            Assert.IsNull(t.Preauthorization.Id);
             Assert.AreEqual(20000, t.ResponseCode);
             Assert.IsFalse(t.IsFraud);
             Assert.AreEqual("7357.7357.7357", t.ShortId);

@@ -31,14 +31,14 @@ namespace UnitTest.Net
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
   
         }
-        [TestMethod]
+  /*      [TestMethod]
         public void RemoveOffer()
         {
             Offer newOffer = createOffer();
             Assert.IsTrue(newOffer.Id != String.Empty, "CreateOffer Fail");
             Boolean result = _paymill.OfferService.DeleteAsync(newOffer.Id, true).Result;
             Assert.IsTrue(result, "Remove  Offer Failed");
-        }
+        }*/
         [TestMethod]
         public void GetOffer()
         {
