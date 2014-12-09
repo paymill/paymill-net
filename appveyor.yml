@@ -1,5 +1,7 @@
 version: 1.0.{build}
 build:
-  project: PaymillWrapper/PaymillWrapper.csproj
+  project: PaymillWrapper.sln
   parallel: true
   verbosity: normal
+test:
+  assemblies: UnitTest.dll
