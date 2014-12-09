@@ -88,7 +88,9 @@
     <EmbeddedResource Include="Models\Input\transaction.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Models\Input\webhook_email.json" />
     <EmbeddedResource Include="Models\Input\webhook_url.json" />
     <EmbeddedResource Include="Models\Input\clients.json" />
