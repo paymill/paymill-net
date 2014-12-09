@@ -28,9 +28,19 @@ namespace Mvc5Application.Controllers
                 Transaction transaction = paymill.TransactionService.CreateWithTokenAsync(token, form.Amount, form.Currency).Result;
                 Transaction.TransactionStatus status = transaction.Status;
                 // You can check the transaction status like this : 
-                if (status == Transaction.TransactionStatus.PENDING)
+               /* if (status == Transaction.TransactionStatus.PENDING)
                 {
                     return Content("Payment PENDING");
+                }*/
+
+                // You can check the Response Code like this : 
+                if (transaction.ResponseCode == 2000)
+                {
+                    return Content("Payment Success");
+                }
+                else
+                {
+                    return Content("Payment NOT successful, response code " + transaction.ResponseCode);
                 }
             }
             catch(AggregateException  ex){
