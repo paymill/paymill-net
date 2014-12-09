@@ -163,7 +163,7 @@ Transaction transaction = transactionService.CreateWithTokenAsync(
     "EUR",
     "For refund"
 ).Result;
-RefundService = paymillContext.RefundService;
+RefundService refundService = paymillContext.RefundService;
 Refund refund = refundService.RefundTransactionAsync( 
     transaction, 
     1000, 
