@@ -2,6 +2,8 @@
 
 # PAYMILL .NET
 
+[![Build status](https://ci.appveyor.com/api/projects/status/6k6s2wk3y4cptl0s/branch/master?svg=true)](https://ci.appveyor.com/project/VMarinov1/paymill-net/branch/master)
+
 A .NET wrapper for the  [PAYMILL](https://www.paymill.com/) API.
 
 ## Getting started
