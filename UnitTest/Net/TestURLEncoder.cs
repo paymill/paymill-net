@@ -64,7 +64,7 @@ namespace UnitTest.Net
         public void EncodeNullableObject()
         {
             UrlEncoder urlEncoder = new UrlEncoder();
-            DateTime trialStart = new DateTime(2014, 3, 20);
+            DateTime trialStart = new DateTime(2014, 3, 20, 0, 0, 0);
             DateTime? trialEnd = null;
             String encodedObject = urlEncoder.EncodeObject(new
                 {
