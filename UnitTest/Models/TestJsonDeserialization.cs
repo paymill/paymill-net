@@ -89,8 +89,8 @@ namespace UnitTest.Models
             Assert.AreEqual(42.00, offer.AmountFormatted);
             Assert.AreEqual("EUR", offer.Currency);
             Assert.AreEqual("1 MONTH", offer.Interval.ToString());
-            Assert.AreEqual(new DateTime(2013, 10, 11, 13, 2, 38, DateTimeKind.Utc), offer.CreatedAt);
-            Assert.AreEqual(new DateTime(2013, 10, 11, 13, 2, 38, DateTimeKind.Utc), offer.UpdatedAt);
+            Assert.AreEqual(1381489358, offer.CreatedAt.ToUnixTimestamp());
+            Assert.AreEqual(1381489358, offer.UpdatedAt.ToUnixTimestamp());
             Assert.AreEqual(20, offer.SubscriptionCount.Inactive);
             Assert.AreEqual(0, offer.TrialPeriodDays);
         }

@@ -233,9 +233,9 @@ namespace UnitTest.Net
             Subscription subscription = _paymill.SubscriptionService.CreateAsync( Subscription.Create( this.payment, 1200, "EUR", "1 WEEK" ).WithInterval( "1 WEEK" ) ).Result;
             subscription = _paymill.SubscriptionService.DeleteAsync(subscription).Result;
             //TODO this seems to be an API bug, as the subscription is not updated immediately. we "refresh"
-            Assert.AreEqual( subscription.Status.ToString(), Subscription.SubscriptionStatus.INACTIVE.ToString() );
-            Assert.AreEqual( subscription.Canceled, true );
-            Assert.AreEqual( subscription.Deleted, false );
+            Assert.AreEqual( Subscription.SubscriptionStatus.INACTIVE.ToString(), subscription.Status.ToString());
+            Assert.AreEqual(true, subscription.Canceled );
+            Assert.AreEqual(true, subscription.Deleted );
           }
 
           [TestMethod]
