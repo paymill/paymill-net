@@ -266,7 +266,7 @@ namespace PaymillWrapper.Service
             });
         }
 
-        internal static TE ReadResult<TE>(string data)
+        public static TE ReadResult<TE>(string data)
         {
             return JsonConvert.DeserializeObject<SingleResult<TE>>(data, customConverters).Data;
         }

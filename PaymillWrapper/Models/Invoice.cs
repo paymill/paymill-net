@@ -8,7 +8,7 @@ using System.Web;
 
 namespace PaymillWrapper.Models
 {
-    [JsonConverter(typeof(StringToBaseModelConverter<Merchant>))]
+    [JsonConverter(typeof(StringToBaseModelConverter<Invoice>))]
     public class Invoice : BaseModel
     {
         public Invoice()
@@ -17,7 +17,7 @@ namespace PaymillWrapper.Models
 
         public Invoice(String invoiceNumber)
         {
-            this.invoiceNumber = invoiceNumber;
+            InvoiceNumber = invoiceNumber;
         }
 
         [DataMember(Name = "invoice_nr")]
@@ -26,34 +26,38 @@ namespace PaymillWrapper.Models
         /**
         * formatted netto amount
         */
+        [DataMember(Name = "netto")]
         public int Netto { get; set; }
 
         /**
         * formatted brutto amount
         */
+        [DataMember(Name = "brutto")]
         public int Brutto { get; set; }
 
         /**
          * The invoice status (e.g. sent, trx_ok, trx_failed, invalid_payment, success, 1st_reminder, 2nd_reminder, 3rd_reminder,
          * suspend, canceled, transferred)
          */
+        [DataMember(Name = "status")]
         public String Status { get; set; }
 
         /**
         * the start of this invoice period
         */
         [DataMember(Name = "period_from")]
-        public DateTime From { get; set; }
+        public DateTime? From { get; set; }
 
-         /**
-         * the end of this invoice period
-         */
+        /**
+        * the end of this invoice period
+        */
         [DataMember(Name = "period_until")]
-        public DateTime Until { get; set; }
+        public DateTime? Until { get; set; }
 
         /**
          * ISO 4217 formatted currency code.
          */
+        [DataMember(Name = "currency")]
         public String Currency { get; set; }
 
         /**
@@ -66,7 +70,7 @@ namespace PaymillWrapper.Models
         * the billing date
         */
         [DataMember(Name = "billing_date")]
-        public DateTime BillingDate { get; set; }
+        public DateTime? BillingDate { get; set; }
 
         /**
         * The type: paymill, wirecard, acceptance etc. Indicates if it's a PAYMILL invoice or an acquirer payout.
@@ -78,7 +82,7 @@ namespace PaymillWrapper.Models
         * the last payment reminder
         */
         [DataMember(Name = "last_reminder_date")]
-        public DateTime LastReminderDate { get; set; }
+        public DateTime? LastReminderDate { get; set; }
 
     }
 }

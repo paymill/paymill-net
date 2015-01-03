@@ -27,21 +27,25 @@ namespace PaymillWrapper.Models
         /**
         * email address of this merchant.
         */
+         [DataMember(Name = "email")]
         public String Email { get; set; }
 
         /**
          * culture setting of this merchant.
          */
+         [DataMember(Name = "locale")]
         public String Locale { get; set; }
 
         /**
          * country code of this merchant.
          */
+        [DataMember(Name = "country")]
         public String Country { get; set; }
 
         /**
          * List of activated card brands of this merchant.
          */
+         [DataMember(Name = "methods")]
         public List<String> Methods { get; set; }
     }
 }

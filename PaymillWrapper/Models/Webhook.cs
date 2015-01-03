@@ -54,6 +54,11 @@ namespace PaymillWrapper.Models
             public static readonly Webhook.WebhookEventType SUBSCRIPTION_DEACTIVATED;
             public static readonly Webhook.WebhookEventType  SUBSCRIPTION_ACTIVATED;
             public static readonly Webhook.WebhookEventType SUBSCRIPTION_CANCELED;
+            public static readonly Webhook.WebhookEventType PAYMENT_EXPIRED;
+            public static readonly Webhook.WebhookEventType APP_MERCHANT_LIVE_REQUESTS_ALLOWED;
+            public static readonly Webhook.WebhookEventType APP_MERCHANT_LIVE_REQUESTS_NOT_ALLOWED;
+            public static readonly Webhook.WebhookEventType APP_MERCHANT_APP_DISABLED;
+
             private WebhookEventType(String value, Boolean unknowValue = false)
                 : base(value, unknowValue)
             {
@@ -88,6 +93,10 @@ namespace PaymillWrapper.Models
                 SUBSCRIPTION_DEACTIVATED = new WebhookEventType("subscription.deactivated");
                 SUBSCRIPTION_ACTIVATED = new WebhookEventType("subscription.activated");
                 SUBSCRIPTION_CANCELED = new WebhookEventType("subscription.activated");
+                PAYMENT_EXPIRED = new WebhookEventType("payment.expired");
+                APP_MERCHANT_LIVE_REQUESTS_ALLOWED = new WebhookEventType("app.merchant.live_requests_allowed");
+                APP_MERCHANT_LIVE_REQUESTS_NOT_ALLOWED = new WebhookEventType("app.merchant.live_requests_not_allowed");
+                APP_MERCHANT_APP_DISABLED = new WebhookEventType("app.merchant.app.disabled");
 
             }
         }

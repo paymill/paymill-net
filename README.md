@@ -138,6 +138,10 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 
 ## Changelog
 
+### 3.1.1
++ Added Invoice model.
++ Added Merchant model.
+
 ### 3.0.1
 + Added Transaction property missing in preauth.
 
