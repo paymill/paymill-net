@@ -256,10 +256,14 @@ namespace PaymillWrapper.Service
             {
                 throw new PaymillException(exc.Message);
             }
-            return Task.Run(() =>
+    /*        return Task.Run(() =>
                 {
                     return String.Empty;
-                });
+                });*/
+            return Task.Factory.StartNew<String>(() =>
+            {
+                return String.Empty;
+            });
         }
 
         internal static TE ReadResult<TE>(string data)
