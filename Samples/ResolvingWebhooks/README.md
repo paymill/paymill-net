@@ -20,7 +20,7 @@ public class PaymillHandler : IHttpHandler {
 
 The response should only contain the HTTP Status OK. Don't send anything in addition.
 
-Now, when you have the JSON String, you can use it convert it to a WebhookResolver using the static "FromJson" method. The returned object contains the Webhook type and the Object(s). 
+Now, when you have the JSON String, you can use it convert it to a WebhookResolver using the static "FromString" method. The returned object contains the Webhook type and the Object(s). 
 
 ```java
 public class PaymillHandler : IHttpHandler {
