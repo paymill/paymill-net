@@ -82,6 +82,7 @@ namespace UnitTest.Net
        [TestMethod]
         public void ListOrderByFilterAmountGreaterThan()
         {
+            CreatePreauthorizationWithPayment();
             int amount = 300;
             Preauthorization.Filter filter = Preauthorization.CreateFilter().ByAmountGreaterThan(amount);
             List<Preauthorization> preauthorization = _paymill.PreauthorizationService.ListAsync(filter, null).Result.Data;
@@ -95,7 +96,7 @@ namespace UnitTest.Net
         [TestMethod]
         public void ListOrderByFilterAmountLessThan()
         {
-            int amount = 30000;
+            int amount = 300;
             Preauthorization.Filter filter = Preauthorization.CreateFilter().ByAmountLessThan(amount);
             List<Preauthorization> preauthorizations = _paymill.PreauthorizationService.ListAsync(filter, null).Result.Data;
             Assert.IsFalse(preauthorizations.Count == 0);

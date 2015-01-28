@@ -96,6 +96,13 @@ namespace UnitTest.Models
         }
 
         [TestMethod]
+        public void TestPaymentSerialize()
+        {
+            var payment = ReadResult<Payment>("payment.json");
+            var serialized = JsonConvert.SerializeObject(payment);
+        }
+
+        [TestMethod]
         public void TestPayment()
         {
             var payment = ReadResult<Payment>("payment.json");
@@ -110,6 +117,8 @@ namespace UnitTest.Models
             Assert.AreEqual("1111", payment.Last4);
             Assert.AreEqual(1381489629, payment.CreatedAt.ToUnixTimestamp());
             Assert.AreEqual(1381489629, payment.UpdatedAt.ToUnixTimestamp());
+
+            
         }
 
         [TestMethod]

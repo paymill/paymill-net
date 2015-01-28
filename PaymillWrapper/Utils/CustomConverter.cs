@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using PaymillWrapper.Models;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,27 @@ using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
-  
+    class JsonConverterExclusionResolver<T> : DefaultContractResolver
+    {
+        protected override JsonConverter ResolveContractConverter(Type objectType)
+        {
+            JsonConverter conv = base.ResolveContractConverter(objectType);
+            if (conv != null && conv.GetType() == typeof(T))
+            {
+                // if something asks for the converter we're excluding,
+                // we never heard of it
+                return null;
+            }
+            return conv;
+        }
+    }
     /// <summary>
     /// Convert json object to object of type T. If converts failed it tries to create object with explicit contructor and set property Id
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class StringToBaseModelConverter<T> : JsonConverter
     {
+        private IContractResolver exclusionResolver = new JsonConverterExclusionResolver<StringToBaseModelConverter<T>>();
         public override bool CanConvert(Type objectType)
         {
             if (objectType == typeof(BaseModel))
@@ -52,7 +67,16 @@ namespace PaymillWrapper.Utils
         }
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+
+            JsonSerializer innerSerializer = new JsonSerializer();
+            innerSerializer.ContractResolver = exclusionResolver;
+            // (copy other settings from the outer serializer if needed)
+
+            var o = JObject.FromObject(value, innerSerializer);
+
+            // ...do your custom stuff here...
+
+            o.WriteTo(writer);
         }
     }
     public class StringToNIntConverter : JsonConverter
