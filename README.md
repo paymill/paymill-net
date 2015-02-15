@@ -138,6 +138,9 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 
 ## Changelog
 
+### 3.1.2
++ Implemented StringToBaseModelConverter to support custom serialization.
+
 ### 3.1.1
 + Added Invoice model.
 + Added Merchant model.
