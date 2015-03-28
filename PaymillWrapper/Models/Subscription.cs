@@ -94,6 +94,7 @@ namespace PaymillWrapper.Models
         /// Payment
         /// </summary>
         [DataMember(Name = "payment")]
+        [Updateable(Name = "payment", OnlyProperty = "Id")]
         public Payment Payment { get; set; }
 
         [DataMember(Name = "app_id")]

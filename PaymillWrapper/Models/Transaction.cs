@@ -160,6 +160,9 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "short_id")]
         public string ShortId { get; set; }
 
+        [DataMember(Name = "mandate_reference")]
+        public string MandateReference { get; set; }
+        
         public static Transaction.Filter CreateFilter()
         {
             return new Transaction.Filter();
