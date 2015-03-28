@@ -45,7 +45,17 @@ namespace UnitTest.Net
             Assert.AreEqual(subscription.Payment.Id, payment.Id);
             Assert.AreEqual(subscription.Offer.Id, offer.Id);
         }
-
+        [TestMethod]
+        public void TestCreateWithPaymentAndOfferAndMandateReference()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, offer), "DE1234TEST").Result;
+            Assert.IsNotNull(subscription);
+            Assert.IsNotNull(subscription.Client);
+            Assert.AreEqual(subscription.Payment.Id, payment.Id);
+            Assert.AreEqual(subscription.Offer.Id, offer.Id);
+        }
         [TestMethod]
         public void TestCreateWithPaymentAndOfferComplex()
         {

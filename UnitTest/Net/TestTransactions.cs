@@ -45,7 +45,18 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Amount == 3500);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
         }
-
+        [TestMethod]
+         public void CreateTransactionWithPaymentAndMandateReference()
+        {
+            Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
+            Transaction transaction = _paymill.TransactionService.CreateWithPaymentAsync(payment, 3500, "USD", "DE1234TEST").Result;
+            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
+            Assert.IsFalse(transaction.Currency == "EUR");
+            Assert.IsTrue(transaction.Currency == "USD");
+            Assert.IsTrue(transaction.Amount == 3500);
+            Assert.IsTrue(transaction.Payment.Id == payment.Id);
+        }
+        
         [TestMethod]
         public void CreateTransactionWithPaymentId()
         {
