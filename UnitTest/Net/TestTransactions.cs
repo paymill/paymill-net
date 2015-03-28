@@ -33,15 +33,7 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Currency == "EUR");
             Assert.IsTrue(transaction.Amount == 3500);
         }
-        [TestMethod]
-        public void CreateTransactionWithTokenAndDescriptionAndMandateReference()
-        {
-            Transaction transaction = _paymill.TransactionService.CreateWithTokenAsync(testToken, 3500, "EUR", "Bar", "test Mandate Reference").Result;
-            Assert.IsFalse(String.IsNullOrEmpty(transaction.Id));
-            Assert.IsTrue(transaction.Description == "Bar");
-            Assert.IsTrue(transaction.Currency == "EUR");
-            Assert.IsTrue(transaction.Amount == 3500);
-        }
+      
         [TestMethod]
         public void CreateTransactionWithPayment()
         {
