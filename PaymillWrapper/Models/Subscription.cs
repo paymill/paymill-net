@@ -100,6 +100,12 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "app_id")]
         public String AppId { get; set; }
 
+         [DataMember(Name = "mandate_reference")]
+        [Updateable(Name = "mandate_reference")]
+        public String MandateReference { get; set; }
+
+         
+
         [JsonConverter(typeof(StringToBaseEnumTypeConverter<SubscriptionStatus>))]
         public class SubscriptionStatus : EnumBaseType
         {

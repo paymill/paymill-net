@@ -56,10 +56,10 @@ namespace PaymillWrapper.Service
         /// <param name="the subscription"></param>
         // <returns>the subscription.</returns>
 
-        public async Task<Subscription> CreateAsync(PaymillWrapper.Models.Subscription.Creator creator)
+        public async Task<Subscription> CreateAsync(PaymillWrapper.Models.Subscription.Creator creator, String mandateReference  = null)
         {
             return await CreateAsync(creator.Payment, creator.Client, creator.Offer, creator.Amount, creator.Currency, creator.Interval,
-                creator.StartAt, creator.Name, creator.PeriodOfValidity);
+                creator.StartAt, creator.Name, creator.PeriodOfValidity, mandateReference);
         }
         /// <summary>
         /// This function creates a <see cref="Subscription" /> between a  <see cref="Client" /> and an  <see cref="Offer" />. A  <see cref="Client" /> can have several
@@ -90,7 +90,7 @@ namespace PaymillWrapper.Service
         /// <returns>the subscription.</returns>
         ///
         public async Task<Subscription> CreateAsync(Payment payment, Client client, Offer offer, int? amount, String currency, Interval.PeriodWithChargeDay interval, DateTime? startAt,
-            String name, Interval.Period periodOfValidity)
+            String name, Interval.Period periodOfValidity, String mandateReference = null)
         {
 
             if (offer == null && (amount == null || currency == null || interval == null))
@@ -134,8 +134,8 @@ namespace PaymillWrapper.Service
                             interval = interval != null ? interval.ToString() : null,
                             start_at = startAt.HasValue ? DateTimeExtensions.ToUnixTimestamp(startAt.Value).ToString() : null,
                             name = name != null ? name : null,
-                            period_of_validity = periodOfValidity != null ? periodOfValidity.ToString() : null
-
+                            period_of_validity = periodOfValidity != null ? periodOfValidity.ToString() : null,
+                            mandate_reference = mandateReference != null ? mandateReference: null
                         }));
         }
 
@@ -170,9 +170,9 @@ namespace PaymillWrapper.Service
         /// <returns>the subscription</returns>
         ///
         public async Task<Subscription> CreateAsync(String paymentId, String clientId, String offerId, int? amount, String currency, Interval.PeriodWithChargeDay interval,
-   DateTime? startAt, String name, Interval.Period periodOfValidity)
+   DateTime? startAt, String name, Interval.Period periodOfValidity, String mandateReference = null)
         {
-            return await CreateAsync(new Payment(paymentId), new Client(clientId), new Offer(offerId), amount, currency, interval, startAt, name, periodOfValidity);
+            return await CreateAsync(new Payment(paymentId), new Client(clientId), new Offer(offerId), amount, currency, interval, startAt, name, periodOfValidity, mandateReference);
         }
 
         /// <summary>
