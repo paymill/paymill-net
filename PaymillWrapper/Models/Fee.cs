@@ -45,8 +45,5 @@ namespace PaymillWrapper.Models
 
         [DataMember(Name = "currency")]
         public String Currency { get; set; }
-
-        [DataMember(Name = "application")]
-        public String application{ get; set; }
     }
 }
