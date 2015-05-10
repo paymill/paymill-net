@@ -256,6 +256,7 @@ namespace PaymillWrapper.Service
             {
                 throw new PaymillException(exc.Message);
             }
+            // For .Net 4.0 use the code bellow 
     /*        return Task.Run(() =>
                 {
                     return String.Empty;

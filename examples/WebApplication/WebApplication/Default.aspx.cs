@@ -26,7 +26,7 @@ namespace WebApplication
                 PaymillContext paymill = new PaymillContext("YOUR PRIVATE KEY");
                 String token = hToken.Value;
                 Payment payment = paymill.PaymentService.CreateWithTokenAsync(token).Result;
-                int amount = int.Parse(tbAmount.Text);
+                int amount = int.Parse(tbAmount.Text)*100;
                 Transaction transaction = paymill.TransactionService.CreateWithPaymentAsync(payment, amount, tbCurrency.Text, "Test API c#").Result;
                 /// Yout Transaction Is Complete 
             }
