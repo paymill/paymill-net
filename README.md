@@ -138,6 +138,10 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 
 ## Changelog
 
+### 3.2.0
++ Added Mandate Reference to Transaction and Subscription
++ Made the Payment Property Updatable in Subscription
+
 ### 3.1.2
 + Implemented StringToBaseModelConverter to support custom serialization.
 

@@ -56,10 +56,10 @@ namespace PaymillWrapper.Service
         /// <param name="the subscription"></param>
         // <returns>the subscription.</returns>
 
-        public async Task<Subscription> CreateAsync(PaymillWrapper.Models.Subscription.Creator creator, String mandateReference  = null)
+        public async Task<Subscription> CreateAsync(PaymillWrapper.Models.Subscription.Creator creator)
         {
             return await CreateAsync(creator.Payment, creator.Client, creator.Offer, creator.Amount, creator.Currency, creator.Interval,
-                creator.StartAt, creator.Name, creator.PeriodOfValidity, mandateReference);
+                creator.StartAt, creator.Name, creator.PeriodOfValidity, null);
         }
         /// <summary>
         /// This function creates a <see cref="Subscription" /> between a  <see cref="Client" /> and an  <see cref="Offer" />. A  <see cref="Client" /> can have several
@@ -90,7 +90,7 @@ namespace PaymillWrapper.Service
         /// <returns>the subscription.</returns>
         ///
         public async Task<Subscription> CreateAsync(Payment payment, Client client, Offer offer, int? amount, String currency, Interval.PeriodWithChargeDay interval, DateTime? startAt,
-            String name, Interval.Period periodOfValidity, String mandateReference = null)
+            String name, Interval.Period periodOfValidity, String mandateReference)
         {
 
             if (offer == null && (amount == null || currency == null || interval == null))
@@ -170,9 +170,9 @@ namespace PaymillWrapper.Service
         /// <returns>the subscription</returns>
         ///
         public async Task<Subscription> CreateAsync(String paymentId, String clientId, String offerId, int? amount, String currency, Interval.PeriodWithChargeDay interval,
-   DateTime? startAt, String name, Interval.Period periodOfValidity, String mandateReference = null)
+   DateTime? startAt, String name, Interval.Period periodOfValidity)
         {
-            return await CreateAsync(new Payment(paymentId), new Client(clientId), new Offer(offerId), amount, currency, interval, startAt, name, periodOfValidity, mandateReference);
+            return await CreateAsync(new Payment(paymentId), new Client(clientId), new Offer(offerId), amount, currency, interval, startAt, name, periodOfValidity, null);
         }
 
         /// <summary>
