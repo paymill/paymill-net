@@ -50,7 +50,7 @@ namespace UnitTest.Net
         {
             Payment payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             Offer offer = _paymill.OfferService.CreateAsync(2223, "EUR", Interval.period(1, Interval.TypeUnit.WEEK), "Offer No Trial").Result;
-            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, offer), "DE1234TEST").Result;
+            Subscription subscription = _paymill.SubscriptionService.CreateAsync(Subscription.Create(payment, offer)).Result;
             Assert.IsNotNull(subscription);
             Assert.IsNotNull(subscription.Client);
             Assert.AreEqual(subscription.Payment.Id, payment.Id);
@@ -102,7 +102,7 @@ namespace UnitTest.Net
         {
             Client client = _paymill.ClientService.CreateWithEmailAsync("zendest@example.com").Result;
             Payment payment = _paymill.PaymentService.CreateWithTokenAndClientAsync(testToken, client).Result;
-            _paymill.SubscriptionService.CreateAsync(payment, client, null, null, null, null, null, null, null).Wait();
+            _paymill.SubscriptionService.CreateAsync(payment, client, null, null, null, null, null, null, null, "DE1234TEST").Wait();
         }
         [TestMethod]
         public void TestCreateWithPaymentAndClient_WithOfferWithoutTrial_shouldReturnSubscriptionWithNullTrialStartAndNullTrialEnd()
