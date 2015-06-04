@@ -22,9 +22,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount"> Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithTokenAsync(String token, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithTokenAsync(String token, int amount, String currency)
         {
-            return await CreateWithTokenAndFeeAsync(token, amount, currency, null, null, mandateReference);
+            return await CreateWithTokenAndFeeAsync(token, amount, currency, null, null, null);
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace PaymillWrapper.Service
         /// <param name="currency"> ISO 4217 formatted currency code.</param>
         /// <param name="description">A short description for the transaction.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithTokenAsync(String token, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithTokenAsync(String token, int amount, String currency, String description)
         {
-            return await CreateWithTokenAndFeeAsync(token, amount, currency, description, null, mandateReference);
+            return await CreateWithTokenAndFeeAsync(token, amount, currency, description, null, null);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="fee">A Fee</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithTokenAndFeeAsync(String token, int amount, String currency, Fee fee, String mandateReference = null)
+        public async Task<Transaction> CreateWithTokenAndFeeAsync(String token, int amount, String currency, Fee fee)
         {
-            return await CreateWithTokenAndFeeAsync(token, amount, currency, null, fee, mandateReference);
+            return await CreateWithTokenAndFeeAsync(token, amount, currency, null, fee, null);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace PaymillWrapper.Service
         /// <param name="fee">A Fee</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
         public async Task<Transaction> CreateWithTokenAndFeeAsync(String token, int amount,
-                                                                  String currency, String description, Fee fee, String mandateReference = null)
+                                                                  String currency, String description, Fee fee, String mandateReference)
         {
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesAmount(amount);
@@ -92,9 +92,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAsync(Payment payment, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAsync(Payment payment, int amount, String currency)
         {
-            return await CreateWithPaymentAsync(payment, amount, currency, null, mandateReference);
+            return await CreateWithPaymentAsync(payment, amount, currency, null, null);
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAsync(String paymentId, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAsync(String paymentId, int amount, String currency)
         {
-            return await CreateWithPaymentAsync(new Payment(paymentId), amount, currency, null, mandateReference);
+            return await CreateWithPaymentAsync(new Payment(paymentId), amount, currency, null, null);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="description">The description.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAsync(Payment payment, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAsync(Payment payment, int amount, String currency, String description, String mandateReference)
         {
             ValidationUtils.ValidatesPayment(payment);
             ValidationUtils.ValidatesAmount(amount);
@@ -142,9 +142,9 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="description">The description.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAsync(String paymentId, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAsync(String paymentId, int amount, String currency, String description)
         {
-            return await CreateWithPaymentAsync(new Payment(paymentId), amount, currency, description, mandateReference);
+            return await CreateWithPaymentAsync(new Payment(paymentId), amount, currency, description, null);
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAndClientAsync(Payment payment, Client client, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAndClientAsync(Payment payment, Client client, int amount, String currency)
         {
-            return await CreateWithPaymentAndClientAsync(payment, client, amount, currency, null, mandateReference);
+            return await CreateWithPaymentAndClientAsync(payment, client, amount, currency, null, null);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAndClientAsync(String paymentId, String clientId, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAndClientAsync(String paymentId, String clientId, int amount, String currency)
         {
-            return await CreateWithPaymentAndClientAsync(paymentId, clientId, amount, currency, null, mandateReference);
+            return await CreateWithPaymentAndClientAsync(paymentId, clientId, amount, currency, null);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="description">The description.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAndClientAsync(Payment payment, Client client, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAndClientAsync(Payment payment, Client client, int amount, String currency, String description, String mandateReference)
         {
             ValidationUtils.ValidatesPayment(payment);
             ValidationUtils.ValidatesClient(client);
@@ -212,9 +212,9 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="description">The description.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPaymentAndClientAsync(String paymentId, String clientId, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithPaymentAndClientAsync(String paymentId, String clientId, int amount, String currency, String description)
         {
-            return await CreateWithPaymentAndClientAsync(new Payment(paymentId), new Client(clientId), amount, currency, mandateReference);
+            return await CreateWithPaymentAndClientAsync(new Payment(paymentId), new Client(clientId), amount, currency);
         }
 
         /// <summary>
@@ -224,9 +224,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPreauthorizationAsync(Preauthorization preauthorization, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithPreauthorizationAsync(Preauthorization preauthorization, int amount, String currency)
         {
-            return await CreateWithPreauthorizationAsync(preauthorization.Id, amount, currency, null, mandateReference);
+            return await CreateWithPreauthorizationAsync(preauthorization.Id, amount, currency, null, null);
         }
 
         /// <summary>
@@ -236,9 +236,9 @@ namespace PaymillWrapper.Service
         /// <param name="amount">Amount (in cents) which will be charged.</param>
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPreauthorizationAsync(String preauthorizationId, int amount, String currency, String mandateReference = null)
+        public async Task<Transaction> CreateWithPreauthorizationAsync(String preauthorizationId, int amount, String currency)
         {
-            return await CreateWithPreauthorizationAsync(preauthorizationId, amount, currency, null, mandateReference);
+            return await CreateWithPreauthorizationAsync(preauthorizationId, amount, currency, null, null);
         }
 
         /// <summary>
@@ -249,9 +249,9 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="description">The description.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPreauthorizationAsync(Preauthorization preauthorization, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithPreauthorizationAsync(Preauthorization preauthorization, int amount, String currency, String description)
         {
-            return await CreateWithPreauthorizationAsync(preauthorization.Id, amount, currency, description, mandateReference);
+            return await CreateWithPreauthorizationAsync(preauthorization.Id, amount, currency, description, null);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace PaymillWrapper.Service
         /// <param name="currency">ISO 4217 formatted currency code.</param>
         /// <param name="description">The description.</param>
         /// <returns>Transaction object indicating whether a the call was successful or not.</returns>
-        public async Task<Transaction> CreateWithPreauthorizationAsync(String preauthorizationId, int amount, String currency, String description, String mandateReference = null)
+        public async Task<Transaction> CreateWithPreauthorizationAsync(String preauthorizationId, int amount, String currency, String description, String mandateReference)
         {
             ValidationUtils.ValidatesId(preauthorizationId);
             ValidationUtils.ValidatesAmount(amount);
