@@ -10,16 +10,12 @@ namespace UnitTest.Net
 {
 
     [TestClass]
-    public class TestRefundes
+    public class TestRefundes : PaymillTest
     {
-
-        PaymillContext _paymill = null;
-        String testToken = "098f6bcd4621d373cade4e832627b4f6";
-
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
+            base.Initialize();
         }
         [TestMethod]
         public void GetRefunds()

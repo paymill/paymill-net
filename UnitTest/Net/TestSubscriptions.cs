@@ -5,15 +5,17 @@ using PaymillWrapper.Service;
 using System.Collections.Generic;
 using PaymillWrapper.Models;
 using PaymillWrapper.Utils;
+using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace UnitTest.Net
 {
     [TestClass]
-    public class TestSubscriptions
+    public class TestSubscriptions : PaymillTest
     {
-        PaymillContext _paymill = null;
-        String testToken = "098f6bcd4621d373cade4e832627b4f6";
-        private int amount = 900;
+         private int amount = 900;
         private Interval.Period interval;
         private String currency = "EUR";
         private Payment payment; 
@@ -23,11 +25,11 @@ namespace UnitTest.Net
         private DateTime inAWeek = DateTime.Now.AddDays(7);
         private DateTime inTwoWeeks = DateTime.Now.AddDays(14);
         private DateTime inAMonth = DateTime.Now.AddMonths(1);
-
+ 
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
+            base.Initialize();
             interval = Interval.period(1, Interval.TypeUnit.MONTH);
             this.payment = _paymill.PaymentService.CreateWithTokenAsync(testToken).Result;
             this.offer1 = _paymill.OfferService.CreateAsync(this.amount, this.currency, this.interval, this.name).Result;
@@ -213,7 +215,7 @@ namespace UnitTest.Net
             Assert.IsTrue( DatesAroundSame( subscription.NextCaptureAt.Value, inTwoWeeks ) );
             subscription = _paymill.SubscriptionService.EndTrialAsync( subscription ).Result;
             Assert.IsTrue( DatesAroundSame( subscription.NextCaptureAt.Value, DateTime.Now ) );
-            Assert.IsNull( subscription.TrialEnd );
+            Assert.IsNotNull( subscription.TrialEnd );
           }
 
           [TestMethod]

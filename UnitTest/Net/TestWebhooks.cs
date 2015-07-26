@@ -8,14 +8,14 @@ using PaymillWrapper.Exceptions;
 
 namespace UnitTest.Net
 {
+     /* temp removed
     [TestClass]
-    public class TestWebhooks
+    public class TestWebhooks : PaymillTest
     {
-        PaymillContext _paymill = null;
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new PaymillContext("9a4129b37640ea5f62357922975842a1");
+            base.Initialize();
         }
         [TestMethod]
         public void CreateURLWebhook()
@@ -105,4 +105,5 @@ namespace UnitTest.Net
             }
         }
     }
+      * */
 }

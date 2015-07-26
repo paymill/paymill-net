@@ -66,6 +66,7 @@
     <Compile Include="Models\TestJsonDeserialization.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Net\PaymillTest.cs" />
     <Compile Include="Net\TestSubscriptions.cs" />
     <Compile Include="Net\TestRefunds.cs" />
     <Compile Include="Net\TestPreauthorization.cs" />

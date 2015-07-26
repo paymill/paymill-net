@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using PaymillWrapper.Models;
 using PaymillWrapper.Utils;
 
+
 namespace UnitTest.Net
 {
     [TestClass]
-    public class TestTransactions
+    public class TestTransactions : PaymillTest
     {
-        PaymillContext _paymill = null;
-        String testToken = "098f6bcd4621d373cade4e832627b4f6";
         [TestInitialize]
         public void Initialize()
         {
-            _paymill = new PaymillContext("0ecdb65b3c7caeb2e10932699dacd50c");
+            base.Initialize();
+           
         }
         [TestMethod]
         public void CreateTransactionWithToken()
@@ -93,7 +93,7 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Amount == 4200);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
             Assert.IsTrue(transaction.Client.Id == client.Id);
-            Assert.IsNull(transaction.Description);
+            Assert.IsTrue(String.IsNullOrEmpty( transaction.Description));
         }
         [TestMethod]
         public void CreateTransactionWithPaymentIdAndClientId()
@@ -107,7 +107,7 @@ namespace UnitTest.Net
             Assert.IsTrue(transaction.Amount == 4200);
             Assert.IsTrue(transaction.Payment.Id == payment.Id);
             Assert.IsTrue(transaction.Client.Id == client.Id);
-            Assert.IsNull(transaction.Description);
+            Assert.IsTrue(String.IsNullOrEmpty(transaction.Description));
         }
 
         [TestMethod]
