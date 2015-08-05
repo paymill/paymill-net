@@ -29,41 +29,38 @@ namespace PaymillWrapper.Models
     /// </summary>
     /// 
     [DataMember(Name = "street_address")]
-    private String StreetAddress;
+    public String StreetAddress;
 
     /**
     * Addition to street address (e.g. building, floor, or c/o), max. 100 characters
     */
     [DataMember(Name = "street_address_addition")]
-    private String StreetAddressAddition;
+    public String StreetAddressAddition;
 
     /**
     * City, max. 40 characters
     */
-    private String city;
+    public String City;
 
     /**
     * State or province, max. 40 characters
     */
-    private String state;
+    public String State;
 
     /**
     * Country-specific postal code, max. 20 characters
     */
     [DataMember(Name = "postal_code")]
-    private String PostalCode;
+    public String PostalCode;
 
     /**
     * 2-letter country code according to ISO 3166-1 alpha-2
-    */ 
-    private String Country;
+    */
+    public String Country;
     /**
     * Contact phone number, max. 20 characters
-    */ 
-    private String Phone;
-
-
-
+    */
+    public String Phone;
 
     }
 
