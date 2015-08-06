@@ -51,6 +51,7 @@ PaymillContext loads the context of PAYMILL for a single account, by providing a
  * SubscriptionService
  * TransactionService
  * WebhookService
+ * ChecksumService
 
 These services should not be created directly. They have to be obtained by the context's accessors.
 
@@ -137,6 +138,9 @@ Because all methods of Wrapper for the PAYMILL API is asynchronous. To catch rea
 ```
 
 ## Changelog
+
+### 3.3.0
++ Added Checksum Survice
 
 ### 3.2.0
 + Added Mandate Reference to Transaction and Subscription
