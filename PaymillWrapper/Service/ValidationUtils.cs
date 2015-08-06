@@ -9,6 +9,11 @@ namespace PaymillWrapper.Service
 {
     internal class ValidationUtils
     {
+        static internal void ValidatesUrl(String url)
+        {
+            if (String.IsNullOrWhiteSpace(url))
+                throw new ArgumentException("Url can not be blank");
+        }
         static internal void ValidatesIntervalPeriodWithChargeDay(Interval.PeriodWithChargeDay interval)
         {
            if( interval.Interval < 1 ) {

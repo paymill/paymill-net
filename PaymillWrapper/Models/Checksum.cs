@@ -19,10 +19,13 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Checksum>))]
     public class Checksum : BaseModel
     {
+        [DataMember(Name = "type")]
         public String Type;
 
-        public String Checksum;
+        [DataMember(Name = "checksum")]
+        public String Value;
 
+        [DataMember(Name = "data")]
         public String Data;
         public Checksum()
         {
@@ -33,7 +36,7 @@ namespace PaymillWrapper.Models
         }
 
         [DataMember(Name = "app_id")]
-        private String appId;
+        public String AppId;
 
     }
 

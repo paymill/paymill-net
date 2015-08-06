@@ -16,10 +16,15 @@ namespace PaymillWrapper.Utils
       }
             
       public void Add( K key, V value ) {
-        List<V> values = this.map[key];
+        List<V> values = null;
 
-        if( values == null ) {
+        if (this.map.ContainsKey(key) == false)
+        {
           values = new List<V>();
+        }
+        else
+        {
+            values = this.map[key];
         }
 
         values.Add( value );
