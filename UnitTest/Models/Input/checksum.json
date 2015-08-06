@@ -1,0 +1,12 @@
+﻿{
+	"data":{
+		"id":"chk_e2fc0f26326b8ca62c6400c3cff8",
+		"checksum":"cd88bfad8ab53ad6e5cd114b61687e3e554bcf7525d7344ef1d9b98ad33d22a751d724aa7c860c0cd7916a84d57c0e3b3f80c92939fcca33a85fd5b10837e2e2",
+		"data":"amount=9700&currency=USD&cancel_url=http%3A%2F%2Fwww.cancel.com&return_url=http%3A%2F%2Fwww.return.com",
+		"type":"paypal",
+		"app_id":null,
+		"created_at":1438867144,
+		"updated_at":1438867144
+	},
+	"mode":"test"
+}

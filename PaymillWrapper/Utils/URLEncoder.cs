@@ -44,6 +44,30 @@ namespace PaymillWrapper.Utils
 
             return sb.ToString();
         }
+        
+        /// <summary>
+        /// Encodes the ParamsMap.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        public string EncodeParamsMap<K, V>(ParameterMap<K, V> data) 
+                where K: class
+                where V: class
+        {
+           
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in data.KeyCollection())
+            {
+                List<V> values = data.Get(key);
+                object value = String.Join(",", values);
+                if (value != null)
+                {
+                    this.addKeyValuePair(sb, key.ToString().ToLower(), value);
+                }
+            }
+
+            return sb.ToString();
+        }
         /// <summary>
         /// Encodes the object.
         /// </summary>

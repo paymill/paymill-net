@@ -9,6 +9,7 @@
         Subscriptions,
         Transactions,
         Preauthorizations,
-        Webhooks
+        Webhooks,
+        Checksums
     }
 }

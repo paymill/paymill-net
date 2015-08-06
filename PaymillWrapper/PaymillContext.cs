@@ -31,6 +31,7 @@ namespace PaymillWrapper
             _subscriptionService = new Lazy<SubscriptionService>(() => new SubscriptionService(Client, ApiUrl));
             _transactionService = new Lazy<TransactionService>(() => new TransactionService(Client, ApiUrl));
             _webhookService = new Lazy<WebhookService>(() => new WebhookService(Client, ApiUrl));
+            _checksumServicee = new Lazy<ChecksumService>(() => new ChecksumService(Client, ApiUrl));
         }
         public static String GetProjectName()
         {
@@ -67,6 +68,7 @@ namespace PaymillWrapper
         }
 
         #region Service members
+        private readonly Lazy<ChecksumService> _checksumServicee;
         private readonly Lazy<ClientService> _clientService;
         private readonly Lazy<OfferService> _offerService;
         private readonly Lazy<PaymentService> _paymentService;
@@ -78,6 +80,10 @@ namespace PaymillWrapper
         #endregion
 
         #region Public services
+        public ChecksumService ChecksumService
+        {
+            get { return _checksumServicee.Value; }
+        }
         public ClientService ClientService
         {
             get { return _clientService.Value; }

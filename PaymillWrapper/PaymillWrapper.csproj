@@ -60,12 +60,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\ShoppingCartItem.cs" />
+    <Compile Include="Models\Checksum.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Interval.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Merchant.cs" />
     <Compile Include="Models\PaymillList.cs" />
     <Compile Include="Models\SnakeCase.cs" />
+    <Compile Include="Service\ChecksumService.cs" />
     <Compile Include="Utils\EnumBaseType.cs" />
     <Compile Include="Models\Fee.cs" />
     <Compile Include="Models\Preauthorization.cs" />
@@ -80,6 +84,7 @@
     <Compile Include="Utils\CustomConverter.cs" />
     <Compile Include="Utils\HttpClientRest.cs" />
     <Compile Include="Utils\MultipleResults.cs" />
+    <Compile Include="Utils\ParameterMap.cs" />
     <Compile Include="Utils\Parser.cs" />
     <Compile Include="Utils\UnixTimestampConverter.cs" />
     <Compile Include="Utils\URLEncoder.cs" />

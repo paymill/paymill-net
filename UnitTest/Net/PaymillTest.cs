@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 
 namespace UnitTest.Net
 {

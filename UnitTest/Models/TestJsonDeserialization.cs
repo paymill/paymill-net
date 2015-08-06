@@ -35,6 +35,14 @@ namespace UnitTest.Models
  
         }
         [TestMethod]
+        public void TestChecksum()
+        {
+            Checksum checksum = ReadResult<Checksum>("checksum.json");
+            Assert.IsTrue(checksum.Data.Length > 0, "Invalid Data");
+            Assert.AreEqual(checksum.Type, "paypal");
+            Assert.AreEqual(checksum.Id, "chk_e2fc0f26326b8ca62c6400c3cff8");
+        }
+        [TestMethod]
         public void TestClients()
         {
             var clients = ReadResults<Client>("clients.json").Data;
