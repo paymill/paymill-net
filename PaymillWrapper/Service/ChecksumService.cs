@@ -18,62 +18,65 @@ namespace PaymillWrapper.Service
         {
         }
 
-        /**
-         * Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
-         * 
-         * @param amount
-         *          Amount (in cents) which will be charged.
-         * @param currency
-         *          ISO 4217 formatted currency code.
-         * @param returnUrl
-         *          URL to redirect customers to after checkout has completed.
-         * @param cancelUrl
-         *          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.
-         * @return {@link Checksum} object.
-         */
+        /// <summary>
+        /// Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
+        /// </summary>
+        /// <param name="amount">
+        ///          Amount (in cents) which will be charged.</param>
+        /// <param name="currency">
+        ///          ISO 4217 formatted currency code.</param>
+        /// <param name="returnUrl">
+        ///          URL to redirect customers to after checkout has completed.</param>
+        /// <param name="cancelUrl">
+        ///          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.</param>
+        /// <returns>
+        /// Checksum object.
+        /// </returns>
         public async Task<Checksum> CreateChecksumForPaypalAsync(int amount, String currency, String returnUrl, String cancelUrl)
         {
             return await CreateChecksumForPaypalWithDescriptionAsync(amount, currency, returnUrl, cancelUrl, null);
         }
 
-        /**
-         * Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
-         * 
-         * @param amount
-         *          Amount (in cents) which will be charged.
-         * @param currency
-         *          ISO 4217 formatted currency code.
-         * @param returnUrl
-         *          URL to redirect customers to after checkout has completed.
-         * @param cancelUrl
-         *          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.
-         * @param fee
-         *          A {@link Fee}.
-         * @param appId 
-         *          App (ID) that created this refund or null if created by yourself.
-         * @return {@link Checksum} object.
-         */
+        /// <summary>
+        /// Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
+        /// </summary>
+        /// <param name="amount">
+        ///          Amount (in cents) which will be charged.</param>
+        /// <param name="currency">
+        ///          ISO 4217 formatted currency code.</param>
+        /// <param name="returnUrl">
+        ///          URL to redirect customers to after checkout has completed.</param>
+        /// <param name="cancelUrl">
+        ///          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.</param>
+        /// <param name="fee">
+        ///          A {@link Fee}.</param>
+        /// <param name="appId">
+        ///          App (ID) that created this refund or null if created by yourself.</param>
+        /// <returns>
+        /// Checksum object.
+        /// </returns>
         public async Task<Checksum> CreateChecksumForPaypalWithFeeAsync(int amount, String currency, String returnUrl, String cancelUrl,
             Fee fee, String appId)
         {
             return await CreateChecksumForPaypalWithFeeAndDescriptionAsync(amount, currency, returnUrl, cancelUrl, fee, null, appId);
         }
 
-        /**
-         * Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
-         * 
-         * @param amount
-         *          Amount (in cents) which will be charged.
-         * @param currency
-         *          ISO 4217 formatted currency code.
-         * @param returnUrl
-         *          URL to redirect customers to after checkout has completed.
-         * @param cancelUrl
-         *          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.
-         * @param description
-         *          A short description for the transaction.
-         * @return {@link Checksum} object.
-         */
+        /// <summary>
+        /// Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
+        /// </summary>
+        /// <param name="amount">
+        ///          Amount (in cents) which will be charged</param>.
+        /// <param name="currency">
+        ///          ISO 4217 formatted currency code.</param>
+        /// <param name="returnUrl">
+        ///          URL to redirect customers to after checkout has completed.</param>
+        /// <param name="cancelUrl">
+        ///          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.</param>
+        /// <param name="description">
+        ///          A short description for the transaction.</param>
+        /// <returns>
+        /// Checksum object.
+        /// </returns>
         public async Task<Checksum> CreateChecksumForPaypalWithDescriptionAsync(int amount, String currency, String returnUrl,
             String cancelUrl, String description)
         {
@@ -81,25 +84,26 @@ namespace PaymillWrapper.Service
                 null, null);
         }
 
-        /**
-         * Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
-         * 
-         * @param amount
-         *          Amount (in cents) which will be charged.
-         * @param currency
-         *          ISO 4217 formatted currency code.
-         * @param returnUrl
-         *          URL to redirect customers to after checkout has completed.
-         * @param cancelUrl
-         *          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.
-         * @param fee
-         *          A {@link Fee}.
-         * @param description
-         *          A short description for the transaction.
-         * @param appId 
-         *          App (ID) that created this refund or null if created by yourself.
-         * @return {@link Checksum} object.
-         */
+        /// <summary>
+        /// Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
+        /// </summary>
+        /// <param name="amount">
+        ///          Amount (in cents) which will be charged.</param>
+        /// <param name="currency">
+        ///          ISO 4217 formatted currency code.</param>
+        /// <param name="returnUrl">
+        ///          URL to redirect customers to after checkout has completed.</param>
+        /// <param name="cancelUrl">
+        ///          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.</param>
+        /// <param name="fee">
+        ///          A {@link Fee}.</param>
+        /// <param name="description">
+        ///          A short description for the transaction.</param>
+        /// <param name="appId">
+        ///          App (ID) that created this refund or null if created by yourself.</param>
+        /// <returns>
+        /// Checksum object.
+        /// </returns>
         public async Task<Checksum> CreateChecksumForPaypalWithFeeAndDescriptionAsync(int amount, String currency, String returnUrl,
             String cancelUrl, Fee fee, String description, String appId)
         {
@@ -107,27 +111,28 @@ namespace PaymillWrapper.Service
                 description, null, null, null, appId);
         }
 
-        /**
-         * Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
-         * 
-         * @param amount
-         *          Amount (in cents) which will be charged.
-         * @param currency
-         *          ISO 4217 formatted currency code.
-         * @param returnUrl
-         *          URL to redirect customers to after checkout has completed.
-         * @param cancelUrl
-         *          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.
-         * @param description
-         *          A short description for the transaction or <code>null</code>.
-         * @param items
-         *          {@link List} of {@link ShoppingCartItem}s
-         * @param billing
-         *          Billing {@link Address} for this transaction.
-         * @param shipping
-         *          Shipping {@link Address} for this transaction.
-         * @return {@link Checksum} object.
-         */
+        /// <summary>
+        /// Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
+        /// </summary>
+        /// <param name="amount">
+        ///          Amount (in cents) which will be charged.</param>
+        /// <param name="currency">
+        ///          ISO 4217 formatted currency code.</param>
+        /// <param name="returnUrl">
+        ///          URL to redirect customers to after checkout has completed.</param>
+        /// <param name="cancelUrl">
+        ///          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.</param>
+        /// <param name="description">
+        ///          A short description for the transaction or <code>null</code>.</param>
+        /// <param name="items">
+        ///          {@link List} of {@link ShoppingCartItem}s</param>
+        /// <param name="billing
+        ///          Billing {@link Address} for this transaction.
+        /// <param name="shipping">
+        ///          Shipping {@link Address} for this transaction.
+        /// <returns>
+        /// Checksum object.
+        /// </returns>
         public async Task<Checksum> CreateChecksumForPaypalWithItemsAndAddressAsync(int amount, String currency, String returnUrl,
             String cancelUrl, String description, List<ShoppingCartItem> items, Address shipping, Address billing)
         {
@@ -135,31 +140,32 @@ namespace PaymillWrapper.Service
                 description, items, shipping, billing, null);
         }
 
-        /**
-         * Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
-         * 
-         * @param amount
-         *          Amount (in cents) which will be charged.
-         * @param currency
-         *          ISO 4217 formatted currency code.
-         * @param returnUrl
-         *          URL to redirect customers to after checkout has completed.
-         * @param cancelUrl
-         *          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.
-         * @param fee
-         *          A {@link Fee}.
-         * @param description
-         *          A short description for the transaction or <code>null</code>.
-         * @param items
-         *          {@link List} of {@link ShoppingCartItem}s
-         * @param billing
-         *          Billing {@link Address} for this transaction.
-         * @param shipping
-         *          Shipping {@link Address} for this transaction.
-         * @param appId 
-         *          App (ID) that created this refund or null if created by yourself.
-         * @return {@link Checksum} object.
-         */
+        /// <summary>
+        /// Created a {@link Checksum} of {@link Checksum.Type} with amount in the given currency.
+        /// </summary> 
+        /// <param name="amount">
+        ///          Amount (in cents) which will be charged.</param>
+        /// <param name="currency">
+        ///          ISO 4217 formatted currency code.</param>
+        /// <param name="returnUrl">
+        ///          URL to redirect customers to after checkout has completed.</param>
+        /// <param name="cancelUrl">
+        ///          URL to redirect customers to after they have canceled the checkout. As a result, there will be no transaction.</param>
+        /// <param name="fee">
+        ///          A {@link Fee}.
+        /// <param name="description">
+        ///          A short description for the transaction or <code>null</code>.</param>
+        /// <param name="items">
+        ///          {@link List} of {@link ShoppingCartItem}s</param>
+        /// <param name="billing">
+        ///          Billing {@link Address} for this transaction.</param>
+        /// <param name="shipping">
+        ///          Shipping {@link Address} for this transaction.</param>
+        /// <param name="appId">
+        ///          App (ID) that created this refund or null if created by yourself.</param>
+        /// <returns>
+        /// Checksum object.
+        /// </returns>
         private async Task<Checksum> CreateChecksumForPaypalWithFeeAndItemsAndAddressAsync(int amount, String currency, String returnUrl,
             String cancelUrl, Fee fee, String description, List<ShoppingCartItem> items, Address shipping, Address billing, String appId)
         {
@@ -203,8 +209,8 @@ namespace PaymillWrapper.Service
             this.parametrizeAddress(billing, paramsMap, "billing_address");
             this.parametrizeAddress(shipping, paramsMap, "shipping_address");
 
-            return await createAsync(null, 
-                new UrlEncoder().EncodeParamsMap< string, string>(paramsMap));
+            return await createAsync(null,
+                new UrlEncoder().EncodeParamsMap<string, string>(paramsMap));
         }
 
         private void parametrizeItems(List<ShoppingCartItem> items, ParameterMap<String, String> paramsMap)
@@ -244,38 +250,46 @@ namespace PaymillWrapper.Service
         {
             return obj.Id;
         }
-        private void parametrizeAddress(Address address, ParameterMap<String, String> paramsMap, String prefix) {
-            if (address != null) {
-              if (String.IsNullOrWhiteSpace(address.Name) == false){
-                paramsMap.Add(prefix + "[name]", address.Name);
-              }
-              if (String.IsNullOrWhiteSpace(address.StreetAddress) == false)
-              {
-                paramsMap.Add(prefix + "[street_address]", address.StreetAddress);
-              }
-              if (String.IsNullOrWhiteSpace(address.StreetAddressAddition) == false){
-                paramsMap.Add(prefix + "[street_address_addition]", address.StreetAddressAddition);
-              }
-              if (String.IsNullOrWhiteSpace(address.City) == false){
-                paramsMap.Add(prefix + "[city]", address.City);
-              }
-              if (String.IsNullOrWhiteSpace(address.State) == false) {
-                paramsMap.Add(prefix + "[state]", address.State);
-              }
-              if (String.IsNullOrWhiteSpace(address.PostalCode) == false){
-                paramsMap.Add(prefix + "[postal_code]", address.PostalCode);
-              }
-              if (String.IsNullOrWhiteSpace(address.Country) == false) {
-                paramsMap.Add(prefix + "[country]", address.Country);
-              }
-              if (String.IsNullOrWhiteSpace(address.Phone) == false) {
-                paramsMap.Add(prefix + "[phone]", address.Phone);
-              }
+        private void parametrizeAddress(Address address, ParameterMap<String, String> paramsMap, String prefix)
+        {
+            if (address != null)
+            {
+                if (String.IsNullOrWhiteSpace(address.Name) == false)
+                {
+                    paramsMap.Add(prefix + "[name]", address.Name);
+                }
+                if (String.IsNullOrWhiteSpace(address.StreetAddress) == false)
+                {
+                    paramsMap.Add(prefix + "[street_address]", address.StreetAddress);
+                }
+                if (String.IsNullOrWhiteSpace(address.StreetAddressAddition) == false)
+                {
+                    paramsMap.Add(prefix + "[street_address_addition]", address.StreetAddressAddition);
+                }
+                if (String.IsNullOrWhiteSpace(address.City) == false)
+                {
+                    paramsMap.Add(prefix + "[city]", address.City);
+                }
+                if (String.IsNullOrWhiteSpace(address.State) == false)
+                {
+                    paramsMap.Add(prefix + "[state]", address.State);
+                }
+                if (String.IsNullOrWhiteSpace(address.PostalCode) == false)
+                {
+                    paramsMap.Add(prefix + "[postal_code]", address.PostalCode);
+                }
+                if (String.IsNullOrWhiteSpace(address.Country) == false)
+                {
+                    paramsMap.Add(prefix + "[country]", address.Country);
+                }
+                if (String.IsNullOrWhiteSpace(address.Phone) == false)
+                {
+                    paramsMap.Add(prefix + "[phone]", address.Phone);
+                }
             }
-          }
+        }
 
     }
 }
 
-   
-   
+
