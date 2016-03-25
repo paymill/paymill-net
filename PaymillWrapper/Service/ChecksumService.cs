@@ -108,7 +108,7 @@ namespace PaymillWrapper.Service
             String cancelUrl, Fee fee, String description, String appId)
         {
             return await CreateChecksumForPaypalWithFeeAndItemsAndAddressAsync(amount, currency, returnUrl, cancelUrl, fee,
-                description, null, null, null, appId);
+                description, null, null, null, appId, null, null);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace PaymillWrapper.Service
             String cancelUrl, String description, List<ShoppingCartItem> items, Address shipping, Address billing)
         {
             return await CreateChecksumForPaypalWithFeeAndItemsAndAddressAsync(amount, currency, returnUrl, cancelUrl, null,
-                description, items, shipping, billing, null);
+                description, items, shipping, billing, null, null, null);
         }
 
         /// <summary>
@@ -163,11 +163,15 @@ namespace PaymillWrapper.Service
         ///          Shipping {@link Address} for this transaction.</param>
         /// <param name="appId">
         ///          App (ID) that created this refund or null if created by yourself.</param>
+        /// <param name="requireReusablePayment">
+        ///          When creating a checksum for a PayPal transaction, simply set require_reusable_payment=true to request a billing agreement from your customer during checkout.
+        /// <param name="reusablePaymentDescription">
+        ///          Optionally, specify reusable_payment_description to let the customer know why exactly you need them to agree to future payments
         /// <returns>
         /// Checksum object.
         /// </returns>
         private async Task<Checksum> CreateChecksumForPaypalWithFeeAndItemsAndAddressAsync(int amount, String currency, String returnUrl,
-            String cancelUrl, Fee fee, String description, List<ShoppingCartItem> items, Address shipping, Address billing, String appId, Boolean requireReusablePayment, String reusablePaymentDescription)
+            String cancelUrl, Fee fee, String description, List<ShoppingCartItem> items, Address shipping, Address billing, String appId, Boolean? requireReusablePayment, String reusablePaymentDescription)
         {
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
@@ -182,11 +186,12 @@ namespace PaymillWrapper.Service
             paramsMap.Add("currency", currency);
             paramsMap.Add("cancel_url", cancelUrl);
             paramsMap.Add("return_url", returnUrl);
-
+  
             if (String.IsNullOrWhiteSpace(description) == false)
             {
                 paramsMap.Add("description", description);
             }
+
             if (fee != null && fee.Amount != null)
             {
                 paramsMap.Add("fee_amount", fee.Amount.ToString());
@@ -204,7 +209,14 @@ namespace PaymillWrapper.Service
             {
                 paramsMap.Add("app_id", appId);
             }
-
+            if (requireReusablePayment.HasValue)
+            {
+                paramsMap.Add("require_reusable_payment", requireReusablePayment.ToString().ToLower());
+            }
+            if (String.IsNullOrWhiteSpace(reusablePaymentDescription) == false)
+            {
+                paramsMap.Add("reusable_payment_description", reusablePaymentDescription);
+            }
             this.parametrizeItems(items, paramsMap);
             this.parametrizeAddress(billing, paramsMap, "billing_address");
             this.parametrizeAddress(shipping, paramsMap, "shipping_address");
