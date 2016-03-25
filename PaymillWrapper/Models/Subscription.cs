@@ -100,6 +100,11 @@ namespace PaymillWrapper.Models
         [DataMember(Name = "app_id")]
         public String AppId { get; set; }
 
+        /**
+        * Set the mandate reference. SEPA mandate reference, can be optionally specified for direct debit transactions.
+        * @param mandateReference
+        *          {@link String}
+        */
          [DataMember(Name = "mandate_reference")]
         [Updateable(Name = "mandate_reference")]
         public String MandateReference { get; set; }
