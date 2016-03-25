@@ -167,7 +167,7 @@ namespace PaymillWrapper.Service
         /// Checksum object.
         /// </returns>
         private async Task<Checksum> CreateChecksumForPaypalWithFeeAndItemsAndAddressAsync(int amount, String currency, String returnUrl,
-            String cancelUrl, Fee fee, String description, List<ShoppingCartItem> items, Address shipping, Address billing, String appId)
+            String cancelUrl, Fee fee, String description, List<ShoppingCartItem> items, Address shipping, Address billing, String appId, Boolean requireReusablePayment, String reusablePaymentDescription)
         {
             ValidationUtils.ValidatesAmount(amount);
             ValidationUtils.ValidatesCurrency(currency);
