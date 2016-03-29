@@ -1,13 +1,13 @@
-
-﻿using System.Net.Http;
-using PaymillWrapper.Models;
+﻿using PaymillWrapper.Models;
 using PaymillWrapper.Utils;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+
 namespace PaymillWrapper.Service
 {
-
     public class TransactionService : AbstractService<Transaction>
     {
         public TransactionService(HttpClient client, string apiUrl)
@@ -199,7 +199,7 @@ namespace PaymillWrapper.Service
                 Currency = currency,
                 source = srcValue,
                 description = description,
-                mandate_reference = mandateReference != null ? mandateReference: null 
+                mandate_reference = mandateReference != null ? mandateReference : null
             }));
         }
 

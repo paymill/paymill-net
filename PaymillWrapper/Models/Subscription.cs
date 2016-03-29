@@ -3,8 +3,7 @@ using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -15,89 +14,89 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Subscription>))]
     public class Subscription : BaseModel
     {
-       [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int? Amount { get; set; }
 
-        [DataMember(Name = "temp_amount")]
+        [JsonProperty("temp_amount")]
         public int? TempAmount { get; set; }
 
-        [DataMember(Name = "currency"),
+        [JsonProperty("currency"),
         Updateable(Name = "currency")]
         public String Currency { get; set; }
 
 
-        [DataMember(Name = "name"),
+        [JsonProperty("name"),
         Updateable(Name = "name")]
         public String Name { get; set; }
 
 
-        [DataMember(Name = "interval"),
+        [JsonProperty("interval"),
         Updateable(Name = "interval")]
         public Interval.PeriodWithChargeDay Interval { get; set; }
 
 
-        [DataMember(Name = "is_canceled")]
+        [JsonProperty("is_canceled")]
         public Boolean Canceled { get; set; }
 
-        [DataMember(Name = "is_deleted")]
+        [JsonProperty("is_deleted")]
         public Boolean Deleted { get; set; }
 
-        [DataMember(Name = "period_of_validity")]
+        [JsonProperty("period_of_validity")]
         public Interval.Period PeriodOfValidity { get; set; }
 
 
-        [DataMember(Name = "end_of_period")]
+        [JsonProperty("end_of_period")]
         public DateTime? EndOfPeriod { get; set; }
 
 
         /// <summary>
         /// Hash describing the offer which is subscribed to the client
         /// </summary>
-        [DataMember(Name = "offer"),
+        [JsonProperty("offer"),
         Updateable(Name = "offer", OnlyProperty = "Id")]
         public Offer Offer { get; set; }
 
         /// <summary>
         /// Whether this subscription was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "livemode")]
+        [JsonProperty("livemode")]
         public bool Livemode { get; set; }
 
 
-        [DataMember(Name = "trial_start")]
+        [JsonProperty("trial_start")]
         public DateTime? TrialStart { get; set; }
 
-        [DataMember(Name = "trial_end")]
+        [JsonProperty("trial_end")]
         public DateTime? TrialEnd { get; set; }
 
         /// <summary>
         /// Next charge date.
         /// </summary>
-        [DataMember(Name = "next_capture_at")]
+        [JsonProperty("next_capture_at")]
         public DateTime? NextCaptureAt { get; set; }
 
         /// <summary>
         /// Cancel date
         /// </summary>
-        [DataMember(Name = "canceled_at")]
+        [JsonProperty("canceled_at")]
         public DateTime? CanceledAt { get; set; }
 
-        [DataMember(Name = "status")]
+        [JsonProperty("status")]
         public SubscriptionStatus Status { get; set; }
         /// <summary>
         /// Client
         /// </summary>
-        [DataMember(Name = "client")]
+        [JsonProperty("client")]
         public Client Client { get; set; }
 
         /// <summary>
         /// Payment
         /// </summary>
-        [DataMember(Name = "payment")]
+        [JsonProperty("payment")]
         [Updateable(Name = "payment", OnlyProperty = "Id")]
         public Payment Payment { get; set; }
 
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         public String AppId { get; set; }
 
         /**
@@ -105,11 +104,11 @@ namespace PaymillWrapper.Models
         * @param mandateReference
         *          {@link String}
         */
-         [DataMember(Name = "mandate_reference")]
+        [JsonProperty("mandate_reference")]
         [Updateable(Name = "mandate_reference")]
         public String MandateReference { get; set; }
 
-         
+
 
         [JsonConverter(typeof(StringToBaseEnumTypeConverter<SubscriptionStatus>))]
         public class SubscriptionStatus : EnumBaseType
@@ -375,5 +374,4 @@ namespace PaymillWrapper.Models
 
 
     }
-
 }

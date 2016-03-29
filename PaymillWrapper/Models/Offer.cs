@@ -1,10 +1,8 @@
-﻿using PaymillWrapper.Utils;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -17,19 +15,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Your name for this offer
         /// </summary>
-        [DataMember(Name = "name"), Updateable(Name = "name")]
+        [JsonProperty("name"), Updateable(Name = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Every interval the specified amount will be charged. In test mode only even values e.g. 42.00 = 4200 are allowed
         /// </summary>
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int Amount { get; set; }
 
         /// <summary>
         /// Return formatted amount, e.g. 4200 amount value return 42.00
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -41,28 +39,28 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Defining how often the client should be charged (week, month, year)
         /// </summary>
-        [DataMember(Name = "interval")]
+        [JsonProperty("interval")]
         public Interval.Period Interval { get; set; }
 
         /// <summary>
         /// Give it a try or charge directly?
         /// </summary>
-        [DataMember(Name = "trial_period_days")]
+        [JsonProperty("trial_period_days")]
         public int? TrialPeriodDays { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "currency")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// App (ID) that created this offer or null if created by yourself
         /// </summary>
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         public string AppId { get; set; }
 
-        [DataMember(Name = "subscription_count")]
+        [JsonProperty("subscription_count")]
         public SubscriptionCount SubscriptionCount { get; set; }
 
         public Offer(String id)
@@ -213,14 +211,13 @@ namespace PaymillWrapper.Models
         }
 
     }
-    [DataContract]
+        
     public class SubscriptionCount
     {
-        [DataMember(Name = "active")]
+        [JsonProperty("active")]
         public String Аctive { get; set; }
-        [DataMember(Name = "inactive")]
+        [JsonProperty("inactive")]
         public int Inactive { get; set; }
     }
 
-   
 }

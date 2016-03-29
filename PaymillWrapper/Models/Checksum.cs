@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using PaymillWrapper.Utils;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -19,13 +18,13 @@ namespace PaymillWrapper.Models
     [JsonConverter(typeof(StringToBaseModelConverter<Checksum>))]
     public class Checksum : BaseModel
     {
-        [DataMember(Name = "type")]
+        [JsonProperty("type")]
         public String Type;
 
-        [DataMember(Name = "checksum")]
+        [JsonProperty("checksum")]
         public String Value;
 
-        [DataMember(Name = "data")]
+        [JsonProperty("data")]
         public String Data;
         public Checksum()
         {
@@ -35,10 +34,8 @@ namespace PaymillWrapper.Models
             Id = id;
         }
 
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         public String AppId;
 
     }
-
-
 }

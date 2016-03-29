@@ -1,11 +1,12 @@
 ﻿using PaymillWrapper.Exceptions;
+using PaymillWrapper.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web;
-using PaymillWrapper.Models;
+using System.Net;
 using System.Reflection;
+using System.Text;
+
 namespace PaymillWrapper.Utils
 {
     public class UrlEncoder
@@ -44,17 +45,17 @@ namespace PaymillWrapper.Utils
 
             return sb.ToString();
         }
-        
+
         /// <summary>
         /// Encodes the ParamsMap.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        public string EncodeParamsMap<K, V>(ParameterMap<K, V> data) 
-                where K: class
-                where V: class
+        public string EncodeParamsMap<K, V>(ParameterMap<K, V> data)
+                where K : class
+                where V : class
         {
-           
+
             StringBuilder sb = new StringBuilder();
             foreach (var key in data.KeyCollection())
             {
@@ -101,7 +102,7 @@ namespace PaymillWrapper.Utils
         {
             var props = data.GetType().GetProperties();
             StringBuilder sb = new StringBuilder();
-            var updatebles = props.Where(x => x.GetCustomAttributes(typeof(Updateable), false).Length > 0);
+            var updatebles = props.Where(x => x.GetCustomAttributes(typeof(Updateable), false).Count() > 0);
             foreach (var prop in updatebles)
             {
                 object value = prop.GetValue(data, null);
@@ -151,9 +152,9 @@ namespace PaymillWrapper.Utils
             if (value == null) return;
             try
             {
-                key = HttpUtility.UrlEncode(key.ToLower(), this.charset);
+                key = WebUtility.UrlEncode(key.ToLower());
 
-                if (value.GetType().IsEnum)
+                if (value.GetType().GetTypeInfo().IsEnum)
                 {
                     reply = value.ToString().ToLower();
                 }
@@ -170,7 +171,7 @@ namespace PaymillWrapper.Utils
                 }
                 else
                 {
-                    reply = HttpUtility.UrlEncode(value.ToString(), this.charset);
+                    reply = WebUtility.UrlEncode(value.ToString());
                 }
 
                 if (!string.IsNullOrEmpty(reply))
@@ -194,7 +195,7 @@ namespace PaymillWrapper.Utils
             if (filter != null)
             {
                 var props = filter.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var snakeProps = props.Where(x => x.GetCustomAttributes(typeof(SnakeCase), false).Length > 0);
+                var snakeProps = props.Where(x => x.GetCustomAttributes(typeof(SnakeCase), false).Count() > 0);
                 foreach (var prop in snakeProps)
                 {
                     object value = prop.GetValue(filter);
@@ -218,13 +219,14 @@ namespace PaymillWrapper.Utils
             if (order != null)
             {
                 var props = order.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var snakeProps = props.Where(x => x.GetCustomAttributes(typeof(SnakeCase), false).Length > 0);
+
+                var snakeProps = props.Where(x => x.GetCustomAttributes(typeof(SnakeCase), false).Count() > 0);
 
                 foreach (var prop in snakeProps)
                 {
                     object value = prop.GetValue(order);
                     var snakeProp = (SnakeCase)prop.GetCustomAttributes(typeof(SnakeCase), false).First();
-                    if (( value as Boolean?) == true)
+                    if ((value as Boolean?) == true)
                     {
                         if (snakeProp.Order)
                         {
@@ -246,7 +248,7 @@ namespace PaymillWrapper.Utils
             encodeFilterParameters(sb, filter);
             String orderParams = encodeOrderParameter(order);
 
-            if (String.IsNullOrWhiteSpace(orderParams) == false 
+            if (String.IsNullOrWhiteSpace(orderParams) == false
                     && !orderParams.StartsWith("_"))
             {
                 this.addKeyValuePair(sb, "order", orderParams);

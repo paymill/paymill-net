@@ -1,15 +1,13 @@
-﻿using System;
+﻿using PaymillWrapper.Models;
+using PaymillWrapper.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using PaymillWrapper.Models;
-using PaymillWrapper.Utils;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
-
     public class OfferService : AbstractService<Offer>
     {
         public OfferService(HttpClient client, string apiUrl)
@@ -48,7 +46,7 @@ namespace PaymillWrapper.Service
             ValidationUtils.ValidatesName(name);
             ValidationUtils.ValidatesTrialPeriodDays(trialPeriodDays);
 
-            return await createAsync(null, 
+            return await createAsync(null,
                     new UrlEncoder().EncodeObject(new
                     {
                         Amount = amount,
@@ -78,9 +76,10 @@ namespace PaymillWrapper.Service
         }
         public virtual async Task<bool> DeleteAsync(string id, Boolean removeWithSubscriptions)
         {
-            return await deleteParamBoolAsync( id ,
-                new { 
-                      remove_with_subscriptions = removeWithSubscriptions.ToString().ToLower()
+            return await deleteParamBoolAsync(id,
+                new
+                {
+                    remove_with_subscriptions = removeWithSubscriptions.ToString().ToLower()
                 });
         }
         public virtual async Task<bool> DeleteAsync(Offer offer, Boolean removeWithSubscriptions)
@@ -105,7 +104,7 @@ namespace PaymillWrapper.Service
         {
             return await base.listAsync(filter, order, count, offset);
         }
-        public virtual async Task<Offer> UpdateAsync(Offer obj, Boolean updateSubscriptions )
+        public virtual async Task<Offer> UpdateAsync(Offer obj, Boolean updateSubscriptions)
         {
             var encoder = new UrlEncoder();
             String param = encoder.EncodeObject(new
@@ -114,7 +113,7 @@ namespace PaymillWrapper.Service
             });
             var content = encoder.EncodeUpdate(obj);
             return await updateWithContentAsync(obj.Id,
-               String.Format("{0}&{1}",content, param));
+               String.Format("{0}&{1}", content, param));
         }
         protected override string GetResourceId(Offer obj)
         {

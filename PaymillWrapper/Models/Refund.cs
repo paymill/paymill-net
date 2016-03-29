@@ -3,8 +3,7 @@ using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -43,19 +42,19 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Transactions-object
         /// </summary>
-        [DataMember(Name = "transaction")]
+        [JsonProperty("transaction")]
         public Transaction Transaction { get; set; }
 
         /// <summary>
         /// The refunded amount
         /// </summary>
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int Amount { get; set; }
 
         /// <summary>
         /// The refunded formatted amount with decimals
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -67,22 +66,22 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Indicates the current status of this transaction
         /// </summary>
-        [DataMember(Name = "status")]
+        [JsonProperty("status")]
         public RefundStatus Status { get; set; }
 
         /// <summary>
         /// The description given for this refund
         /// </summary>
-        [DataMember(Name = "description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Whether this refund happend in test- or in livemode
         /// </summary>
-        [DataMember(Name = "livemode")]
+        [JsonProperty("livemode")]
         public bool Livemode { get; set; }
 
-        [DataMember(Name = "response_code")]
+        [JsonProperty("response_code")]
         public int ResponseCode;
 
 

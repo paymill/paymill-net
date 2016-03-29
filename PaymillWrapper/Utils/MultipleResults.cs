@@ -1,28 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
-    [DataContract]
     internal class SingleResult<T>
     {
-        [DataMember(Name = "data")]
+        [JsonProperty("data")]
         public T Data { get; set; }
 
-        [DataMember(Name = "mode")]
+        [JsonProperty("mode")]
         public string Mode { get; set; }
     }
 
-    [DataContract]
     internal class MultipleResults<T>
     {
-        [DataMember(Name = "data")]
+        [JsonProperty("data")]
         public List<T> Data { get; set; }
 
-        [DataMember(Name = "mode")]
+        [JsonProperty("mode")]
         public string Mode { get; set; }
 
-        [DataMember(Name = "data_count")]
+        [JsonProperty("data_count")]
         public int Count { get; set; }
     }
 }

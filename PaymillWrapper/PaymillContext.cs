@@ -1,17 +1,8 @@
-using Newtonsoft.Json.Linq;
-using PaymillWrapper.Models;
-using PaymillWrapper.Utils;
+﻿using PaymillWrapper.Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Web;
-using PaymillWrapper.Service;
-using System.Reflection;
-using System.Diagnostics;
-
 
 namespace PaymillWrapper
 {
@@ -35,13 +26,12 @@ namespace PaymillWrapper
         }
         public static String GetProjectName()
         {
-           return "paymill-net";
+            return "paymill-net";
         }
+
         public static String GetProjectVersion()
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fvi.FileVersion;
+        {                        
+            return "dnxcore50";
         }
 
         public static string ApiKey { get; private set; }
@@ -59,7 +49,7 @@ namespace PaymillWrapper
                         .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     var authInfo = ApiKey + ":";
-                    authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                    authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authInfo);
                 }
 
@@ -103,6 +93,7 @@ namespace PaymillWrapper
         {
             get { return _preauthorizationService.Value; }
         }
+
         public WebhookService WebhookService
         {
             get { return _webhookService.Value; }

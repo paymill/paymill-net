@@ -1,15 +1,10 @@
+﻿using PaymillWrapper.Models;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using PaymillWrapper;
-using PaymillWrapper.Models;
-using PaymillWrapper.Utils;
 
 namespace PaymillWrapper.Service
 {
@@ -27,7 +22,7 @@ namespace PaymillWrapper.Service
         public async Task<Payment> CreateWithTokenAsync(String token)
         {
             ValidationUtils.ValidatesToken(token);
-            return await createAsync(null, 
+            return await createAsync(null,
                 new UrlEncoder().EncodeObject(new { Token = token }));
         }
         /// <summary>
@@ -40,7 +35,7 @@ namespace PaymillWrapper.Service
         {
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesClient(client);
-            return await createAsync(null, 
+            return await createAsync(null,
                 new UrlEncoder().EncodeObject(new { Token = token, Client = client.Id }));
         }
         /// <summary>
@@ -53,7 +48,7 @@ namespace PaymillWrapper.Service
         {
             ValidationUtils.ValidatesToken(token);
             ValidationUtils.ValidatesId(clientId);
-            return await createAsync(null, 
+            return await createAsync(null,
                 new UrlEncoder().EncodeObject(new { Token = token, Client = clientId }));
         }
         /// <summary>

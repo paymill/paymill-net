@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
@@ -12,7 +9,7 @@ namespace PaymillWrapper.Utils
         public String Value { get; private set; }
         private static List<EnumBaseType> createdEnumItems = new List<EnumBaseType>();
         private Boolean unknow;
-  
+
         protected EnumBaseType(String value, Boolean unknowValue = false)
         {
             Value = value;
@@ -38,7 +35,7 @@ namespace PaymillWrapper.Utils
         }
         public static EnumBaseType GetItemByValue(String value, Type t)
         {
-            if (EnumBaseType.createdEnumItems.Exists(x=> x.GetType() == t) == false)
+            if (EnumBaseType.createdEnumItems.Exists(x => x.GetType() == t) == false)
             {
                 Activator.CreateInstance(t);
             }

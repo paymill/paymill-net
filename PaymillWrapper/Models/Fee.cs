@@ -3,8 +3,6 @@ using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
@@ -28,22 +26,22 @@ namespace PaymillWrapper.Models
             }
         }
 
-        [DataMember(Name = "type")]
+        [JsonProperty("type")]
         public FeeType Type { get; set; }
 
-        [DataMember(Name = "application")]
+        [JsonProperty("application")]
         public String Application { get; set; }
 
-        [DataMember(Name = "payment")]
+        [JsonProperty("payment")]
         public String Payment { get; set; }
 
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int? Amount { get; set; }
 
-        [DataMember(Name = "billed_at")]
+        [JsonProperty("billed_at")]
         public DateTime? BilledAt { get; set; }
 
-        [DataMember(Name = "currency")]
+        [JsonProperty("currency")]
         public String Currency { get; set; }
     }
 }

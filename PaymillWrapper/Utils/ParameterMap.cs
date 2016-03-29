@@ -1,93 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
-    public class ParameterMap<K, V> 
-            where V: class
-            where K: class {
-       private  Dictionary<K, List<V>> map;
+    public class ParameterMap<K, V>
+         where V : class
+         where K : class
+    {
+        private Dictionary<K, List<V>> map;
 
-      public ParameterMap() {
-        this.map = new Dictionary<K, List<V>>();
-      }
-            
-      public void Add( K key, V value ) {
-        List<V> values = null;
-
-        if (this.map.ContainsKey(key) == false)
+        public ParameterMap()
         {
-          values = new List<V>();
-        }
-        else
-        {
-            values = this.map[key];
+            this.map = new Dictionary<K, List<V>>();
         }
 
-        values.Add( value );
+        public void Add(K key, V value)
+        {
+            List<V> values = null;
 
-        this.map.Add( key, values );
-      }
+            if (this.map.ContainsKey(key) == false)
+            {
+                values = new List<V>();
+            }
+            else
+            {
+                values = this.map[key];
+            }
 
-      public V GetFirst( K key ) {
-        return this.map[key] != null ? this.map[key].First() : null;
-      }
+            values.Add(value);
 
-      public int Size() {
-        return this.map.Count();
-      }
+            this.map.Add(key, values);
+        }
 
-      public Boolean IsEmpty() {
-        return this.map.Count() == 0;
-      }
+        public V GetFirst(K key)
+        {
+            return this.map[key] != null ? this.map[key].First() : null;
+        }
 
-  
-      public Boolean ContainsKey( K o ) {
-        return this.map.ContainsKey( o );
-      }
+        public int Size()
+        {
+            return this.map.Count();
+        }
 
- 
-      public Boolean ContainsValue( List<V> o ) {
-        return this.map.ContainsValue( o );
-      }
+        public Boolean IsEmpty()
+        {
+            return this.map.Count() == 0;
+        }
 
-      public List<V> Get(K o) {
-        return this.map[o];
-      }
 
-  
-      public void Put( K k, List<V> vs) {
-        this.map.Add( k, vs );
-      }
+        public Boolean ContainsKey(K o)
+        {
+            return this.map.ContainsKey(o);
+        }
 
-      public void Remove(K o ) {
-        this.map.Remove( o );
-      }
 
-      public void PutAll( Dictionary< K,  List<V>> map ) {
+        public Boolean ContainsValue(List<V> o)
+        {
+            return this.map.ContainsValue(o);
+        }
 
-          foreach(var item in map) {
-              this.map.Add(item.Key, item.Value);
-          }
-      }
+        public List<V> Get(K o)
+        {
+            return this.map[o];
+        }
 
-      public void Clear() {
-        this.map.Clear();
-      }
 
-      public List<K> KeyCollection() {
-        return this.map.Keys.ToList();
-      }
+        public void Put(K k, List<V> vs)
+        {
+            this.map.Add(k, vs);
+        }
 
-      public List<  List<V> > Values() {
-        return this.map.Values.ToList();
-      }
+        public void Remove(K o)
+        {
+            this.map.Remove(o);
+        }
 
-      public IDictionary<K, List<V>> EntrySet() {
-        return this.map;
-      }
+        public void PutAll(Dictionary<K, List<V>> map)
+        {
+
+            foreach (var item in map)
+            {
+                this.map.Add(item.Key, item.Value);
+            }
+        }
+
+        public void Clear()
+        {
+            this.map.Clear();
+        }
+
+        public List<K> KeyCollection()
+        {
+            return this.map.Keys.ToList();
+        }
+
+        public List<List<V>> Values()
+        {
+            return this.map.Values.ToList();
+        }
+
+        public IDictionary<K, List<V>> EntrySet()
+        {
+            return this.map;
+        }
     }
 }

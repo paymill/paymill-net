@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using PaymillWrapper.Utils;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -18,28 +17,28 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Mail address of this client
         /// </summary>
-        [DataMember(Name = "email"), Updateable(Name = "email")]
+        [JsonProperty("email"), Updateable(Name = "email")]
         public string Email { get; set; }
 
         /// <summary>
         /// Additional description for this client
         /// </summary>
-        [DataMember(Name = "description"), Updateable(Name = "description")]
+        [JsonProperty("description"), Updateable(Name = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// List of credit card/direct debit. Please note, that the payment objects might only contain valid ids.
         /// </summary>
-        [DataMember(Name = "payment")]
+        [JsonProperty("payment")]
         public List<Payment> Payments { get; set; }
 
         /// <summary>
         /// List suscription-object
         /// </summary>
-        [DataMember(Name = "subscription")]
+        [JsonProperty("subscription")]
         public List<Subscription> Subscriptions { get; set; }
 
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         private String appId;
 
         public Client()
@@ -177,6 +176,4 @@ namespace PaymillWrapper.Models
         }
 
     }
-
-
 }

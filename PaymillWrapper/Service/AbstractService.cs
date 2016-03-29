@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using PaymillWrapper.Utils;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PaymillWrapper.Exceptions;
+using PaymillWrapper.Utils;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using PaymillWrapper.Exceptions;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Configuration;
 
 namespace PaymillWrapper.Service
 {
@@ -198,7 +193,7 @@ namespace PaymillWrapper.Service
             string requestUri = _apiUrl + "/" + _resource.ToString().ToLower() + "/" + resourceId;
             HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
             String data = await readReponseMessage(response);
- 
+
             return ReadResult<T>(data);
         }
         /// <summary>
@@ -257,10 +252,10 @@ namespace PaymillWrapper.Service
                 throw new PaymillException(exc.Message);
             }
             // For .Net 4.0 use the code bellow 
-    /*        return Task.Run(() =>
-                {
-                    return String.Empty;
-                });*/
+            /*        return Task.Run(() =>
+                        {
+                            return String.Empty;
+                        });*/
             return Task.Factory.StartNew<String>(() =>
             {
                 return String.Empty;

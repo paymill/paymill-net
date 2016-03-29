@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
@@ -6,7 +9,7 @@ namespace PaymillWrapper.Utils
     {
 
         private static readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
-  
+
         public static int ToUnixTimestamp(this DateTime dateTime)
         {
             return (int)(dateTime - unixEpoch).TotalSeconds;

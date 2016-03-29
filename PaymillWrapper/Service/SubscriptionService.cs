@@ -1,9 +1,10 @@
-using System.Net.Http;
-using PaymillWrapper.Models;
+﻿using PaymillWrapper.Models;
 using PaymillWrapper.Utils;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
@@ -135,7 +136,7 @@ namespace PaymillWrapper.Service
                             start_at = startAt.HasValue ? DateTimeExtensions.ToUnixTimestamp(startAt.Value).ToString() : null,
                             name = name != null ? name : null,
                             period_of_validity = periodOfValidity != null ? periodOfValidity.ToString() : null,
-                            mandate_reference = mandateReference != null ? mandateReference: null
+                            mandate_reference = mandateReference != null ? mandateReference : null
                         }));
         }
 
@@ -350,11 +351,12 @@ namespace PaymillWrapper.Service
             {
                 ValidationUtils.ValidatesIntervalPeriodWithChargeDay(interval);
             }
-            return await updateParamAsync(subscription.Id, new {
+            return await updateParamAsync(subscription.Id, new
+            {
                 amount = amount,
                 amount_change_type = type,
                 currency = currency != null ? currency : null,
-                interval = interval != null ? interval: null
+                interval = interval != null ? interval : null
             });
         }
 
@@ -421,7 +423,8 @@ namespace PaymillWrapper.Service
         private async Task<Subscription> changeOfferAsync(Subscription subscription, Offer offer, int type)
         {
             ValidationUtils.ValidatesOffer(offer);
-            return await updateParamAsync(subscription.Id, new {
+            return await updateParamAsync(subscription.Id, new
+            {
                 offer = offer.Id,
                 offer_change_type = type
             });

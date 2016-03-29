@@ -1,9 +1,9 @@
-﻿using PaymillWrapper.Utils;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -60,13 +60,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Amount of this transaction
         /// </summary>
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int Amount { get; set; }
 
         /// <summary>
         /// Formatted amount of this transaction
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -78,13 +78,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// The used amount, smallest possible unit per currency (for euro, we’re calculating the amount in cents)
         /// </summary>
-        [DataMember(Name = "origin_amount")]
+        [JsonProperty("origin_amount")]
         public int OriginAmount { get; set; }
 
         /// <summary>
         /// Formatted origin amount
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double OriginAmountFormatted
         {
             get
@@ -96,68 +96,68 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Indicates the current status of this transaction, e.g closed means the transaction is sucessfully transfered, refunded means that the amount is fully or in parts refunded
         /// </summary>
-        [DataMember(Name = "status")]
+        [JsonProperty("status")]
         public TransactionStatus Status { get; set; }
 
         /// <summary>
         /// Need a additional description for this transaction? Maybe your shopping cart ID or something like that?
         /// </summary>
-        [DataMember(Name = "description"),
+        [JsonProperty("description"),
         Updateable(Name = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Whether this transaction was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "livemode")]
+        [JsonProperty("livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// List refunds-object
         /// </summary>
-        [DataMember(Name = "refunds")]
+        [JsonProperty("refunds")]
         public List<Refund> Refunds { get; set; }
 
         /// <summary>
         /// Creditcard-object or directdebit-object
         /// </summary>
-        [DataMember(Name = "payment")]
+        [JsonProperty("payment")]
         public Payment Payment { get; set; }
 
         /// <summary>
         /// Client-object
         /// </summary>
-        [DataMember(Name = "client")]
+        [JsonProperty("client")]
         public Client Client { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "currency")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// A token generated through JavaScript-Bridge Paymill
         /// </summary>
-        [DataMember(Name = "token")]
+        [JsonProperty("token")]
         public string Token { get; set; }
 
         /// <summary>
         /// Preauthorization-object
         /// </summary>
-        [DataMember(Name = "preauthorization")]
+        [JsonProperty("preauthorization")]
         public Preauthorization Preauthorization { get; set; }
 
-        [DataMember(Name = "response_code")]
+        [JsonProperty("response_code")]
         public int ResponseCode { get; set; }
 
-        [DataMember(Name = "fees")]
+        [JsonProperty("fees")]
         public List<Fee> Fees { get; set; }
 
-        [DataMember(Name = "is_fraud")]
+        [JsonProperty("is_fraud")]
         public bool IsFraud { get; set; }
 
-        [DataMember(Name = "short_id")]
+        [JsonProperty("short_id")]
         public string ShortId { get; set; }
 
         /**
@@ -165,9 +165,9 @@ namespace PaymillWrapper.Models
         * @param mandateReference
         *          {@link String}
         */
-        [DataMember(Name = "mandate_reference")]
+        [JsonProperty("mandate_reference")]
         public string MandateReference { get; set; }
-        
+
         public static Transaction.Filter CreateFilter()
         {
             return new Transaction.Filter();
