@@ -1,33 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using PaymillWrapper.Utils;
+using System;
 
 namespace PaymillWrapper.Models
 {
-    [DataContract]
     public class BaseModel
     {
 
         /// <summary>
         /// Unique identifier
         /// </summary>
-        [DataMember(Name = "id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Creation date
         /// </summary>
-        [DataMember(Name = "created_at")]
+        [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Last update
         /// </summary>
-        [DataMember(Name = "updated_at")]
+        [JsonProperty("updated_at")]
         public DateTime UpdatedAt { get; set; }
 
         public class BaseFilter

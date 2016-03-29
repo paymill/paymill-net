@@ -3,8 +3,7 @@ using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -37,13 +36,13 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Amount of this transaction
         /// </summary>
-        [DataMember(Name = "amount")]
+        [JsonProperty("amount")]
         public int Amount { get; set; }
 
         /// <summary>
         /// Formatted amount of this transaction
         /// </summary>
-        [IgnoreDataMember]
+        [JsonIgnore]
         public double AmountFormatted
         {
             get
@@ -55,43 +54,43 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Whether this transaction was issued while being in live mode or not
         /// </summary>
-        [DataMember(Name = "livemode")]
+        [JsonProperty("livemode")]
         public bool Livemode { get; set; }
 
         /// <summary>
         /// Creditcard-object or directdebit-object
         /// </summary>
-        [DataMember(Name = "payment")]
+        [JsonProperty("payment")]
         public Payment Payment { get; set; }
 
         /// <summary>
         /// Client-object
         /// </summary>
-        [DataMember(Name = "client")]
+        [JsonProperty("client")]
         public Client Client { get; set; }
 
-        [DataMember(Name = "transaction")]
+        [JsonProperty("transaction")]
         public Transaction Transaction { get; set; }
 
         /// <summary>
         /// ISO 4217 formatted currency code
         /// </summary>
-        [DataMember(Name = "currency")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// A token generated through JavaScript-Bridge Paymill
         /// </summary>
-        [DataMember(Name = "token")]
+        [JsonProperty("token")]
         public string Token { get; set; }
 
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         public String AppId;
 
-        [DataMember(Name = "status")]
+        [JsonProperty("status")]
         public PreauthorizationStatus Status;
 
-        [DataMember(Name = "description")]
+        [JsonProperty("description")]
         public String Description;
 
         public static Preauthorization.Filter CreateFilter()

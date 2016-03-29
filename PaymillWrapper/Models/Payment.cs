@@ -3,8 +3,8 @@ using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Threading.Tasks;
+
 namespace PaymillWrapper.Models
 {
     /// <summary>
@@ -73,50 +73,50 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// creditcard, debit
         /// </summary>
-        [DataMember(Name = "type")]
+        [JsonProperty("type")]
         public PaymentType Type { get; set; }
 
         // Credit card attributes
         /// <summary>
         /// The identifier of a client (client-object)
         /// </summary>
-        [DataMember(Name = "client")]
+        [JsonProperty("client")]
         public Client Client { get; set; }
 
         /// <summary>
         /// Visa or Mastercard
         /// </summary>
-        [DataMember(Name = "card_type")]
+        [JsonProperty("card_type")]
         public CardTypes CardType { get; set; }
 
         /// <summary>
         /// Country
         /// </summary>
-        [DataMember(Name = "country")]
+        [JsonProperty("country")]
         public string Country { get; set; }
 
         /// <summary>
         /// Expiry month of the credit card
         /// </summary>
-        [DataMember(Name = "expire_month")]
+        [JsonProperty("expire_month")]
         public int ExpireMonth { get; set; }
 
         /// <summary>
         /// Expiry year of the credit card
         /// </summary>
-        [DataMember(Name = "expire_year")]
+        [JsonProperty("expire_year")]
         public int ExpireYear { get; set; }
 
         /// <summary>
         /// Name of the card holder
         /// </summary>
-        [DataMember(Name = "card_holder")]
+        [JsonProperty("card_holder")]
         public string CardHolder { get; set; }
 
         /// <summary>
         /// The last four digits of the credit card
         /// </summary>
-        [DataMember(Name = "last4")]
+        [JsonProperty("last4")]
         public string Last4 { get; set; }
 
         // Direct debit attributes
@@ -124,25 +124,25 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// The used Bank Code
         /// </summary>
-        [DataMember(Name = "code")]
+        [JsonProperty("code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Name of the account holder
         /// </summary>
-        [DataMember(Name = "holder")]
+        [JsonProperty("holder")]
         public string Holder { get; set; }
 
         /// <summary>
         /// The used account number, for security reasons the number is masked
         /// </summary>
-        [DataMember(Name = "account")]
+        [JsonProperty("account")]
         public string Account { get; set; }
 
         /// <summary>
         /// App (ID) that created this offer or null if created by yourself
         /// </summary>
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         public string AppId { get; set; }
 
         public Payment(String id)

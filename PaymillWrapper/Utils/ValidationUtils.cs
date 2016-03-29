@@ -1,11 +1,7 @@
 ﻿using PaymillWrapper.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PaymillWrapper.Service
+namespace PaymillWrapper.Utils
 {
     internal class ValidationUtils
     {
@@ -16,13 +12,15 @@ namespace PaymillWrapper.Service
         }
         static internal void ValidatesIntervalPeriodWithChargeDay(Interval.PeriodWithChargeDay interval)
         {
-           if( interval.Interval < 1 ) {
-               throw new ArgumentException("Interval must be greater than zero");
-           }
-           if( interval.Unit == null ) {
-               throw new ArgumentException("Interval unit cannot be null");
-           }
-         }
+            if (interval.Interval < 1)
+            {
+                throw new ArgumentException("Interval must be greater than zero");
+            }
+            if (interval.Unit == null)
+            {
+                throw new ArgumentException("Interval unit cannot be null");
+            }
+        }
         static internal void ValidatesId(String id)
         {
             if (String.IsNullOrWhiteSpace(id))

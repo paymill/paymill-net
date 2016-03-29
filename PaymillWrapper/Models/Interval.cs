@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
@@ -23,7 +22,7 @@ namespace PaymillWrapper.Models
         {
             return new Interval.PeriodWithChargeDay(interval, unit, null);
         }
-         [Newtonsoft.Json.JsonConverter(typeof(StringToPeriodConverter))]
+        [Newtonsoft.Json.JsonConverter(typeof(StringToPeriodConverter))]
         public sealed class Period
         {
 
@@ -57,7 +56,7 @@ namespace PaymillWrapper.Models
                 return this.Interval + " " + this.Unit;
             }
         }
-         [Newtonsoft.Json.JsonConverter(typeof(StringToPeriodWithChargeDaydConverter))]
+        [Newtonsoft.Json.JsonConverter(typeof(StringToPeriodWithChargeDaydConverter))]
         public sealed class PeriodWithChargeDay
         {
             public int Interval { get; set; }
@@ -91,7 +90,8 @@ namespace PaymillWrapper.Models
             }
 
 
-            public override string ToString() {
+            public override string ToString()
+            {
                 return (Weekday == null) ? this.Interval + " " + this.Unit : this.Interval + " " + this.Unit + "," + Weekday;
             }
         }

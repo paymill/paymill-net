@@ -3,11 +3,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using PaymillWrapper.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaymillWrapper.Utils
 {
@@ -84,7 +80,7 @@ namespace PaymillWrapper.Utils
 
         public override bool CanConvert(Type objectType)
         {
-            return ( objectType == typeof(int));
+            return (objectType == typeof(int));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -112,7 +108,7 @@ namespace PaymillWrapper.Utils
             writer.WriteValue(value);
         }
     }
-    public class StringToBaseEnumTypeConverter<T> : Newtonsoft.Json.JsonConverter  where T : EnumBaseType
+    public class StringToBaseEnumTypeConverter<T> : Newtonsoft.Json.JsonConverter where T : EnumBaseType
     {
         public override bool CanConvert(Type objectType)
         {

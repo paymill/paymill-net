@@ -1,7 +1,11 @@
-﻿using System;
-using System.Globalization;
+﻿using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Reflection;
+using System.Globalization;
 
 namespace PaymillWrapper.Utils
 {
@@ -9,14 +13,14 @@ namespace PaymillWrapper.Utils
     {
         private static bool IsNullableType(Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>);
+            return type.GetType().GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType,
             object existingValue, JsonSerializer serializer)
         {
             var t = IsNullableType(objectType)
-                ? Nullable.GetUnderlyingType(objectType) 
+                ? Nullable.GetUnderlyingType(objectType)
                 : objectType;
             if (reader.TokenType == JsonToken.Null)
             {

@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Net.Http;
-using PaymillWrapper.Models;
+﻿using PaymillWrapper.Models;
 using PaymillWrapper.Utils;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service
 {
-
     public class ClientService : AbstractService<Client>
     {
         public ClientService(HttpClient client,
@@ -62,7 +58,7 @@ namespace PaymillWrapper.Service
         /// </returns>
         public async Task<Client> CreateWithEmailAndDescriptionAsync(String email, String description)
         {
-            return await createAsync(null, 
+            return await createAsync(null,
                 new UrlEncoder().EncodeObject(new { Email = email, Description = description }));
         }
         /// <summary>

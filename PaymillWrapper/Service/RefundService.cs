@@ -1,8 +1,7 @@
-﻿using System.Net.Http;
-using PaymillWrapper.Models;
+﻿using PaymillWrapper.Models;
 using PaymillWrapper.Utils;
-using System.Collections.Generic;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Service

@@ -1,13 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using PaymillWrapper.Exceptions;
-using PaymillWrapper.Models;
-using PaymillWrapper.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
+using PaymillWrapper.Exceptions;
 
 namespace PaymillWrapper.Utils
 {

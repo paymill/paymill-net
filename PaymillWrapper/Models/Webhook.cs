@@ -1,31 +1,29 @@
 ﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using PaymillWrapper.Utils;
 using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
     public class Webhook : BaseModel
     {
-        [DataMember(Name = "url"),
+        [JsonProperty("url"),
         Updateable(Name = "url")]
         public Uri Url { get; set; }
 
-        [DataMember(Name = "livemode")]
+        [JsonProperty("livemode")]
         public Boolean livemode { get; set; }
 
-        [DataMember(Name = "email"),
+        [JsonProperty("email"),
         Updateable(Name = "email")]
         public String Email { get; set; }
 
-        [DataMember(Name = "app_id")]
+        [JsonProperty("app_id")]
         public String AppId { get; private set; }
 
-        [DataMember(Name = "event_types")]
+        [JsonProperty("event_types")]
         public WebhookEventType[] EventTypes { get; set; }
 
         [JsonConverter(typeof(StringToBaseEnumTypeConverter<WebhookEventType>))]
@@ -50,9 +48,9 @@ namespace PaymillWrapper.Models
             public static readonly Webhook.WebhookEventType APP_MERCHANT_REJECTED;
             public static readonly Webhook.WebhookEventType CLIENT_UPDATED;
             public static readonly Webhook.WebhookEventType UNKNOWN;
-            public static readonly Webhook.WebhookEventType  SUBSCRIPTION_EXPIRING;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_EXPIRING;
             public static readonly Webhook.WebhookEventType SUBSCRIPTION_DEACTIVATED;
-            public static readonly Webhook.WebhookEventType  SUBSCRIPTION_ACTIVATED;
+            public static readonly Webhook.WebhookEventType SUBSCRIPTION_ACTIVATED;
             public static readonly Webhook.WebhookEventType SUBSCRIPTION_CANCELED;
             public static readonly Webhook.WebhookEventType PAYMENT_EXPIRED;
             public static readonly Webhook.WebhookEventType APP_MERCHANT_LIVE_REQUESTS_ALLOWED;

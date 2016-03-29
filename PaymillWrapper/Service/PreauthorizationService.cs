@@ -1,13 +1,11 @@
+﻿using PaymillWrapper.Models;
+using PaymillWrapper.Utils;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using PaymillWrapper.Models;
-using PaymillWrapper.Utils;
 
 namespace PaymillWrapper.Service
 {
-
-
     public class PreauthorizationService : AbstractService<Preauthorization>
     {
         public PreauthorizationService(HttpClient client, string apiUrl)

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PaymillWrapper.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using PaymillWrapper.Utils;
+using System.Threading.Tasks;
 
 namespace PaymillWrapper.Models
 {
@@ -12,7 +11,7 @@ namespace PaymillWrapper.Models
     ///A shopping cart item object belongs to exactly one transaction. It represents the merchants item which will be given to paypal.
     /// </summary>
     [JsonConverter(typeof(StringToBaseModelConverter<ShoppingCartItem>))]
-    public class ShoppingCartItem 
+    public class ShoppingCartItem
     {
         /// <summary>
         /// Item name, max. 127 characters
@@ -37,7 +36,7 @@ namespace PaymillWrapper.Models
         /// <summary>
         /// Item number or other identifier (SKU/EAN), max. 127 characters
         /// </summary>
-        [DataMember(Name = "item_number")]
+        [JsonProperty("item_number")]
         public String ItemNumber;
 
         /// <summary>
@@ -45,8 +44,6 @@ namespace PaymillWrapper.Models
         /// </summary>
         public String Url;
 
- 
+
     }
-
-
 }

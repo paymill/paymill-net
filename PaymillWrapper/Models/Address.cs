@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PaymillWrapper.Utils;
+using System;
 
 namespace PaymillWrapper.Models
 {
@@ -16,52 +12,52 @@ namespace PaymillWrapper.Models
     /// 
 
     [JsonConverter(typeof(StringToBaseModelConverter<Address>))]
-    public class Address {
-        
-    /// <summary>
-    /// Name of recipient, max. 128 characters
-    /// </summary>
-    /// 
-    public String Name;
+    public class Address
+    {
 
-    /// <summary>
-    /// Street address (incl. street number), max. 100 characters
-    /// </summary>
-    /// 
-    [DataMember(Name = "street_address")]
-    public String StreetAddress;
+        /// <summary>
+        /// Name of recipient, max. 128 characters
+        /// </summary>
+        /// 
+        public String Name;
 
-    /**
-    * Addition to street address (e.g. building, floor, or c/o), max. 100 characters
-    */
-    [DataMember(Name = "street_address_addition")]
-    public String StreetAddressAddition;
+        /// <summary>
+        /// Street address (incl. street number), max. 100 characters
+        /// </summary>
+        /// 
+        [JsonProperty("street_address")]
+        public String StreetAddress;
 
-    /**
-    * City, max. 40 characters
-    */
-    public String City;
+        /**
+        * Addition to street address (e.g. building, floor, or c/o), max. 100 characters
+        */
+        [JsonProperty("street_address_addition")]
+        public String StreetAddressAddition;
 
-    /**
-    * State or province, max. 40 characters
-    */
-    public String State;
+        /**
+        * City, max. 40 characters
+        */
+        public String City;
 
-    /**
-    * Country-specific postal code, max. 20 characters
-    */
-    [DataMember(Name = "postal_code")]
-    public String PostalCode;
+        /**
+        * State or province, max. 40 characters
+        */
+        public String State;
 
-    /**
-    * 2-letter country code according to ISO 3166-1 alpha-2
-    */
-    public String Country;
-    /**
-    * Contact phone number, max. 20 characters
-    */
-    public String Phone;
+        /**
+        * Country-specific postal code, max. 20 characters
+        */
+        [JsonProperty("postal_code")]
+        public String PostalCode;
+
+        /**
+        * 2-letter country code according to ISO 3166-1 alpha-2
+        */
+        public String Country;
+        /**
+        * Contact phone number, max. 20 characters
+        */
+        public String Phone;
 
     }
-
 }
